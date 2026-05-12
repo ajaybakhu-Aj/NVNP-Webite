@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@600;700&display=swap');
@@ -257,20 +258,66 @@ function Header() {
   </span>
   <span style={{ color: "#FFFFFF" }}>NIGHTVISION™</span>
 </div>
-      <nav style={{ display: "flex", alignItems: "center", gap: 24, marginLeft: "20px" }}>
-  {["CCTV CAMERAS", "ABOUT US", "CONTACT US", "DEALERSHIPS"].map((item, i) => (
-    <a key={item} href="#" style={{
-      color: i === 0 ? colors.se : colors.onSurfaceVariant,
-      borderBottom: i === 0 ? `2px solid ${colors.primary}` : "none",
-      paddingBottom: i === 0 ? 8 : 0,
-      fontFamily: "'Inter', sans-serif", fontWeight: 600,
-      fontSize: 12, letterSpacing: 1, textDecoration: "none",
-      transition: "color 0.2s",
-    }}>{item}</a>
-  ))}
+      <nav
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: "24px",
+    marginLeft: "20px",
+  }}
+>
+  {["CCTV CAMERAS", "ABOUT US", "CONTACT US", "DEALERSHIPS"].map(
+    (item, i) =>
+      item === "ABOUT US" ? (
+        <Link
+          key={item}
+          to="/about"
+          style={{
+            color: colors.onSurfaceVariant,
+            borderBottom: "2px solid transparent",
+            paddingBottom: "6px",
+            fontFamily: "'Arial Black', sans-serif",
+            fontWeight: 600,
+            fontSize: "12px",
+            letterSpacing: "1px",
+            textDecoration: "none",
+            lineHeight: 1,
+          }}
+        >
+          ABOUT US
+        </Link>
+      ) : (
+        <a
+          key={item}
+          href="#"
+          style={{
+            color:
+              i === 0
+                ? colors.secondary
+                : colors.onSurfaceVariant,
+
+            borderBottom:
+              i === 0
+                ? `2px solid ${colors.secondary}`
+                : "2px solid transparent",
+
+            paddingBottom: "6px",
+
+            fontFamily: "'Arial Black', sans-serif",
+            fontWeight: 600,
+            fontSize: "12px",
+            letterSpacing: "1px",
+            textDecoration: "none",
+            lineHeight: 1,
+          }}
+        >
+          {item}
+        </a>
+      )
+  )}
 </nav>
       <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "nowrap" }}>
-  <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: 12, letterSpacing: 1, color: colors.secondary, marginRight: 16, marginLeft: "20px", whiteSpace: "nowrap" }}>
+  <span style={{ fontFamily: "'Arial Black', sans-serif", fontWeight: 600, fontSize: 12, letterSpacing: 1, color: colors.secondary, marginRight: 16, marginLeft: "20px", whiteSpace: "nowrap" }}>
     SUPPORT HOTLINE: +977-9745978217
   </span>
   <Icon name="shopping_cart" size={24} style={{ color: colors.onSurfaceVariant, cursor: "pointer", flexShrink: 0 }} />
@@ -323,14 +370,14 @@ function HeroSection() {
           <div style={{ display: "flex", flexWrap: "wrap", gap: 24, padding: "24px 0" }}>
             <button style={{
               background: colors.primaryContainer, color: colors.onPrimaryContainer,
-              padding: "24px 48px", fontFamily: "'Inter', sans-serif",
+              padding: "24px 48px", fontFamily: "'Arial Black', sans-serif",
               fontWeight: 600, fontSize: 12, letterSpacing: 1, border: "none",
               cursor: "pointer", transition: "all 0.2s",
             }}>VIEW CCTV CAMERAS</button>
             <button style={{
               background: "transparent", border: `1px solid ${colors.secondary}`,
               color: colors.secondary, padding: "24px 48px",
-              fontFamily: "'Inter', sans-serif", fontWeight: 600,
+              fontFamily: "'Arial Black', sans-serif", fontWeight: 600,
               fontSize: 12, letterSpacing: 1, cursor: "pointer", transition: "all 0.2s",
             }}>OUR STORY</button>
           </div>
