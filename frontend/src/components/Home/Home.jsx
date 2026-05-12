@@ -580,7 +580,23 @@ function FounderSection() {
             The vision behind NV// was never just about hardware. It was about reclaiming safety in a world that never sleeps.
           </blockquote>
           <p style={{ color: colors.onSurfaceVariant, fontSize: 18, lineHeight: 1.6, marginBottom: 24 }}>Founder Rozil Thapa started NightVision with a singular mission: to provide the people of Nepal with security technology that rivals the global elite, without compromise.</p>
-          <button style={{ background: colors.primaryContainer, color: colors.onPrimaryContainer, padding: "24px 48px", fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: 12, letterSpacing: 1, border: "none", cursor: "pointer" }}>READ THE FULL STORY</button>
+          <a href="/founder">
+  <button
+    style={{
+      background: colors.primaryContainer,
+      color: colors.onPrimaryContainer,
+      padding: "24px 48px",
+      fontFamily: "'Inter', sans-serif",
+      fontWeight: 600,
+      fontSize: 12,
+      letterSpacing: 1,
+      border: "none",
+      cursor: "pointer",
+    }}
+  >
+    READ THE FULL STORY
+  </button>
+</a>
         </div>
       </div>
     </section>

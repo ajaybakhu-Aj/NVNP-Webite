@@ -931,7 +931,7 @@ function Footer() {
                         textTransform: "uppercase",
                     }}
                 >
-                    UNCOMPROMISING VIGILANCE SINCE 2020.
+                    UNCOMPROMISING VIGILANCE SINCE 2018.
                 </p>
             </div>
 
