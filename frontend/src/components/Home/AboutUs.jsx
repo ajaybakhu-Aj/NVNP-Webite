@@ -84,24 +84,36 @@ function Header() {
             }}
         >
             {/* Logo */}
-            <div
-                style={{
-                    fontFamily: "Arial Black, sans-serif",
-                    fontStyle: "italic",
-                    fontSize: "30px",
-                    lineHeight: "1.2",
-                    letterSpacing: "2px",
-                    fontWeight: 700,
-                    color: "#94da32",
-                }}
-            >
-                <span>
-                    <span style={{ color: "#B5E75D" }}>N</span>
-                    <span style={{ color: "#FFFFFF" }}>V</span>
-                    <span style={{ color: "#B5E75D" }}>//</span>
-                </span>
-                <span style={{ color: "#FFFFFF" }}>NIGHTVISION™</span>
-            </div>
+            <a
+  href="/"
+  style={{
+    textDecoration: "none",
+  }}
+>
+  <div
+    style={{
+      fontFamily: "'Arial Black', sans-serif",
+      fontStyle: "italic",
+      fontSize: 30,
+      fontWeight: 500,
+      letterSpacing: 0,
+      display: "flex",
+      alignItems: "center",
+      gap: "8px",
+      cursor: "pointer",
+    }}
+  >
+    <span>
+      <span style={{ color: "#B5E75D" }}>N</span>
+      <span style={{ color: "#FFFFFF" }}>V</span>
+      <span style={{ color: "#B5E75D" }}>//</span>
+    </span>
+
+    <span style={{ color: "#FFFFFF" }}>
+      NIGHTVISION™
+    </span>
+  </div>
+</a>
 
             {/* Desktop Nav */}
             <nav

@@ -233,96 +233,220 @@ function Icon({ name, size = 24, fill = false, style = {}, className = "" }) {
 }
 
 function Header() {
+
+  const [accountOpen, setAccountOpen] = useState(false);
+
   return (
-    <header style={{
-  position: "sticky", top: 0, zIndex: 50,
-  display: "flex", justifyContent: "space-between", alignItems: "center",
-  width: "100%", padding: "16px 24px", maxWidth: 1280, margin: "0 auto",
-  borderBottom: "1px solid transparent",
-  background: "rgba(19,19,19,0.95)", backdropFilter: "blur(4px)",
-}}>
-      <div style={{ 
-  fontFamily: "'Arial Black', sans-serif", 
-  fontStyle: "italic", 
-  fontSize: 30, 
-  fontWeight: 500, 
-  letterSpacing: 0, 
-  display: "flex", 
-  alignItems: "center", 
-  gap: "8px" 
-}}>
-  <span>
-    <span style={{ color: "#B5E75D" }}>N</span>
-    <span style={{ color: "#FFFFFF" }}>V</span>
-    <span style={{ color: "#B5E75D" }}>//</span>
-  </span>
-  <span style={{ color: "#FFFFFF" }}>NIGHTVISION™</span>
-</div>
+    <header
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 50,
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: "100%",
+        padding: "16px 24px",
+        maxWidth: 1280,
+        margin: "0 auto",
+        borderBottom: "1px solid transparent",
+        background: "rgba(19,19,19,0.95)",
+        backdropFilter: "blur(4px)",
+      }}
+    >
+      {/* Logo */}
+      <a
+        href="/"
+        style={{
+          textDecoration: "none",
+        }}
+      >
+        <div
+          style={{
+            fontFamily: "'Arial Black', sans-serif",
+            fontStyle: "italic",
+            fontSize: 30,
+            fontWeight: 500,
+            letterSpacing: 0,
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            cursor: "pointer",
+          }}
+        >
+          <span>
+            <span style={{ color: "#B5E75D" }}>N</span>
+            <span style={{ color: "#FFFFFF" }}>V</span>
+            <span style={{ color: "#B5E75D" }}>//</span>
+          </span>
+
+          <span style={{ color: "#FFFFFF" }}>
+            NIGHTVISION™
+          </span>
+        </div>
+      </a>
+
+      {/* Navigation */}
       <nav
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "24px",
+          marginLeft: "20px",
+        }}
+      >
+        {["CCTV CAMERAS", "ABOUT US", "CONTACT US", "DEALERSHIPS"].map(
+          (item, i) =>
+            item === "ABOUT US" ? (
+              <a
+                key={item}
+                href="/about"
+                style={{
+                  color: colors.onSurfaceVariant,
+                  borderBottom: "2px solid transparent",
+                  paddingBottom: "6px",
+                  fontFamily: "'Arial Black', sans-serif",
+                  fontWeight: 600,
+                  fontSize: "12px",
+                  letterSpacing: "1px",
+                  textDecoration: "none",
+                  lineHeight: 1,
+                }}
+              >
+                ABOUT US
+              </a>
+            ) : (
+              <a
+                key={item}
+                href="#"
+                style={{
+                  color:
+                    i === 0
+                      ? colors.secondary
+                      : colors.onSurfaceVariant,
+
+                  borderBottom:
+                    i === 0
+                      ? `2px solid ${colors.secondary}`
+                      : "2px solid transparent",
+
+                  paddingBottom: "6px",
+
+                  fontFamily: "'Arial Black', sans-serif",
+                  fontWeight: 600,
+                  fontSize: "12px",
+                  letterSpacing: "1px",
+                  textDecoration: "none",
+                  lineHeight: 1,
+                }}
+              >
+                {item}
+              </a>
+            )
+        )}
+      </nav>
+
+      {/* Right Side */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+          flexWrap: "nowrap",
+        }}
+      >
+        <span
+          style={{
+            fontFamily: "'Arial Black', sans-serif",
+            fontWeight: 600,
+            fontSize: 12,
+            letterSpacing: 1,
+            color: colors.secondary,
+            marginRight: 16,
+            marginLeft: "20px",
+            whiteSpace: "nowrap",
+          }}
+        >
+          SUPPORT HOTLINE: +977-9745978217
+        </span>
+
+        <a
+  href="/cart"
   style={{
     display: "flex",
     alignItems: "center",
-    gap: "24px",
-    marginLeft: "20px",
+    textDecoration: "none",
   }}
 >
-  {["CCTV CAMERAS", "ABOUT US", "CONTACT US", "DEALERSHIPS"].map(
-    (item, i) =>
-      item === "ABOUT US" ? (
-        <Link
-          key={item}
-          to="/about"
-          style={{
-            color: colors.onSurfaceVariant,
-            borderBottom: "2px solid transparent",
-            paddingBottom: "6px",
-            fontFamily: "'Arial Black', sans-serif",
-            fontWeight: 600,
-            fontSize: "12px",
-            letterSpacing: "1px",
-            textDecoration: "none",
-            lineHeight: 1,
-          }}
-        >
-          ABOUT US
-        </Link>
-      ) : (
-        <a
-          key={item}
-          href="#"
-          style={{
-            color:
-              i === 0
-                ? colors.secondary
-                : colors.onSurfaceVariant,
+  <Icon
+    name="shopping_cart"
+    size={24}
+    style={{
+      color: colors.onSurfaceVariant,
+      cursor: "pointer",
+      flexShrink: 0,
+    }}
+  />
+</a>
 
-            borderBottom:
-              i === 0
-                ? `2px solid ${colors.secondary}`
-                : "2px solid transparent",
+        {/* Account Dropdown */}
+        <div style={{ position: "relative" }}>
+          <div
+            onClick={() => setAccountOpen(!accountOpen)}
+            style={{
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Icon
+              name="account_circle"
+              size={24}
+              style={{
+                color: colors.onSurfaceVariant,
+                flexShrink: 0,
+              }}
+            />
+          </div>
 
-            paddingBottom: "6px",
-
-            fontFamily: "'Arial Black', sans-serif",
-            fontWeight: 600,
-            fontSize: "12px",
-            letterSpacing: "1px",
-            textDecoration: "none",
-            lineHeight: 1,
-          }}
-        >
-          {item}
-        </a>
-      )
-  )}
-</nav>
-      <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "nowrap" }}>
-  <span style={{ fontFamily: "'Arial Black', sans-serif", fontWeight: 600, fontSize: 12, letterSpacing: 1, color: colors.secondary, marginRight: 16, marginLeft: "20px", whiteSpace: "nowrap" }}>
-    SUPPORT HOTLINE: +977-9745978217
-  </span>
-  <Icon name="shopping_cart" size={24} style={{ color: colors.onSurfaceVariant, cursor: "pointer", flexShrink: 0 }} />
-  <Icon name="account_circle" size={24} style={{ color: colors.onSurfaceVariant, cursor: "pointer", flexShrink: 0 }} />
-</div>
+          {accountOpen && (
+            <div
+              style={{
+                position: "absolute",
+                top: "40px",
+                right: 0,
+                width: "220px",
+                background: "#20201f",
+                border: "1px solid #434938",
+                zIndex: 999,
+              }}
+            >
+              {[
+                "My Profile",
+                "Dashboard",
+                "Orders",
+                "Settings",
+                "Logout",
+              ].map((item) => (
+                <a
+                  key={item}
+                  href="#"
+                  style={{
+                    display: "block",
+                    padding: "14px",
+                    color: "#c3c9b3",
+                    textDecoration: "none",
+                    borderBottom: "1px solid #434938",
+                    fontFamily: "Inter",
+                  }}
+                >
+                  {item}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </header>
   );
 }
@@ -652,7 +776,20 @@ function Footer() {
   return (
     <footer style={{ padding: "48px 24px", display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 24, maxWidth: 1280, margin: "0 auto", background: colors.surfaceContainerLowest, borderTop: `1px solid ${colors.secondary}` }}>
       <div style={{ gridColumn: "1/2" }}>
-        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 24, fontWeight: 600, letterSpacing: 1, color: colors.secondary, marginBottom: 24 }}>NV// NIGHTVISION™</div>
+        <div
+  style={{
+    fontFamily: "'Arial Black', sans-serif",
+    fontStyle: "italic",
+    fontSize: 24,
+    fontWeight: 600,
+    letterSpacing: 1,
+    marginBottom: 24,
+  }}
+>
+  <span style={{ color: colors.secondary }}>N</span>
+  <span style={{ color: "#ffffff" }}>V</span>
+  <span style={{ color: colors.secondary }}>//</span>
+</div>
         <p style={{ color: colors.onSurfaceVariant, fontSize: 16, lineHeight: 1.5, maxWidth: 384, marginBottom: 24 }}>Dedicated to the highest standard of surveillance technology and national security for Nepal. Vigilance is our duty.</p>
         <div style={{ display: "flex", gap: 24 }}>
           {["public", "share", "chat"].map(icon => <Icon key={icon} name={icon} size={24} style={{ color: colors.secondary, cursor: "pointer" }} />)}
