@@ -1,0 +1,324 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #131313;
+  color: #e5e2e1;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #94da32;
+  color: black;
+}
+
+/* =========================
+   ANIMATION KEYFRAMES
+========================= */
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-10%);
+  }
+
+  100% {
+    transform: translateY(110vh);
+  }
+}
+
+@keyframes recordingPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 5px #ff2d2d;
+  }
+
+  50% {
+    opacity: 0.2;
+    transform: scale(0.8);
+    box-shadow: 0 0 20px #ff2d2d;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* =========================
+   UTILITY CLASSES
+========================= */
+
+.grid-overlay {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(181, 231, 93, 0.04) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(181, 231, 93, 0.04) 1px,
+      transparent 1px
+    );
+}
+
+.scanline-effect {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.scanline-effect::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 6px;
+
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(181, 231, 93, 0.9),
+    transparent
+  );
+
+  box-shadow:
+    0 0 10px rgba(181, 231, 93, 0.5),
+    0 0 20px rgba(181, 231, 93, 0.2);
+
+  animation: scanline 5s linear infinite;
+}
+
+/* =========================
+   RECORDING FRAME
+========================= */
+
+.recording-frame {
+  position: absolute;
+  inset: 20px;
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* CORNERS */
+
+.recording-corner {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-color: rgba(181, 231, 93, 0.9);
+  border-style: solid;
+  filter: drop-shadow(0 0 6px rgba(181, 231, 93, 0.4));
+}
+
+.recording-corner.top-left {
+  top: 0;
+  left: 0;
+  border-width: 3px 0 0 3px;
+}
+
+.recording-corner.top-right {
+  top: 0;
+  right: 0;
+  border-width: 3px 3px 0 0;
+}
+
+.recording-corner.bottom-left {
+  bottom: 0;
+  left: 0;
+  border-width: 0 0 3px 3px;
+}
+
+.recording-corner.bottom-right {
+  bottom: 0;
+  right: 0;
+  border-width: 0 3px 3px 0;
+}
+
+/* REC LABEL */
+.recording-indicator {
+  position: absolute;
+
+  top: 16px;
+  right: 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+
+  font-family: 'Arial Black', sans-serif;
+}
+
+/* BLINKING RED DOT */
+
+.recording-dot {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  background: #ff2d2d;
+
+  animation: recordingPulse 1s infinite;
+}
+
+/* CAMERA HUD */
+
+.recording-crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  width: 80px;
+  height: 80px;
+
+  border: 2px solid rgba(255,255,255,0.4);
+}
+
+.recording-crosshair::before,
+.recording-crosshair::after {
+  content: "";
+
+  position: absolute;
+
+  background: rgba(255,255,255,0.6);
+}
+
+.recording-crosshair::before {
+  width: 2px;
+  height: 100%;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.recording-crosshair::after {
+  height: 2px;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+/* =========================
+   VISUAL EFFECTS
+========================= */
+
+.luminous-glow {
+  box-shadow: 0 0 15px rgba(181, 231, 93, 0.2);
+}
+
+.text-glow {
+  text-shadow: 0 0 10px rgba(181, 231, 93, 0.5);
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.spin-slow {
+  animation: spin 10s linear infinite;
+}
+
+.spin-reverse {
+  animation: spin-reverse 15s linear infinite;
+}
+
+.animate-pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* =========================
+   MATERIAL ICONS
+========================= */
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+
+  -webkit-font-smoothing: antialiased;
+
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+
+  user-select: none;
+}
+
+.fill-icon {
+  font-variation-settings: 'FILL' 1;
+}

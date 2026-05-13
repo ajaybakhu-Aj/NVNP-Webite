@@ -1,17 +1,40 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
 
-import Header from "./components/Home/Home";
-import AboutUs from "./components/Home/AboutUs";
-import Founder from "./components/Home/Founder";
+import Header from "./components/Home/Header";
+
+import HeroSection from "./components/Home/HeroSection";
+import TickerStrip from "./components/Home/TickerStrip";
+import FeaturesStrip from "./components/Home/FeaturesStrip";
+import ProductsSection from "./components/Home/ProductsSection";
+import WhySection from "./components/Home/WhySection";
+import FounderSection from "./components/Home/FounderSection";
+import TestimonialsSection from "./components/Home/TestimonialsSection";
+import DealerSection from "./components/Home/DealerSection";
+
+import "./styles/global.css";
+
+import Footer from "./components/Home/Footer";
+
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Header />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/founder" element={<Founder />} />
-      </Routes>
-    </BrowserRouter>
+    
+    <div>
+      <Header />
+
+      <main>
+        
+        <HeroSection />
+        <TickerStrip />
+        <FeaturesStrip />
+        <ProductsSection />
+        <WhySection />
+        <FounderSection />
+        <TestimonialsSection />
+        <DealerSection />
+      </main>
+
+      <Footer />
+    </div>
   );
 }
 
