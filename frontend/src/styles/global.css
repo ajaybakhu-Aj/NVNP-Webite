@@ -27,11 +27,10 @@ body {
 
 @keyframes scanline {
   0% {
-    transform: translateY(-10%);
+    top: 0%;
   }
-
   100% {
-    transform: translateY(110vh);
+    top: 100%;
   }
 }
 
@@ -110,35 +109,6 @@ body {
     );
 }
 
-.scanline-effect {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.scanline-effect::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 6px;
-
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(181, 231, 93, 0.9),
-    transparent
-  );
-
-  box-shadow:
-    0 0 10px rgba(181, 231, 93, 0.5),
-    0 0 20px rgba(181, 231, 93, 0.2);
-
-  animation: scanline 5s linear infinite;
-}
-
 /* =========================
    RECORDING FRAME
 ========================= */
@@ -148,6 +118,37 @@ body {
   inset: 20px;
   pointer-events: none;
   z-index: 4;
+  overflow: hidden;
+}
+
+/* SCANLINE EFFECT INSIDE RECORDING FRAME - runs from top to bottom */
+.scanline-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.scanline-effect::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(
+    to bottom,
+    rgba(181, 231, 93, 0.9),
+    rgba(181, 231, 93, 0)
+  );
+  box-shadow:
+    0 0 10px rgba(181, 231, 93, 0.5),
+    0 0 20px rgba(181, 231, 93, 0.2);
+  animation: scanline 4s linear infinite;
+  top: 0;
 }
 
 /* CORNERS */
@@ -159,6 +160,7 @@ body {
   border-color: rgba(181, 231, 93, 0.9);
   border-style: solid;
   filter: drop-shadow(0 0 6px rgba(181, 231, 93, 0.4));
+  z-index: 6;
 }
 
 .recording-corner.top-left {
@@ -203,6 +205,7 @@ body {
   letter-spacing: 2px;
 
   font-family: 'Arial Black', sans-serif;
+  z-index: 6;
 }
 
 /* BLINKING RED DOT */
@@ -218,45 +221,7 @@ body {
   animation: recordingPulse 1s infinite;
 }
 
-/* CAMERA HUD */
-
-.recording-crosshair {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-
-  width: 80px;
-  height: 80px;
-
-  border: 2px solid rgba(255,255,255,0.4);
-}
-
-.recording-crosshair::before,
-.recording-crosshair::after {
-  content: "";
-
-  position: absolute;
-
-  background: rgba(255,255,255,0.6);
-}
-
-.recording-crosshair::before {
-  width: 2px;
-  height: 100%;
-  left: 50%;
-  top: 0;
-  transform: translateX(-50%);
-}
-
-.recording-crosshair::after {
-  height: 2px;
-  width: 100%;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-}
+/* CAMERA HUD - REMOVED */
 
 /* =========================
    VISUAL EFFECTS

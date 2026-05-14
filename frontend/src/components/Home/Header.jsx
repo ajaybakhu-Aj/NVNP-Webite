@@ -78,22 +78,31 @@ export default function Header() {
               </Link>
             ) : (
               <Link
-                key={item}
-                to="#"
-                style={{
-                  color: i === 0 ? colors.secondary : colors.onSurfaceVariant,
-                  borderBottom: i === 0 ? `2px solid ${colors.secondary}` : "2px solid transparent",
-                  paddingBottom: "6px",
-                  fontFamily: "'Arial Black', sans-serif",
-                  fontWeight: 600,
-                  fontSize: "12px",
-                  letterSpacing: "1px",
-                  textDecoration: "none",
-                  lineHeight: 1,
-                }}
-              >
-                {item}
-              </Link>
+  key={item}
+  to={
+    item === "ABOUT US"
+      ? "/about"
+      : item === "CONTACT US"
+      ? "/contact"
+      : "#"
+  }
+  style={{
+    color: i === 0 ? colors.secondary : colors.onSurfaceVariant,
+    borderBottom:
+      i === 0
+        ? `2px solid ${colors.secondary}`
+        : "2px solid transparent",
+    paddingBottom: "6px",
+    fontFamily: "'Arial Black', sans-serif",
+    fontWeight: 600,
+    fontSize: "12px",
+    letterSpacing: "1px",
+    textDecoration: "none",
+    lineHeight: 1,
+  }}
+>
+  {item}
+</Link>
             )
         )}
       </nav>
