@@ -1,6 +1,7 @@
 import React from "react";
 import Icon from "../../utils/Icon";
 import { colors } from "../../data/constants";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -19,8 +20,9 @@ export default function Footer() {
           <span style={{ color: colors.secondary }}>N</span>
           <span style={{ color: "#ffffff" }}>V</span>
           <span style={{ color: colors.secondary }}>//</span>
+          <span style={{ color: "#ffffff" }}>NIGHTVISION™</span>
         </div>
-        <p style={{ color: colors.onSurfaceVariant, fontSize: 16, lineHeight: 1.5, maxWidth: 384, marginBottom: 24 }}>Dedicated to the highest standard of surveillance technology and national security for Nepal. Vigilance is our duty.</p>
+        <p style={{ color: colors.onSurfaceVariant, fontSize: 16, lineHeight: 1.5, maxWidth: 384, marginBottom: 24 }}>Dedicated to the highest standard of surveillance technology and national security for Nepal. Security is our duty.</p>
         <div style={{ display: "flex", gap: 24 }}>
           {["public", "share", "chat"].map(icon => <Icon key={icon} name={icon} size={24} style={{ color: colors.secondary, cursor: "pointer" }} />)}
         </div>
@@ -28,9 +30,32 @@ export default function Footer() {
       <div>
         <h5 style={{ color: colors.secondary, fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: 12, letterSpacing: 1, textTransform: "uppercase", marginBottom: 24 }}>Navigation</h5>
         <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
-          {["Privacy Policy", "Terms of Service", "Support"].map(item => (
-            <li key={item}><a href="#" style={{ color: colors.onSurfaceVariant, fontSize: 16, textTransform: "uppercase", letterSpacing: 1, textDecoration: "none" }}>{item}</a></li>
-          ))}
+          {["Privacy Policy", "Terms of Service", "Support"].map((item) => {
+
+  const route =
+    item === "Support"
+      ? "/support"
+      : "#";
+
+  return (
+    <li key={item}>
+
+      <Link
+        to={route}
+        style={{
+          color: colors.onSurfaceVariant,
+          fontSize: 16,
+          textTransform: "uppercase",
+          letterSpacing: 1,
+          textDecoration: "none",
+        }}
+      >
+        {item}
+      </Link>
+
+    </li>
+  );
+})}
         </ul>
       </div>
       <div>
@@ -42,7 +67,7 @@ export default function Footer() {
         </ul>
       </div>
       <div style={{ gridColumn: "1/-1", paddingTop: 48, marginTop: 48, borderTop: `1px solid ${colors.outlineVariant}`, textAlign: "center" }}>
-        <p style={{ color: colors.onSurfaceVariant, fontSize: 16, textTransform: "uppercase", letterSpacing: 1 }}>© 2024 NIGHTVISION SECURITY SYSTEMS. ALL RIGHTS RESERVED. UNCOMPROMISING VIGILANCE.</p>
+        <p style={{ color: colors.onSurfaceVariant, fontSize: 16, textTransform: "uppercase", letterSpacing: 1 }}>© 2024 NIGHTVISION SECURITY SYSTEMS. ALL RIGHTS RESERVED. UNCOMPROMISING Security.</p>
       </div>
     </footer>
   );
