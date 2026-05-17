@@ -18,6 +18,9 @@ import AboutUs from "./components/Home/AboutUs";
 import ContactUs from "./components/Home/ContactUs";
 import Product from "./components/Home/Product";
 import Cart from "./components/Home/Cart";
+import Founder from "./components/Home/FounderPage";
+import Dealership from "./components/Home/Dealership";
+import SupportPage from "./components/Home/SupportPage";
 
 import "./styles/global.css";
 
@@ -62,6 +65,26 @@ function App() {
 
         {/* CART PAGE */}
         <Route path="/cart" element={<Cart />} />
+
+        {/* FOUNDER PAGE */}
+        <Route path="/founder" element={<Founder />} />
+
+        {/* DEALERSHIP PAGE */}
+        <Route path="/dealership" element={<Dealership />} />
+
+        <Route
+        path="/cart"
+        element={<Cart />}
+      />
+       <Route
+        path="/products"
+        element={<Product />}
+      />
+        <Route path="/support" element={<SupportPage />} />
+
+
+      
+
       </Routes>
       <Footer />
     </div>

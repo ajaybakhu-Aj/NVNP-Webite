@@ -187,7 +187,7 @@ function HeroSection() {
                             }}
                         />
 
-                        LIVE VIGILANCE SYSTEM ACTIVE
+                        LIVE SURVEILLANCE SYSTEM ACTIVE
                     </div>
 
                     {/* TITLE */}

@@ -54,57 +54,47 @@ export default function Header() {
           alignItems: "center",
           gap: "24px",
           marginLeft: "20px",
+          
         }}
       >
-        {["CCTV CAMERAS", "ABOUT US", "CONTACT US", "DEALERSHIPS"].map(
-          (item, i) =>
-            item === "ABOUT US" ? (
-              <Link
-                key={item}
-                to="/about"
-                style={{
-                  color: colors.onSurfaceVariant,
-                  borderBottom: "2px solid transparent",
-                  paddingBottom: "6px",
-                  fontFamily: "'Arial Black', sans-serif",
-                  fontWeight: 600,
-                  fontSize: "12px",
-                  letterSpacing: "1px",
-                  textDecoration: "none",
-                  lineHeight: 1,
-                }}
-              >
-                ABOUT US
-              </Link>
-            ) : (
-              <Link
-  key={item}
-  to={
-    item === "ABOUT US"
+        {[
+  "CCTV CAMERAS",
+  "ABOUT US",
+  "CONTACT US",
+  "DEALERSHIPS",
+].map((item, i) => {
+
+  const route =
+    item === "CCTV CAMERAS"
+      ? "/products"
+      : item === "ABOUT US"
       ? "/about"
       : item === "CONTACT US"
       ? "/contact"
-      : "#"
-  }
-  style={{
-    color: i === 0 ? colors.secondary : colors.onSurfaceVariant,
-    borderBottom:
-      i === 0
-        ? `2px solid ${colors.secondary}`
-        : "2px solid transparent",
-    paddingBottom: "6px",
-    fontFamily: "'Arial Black', sans-serif",
-    fontWeight: 600,
-    fontSize: "12px",
-    letterSpacing: "1px",
-    textDecoration: "none",
-    lineHeight: 1,
-  }}
->
-  {item}
-</Link>
-            )
-        )}
+      : item === "DEALERSHIPS"
+      ? "/dealership"
+      : "/";
+
+  return (
+    <Link
+      key={item}
+      to={route}
+      style={{
+  color: "#ffffff",
+  borderBottom: "2px solid transparent",
+  paddingBottom: "6px",
+  fontFamily: "'Arial Black', sans-serif",
+  fontWeight: 600,
+  fontSize: "12px",
+  letterSpacing: "1px",
+  textDecoration: "none",
+  lineHeight: 1,
+}}
+    >
+      {item}
+    </Link>
+  );
+})}
       </nav>
 
       {/* Right Side */}

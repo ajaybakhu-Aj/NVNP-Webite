@@ -21,112 +21,15 @@ export default function NightVisionAboutPage() {
     }
 
     /* Header/TopAppBar */
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      padding: 16px 24px;
-      max-width: 1280px;
-      margin: 0 auto;
-      border-bottom: 1px solid #434938;
-      background-color: rgba(19, 19, 19, 0.95);
-      backdrop-filter: blur(4px);
-    }
-
-    .logo {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 40px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: #94da32;
-    }
-
-    .nav {
-      display: none;
-      gap: 24px;
-      align-items: center;
-    }
-
-    @media (min-width: 768px) {
-      .nav {
-        display: flex;
-      }
-    }
-
-    .nav a {
-      color: #c3c9b3;
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      transition: color 0.2s;
-      text-transform: uppercase;
-    }
-
-    .nav a:hover {
-      color: #94da32;
-    }
-
-    .nav a.active {
-      color: #94da32;
-      border-bottom: 2px solid #94da32;
-      padding-bottom: 8px;
-    }
-
-    .nav-icons {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .icon-btn {
-      background: none;
-      border: none;
-      color: #94da32;
-      cursor: pointer;
-      padding: 8px;
-      font-size: 24px;
-      transition: background-color 0.2s;
-    }
-
-    .icon-btn:hover {
-      background-color: #2a2a2a;
-    }
-
-    .support-btn {
-      display: none;
-      padding: 8px 16px;
-      background: none;
-      border: 1px solid #94da32;
-      color: #94da32;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    @media (min-width: 1024px) {
-      .support-btn {
-        display: block;
-      }
-    }
-
-    .support-btn:hover {
-      background-color: #94da32;
-      color: #131313;
-    }
+    
 
     /* Main Content */
-    .main-content {
-      max-width: 1280px;
-      margin: 0 auto;
-      overflow: hidden;
-    }
+   .main-content {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  overflow: hidden;
+}
 
     /* Hero Section */
     .hero {
