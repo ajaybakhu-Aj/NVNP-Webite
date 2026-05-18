@@ -31,11 +31,12 @@ export default function Footer() {
         <h5 style={{ color: colors.secondary, fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: 12, letterSpacing: 1, textTransform: "uppercase", marginBottom: 24 }}>Navigation</h5>
         <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
           {["Privacy Policy", "Terms of Service", "Support"].map((item) => {
-
-  const route =
-    item === "Support"
-      ? "/support"
-      : "#";
+   const route =
+  item === "Support"
+    ? "/support"
+    : item === "Terms of Service"
+    ? "/terms"
+    : "#";
 
   return (
     <li key={item}>
@@ -61,9 +62,30 @@ export default function Footer() {
       <div>
         <h5 style={{ color: colors.secondary, fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: 12, letterSpacing: 1, textTransform: "uppercase", marginBottom: 24 }}>Corporate</h5>
         <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
-          {["Warranty", "Careers"].map(item => (
-            <li key={item}><a href="#" style={{ color: colors.onSurfaceVariant, fontSize: 16, textTransform: "uppercase", letterSpacing: 1, textDecoration: "none" }}>{item}</a></li>
-          ))}
+          {["Warranty", "Careers"].map((item) => {
+
+  const route =
+    item === "Warranty"
+      ? "/warranty"
+      : "#";
+
+  return (
+    <li key={item}>
+      <Link
+        to={route}
+        style={{
+          color: colors.onSurfaceVariant,
+          fontSize: 16,
+          textTransform: "uppercase",
+          letterSpacing: 1,
+          textDecoration: "none",
+        }}
+      >
+        {item}
+      </Link>
+    </li>
+  );
+})}
         </ul>
       </div>
       <div style={{ gridColumn: "1/-1", paddingTop: 48, marginTop: 48, borderTop: `1px solid ${colors.outlineVariant}`, textAlign: "center" }}>

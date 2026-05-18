@@ -1,6 +1,5 @@
-import React from 'react';
-import { Link } from "react-router-dom";
-
+import React from "react";   
+import { Link } from "react-router-dom";   
 export default function NightVisionAboutPage() {
   const styles = `
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@600;700&display=swap');

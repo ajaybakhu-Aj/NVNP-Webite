@@ -22,6 +22,9 @@ import Founder from "./components/Home/FounderPage";
 import Dealership from "./components/Home/Dealership";
 import SupportPage from "./components/Home/SupportPage";
 import ApplyDealersPage from "./components/Home/ApplyDealersPage";
+import Warranty from "./components/Home/Warranty";
+import TermService from "./components/Home/TermService";
+import PrivacyPolicy from "./components/Home/PrivacyPolicy";
 
 import "./styles/global.css";
 
@@ -83,6 +86,9 @@ function App() {
       />
         <Route path="/support" element={<SupportPage />} />
         <Route path="/apply-dealers" element={<ApplyDealersPage />} />
+        <Route path="/warranty" element={<Warranty />} />
+        <Route path="/terms" element={<TermService />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
 
 
       
