@@ -957,7 +957,312 @@ export default function NightVisionContactPage() {
       opacity: 0.5;
       font-size: 14px;
     }
-  `;
+      /* =========================================
+   GLOBAL RESPONSIVE FIXES
+========================================= */
+
+img,
+iframe {
+  max-width: 100%;
+  display: block;
+}
+
+body,
+html {
+  overflow-x: hidden;
+}
+
+/* =========================================
+   HERO SECTION
+========================================= */
+
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 52px;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 260px;
+    padding: 40px 20px;
+  }
+
+  .hero-title {
+    font-size: 38px;
+    letter-spacing: 2px;
+  }
+
+  .hero-subtitle {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .hero-accent-tl,
+  .hero-accent-br {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 30px;
+  }
+
+  .hero-badge-text {
+    font-size: 10px;
+  }
+}
+
+/* =========================================
+   CONTACT CARDS
+========================================= */
+
+@media (max-width: 768px) {
+  .contact-cards {
+    padding: 50px 20px;
+    gap: 20px;
+  }
+
+  .contact-card {
+    padding: 20px;
+  }
+
+  .card-title {
+    font-size: 20px;
+  }
+
+  .card-content-item {
+    font-size: 18px;
+    word-break: break-word;
+  }
+}
+
+/* =========================================
+   MAP SECTION
+========================================= */
+
+@media (max-width: 1024px) {
+  .map-container {
+    height: 450px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .map-section {
+    padding: 0 16px 60px;
+  }
+
+  .map-container {
+    height: 420px !important;
+    border-radius: 18px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .map-container {
+    height: 380px !important;
+  }
+
+  .map-info-box {
+    width: calc(100% - 32px);
+    left: 16px !important;
+    top: 16px !important;
+  }
+}
+
+/* =========================================
+   INLINE MAP OVERLAY FIXES
+========================================= */
+
+@media (max-width: 768px) {
+  div[style*="minWidth: 300px"] {
+    min-width: unset !important;
+    width: calc(100% - 32px) !important;
+    left: 16px !important;
+    top: 16px !important;
+    padding: 16px !important;
+  }
+
+  div[style*="width: 280px"] {
+    width: calc(100% - 32px) !important;
+    right: 16px !important;
+    bottom: 16px !important;
+    padding: 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  div[style*="minWidth: 300px"] h3 {
+    font-size: 18px !important;
+  }
+
+  div[style*="minWidth: 300px"] p {
+    font-size: 12px !important;
+  }
+}
+
+/* =========================================
+   FORM SECTION
+========================================= */
+
+@media (max-width: 1024px) {
+  .form-dealers-section {
+    gap: 50px;
+  }
+
+  .contact-form-wrapper {
+    padding: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-dealers-section {
+    padding: 0 16px 60px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-title,
+  .dealers-title {
+    font-size: 28px;
+    line-height: 1.2;
+  }
+
+  .contact-form-wrapper {
+    padding: 24px;
+  }
+
+  .form-submit-btn {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-form-wrapper {
+    padding: 20px;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    padding: 14px;
+    font-size: 14px;
+  }
+}
+
+/* =========================================
+   DEALERS GRID
+========================================= */
+
+@media (max-width: 768px) {
+  .dealers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .dealers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dealer-card {
+    padding: 14px;
+  }
+}
+
+/* =========================================
+   DEALER PROMO
+========================================= */
+
+@media (max-width: 768px) {
+  .dealers-promo {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .dealers-promo-content h4 {
+    font-size: 18px;
+  }
+
+  .dealers-promo-content p {
+    font-size: 14px;
+  }
+}
+
+/* =========================================
+   APP DOWNLOAD
+========================================= */
+
+@media (max-width: 768px) {
+  .app-download-section {
+    padding: 0 16px 60px;
+  }
+
+  .app-download-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .app-download-btn {
+    width: 100%;
+    min-width: unset;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-download-btn {
+    padding: 14px 18px;
+  }
+
+  .app-download-btn-name {
+    font-size: 12px;
+  }
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 40px 20px;
+    gap: 32px;
+  }
+
+  .footer-section-nav a {
+    font-size: 14px;
+  }
+}
+
+/* =========================================
+   EXTRA SMALL DEVICES
+========================================= */
+
+@media (max-width: 360px) {
+  .hero-title,
+  .form-title,
+  .dealers-title {
+    font-size: 24px;
+  }
+
+  .card-content-item {
+    font-size: 16px;
+  }
+
+  .app-download-btn {
+    padding: 12px;
+  }
+}`;
 
   return (
     <>
@@ -1161,99 +1466,210 @@ export default function NightVisionContactPage() {
     />
 
     {/* LOCATION INFO CARD */}
+    {/* LOCATION INFO CARD */}
+<div
+  style={{
+    position: "absolute",
+
+    top:
+      window.innerWidth <= 480
+        ? "12px"
+        : "24px",
+
+    left:
+      window.innerWidth <= 480
+        ? "12px"
+        : "24px",
+
+    right:
+      window.innerWidth <= 480
+        ? "12px"
+        : "auto",
+
+    zIndex: 5,
+
+    background: "rgba(0,0,0,0.78)",
+
+    backdropFilter: "blur(12px)",
+
+    border: "1px solid rgba(148,218,50,0.3)",
+
+    borderRadius:
+      window.innerWidth <= 480
+        ? "14px"
+        : "18px",
+
+    padding:
+      window.innerWidth <= 480
+        ? "14px"
+        : "18px 22px",
+
+    width:
+      window.innerWidth <= 480
+        ? "calc(100% - 24px)"
+        : window.innerWidth <= 768
+        ? "calc(100% - 48px)"
+        : "340px",
+
+    maxWidth: "100%",
+
+    boxShadow:
+      "0 0 20px rgba(148,218,50,0.15)",
+
+    boxSizing: "border-box",
+
+    overflow: "hidden",
+  }}
+>
+  {/* RED LIVE DOT */}
+  <div
+    style={{
+      display: "flex",
+
+      alignItems: "center",
+
+      gap: "10px",
+
+      marginBottom: "12px",
+
+      flexWrap: "wrap",
+    }}
+  >
     <div
       style={{
-        position: "absolute",
-        top: "24px",
-        left: "24px",
-        zIndex: 5,
-        background: "rgba(0,0,0,0.75)",
-        backdropFilter: "blur(12px)",
-        border: "1px solid rgba(148,218,50,0.3)",
-        borderRadius: "18px",
-        padding: "18px 22px",
-        minWidth: "300px",
-        boxShadow: "0 0 20px rgba(148,218,50,0.15)",
+        width: "12px",
+
+        height: "12px",
+
+        borderRadius: "50%",
+
+        background: "#ff2d2d",
+
+        boxShadow: "0 0 14px #ff2d2d",
+
+        animation: "pulse 1s infinite",
+
+        flexShrink: 0,
+      }}
+    />
+
+    <span
+      style={{
+        color: "#94da32",
+
+        fontSize:
+          window.innerWidth <= 480
+            ? "10px"
+            : "12px",
+
+        letterSpacing: "2px",
+
+        fontWeight: "700",
+
+        fontFamily:
+          "'Space Grotesk', sans-serif",
+
+        lineHeight: 1.5,
+
+        wordBreak: "break-word",
       }}
     >
-      {/* RED LIVE DOT */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "10px",
-          marginBottom: "12px",
-        }}
-      >
-        <div
-          style={{
-            width: "12px",
-            height: "12px",
-            borderRadius: "50%",
-            background: "#ff2d2d",
-            boxShadow: "0 0 14px #ff2d2d",
-            animation: "pulse 1s infinite",
-          }}
-        />
+      LIVE LOCATION ACTIVE
+    </span>
+  </div>
 
-        <span
-          style={{
-            color: "#94da32",
-            fontSize: "12px",
-            letterSpacing: "2px",
-            fontWeight: "700",
-            fontFamily: "'Space Grotesk', sans-serif",
-          }}
-        >
-          LIVE LOCATION ACTIVE
-        </span>
-      </div>
+  <h3
+    style={{
+      color: "#ffffff",
 
-      <h3
-        style={{
-          color: "#ffffff",
-          fontSize: "24px",
-          marginBottom: "10px",
-          fontFamily: "'Space Grotesk', sans-serif",
-        }}
-      >
-        Night Vision CCTV Nepal
-      </h3>
+      fontSize:
+        window.innerWidth <= 480
+          ? "18px"
+          : window.innerWidth <= 768
+          ? "20px"
+          : "24px",
 
-      <p
-        style={{
-          color: "#d4d4d4",
-          lineHeight: 1.7,
-          fontSize: "14px",
-          marginBottom: "20px",
-        }}
-      >
-        Kathmandu, Nepal
-        <br />
-        Advanced Surveillance Headquarters
-      </p>
+      marginBottom: "10px",
 
-      {/* GET DIRECTIONS BUTTON */}
-      <a
-        href="https://maps.app.goo.gl/QohWxPHLPzi1MPCu7"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          display: "inline-block",
-          background: "#94da32",
-          color: "#111",
-          padding: "12px 18px",
-          borderRadius: "12px",
-          textDecoration: "none",
-          fontWeight: "700",
-          fontSize: "13px",
-          letterSpacing: "1px",
-          transition: "0.3s",
-        }}
-      >
-        GET DIRECTIONS →
-      </a>
-    </div>
+      fontFamily:
+        "'Space Grotesk', sans-serif",
+
+      lineHeight: 1.3,
+
+      wordBreak: "break-word",
+    }}
+  >
+    Night Vision CCTV Nepal
+  </h3>
+
+  <p
+    style={{
+      color: "#d4d4d4",
+
+      lineHeight: 1.7,
+
+      fontSize:
+        window.innerWidth <= 480
+          ? "12px"
+          : "14px",
+
+      marginBottom: "18px",
+
+      wordBreak: "break-word",
+    }}
+  >
+    Kathmandu, Nepal
+    <br />
+    Advanced Surveillance Headquarters
+  </p>
+
+  {/* GET DIRECTIONS BUTTON */}
+  <a
+    href="https://maps.app.goo.gl/QohWxPHLPzi1MPCu7"
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{
+      display: "flex",
+
+      justifyContent: "center",
+
+      alignItems: "center",
+
+      width:
+        window.innerWidth <= 480
+          ? "100%"
+          : "fit-content",
+
+      background: "#94da32",
+
+      color: "#111",
+
+      padding:
+        window.innerWidth <= 480
+          ? "12px"
+          : "12px 18px",
+
+      borderRadius: "12px",
+
+      textDecoration: "none",
+
+      fontWeight: "700",
+
+      fontSize:
+        window.innerWidth <= 480
+          ? "12px"
+          : "13px",
+
+      letterSpacing: "1px",
+
+      boxSizing: "border-box",
+
+      textAlign: "center",
+    }}
+  >
+    GET DIRECTIONS →
+  </a>
+</div>
 
     {/* COORDINATES CARD */}
     <div

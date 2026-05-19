@@ -222,47 +222,384 @@ export default function NightVisionDealerships() {
       </section>
 
       {/* Map Section */}
-      <section style={{ padding: '80px 24px', borderTop: '1px solid #555', borderBottom: '1px solid #555', backgroundColor: '#111', overflow: 'hidden', position: 'relative' }}>
-        <div style={{ maxWidth: '80rem', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', alignItems: 'center' }}>
-          <div style={{ position: 'relative', zIndex: 10 }}>
-            <h2 style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '24px' }}>
-              DOMINATING THE<br />
-              <span style={{ color: '#94da32' }}>NEPALESE TERRAIN</span>
-            </h2>
-            <p style={{ fontSize: '18px', color: '#999', marginBottom: '32px', lineHeight: 1.6 }}>
-              From the high mountain passes to the bustling urban centers, NV// hardware is deployed in the most demanding environments across the country.
-            </p>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
-              <div style={{ borderLeft: '2px solid #94da32', paddingLeft: '24px' }}>
-                <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#94da32' }}>50+</div>
-                <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#999', textTransform: 'uppercase', letterSpacing: '0.1em' }}>INSTALLATION HUBS</div>
-              </div>
-              <div style={{ borderLeft: '2px solid #94da32', paddingLeft: '24px' }}>
-                <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#94da32' }}>24/7</div>
-                <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#999', textTransform: 'uppercase', letterSpacing: '0.1em' }}>LOCAL SUPPORT</div>
-              </div>
-            </div>
+      {/* Map Section */}
+<section
+  style={{
+    padding:
+      window.innerWidth <= 768
+        ? '50px 20px'
+        : '80px 24px',
+
+    borderTop: '1px solid #555',
+
+    borderBottom: '1px solid #555',
+
+    backgroundColor: '#111',
+
+    overflow: 'hidden',
+
+    position: 'relative',
+  }}
+>
+  <div
+    style={{
+      maxWidth: '80rem',
+
+      margin: '0 auto',
+
+      display: 'grid',
+
+      gridTemplateColumns:
+        window.innerWidth <= 768
+          ? '1fr'
+          : '1fr 1fr',
+
+      gap:
+        window.innerWidth <= 768
+          ? '40px'
+          : '48px',
+
+      alignItems: 'center',
+    }}
+  >
+    {/* LEFT CONTENT */}
+    <div
+      style={{
+        position: 'relative',
+
+        zIndex: 10,
+
+        width: '100%',
+      }}
+    >
+      <h2
+        style={{
+          fontSize:
+            window.innerWidth <= 480
+              ? '42px'
+              : window.innerWidth <= 768
+              ? '56px'
+              : '32px',
+
+          fontWeight: 'bold',
+
+          marginBottom: '24px',
+
+          lineHeight: 1.05,
+
+          wordBreak: 'break-word',
+        }}
+      >
+        DOMINATING THE
+        <br />
+
+        <span style={{ color: '#94da32' }}>
+          NEPALESE TERRAIN
+        </span>
+      </h2>
+
+      <p
+        style={{
+          fontSize:
+            window.innerWidth <= 480
+              ? '15px'
+              : '18px',
+
+          color: '#999',
+
+          marginBottom: '32px',
+
+          lineHeight: 1.8,
+
+          maxWidth: '100%',
+        }}
+      >
+        From the high mountain passes to the
+        bustling urban centers, NV// hardware
+        is deployed in the most demanding
+        environments across the country.
+      </p>
+
+      <div
+        style={{
+          display: 'grid',
+
+          gridTemplateColumns:
+            window.innerWidth <= 480
+              ? '1fr'
+              : '1fr 1fr',
+
+          gap:
+            window.innerWidth <= 480
+              ? '20px'
+              : '24px',
+
+          width: '100%',
+        }}
+      >
+        <div
+          style={{
+            borderLeft: '2px solid #94da32',
+
+            paddingLeft:
+              window.innerWidth <= 480
+                ? '16px'
+                : '24px',
+          }}
+        >
+          <div
+            style={{
+              fontSize:
+                window.innerWidth <= 480
+                  ? '52px'
+                  : '32px',
+
+              fontWeight: 'bold',
+
+              color: '#94da32',
+
+              lineHeight: 1,
+            }}
+          >
+            50+
           </div>
 
-          <div style={{ position: 'relative', height: '400px', border: '1px solid #555', backgroundColor: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1NTrgUfi7r729Nuok8DVlAC9KsIK1uc9Zyqyt2ZrKoxf68pU6QioqxO6z1Sk-k-UKLSIYpjnf2oDNT-XoDGJ23UJQK_exW8BNkgGi4xwqcn_2C1j70rt51KCi6ObuPB-ey9y1kleGn7me31h4h98sXiC_52CxFDUVWDH39cvSf6eujPyp-lvRy_5FDcuiEro3knUGwTkvOjq6wFFzQDwWYMlhNp6o9b5B7t8mmoFlBhyTKL1DozizXfcaSfDmq7JGidKVlUugDB_e"
-              alt="Nepal map"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5 }}
-            />
-            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div style={{ position: 'relative', width: '128px', height: '128px' }}>
-                <div style={{ position: 'absolute', inset: 0, border: '2px solid #94da32', borderRadius: '50%', animation: 'ping 2s infinite', opacity: 0.2 }}></div>
-                <div style={{ position: 'absolute', inset: '16px', border: '1px solid rgba(148, 218, 50, 0.4)', borderRadius: '50%' }}></div>
-                <Radar size={48} style={{ color: '#94da32', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
-              </div>
-            </div>
-            <div style={{ position: 'absolute', top: '16px', left: '16px', fontSize: '12px', color: '#94da32', padding: '8px', backgroundColor: 'rgba(0, 0, 0, 0.8)' }}>
-              SIGNAL_STRENGTH: OPTIMAL
-            </div>
+          <div
+            style={{
+              fontSize:
+                window.innerWidth <= 480
+                  ? '11px'
+                  : '12px',
+
+              fontWeight: 'bold',
+
+              color: '#999',
+
+              textTransform: 'uppercase',
+
+              letterSpacing: '0.1em',
+
+              lineHeight: 1.6,
+            }}
+          >
+            INSTALLATION HUBS
           </div>
         </div>
-      </section>
+
+        <div
+          style={{
+            borderLeft: '2px solid #94da32',
+
+            paddingLeft:
+              window.innerWidth <= 480
+                ? '16px'
+                : '24px',
+          }}
+        >
+          <div
+            style={{
+              fontSize:
+                window.innerWidth <= 480
+                  ? '52px'
+                  : '32px',
+
+              fontWeight: 'bold',
+
+              color: '#94da32',
+
+              lineHeight: 1,
+            }}
+          >
+            24/7
+          </div>
+
+          <div
+            style={{
+              fontSize:
+                window.innerWidth <= 480
+                  ? '11px'
+                  : '12px',
+
+              fontWeight: 'bold',
+
+              color: '#999',
+
+              textTransform: 'uppercase',
+
+              letterSpacing: '0.1em',
+
+              lineHeight: 1.6,
+            }}
+          >
+            LOCAL SUPPORT
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* MAP */}
+    <div
+      style={{
+        position: 'relative',
+
+        height:
+          window.innerWidth <= 480
+            ? '260px'
+            : window.innerWidth <= 768
+            ? '320px'
+            : '400px',
+
+        border: '1px solid #555',
+
+        backgroundColor: '#000',
+
+        overflow: 'hidden',
+
+        width: '100%',
+      }}
+    >
+      <img
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1NTrgUfi7r729Nuok8DVlAC9KsIK1uc9Zyqyt2ZrKoxf68pU6QioqxO6z1Sk-k-UKLSIYpjnf2oDNT-XoDGJ23UJQK_exW8BNkgGi4xwqcn_2C1j70rt51KCi6ObuPB-ey9y1kleGn7me31h4h98sXiC_52CxFDUVWDH39cvSf6eujPyp-lvRy_5FDcuiEro3knUGwTkvOjq6wFFzQDwWYMlhNp6o9b5B7t8mmoFlBhyTKL1DozizXfcaSfDmq7JGidKVlUugDB_e"
+        alt="Nepal map"
+        style={{
+          width: '100%',
+
+          height: '100%',
+
+          objectFit: 'cover',
+
+          opacity: 0.5,
+        }}
+      />
+
+      <div
+        style={{
+          position: 'absolute',
+
+          inset: 0,
+
+          display: 'flex',
+
+          alignItems: 'center',
+
+          justifyContent: 'center',
+        }}
+      >
+        <div
+          style={{
+            position: 'relative',
+
+            width:
+              window.innerWidth <= 480
+                ? '90px'
+                : '128px',
+
+            height:
+              window.innerWidth <= 480
+                ? '90px'
+                : '128px',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+
+              inset: 0,
+
+              border: '2px solid #94da32',
+
+              borderRadius: '50%',
+
+              animation: 'ping 2s infinite',
+
+              opacity: 0.2,
+            }}
+          />
+
+          <div
+            style={{
+              position: 'absolute',
+
+              inset:
+                window.innerWidth <= 480
+                  ? '10px'
+                  : '16px',
+
+              border:
+                '1px solid rgba(148, 218, 50, 0.4)',
+
+              borderRadius: '50%',
+            }}
+          />
+
+          <Radar
+            size={
+              window.innerWidth <= 480
+                ? 34
+                : 48
+            }
+            style={{
+              color: '#94da32',
+
+              position: 'absolute',
+
+              top: '50%',
+
+              left: '50%',
+
+              transform:
+                'translate(-50%, -50%)',
+            }}
+          />
+        </div>
+      </div>
+
+      <div
+        style={{
+          position: 'absolute',
+
+          top:
+            window.innerWidth <= 480
+              ? '10px'
+              : '16px',
+
+          right:
+            window.innerWidth <= 480
+              ? '10px'
+              : '16px',
+
+          fontSize:
+            window.innerWidth <= 480
+              ? '9px'
+              : '12px',
+
+          color: '#94da32',
+
+          padding:
+            window.innerWidth <= 480
+              ? '6px 10px'
+              : '8px',
+
+          backgroundColor:
+            'rgba(0, 0, 0, 0.75)',
+
+          lineHeight: 1.5,
+
+          maxWidth:
+            window.innerWidth <= 480
+              ? '140px'
+              : 'unset',
+
+          textAlign: 'right',
+        }}
+      >
+        SIGNAL_STRENGTH:
+        <br />
+        OPTIMAL
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Apply Section */}
       <section id="apply" style={{ position: 'relative', padding: '80px 24px', overflow: 'hidden', backgroundColor: '#b5e75d' }}>

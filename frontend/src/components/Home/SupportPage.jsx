@@ -11,6 +11,8 @@ const NightVisionSupport = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [activeCategory, setActiveCategory] = useState('general');
   const [showChat, setShowChat] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -20,6 +22,18 @@ const NightVisionSupport = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+      if (window.innerWidth > 768) {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const categories = [
     { id: 'general', name: 'General Questions', icon: '?' },
@@ -88,7 +102,6 @@ const NightVisionSupport = () => {
   const handleSendMessage = async (message) => {
     if (!message.trim()) return;
 
-    // Add user message
     const userMessage = {
       id: Date.now(),
       text: message,
@@ -100,7 +113,6 @@ const NightVisionSupport = () => {
     setInputValue('');
     setIsTyping(true);
 
-    // Simulate expert typing delay
     setTimeout(() => {
       const responses = expertResponses[activeCategory];
       const randomResponse = responses[Math.floor(Math.random() * responses.length)];
@@ -121,41 +133,103 @@ const NightVisionSupport = () => {
     handleSendMessage(reply);
   };
 
-  return (
-    <div style={{ backgroundColor: '#0a0a0a', color: '#ffffff', fontFamily: 'Inter, sans-serif', minHeight: '100vh' }}>
-      {/* Header */}
-      
+  const handleCategoryClick = (categoryId) => {
+    setActiveCategory(categoryId);
+    if (windowWidth < 768) {
+      setIsSidebarOpen(false);
+    }
+  };
 
+  const isMobile = windowWidth < 768;
+  const isTablet = windowWidth >= 768 && windowWidth < 1024;
+
+  return (
+    <div style={{ backgroundColor: '#0a0a0a', color: '#ffffff', fontFamily: 'Inter, sans-serif', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       {/* Hero Section */}
       <section style={{
         backgroundColor: '#8bc34a',
         color: '#000000',
-        padding: '60px 40px',
+        padding: isMobile ? '40px 20px' : isTablet ? '50px 30px' : '60px 40px',
         textAlign: 'center',
         position: 'relative',
         overflow: 'hidden',
       }}>
         <div style={{ position: 'relative', zIndex: 2 }}>
-          <h1 style={{ fontSize: '48px', fontWeight: 'bold', margin: '0 0 20px 0' }}>
+          <h1 style={{ 
+            fontSize: isMobile ? '32px' : isTablet ? '40px' : '48px', 
+            fontWeight: 'bold', 
+            margin: '0 0 20px 0',
+            lineHeight: '1.2',
+          }}>
             24/7 EXPERT SUPPORT
           </h1>
-          <p style={{ fontSize: '18px', margin: 0, opacity: 0.9 }}>
+          <p style={{ 
+            fontSize: isMobile ? '14px' : isTablet ? '16px' : '18px', 
+            margin: 0, 
+            opacity: 0.9,
+            lineHeight: '1.5',
+          }}>
             Our surveillance specialists are ready to help you. Connect with an expert instantly.
           </p>
         </div>
       </section>
 
+      {/* Mobile Menu Button */}
+      {isMobile && (
+        <div style={{
+          padding: '15px 20px',
+          borderBottom: '1px solid #333333',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          backgroundColor: '#1a1a1a',
+        }}>
+          <span style={{ fontSize: '12px', color: '#999999', textTransform: 'uppercase', letterSpacing: '1px' }}>
+            {categories.find(c => c.id === activeCategory)?.name}
+          </span>
+          <button
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            style={{
+              backgroundColor: '#8bc34a',
+              border: 'none',
+              color: '#000000',
+              padding: '8px 12px',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '12px',
+              fontWeight: 'bold',
+            }}
+          >
+            {isSidebarOpen ? '✕ Close' : '☰ Topics'}
+          </button>
+        </div>
+      )}
+
       {/* Main Content */}
-      <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', minHeight: 'calc(100vh - 250px)', maxWidth: '1400px', margin: '0 auto' }}>
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: isMobile ? '1fr' : isTablet ? '250px 1fr' : '300px 1fr', 
+        flex: 1,
+        maxWidth: '1400px',
+        width: '100%',
+        margin: '0 auto',
+        gap: 0,
+      }}>
         
         {/* Sidebar - Categories */}
         <aside style={{
           backgroundColor: '#1a1a1a',
-          borderRight: '2px solid #333333',
-          padding: '30px 20px',
-          display: 'flex',
+          borderRight: isMobile && !isSidebarOpen ? 'none' : '2px solid #333333',
+          borderBottom: isMobile && isSidebarOpen ? '2px solid #333333' : 'none',
+          padding: isMobile && !isSidebarOpen ? '0' : '30px 20px',
+          display: isMobile && !isSidebarOpen ? 'none' : 'flex',
           flexDirection: 'column',
           gap: '10px',
+          height: isMobile ? 'auto' : 'auto',
+          order: isMobile && isSidebarOpen ? -1 : 0,
+          gridColumn: isMobile ? '1 / -1' : 'auto',
+          overflowY: isMobile ? 'auto' : 'visible',
+          maxHeight: isMobile ? '300px' : 'auto',
         }}>
           <h3 style={{ color: '#8bc34a', fontSize: '14px', letterSpacing: '1px', margin: '0 0 20px 0', textTransform: 'uppercase' }}>
             Support Topics
@@ -163,7 +237,7 @@ const NightVisionSupport = () => {
           {categories.map(cat => (
             <button
               key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
+              onClick={() => handleCategoryClick(cat.id)}
               style={{
                 backgroundColor: activeCategory === cat.id ? '#8bc34a' : 'transparent',
                 color: activeCategory === cat.id ? '#000000' : '#ffffff',
@@ -220,13 +294,19 @@ const NightVisionSupport = () => {
         </aside>
 
         {/* Chat Area */}
-        <main style={{ display: 'flex', flexDirection: 'column', backgroundColor: '#0f0f0f' }}>
+        <main style={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
+          backgroundColor: '#0f0f0f',
+          minHeight: isMobile ? 'calc(100vh - 280px)' : 'auto',
+          gridColumn: isMobile ? '1 / -1' : 'auto',
+        }}>
           
           {/* Messages Container */}
           <div style={{
             flex: 1,
             overflowY: 'auto',
-            padding: '30px 40px',
+            padding: isMobile ? '20px 16px' : isTablet ? '25px 30px' : '30px 40px',
             display: 'flex',
             flexDirection: 'column',
             gap: '16px',
@@ -241,14 +321,15 @@ const NightVisionSupport = () => {
                 }}
               >
                 <div style={{
-                  maxWidth: '60%',
+                  maxWidth: isMobile ? '85%' : '60%',
                   backgroundColor: msg.sender === 'user' ? '#8bc34a' : '#1a1a1a',
                   color: msg.sender === 'user' ? '#000000' : '#ffffff',
                   padding: '12px 16px',
                   borderRadius: '8px',
                   borderLeft: msg.sender === 'expert' ? '3px solid #8bc34a' : 'none',
-                  fontSize: '14px',
+                  fontSize: isMobile ? '13px' : '14px',
                   lineHeight: '1.5',
+                  wordBreak: 'break-word',
                 }}>
                   {msg.text}
                   <div style={{
@@ -294,16 +375,26 @@ const NightVisionSupport = () => {
           {/* Quick Replies */}
           {messages.length === 1 && (
             <div style={{
-              padding: '0 40px 20px 40px',
+              padding: isMobile ? '15px 16px' : isTablet ? '20px 30px' : '0 40px 20px 40px',
               borderTop: '1px solid #333333',
               display: 'flex',
               flexDirection: 'column',
               gap: '8px',
             }}>
-              <p style={{ fontSize: '12px', color: '#999999', margin: '0 0 12px 0', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              <p style={{ 
+                fontSize: '12px', 
+                color: '#999999', 
+                margin: '0 0 12px 0', 
+                textTransform: 'uppercase', 
+                letterSpacing: '0.5px' 
+              }}>
                 Quick Questions
               </p>
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              <div style={{ 
+                display: 'flex', 
+                gap: '8px', 
+                flexWrap: 'wrap',
+              }}>
                 {quickReplies[activeCategory].map((reply, idx) => (
                   <button
                     key={idx}
@@ -312,11 +403,15 @@ const NightVisionSupport = () => {
                       backgroundColor: 'transparent',
                       border: '1px solid #8bc34a',
                       color: '#8bc34a',
-                      padding: '8px 12px',
+                      padding: isMobile ? '6px 10px' : '8px 12px',
                       borderRadius: '4px',
-                      fontSize: '12px',
+                      fontSize: isMobile ? '11px' : '12px',
                       cursor: 'pointer',
                       transition: 'all 0.3s ease',
+                      flex: isMobile ? '1 1 calc(50% - 4px)' : 'auto',
+                      minWidth: isMobile ? '0' : 'auto',
+                      whiteSpace: isMobile ? 'normal' : 'nowrap',
+                      lineHeight: '1.3',
                     }}
                     onMouseEnter={(e) => {
                       e.target.style.backgroundColor = '#8bc34a';
@@ -336,28 +431,30 @@ const NightVisionSupport = () => {
 
           {/* Input Area */}
           <div style={{
-            padding: '20px 40px',
+            padding: isMobile ? '15px 16px' : isTablet ? '20px 30px' : '20px 40px',
             borderTop: '1px solid #333333',
             display: 'flex',
             gap: '12px',
             backgroundColor: '#1a1a1a',
+            flexShrink: 0,
           }}>
             <input
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage(inputValue)}
-              placeholder="Type your question here..."
+              placeholder={isMobile ? "Ask..." : "Type your question here..."}
               style={{
                 flex: 1,
                 backgroundColor: '#0a0a0a',
                 border: '1px solid #333333',
                 color: '#ffffff',
-                padding: '12px 16px',
+                padding: isMobile ? '10px 12px' : '12px 16px',
                 borderRadius: '4px',
-                fontSize: '14px',
+                fontSize: isMobile ? '13px' : '14px',
                 outline: 'none',
                 transition: 'border-color 0.3s ease',
+                minHeight: isMobile ? '40px' : 'auto',
               }}
               onFocus={(e) => e.target.style.borderColor = '#8bc34a'}
               onBlur={(e) => e.target.style.borderColor = '#333333'}
@@ -368,14 +465,16 @@ const NightVisionSupport = () => {
                 backgroundColor: '#8bc34a',
                 border: 'none',
                 color: '#000000',
-                padding: '12px 20px',
+                padding: isMobile ? '10px 14px' : '12px 20px',
                 borderRadius: '4px',
                 cursor: 'pointer',
                 fontWeight: 'bold',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px',
+                gap: isMobile ? '4px' : '8px',
                 transition: 'all 0.3s ease',
+                fontSize: isMobile ? '12px' : '14px',
+                whiteSpace: 'nowrap',
               }}
               onMouseEnter={(e) => {
                 e.target.style.boxShadow = '0 0 20px rgba(139, 195, 74, 0.5)';
@@ -386,8 +485,8 @@ const NightVisionSupport = () => {
                 e.target.style.transform = 'scale(1)';
               }}
             >
-              <Send size={18} />
-              Send
+              <Send size={isMobile ? 16 : 18} />
+              {!isMobile && 'Send'}
             </button>
           </div>
         </main>
@@ -433,6 +532,13 @@ const NightVisionSupport = () => {
 
         * {
           box-sizing: border-box;
+        }
+
+        @media (max-width: 767px) {
+          body {
+            margin: 0;
+            padding: 0;
+          }
         }
       `}</style>
     </div>

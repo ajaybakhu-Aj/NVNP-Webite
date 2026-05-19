@@ -91,15 +91,28 @@ export default function App() {
     const [verifyState, setVerifyState] = useState(null); // null | 'valid' | 'invalid'
     const [cartCount] = useState(2);
     const [heroLoaded, setHeroLoaded] = useState(false);
+    const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
 
     useEffect(() => {
         setTimeout(() => setHeroLoaded(true), 100);
+    }, []);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     function handleVerify() {
         if (!serial.trim()) return;
         setVerifyState(serial.length === 16 ? "valid" : "invalid");
     }
+
+    const isMobile = windowWidth < 768;
+    const isTablet = windowWidth >= 768 && windowWidth < 1024;
 
     return (
         <div style={{ fontFamily: "'Space Grotesk', sans-serif", background: colors.bg, color: colors.onBg, minHeight: "100vh", position: "relative" }}>
@@ -139,6 +152,26 @@ export default function App() {
         a { color: inherit; text-decoration: none; }
         .footer-link { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: ${colors.onSurfaceVariant}; transition: color 0.2s; cursor: pointer; }
         .footer-link:hover { color: ${colors.secondary}; }
+
+        @media (max-width: 767px) {
+            .btn-primary, .btn-outline {
+                padding: 12px 20px;
+                font-size: 10px;
+                letter-spacing: 1px;
+            }
+            input[type=text] {
+                font-size: 12px;
+                padding: 12px 16px 12px 40px;
+            }
+            .step-card {
+                border-right: none;
+                border-bottom: 1px solid ${colors.outlineVariant};
+                padding: 24px;
+            }
+            .step-card:last-child {
+                border-bottom: none;
+            }
+        }
       `}</style>
 
             {/* Scanline overlay */}
@@ -151,9 +184,11 @@ export default function App() {
 
                 {/* Hero */}
                 <section style={{
-                    position: "relative", overflow: "hidden",
-                    padding: "100px 32px 80px", borderBottom: `1px solid ${colors.outlineVariant}`,
-                    minHeight: 520,
+                    position: "relative", 
+                    overflow: "hidden",
+                    padding: isMobile ? "60px 20px 60px" : isTablet ? "80px 30px 80px" : "100px 32px 80px", 
+                    borderBottom: `1px solid ${colors.outlineVariant}`,
+                    minHeight: isMobile ? "auto" : "520px",
                 }}>
                     {/* BG image */}
                     <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
@@ -172,23 +207,36 @@ export default function App() {
                         animation: "scanH 4s linear infinite",
                     }} />
 
-                    <div style={{ position: "relative", zIndex: 3, maxWidth: 900 }}>
+                    <div style={{ position: "relative", zIndex: 3, maxWidth: isMobile ? "100%" : "900px" }}>
                         <div style={{
-                            display: "inline-flex", alignItems: "center", gap: 8,
-                            background: `rgba(148,218,50,0.1)`, border: `1px solid ${colors.secondary}`,
-                            color: colors.secondary, padding: "6px 14px",
-                            fontFamily: "'JetBrains Mono'", fontSize: 11, letterSpacing: 3,
-                            textTransform: "uppercase", marginBottom: 24,
-                            opacity: heroLoaded ? 1 : 0, transition: "opacity 0.6s ease 0.2s",
+                            display: "inline-flex", 
+                            alignItems: "center", 
+                            gap: 8,
+                            background: `rgba(148,218,50,0.1)`, 
+                            border: `1px solid ${colors.secondary}`,
+                            color: colors.secondary, 
+                            padding: isMobile ? "5px 12px" : "6px 14px",
+                            fontFamily: "'JetBrains Mono'", 
+                            fontSize: isMobile ? "9px" : "11px", 
+                            letterSpacing: 3,
+                            textTransform: "uppercase", 
+                            marginBottom: 24,
+                            opacity: heroLoaded ? 1 : 0, 
+                            transition: "opacity 0.6s ease 0.2s",
                         }}>
                             <PulsingDot /> SYSTEM STATUS: PROTECTED
                         </div>
 
                         <h1 style={{
-                            fontFamily: "'Space Grotesk'", fontSize: "clamp(36px, 6vw, 72px)",
-                            fontWeight: 700, lineHeight: 1.05, textTransform: "uppercase",
-                            letterSpacing: "2px", marginBottom: 24,
-                            opacity: heroLoaded ? 1 : 0, transform: heroLoaded ? "translateY(0)" : "translateY(20px)",
+                            fontFamily: "'Space Grotesk'", 
+                            fontSize: isMobile ? "clamp(28px, 8vw, 48px)" : isTablet ? "clamp(40px, 6vw, 60px)" : "clamp(36px, 6vw, 72px)",
+                            fontWeight: 700, 
+                            lineHeight: 1.05, 
+                            textTransform: "uppercase",
+                            letterSpacing: isMobile ? "1px" : "2px", 
+                            marginBottom: 24,
+                            opacity: heroLoaded ? 1 : 0, 
+                            transform: heroLoaded ? "translateY(0)" : "translateY(20px)",
                             transition: "opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s",
                         }}>
                             UNCOMPROMISING<br />PROTECTION:{" "}
@@ -196,20 +244,29 @@ export default function App() {
                         </h1>
 
                         <p style={{
-                            fontFamily: "'Space Grotesk'", fontSize: 16, color: colors.onSurfaceVariant,
-                            lineHeight: 1.7, maxWidth: 560, marginBottom: 36,
-                            opacity: heroLoaded ? 1 : 0, transition: "opacity 0.7s ease 0.5s",
+                            fontFamily: "'Space Grotesk'", 
+                            fontSize: isMobile ? "14px" : isTablet ? "15px" : "16px", 
+                            color: colors.onSurfaceVariant,
+                            lineHeight: 1.7, 
+                            maxWidth: 560, 
+                            marginBottom: 36,
+                            opacity: heroLoaded ? 1 : 0, 
+                            transition: "opacity 0.7s ease 0.5s",
                         }}>
                             Every NV/// unit is forged for endurance. Our 1-Year 'Ironclad' Warranty ensures your perimeter remains secure without failure. In the rare event of a technical breach, we deploy immediate hardware restoration.
                         </p>
 
                         <div style={{
-                            display: "flex", gap: 16, flexWrap: "wrap",
-                            opacity: heroLoaded ? 1 : 0, transition: "opacity 0.7s ease 0.7s",
+                            display: "flex", 
+                            gap: 16, 
+                            flexWrap: "wrap",
+                            opacity: heroLoaded ? 1 : 0, 
+                            transition: "opacity 0.7s ease 0.7s",
+                            flexDirection: isMobile ? "column" : "row",
                         }}>
-                            <button className="btn-primary" style={{ color: "#131313" }}>DOWNLOAD POLICY PDF</button>
-                            <Link to="/support">
-                                <button className="btn-outline">
+                            <button className="btn-primary" style={{ color: "#131313", width: isMobile ? "100%" : "auto" }}>DOWNLOAD POLICY PDF</button>
+                            <Link to="/support" style={{ width: isMobile ? "100%" : "auto" }}>
+                                <button className="btn-outline" style={{ width: "100%" }}>
                                     CONTACT TECHNICAL OPS
                                 </button>
                             </Link>
@@ -218,25 +275,51 @@ export default function App() {
                 </section>
 
                 {/* Serial Verification */}
-                <section style={{ padding: "40px 32px", background: "#0e0e0e", borderBottom: `1px solid ${colors.outlineVariant}` }}>
+                <section style={{ 
+                    padding: isMobile ? "30px 20px" : isTablet ? "35px 30px" : "40px 32px", 
+                    background: "#0e0e0e", 
+                    borderBottom: `1px solid ${colors.outlineVariant}` 
+                }}>
                     <FadeIn>
                         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
                             <div style={{
                                 position: "relative",
-                                display: "grid", gridTemplateColumns: "1fr 2fr", gap: 24, alignItems: "center",
-                                background: colors.surface, border: `1px solid ${colors.outlineVariant}`,
-                                padding: "28px 32px",
+                                display: isMobile ? "grid" : "grid", 
+                                gridTemplateColumns: isMobile ? "1fr" : "1fr 2fr", 
+                                gap: isMobile ? "16px" : "24px", 
+                                alignItems: isMobile ? "stretch" : "center",
+                                background: colors.surface, 
+                                border: `1px solid ${colors.outlineVariant}`,
+                                padding: isMobile ? "20px 16px" : isTablet ? "24px 28px" : "28px 32px",
                             }}>
                                 <CornerBrackets />
                                 <div>
-                                    <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 10, letterSpacing: 3, color: colors.secondary, textTransform: "uppercase", marginBottom: 6 }}>
+                                    <div style={{ 
+                                        fontFamily: "'JetBrains Mono'", 
+                                        fontSize: isMobile ? "9px" : "10px", 
+                                        letterSpacing: 3, 
+                                        color: colors.secondary, 
+                                        textTransform: "uppercase", 
+                                        marginBottom: 6 
+                                    }}>
                                         Serial Authentication
                                     </div>
-                                    <h3 style={{ fontFamily: "'Space Grotesk'", fontSize: 22, fontWeight: 700, textTransform: "uppercase", letterSpacing: 1 }}>
+                                    <h3 style={{ 
+                                        fontFamily: "'Space Grotesk'", 
+                                        fontSize: isMobile ? "18px" : "22px", 
+                                        fontWeight: 700, 
+                                        textTransform: "uppercase", 
+                                        letterSpacing: 1 
+                                    }}>
                                         VERIFY YOUR UNIT
                                     </h3>
                                 </div>
-                                <div style={{ display: "flex", gap: 0 }}>
+                                <div style={{ 
+                                    display: "flex", 
+                                    gap: 0,
+                                    gridColumn: isMobile ? "1 / -1" : "auto",
+                                    flexDirection: isMobile ? "column" : "row",
+                                }}>
                                     <div style={{ flex: 1, position: "relative" }}>
                                         <svg style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)" }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={colors.outline} strokeWidth="2"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>
                                         <input
@@ -247,12 +330,25 @@ export default function App() {
                                             maxLength={16}
                                         />
                                     </div>
-                                    <button className="btn-primary" style={{ color: "#131313", padding: "14px 28px" }} onClick={handleVerify}>VERIFY</button>
+                                    <button 
+                                        className="btn-primary" 
+                                        style={{ 
+                                            color: "#131313", 
+                                            padding: isMobile ? "12px 16px" : "14px 28px",
+                                            width: isMobile ? "100%" : "auto",
+                                            fontSize: isMobile ? "10px" : "11px",
+                                        }} 
+                                        onClick={handleVerify}
+                                    >
+                                        VERIFY
+                                    </button>
                                 </div>
                                 {verifyState && (
                                     <div style={{
                                         gridColumn: "1 / -1",
-                                        fontFamily: "'JetBrains Mono'", fontSize: 12, letterSpacing: 1,
+                                        fontFamily: "'JetBrains Mono'", 
+                                        fontSize: isMobile ? "11px" : "12px", 
+                                        letterSpacing: 1,
                                         color: verifyState === "valid" ? colors.secondary : colors.error,
                                         padding: "10px 0 0",
                                     }}>
@@ -267,29 +363,66 @@ export default function App() {
                 </section>
 
                 {/* Coverage Protocols */}
-                <section style={{ padding: "80px 32px" }}>
+                <section style={{ 
+                    padding: isMobile ? "60px 20px" : isTablet ? "70px 30px" : "80px 32px" 
+                }}>
                     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
                         <FadeIn>
-                            <div style={{ textAlign: "center", marginBottom: 56 }}>
-                                <h2 style={{ fontFamily: "'Space Grotesk'", fontSize: 40, fontWeight: 700, textTransform: "uppercase", letterSpacing: 2, marginBottom: 12 }}>
+                            <div style={{ textAlign: "center", marginBottom: isMobile ? "40px" : "56px" }}>
+                                <h2 style={{ 
+                                    fontFamily: "'Space Grotesk'", 
+                                    fontSize: isMobile ? "28px" : isTablet ? "32px" : "40px", 
+                                    fontWeight: 700, 
+                                    textTransform: "uppercase", 
+                                    letterSpacing: isMobile ? "1px" : "2px", 
+                                    marginBottom: 12 
+                                }}>
                                     COVERAGE PROTOCOLS
                                 </h2>
                                 <div style={{ width: 80, height: 3, background: colors.secondary, margin: "0 auto" }} />
                             </div>
                         </FadeIn>
 
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
+                        <div style={{ 
+                            display: "grid", 
+                            gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", 
+                            gap: isMobile ? "24px" : "32px" 
+                        }}>
                             {/* Covered */}
                             <FadeIn delay={0.1}>
                                 <div style={{
-                                    background: colors.surface, border: `1px solid ${colors.secondary}`,
-                                    padding: 36, position: "relative", overflow: "hidden",
+                                    background: colors.surface, 
+                                    border: `1px solid ${colors.secondary}`,
+                                    padding: isMobile ? "24px" : "36px", 
+                                    position: "relative", 
+                                    overflow: "hidden",
                                     boxShadow: `0 0 20px rgba(148,218,50,0.15)`,
                                 }}>
-                                    <div style={{ position: "absolute", top: 12, right: 12, fontFamily: "'JetBrains Mono'", fontSize: 9, color: colors.secondary, opacity: 0.15, letterSpacing: 2 }}>LVL_01_PROT</div>
-                                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 28 }}>
+                                    <div style={{ 
+                                        position: "absolute", 
+                                        top: 12, 
+                                        right: 12, 
+                                        fontFamily: "'JetBrains Mono'", 
+                                        fontSize: 9, 
+                                        color: colors.secondary, 
+                                        opacity: 0.15, 
+                                        letterSpacing: 2 
+                                    }}>LVL_01_PROT</div>
+                                    <div style={{ 
+                                        display: "flex", 
+                                        alignItems: "center", 
+                                        gap: 10, 
+                                        marginBottom: 28 
+                                    }}>
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={colors.secondary} strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-                                        <h3 style={{ fontFamily: "'JetBrains Mono'", fontSize: 13, fontWeight: 700, letterSpacing: 2, color: colors.secondary, textTransform: "uppercase" }}>
+                                        <h3 style={{ 
+                                            fontFamily: "'JetBrains Mono'", 
+                                            fontSize: isMobile ? "12px" : "13px", 
+                                            fontWeight: 700, 
+                                            letterSpacing: 2, 
+                                            color: colors.secondary, 
+                                            textTransform: "uppercase" 
+                                        }}>
                                             IRONCLAD COVERAGE
                                         </h3>
                                     </div>
@@ -299,11 +432,29 @@ export default function App() {
                                             { title: "Sensor Degradation", desc: "Premature pixel death or thermal sensor calibration drift." },
                                             { title: "Circuit Integrity", desc: "Processor failure or firmware corruption resulting from hardware flaws." },
                                         ].map((item, i) => (
-                                            <div key={i} style={{ display: "flex", gap: 14, alignItems: "flex-start", paddingBottom: 20, borderBottom: i < 2 ? `1px solid ${colors.outlineVariant}` : "none" }}>
+                                            <div key={i} style={{ 
+                                                display: "flex", 
+                                                gap: 14, 
+                                                alignItems: "flex-start", 
+                                                paddingBottom: 20, 
+                                                borderBottom: i < 2 ? `1px solid ${colors.outlineVariant}` : "none" 
+                                            }}>
                                                 <svg style={{ flexShrink: 0, marginTop: 2 }} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={colors.secondary} strokeWidth="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
                                                 <div>
-                                                    <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 11, letterSpacing: 1.5, fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>{item.title}</div>
-                                                    <div style={{ fontFamily: "'Space Grotesk'", fontSize: 14, color: colors.onSurfaceVariant, lineHeight: 1.5 }}>{item.desc}</div>
+                                                    <div style={{ 
+                                                        fontFamily: "'JetBrains Mono'", 
+                                                        fontSize: isMobile ? "10px" : "11px", 
+                                                        letterSpacing: 1.5, 
+                                                        fontWeight: 700, 
+                                                        textTransform: "uppercase", 
+                                                        marginBottom: 4 
+                                                    }}>{item.title}</div>
+                                                    <div style={{ 
+                                                        fontFamily: "'Space Grotesk'", 
+                                                        fontSize: isMobile ? "13px" : "14px", 
+                                                        color: colors.onSurfaceVariant, 
+                                                        lineHeight: 1.5 
+                                                    }}>{item.desc}</div>
                                                 </div>
                                             </div>
                                         ))}
@@ -313,11 +464,37 @@ export default function App() {
 
                             {/* Void */}
                             <FadeIn delay={0.2}>
-                                <div style={{ background: "#181818", border: `1px solid ${colors.outlineVariant}`, padding: 36, position: "relative", overflow: "hidden" }}>
-                                    <div style={{ position: "absolute", top: 12, right: 12, fontFamily: "'JetBrains Mono'", fontSize: 9, color: colors.outline, opacity: 0.15, letterSpacing: 2 }}>X_VOID_POLICY</div>
-                                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 28 }}>
+                                <div style={{ 
+                                    background: "#181818", 
+                                    border: `1px solid ${colors.outlineVariant}`, 
+                                    padding: isMobile ? "24px" : "36px", 
+                                    position: "relative", 
+                                    overflow: "hidden" 
+                                }}>
+                                    <div style={{ 
+                                        position: "absolute", 
+                                        top: 12, 
+                                        right: 12, 
+                                        fontFamily: "'JetBrains Mono'", 
+                                        fontSize: 9, 
+                                        color: colors.outline, 
+                                        opacity: 0.15, 
+                                        letterSpacing: 2 
+                                    }}>X_VOID_POLICY</div>
+                                    <div style={{ 
+                                        display: "flex", 
+                                        alignItems: "center", 
+                                        gap: 10, 
+                                        marginBottom: 28 
+                                    }}>
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={colors.error} strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><line x1="9" y1="9" x2="15" y2="15" /><line x1="15" y1="9" x2="9" y2="15" /></svg>
-                                        <h3 style={{ fontFamily: "'JetBrains Mono'", fontSize: 13, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase" }}>
+                                        <h3 style={{ 
+                                            fontFamily: "'JetBrains Mono'", 
+                                            fontSize: isMobile ? "12px" : "13px", 
+                                            fontWeight: 700, 
+                                            letterSpacing: 2, 
+                                            textTransform: "uppercase" 
+                                        }}>
                                             VOID CONDITIONS
                                         </h3>
                                     </div>
@@ -327,11 +504,32 @@ export default function App() {
                                             { title: "Unauthorized Access", desc: "Broken factory seals or third-party hardware modifications." },
                                             { title: "Grid Surge", desc: "Damage resulting from non-compliant power supplies or lightning." },
                                         ].map((item, i) => (
-                                            <div key={i} style={{ display: "flex", gap: 14, alignItems: "flex-start", paddingBottom: 20, borderBottom: i < 2 ? `1px solid ${colors.outlineVariant}` : "none", opacity: 0.75 }}>
+                                            <div key={i} style={{ 
+                                                display: "flex", 
+                                                gap: 14, 
+                                                alignItems: "flex-start", 
+                                                paddingBottom: 20, 
+                                                borderBottom: i < 2 ? `1px solid ${colors.outlineVariant}` : "none", 
+                                                opacity: 0.75 
+                                            }}>
                                                 <svg style={{ flexShrink: 0, marginTop: 2 }} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={colors.outline} strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>
                                                 <div>
-                                                    <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 11, letterSpacing: 1.5, fontWeight: 700, textTransform: "uppercase", marginBottom: 4, color: colors.onSurfaceVariant }}>{item.title}</div>
-                                                    <div style={{ fontFamily: "'Space Grotesk'", fontSize: 14, color: colors.onSurfaceVariant, lineHeight: 1.5, opacity: 0.7 }}>{item.desc}</div>
+                                                    <div style={{ 
+                                                        fontFamily: "'JetBrains Mono'", 
+                                                        fontSize: isMobile ? "10px" : "11px", 
+                                                        letterSpacing: 1.5, 
+                                                        fontWeight: 700, 
+                                                        textTransform: "uppercase", 
+                                                        marginBottom: 4, 
+                                                        color: colors.onSurfaceVariant 
+                                                    }}>{item.title}</div>
+                                                    <div style={{ 
+                                                        fontFamily: "'Space Grotesk'", 
+                                                        fontSize: isMobile ? "13px" : "14px", 
+                                                        color: colors.onSurfaceVariant, 
+                                                        lineHeight: 1.5, 
+                                                        opacity: 0.7 
+                                                    }}>{item.desc}</div>
                                                 </div>
                                             </div>
                                         ))}
@@ -343,25 +541,61 @@ export default function App() {
                 </section>
 
                 {/* Claim Process */}
-                <section style={{ padding: "80px 32px", background: colors.surface, borderTop: `1px solid ${colors.outlineVariant}`, borderBottom: `1px solid ${colors.outlineVariant}` }}>
+                <section style={{ 
+                    padding: isMobile ? "60px 20px" : isTablet ? "70px 30px" : "80px 32px", 
+                    background: colors.surface, 
+                    borderTop: `1px solid ${colors.outlineVariant}`, 
+                    borderBottom: `1px solid ${colors.outlineVariant}` 
+                }}>
                     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
                         <FadeIn>
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 48 }}>
+                            <div style={{ 
+                                display: "flex", 
+                                justifyContent: "space-between", 
+                                alignItems: isMobile ? "flex-start" : "flex-end", 
+                                marginBottom: isMobile ? "32px" : "48px",
+                                flexDirection: isMobile ? "column" : "row",
+                                gap: isMobile ? "16px" : "0",
+                            }}>
                                 <div>
-                                    <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 10, letterSpacing: 4, color: colors.secondary, textTransform: "uppercase", marginBottom: 6 }}>
+                                    <div style={{ 
+                                        fontFamily: "'JetBrains Mono'", 
+                                        fontSize: isMobile ? "9px" : "10px", 
+                                        letterSpacing: 4, 
+                                        color: colors.secondary, 
+                                        textTransform: "uppercase", 
+                                        marginBottom: 6 
+                                    }}>
                                         Mission Profile
                                     </div>
-                                    <h2 style={{ fontFamily: "'Space Grotesk'", fontSize: 40, fontWeight: 700, textTransform: "uppercase", letterSpacing: 2 }}>
+                                    <h2 style={{ 
+                                        fontFamily: "'Space Grotesk'", 
+                                        fontSize: isMobile ? "28px" : isTablet ? "32px" : "40px", 
+                                        fontWeight: 700, 
+                                        textTransform: "uppercase", 
+                                        letterSpacing: isMobile ? "1px" : "2px" 
+                                    }}>
                                         CLAIM DEPLOYMENT PROCESS
                                     </h2>
                                 </div>
-                                <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 10, letterSpacing: 2, color: colors.onSurfaceVariant, textTransform: "uppercase", paddingBottom: 8 }}>
+                                <div style={{ 
+                                    fontFamily: "'JetBrains Mono'", 
+                                    fontSize: isMobile ? "9px" : "10px", 
+                                    letterSpacing: 2, 
+                                    color: colors.onSurfaceVariant, 
+                                    textTransform: "uppercase", 
+                                    paddingBottom: isMobile ? "0" : "8px" 
+                                }}>
                                     EST. RESOLUTION: 48-72 HOURS
                                 </div>
                             </div>
                         </FadeIn>
 
-                        <div style={{ display: "flex", border: `1px solid ${colors.outlineVariant}` }}>
+                        <div style={{ 
+                            display: "flex", 
+                            border: `1px solid ${colors.outlineVariant}`,
+                            flexDirection: isMobile ? "column" : "row",
+                        }}>
                             {[
                                 {
                                     num: "01",
@@ -382,15 +616,37 @@ export default function App() {
                                     desc: "Our tactical response team validates the claim and ships a replacement unit or dispatches technical support.",
                                 },
                             ].map((step, i) => (
-                                <FadeIn key={i} delay={i * 0.15} style={{ flex: 1, borderRight: i < 2 ? `1px solid ${colors.outlineVariant}` : "none" }}>
+                                <FadeIn key={i} delay={i * 0.15} style={{ 
+                                    flex: 1, 
+                                    borderRight: isMobile ? "none" : (i < 2 ? `1px solid ${colors.outlineVariant}` : "none"),
+                                    borderBottom: isMobile && i < 2 ? `1px solid ${colors.outlineVariant}` : "none",
+                                }}>
                                     <div className="step-card">
                                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                                            <span style={{ fontFamily: "'Space Grotesk'", fontSize: 52, fontWeight: 700, color: colors.outlineVariant, lineHeight: 1 }}>{step.num}</span>
+                                            <span style={{ 
+                                                fontFamily: "'Space Grotesk'", 
+                                                fontSize: isMobile ? "40px" : "52px", 
+                                                fontWeight: 700, 
+                                                color: colors.outlineVariant, 
+                                                lineHeight: 1 
+                                            }}>{step.num}</span>
                                             {step.icon}
                                         </div>
                                         <div>
-                                            <h4 style={{ fontFamily: "'JetBrains Mono'", fontSize: 13, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>{step.title}</h4>
-                                            <p style={{ fontFamily: "'Space Grotesk'", fontSize: 14, color: colors.onSurfaceVariant, lineHeight: 1.6 }}>{step.desc}</p>
+                                            <h4 style={{ 
+                                                fontFamily: "'JetBrains Mono'", 
+                                                fontSize: isMobile ? "12px" : "13px", 
+                                                fontWeight: 700, 
+                                                letterSpacing: 2, 
+                                                textTransform: "uppercase", 
+                                                marginBottom: 10 
+                                            }}>{step.title}</h4>
+                                            <p style={{ 
+                                                fontFamily: "'Space Grotesk'", 
+                                                fontSize: isMobile ? "13px" : "14px", 
+                                                color: colors.onSurfaceVariant, 
+                                                lineHeight: 1.6 
+                                            }}>{step.desc}</p>
                                         </div>
                                     </div>
                                 </FadeIn>
@@ -400,8 +656,34 @@ export default function App() {
                 </section>
 
                 {/* Side labels */}
-                <div style={{ position: "absolute", left: 8, top: "50%", transform: "translateY(-50%) rotate(-90deg)", transformOrigin: "left center", fontFamily: "'JetBrains Mono'", fontSize: 9, letterSpacing: 10, color: colors.secondary, opacity: 0.15, whiteSpace: "nowrap", pointerEvents: "none" }}>AUTH_WARRANTY_V2.0</div>
-                <div style={{ position: "absolute", right: 8, top: "50%", transform: "translateY(-50%) rotate(90deg)", transformOrigin: "right center", fontFamily: "'JetBrains Mono'", fontSize: 9, letterSpacing: 10, color: colors.secondary, opacity: 0.15, whiteSpace: "nowrap", pointerEvents: "none" }}>SECURE_ENCRYPTION_ACTIVE</div>
+                <div style={{ 
+                    position: "absolute", 
+                    left: 8, 
+                    top: "50%", 
+                    transform: "translateY(-50%) rotate(-90deg)", 
+                    transformOrigin: "left center", 
+                    fontFamily: "'JetBrains Mono'", 
+                    fontSize: isMobile ? "7px" : "9px", 
+                    letterSpacing: 10, 
+                    color: colors.secondary, 
+                    opacity: isMobile ? 0.08 : 0.15, 
+                    whiteSpace: "nowrap", 
+                    pointerEvents: "none" 
+                }}>AUTH_WARRANTY_V2.0</div>
+                <div style={{ 
+                    position: "absolute", 
+                    right: 8, 
+                    top: "50%", 
+                    transform: "translateY(-50%) rotate(90deg)", 
+                    transformOrigin: "right center", 
+                    fontFamily: "'JetBrains Mono'", 
+                    fontSize: isMobile ? "7px" : "9px", 
+                    letterSpacing: 10, 
+                    color: colors.secondary, 
+                    opacity: isMobile ? 0.08 : 0.15, 
+                    whiteSpace: "nowrap", 
+                    pointerEvents: "none" 
+                }}>SECURE_ENCRYPTION_ACTIVE</div>
             </main>
 
             {/* Footer */}

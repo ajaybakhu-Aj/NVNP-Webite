@@ -254,23 +254,53 @@ const FounderPage = () => {
     },
 
     startGrid: {
-      display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
-      gap: '64px',
-      alignItems: 'start',
-    },
+  display: 'grid',
+  gridTemplateColumns:
+    window.innerWidth <= 768
+      ? '1fr'
+      : '1fr 1fr',
+
+  gap: window.innerWidth <= 768
+    ? '24px'
+    : '64px',
+
+  alignItems: 'start',
+
+  width: '100%',
+},
 
     startText: {
-      fontSize: '22px',
-      color: '#e5e2e1',
-      lineHeight: '1.6',
-    },
+  fontSize:
+    window.innerWidth <= 480
+      ? '14px'
+      : window.innerWidth <= 768
+      ? '16px'
+      : '22px',
 
-    statBoxes: {
-      display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
-      gap: '32px',
-    },
+  color: '#e5e2e1',
+
+  lineHeight: '1.8',
+
+  width: '100%',
+
+  wordBreak: 'break-word',
+},
+
+   statBoxes: {
+  display: 'grid',
+
+  gridTemplateColumns:
+    window.innerWidth <= 768
+      ? '1fr'
+      : '1fr 1fr',
+
+  gap:
+    window.innerWidth <= 768
+      ? '16px'
+      : '32px',
+
+  width: '100%',
+},
 
     statBox: {
       border: '2px solid #94da32',
@@ -600,8 +630,6 @@ const FounderPage = () => {
       backgroundColor: 'rgba(148, 218, 50, 0.1)',
     },
 
-    
-
     // Keyframes
     '@keyframes pulse': {
       '0%, 100%': { opacity: 1 },
@@ -613,6 +641,701 @@ const FounderPage = () => {
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
+    }
+
+    /* ========== RESPONSIVE DESIGN ========== */
+    
+    /* TABLET & SMALL DESKTOP (max 1024px) */
+    @media (max-width: 1024px) {
+      /* Hero Section */
+      section:first-of-type {
+        height: 60vh !important;
+        padding: 40px 24px !important;
+        padding-bottom: 60px !important;
+      }
+
+      h1 {
+        font-size: 48px !important;
+        max-width: 100% !important;
+        letter-spacing: 2px !important;
+      }
+
+      /* Bio Section */
+      section:nth-of-type(2) {
+        grid-template-columns: 1fr !important;
+        min-height: auto !important;
+      }
+
+      section:nth-of-type(2) > div:first-child {
+        border-right: none !important;
+        border-bottom: 1px solid #434938 !important;
+        min-height: 400px !important;
+      }
+
+      section:nth-of-type(2) > div:last-child {
+        padding: 64px 24px !important;
+      }
+
+      .bioTitle {
+        font-size: 32px !important;
+      }
+
+      /* ID Card - Responsive */
+      .idCard {
+        padding: 24px !important;
+      }
+
+      .idGrid {
+        gap: 20px !important;
+        grid-template-columns: 1fr 1fr !important;
+      }
+
+      .idLabel {
+        font-size: 10px !important;
+      }
+
+      .idValue {
+        font-size: 18px !important;
+      }
+
+      /* Starting Brand Section */
+      section:nth-of-type(3) {
+        padding: 80px 24px !important;
+      }
+
+      section:nth-of-type(3) h2 {
+        font-size: 48px !important;
+        margin-bottom: 40px !important;
+      }
+
+      .startGrid {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+      }
+
+      .startText {
+        font-size: 18px !important;
+      }
+
+      .statBoxes {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 20px !important;
+      }
+
+      .statBox {
+        padding: 32px !important;
+      }
+
+      .statNumber {
+        font-size: 56px !important;
+      }
+
+      .statLabel {
+        font-size: 11px !important;
+      }
+
+      /* Market Section */
+      section:nth-of-type(4) {
+        grid-template-columns: 1fr !important;
+      }
+
+      section:nth-of-type(4) > div:first-child {
+        order: 1 !important;
+        padding: 64px 24px !important;
+      }
+
+      section:nth-of-type(4) > div:last-child {
+        order: 2 !important;
+        border-left: none !important;
+        border-top: 1px solid #434938 !important;
+        min-height: 300px !important;
+      }
+
+      .marketTitle {
+        font-size: 32px !important;
+      }
+
+      /* Highlights Section */
+      section:nth-of-type(5) {
+        padding: 80px 24px !important;
+      }
+
+      section:nth-of-type(5) h2 {
+        font-size: 48px !important;
+        margin-bottom: 48px !important;
+      }
+
+      .cardsGrid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+        gap: 24px !important;
+      }
+
+      /* Vision Section */
+      section:nth-of-type(6) {
+        padding: 96px 24px !important;
+      }
+
+      section:nth-of-type(6) h2 {
+        font-size: 48px !important;
+        margin-bottom: 40px !important;
+      }
+
+      blockquote {
+        font-size: 32px !important;
+        padding-top: 40px !important;
+        padding-bottom: 40px !important;
+      }
+
+      /* CTA Section */
+      section:nth-of-type(7) {
+        padding: 64px 24px !important;
+      }
+
+      section:nth-of-type(7) h2 {
+        font-size: 48px !important;
+        margin-bottom: 48px !important;
+      }
+    }
+
+    /* MOBILE TABLET (max 768px) */
+    @media (max-width: 768px) {
+      body {
+        overflow-x: hidden !important;
+      }
+
+      /* Hero Section */
+      section:first-of-type {
+        height: 50vh !important;
+        padding: 32px 16px !important;
+        padding-bottom: 50px !important;
+      }
+
+      h1 {
+        font-size: 36px !important;
+        margin-bottom: 16px !important;
+        letter-spacing: 1px !important;
+      }
+
+      p {
+        font-size: 16px !important;
+      }
+
+      /* Archive Label */
+      .archiveLabel {
+        font-size: 10px !important;
+        padding: 6px 12px !important;
+        gap: 6px !important;
+        margin-bottom: 12px !important;
+      }
+
+      .pulseDot {
+        width: 8px !important;
+        height: 8px !important;
+      }
+
+      /* Bio Section */
+      section:nth-of-type(2) > div:first-child {
+        min-height: 350px !important;
+      }
+
+      section:nth-of-type(2) > div:last-child {
+        padding: 50px 20px !important;
+      }
+
+      .bioItem {
+        margin-bottom: 60px !important;
+        padding-left: 32px !important;
+      }
+
+      .bioNumber {
+        width: 20px !important;
+        height: 20px !important;
+        font-size: 8px !important;
+        left: -10px !important;
+      }
+
+      .bioTitle {
+        font-size: 24px !important;
+        margin-bottom: 16px !important;
+      }
+
+      .bioText {
+        font-size: 16px !important;
+        margin-bottom: 16px !important;
+      }
+
+      /* ID Card - Keep 2 column layout */
+      .idCard {
+        padding: 20px !important;
+        bottom: 16px !important;
+        left: 16px !important;
+        right: 16px !important;
+      }
+
+      .idGrid {
+        gap: 12px !important;
+        grid-template-columns: 1fr 1fr !important;
+      }
+
+      .idLabel {
+        font-size: 10px !important;
+        letter-spacing: 0.5px !important;
+      }
+
+      .idValue {
+        font-size: 13px !important;
+      }
+
+      /* Starting Brand */
+      section:nth-of-type(3) {
+        padding: 60px 16px !important;
+      }
+
+      .estBg {
+        font-size: 12vw !important;
+        opacity: 0.3 !important;
+      }
+
+      .sectionTitle {
+        font-size: 36px !important;
+        margin-bottom: 32px !important;
+      }
+
+      .startText {
+        font-size: 16px !important;
+      }
+
+      .statBoxes {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+
+      .statBox {
+        padding: 20px !important;
+      }
+
+      .statNumber {
+        font-size: 42px !important;
+        margin-bottom: 12px !important;
+      }
+
+      .statLabel {
+        font-size: 11px !important;
+      }
+
+      /* Market Text */
+      .marketText {
+        font-size: 16px !important;
+        max-width: 100% !important;
+      }
+
+      .quote {
+        font-size: 14px !important;
+        padding: 16px !important;
+        margin-top: 16px !important;
+      }
+
+      section:nth-of-type(4) > div:last-child {
+        min-height: 280px !important;
+      }
+
+      /* Highlights */
+      section:nth-of-type(5) {
+        padding: 60px 16px !important;
+      }
+
+      .highlightsTitle {
+        font-size: 36px !important;
+        margin-bottom: 40px !important;
+      }
+
+      .cardsGrid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+      }
+
+      .card {
+        padding: 24px !important;
+      }
+
+      .cardIcon {
+        font-size: 32px !important;
+        margin-bottom: 16px !important;
+      }
+
+      .cardTitle {
+        font-size: 18px !important;
+        margin-bottom: 8px !important;
+      }
+
+      .cardText {
+        font-size: 14px !important;
+      }
+
+      /* Vision */
+      section:nth-of-type(6) {
+        padding: 60px 16px !important;
+      }
+
+      .visionTitle {
+        font-size: 36px !important;
+        margin-bottom: 32px !important;
+      }
+
+      blockquote {
+        font-size: 24px !important;
+        margin-bottom: 32px !important;
+        padding-top: 32px !important;
+        padding-bottom: 32px !important;
+      }
+
+      .visionText {
+        font-size: 16px !important;
+        max-width: 100% !important;
+      }
+
+      /* CTA */
+      section:nth-of-type(7) {
+        padding: 50px 16px !important;
+      }
+
+      .ctaTitle {
+        font-size: 36px !important;
+        margin-bottom: 40px !important;
+      }
+
+      .ctaButtons {
+        flex-direction: column !important;
+        gap: 16px !important;
+      }
+
+      .btn {
+        padding: 12px 24px !important;
+        font-size: 12px !important;
+        width: calc(100% - 32px) !important;
+        max-width: 280px !important;
+      }
+    }
+
+    /* SMALL MOBILE (max 480px) */
+    @media (max-width: 480px) {
+      /* Hero Section */
+      section:first-of-type {
+        height: 45vh !important;
+        padding: 24px 12px !important;
+        padding-bottom: 40px !important;
+        align-items: flex-end !important;
+      }
+
+      h1 {
+        font-size: 28px !important;
+        letter-spacing: 1px !important;
+        margin-bottom: 12px !important;
+        line-height: 1.2 !important;
+      }
+
+      p {
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+      }
+
+      /* Archive Label */
+      .archiveLabel {
+        font-size: 8px !important;
+        padding: 4px 8px !important;
+        gap: 4px !important;
+        margin-bottom: 12px !important;
+      }
+
+      /* Hero Subtitle */
+      section:first-of-type p {
+        font-size: 13px !important;
+        padding-left: 12px !important;
+        max-width: 100% !important;
+      }
+
+      /* Bio Section */
+      section:nth-of-type(2) > div:first-child {
+        min-height: 320px !important;
+      }
+
+      section:nth-of-type(2) > div:last-child {
+        padding: 40px 16px !important;
+      }
+
+      .bioItem {
+        margin-bottom: 48px !important;
+        padding-left: 24px !important;
+      }
+
+      .bioNumber {
+        width: 18px !important;
+        height: 18px !important;
+        font-size: 7px !important;
+        left: -9px !important;
+      }
+
+      .bioTitle {
+        font-size: 20px !important;
+        margin-bottom: 12px !important;
+        letter-spacing: 1px !important;
+      }
+
+      .bioText {
+        font-size: 14px !important;
+        margin-bottom: 12px !important;
+      }
+
+      .bioTextSecondary {
+        font-size: 13px !important;
+      }
+
+      /* ID Card - Responsive for small mobile */
+      .idCard {
+        padding: 12px !important;
+        bottom: 12px !important;
+        left: 12px !important;
+        right: 12px !important;
+      }
+
+      .idGrid {
+        gap: 10px !important;
+        grid-template-columns: 1fr 1fr !important;
+      }
+
+      .idValue {
+        font-size: 12px !important;
+      }
+
+      .idLabel {
+        font-size: 8px !important;
+      }
+
+      /* Starting Brand */
+      section:nth-of-type(3) {
+        padding: 50px 12px !important;
+      }
+
+      .estBg {
+        font-size: 10vw !important;
+        opacity: 0.2 !important;
+      }
+
+      .sectionTitle {
+        font-size: 28px !important;
+        margin-bottom: 28px !important;
+        letter-spacing: 1px !important;
+      }
+
+      .startText {
+        font-size: 14px !important;
+        margin-bottom: 20px !important;
+      }
+
+      .statBoxes {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+      }
+
+      .statBox {
+        padding: 16px !important;
+      }
+
+      .statNumber {
+        font-size: 36px !important;
+        margin-bottom: 12px !important;
+      }
+
+      .statLabel {
+        font-size: 10px !important;
+      }
+
+      /* Market Section */
+      section:nth-of-type(4) > div:first-child {
+        padding: 40px 12px !important;
+      }
+
+      .phaseLabel {
+        font-size: 11px !important;
+        padding: 3px 12px !important;
+        margin-bottom: 20px !important;
+      }
+
+      .marketTitle {
+        font-size: 24px !important;
+        margin-bottom: 20px !important;
+      }
+
+      .marketText {
+        font-size: 14px !important;
+        max-width: 100% !important;
+        margin-bottom: 20px !important;
+      }
+
+      .quote {
+        font-size: 13px !important;
+        padding: 12px !important;
+        margin-top: 12px !important;
+      }
+
+      section:nth-of-type(4) > div:last-child {
+        min-height: 250px !important;
+      }
+
+      /* Highlights */
+      section:nth-of-type(5) {
+        padding: 50px 12px !important;
+      }
+
+      .highlightsTitle {
+        font-size: 28px !important;
+        margin-bottom: 28px !important;
+      }
+
+      .cardsGrid {
+        gap: 16px !important;
+      }
+
+      .card {
+        padding: 16px !important;
+      }
+
+      .cardIcon {
+        font-size: 28px !important;
+        margin-bottom: 12px !important;
+      }
+
+      .cardTitle {
+        font-size: 16px !important;
+        margin-bottom: 8px !important;
+      }
+
+      .cardText {
+        font-size: 13px !important;
+      }
+
+      .cardAfter {
+        width: 36px !important;
+        height: 36px !important;
+      }
+
+      /* Vision */
+      section:nth-of-type(6) {
+        padding: 50px 12px !important;
+      }
+
+      .visionTitle {
+        font-size: 28px !important;
+        margin-bottom: 28px !important;
+      }
+
+      blockquote {
+        font-size: 18px !important;
+        margin-bottom: 24px !important;
+        padding-top: 24px !important;
+        padding-bottom: 24px !important;
+        line-height: 1.3 !important;
+      }
+
+      .visionText {
+        font-size: 14px !important;
+        max-width: 100% !important;
+      }
+
+      /* CTA */
+      section:nth-of-type(7) {
+        padding: 40px 12px !important;
+      }
+
+      .ctaTitle {
+        font-size: 28px !important;
+        margin-bottom: 32px !important;
+        letter-spacing: 1px !important;
+      }
+
+      .btn {
+        padding: 10px 20px !important;
+        font-size: 11px !important;
+        width: calc(100% - 24px) !important;
+        max-width: 270px !important;
+      }
+
+      .ctaButtons {
+        gap: 12px !important;
+      }
+    }
+
+    /* EXTRA SMALL (max 360px) */
+    @media (max-width: 360px) {
+      h1 {
+        font-size: 24px !important;
+        margin-bottom: 10px !important;
+      }
+
+      .sectionTitle {
+        font-size: 24px !important;
+      }
+
+      .bioTitle {
+        font-size: 18px !important;
+      }
+
+      blockquote {
+        font-size: 16px !important;
+      }
+
+      .ctaTitle {
+        font-size: 24px !important;
+      }
+
+      section:first-of-type {
+        height: 40vh !important;
+      }
+
+      .btn {
+        width: calc(100% - 20px) !important;
+      }
+    }
+
+    /* TABLET LANDSCAPE (1024px and below, landscape orientation) */
+    @media (max-width: 1024px) and (orientation: landscape) {
+      section:first-of-type {
+        height: auto !important;
+        min-height: 80vh !important;
+      }
+
+      h1 {
+        font-size: 42px !important;
+      }
+
+      .startGrid {
+        gap: 24px !important;
+      }
+    }
+
+    /* MOBILE LANDSCAPE (480px and below, landscape) */
+    @media (max-width: 480px) and (orientation: landscape) {
+      section:first-of-type {
+        height: auto !important;
+        min-height: 100vh !important;
+        padding: 20px 12px !important;
+      }
+
+      h1 {
+        font-size: 26px !important;
+      }
+
+      .bioTitle {
+        font-size: 18px !important;
+      }
+
+      section:nth-of-type(2) > div:first-child {
+        min-height: 300px !important;
+      }
+
+      .cardsGrid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
     }
   `;
 
@@ -656,42 +1379,130 @@ const FounderPage = () => {
                 transform: imgHovered ? 'scale(1.05)' : 'scale(1)',
               }}
             />
-            <div style={{
-  ...styles.idCard,
-  padding: '1.5rem'
-}}>
-  <div style={{
-    ...styles.idGrid,
-    gap: '1rem'
-  }}>
-    <div>
-      <span style={{
-        ...styles.idLabel,
-        fontSize: '0.9rem'
-      }}>
-        Identification: 
+            <div
+  style={{
+    ...styles.idCard,
+
+    padding:
+      window.innerWidth <= 480
+        ? '12px'
+        : window.innerWidth <= 768
+        ? '16px'
+        : '24px',
+
+    left:
+      window.innerWidth <= 480
+        ? '12px'
+        : '40px',
+
+    right:
+      window.innerWidth <= 480
+        ? '12px'
+        : '40px',
+
+    bottom:
+      window.innerWidth <= 480
+        ? '12px'
+        : '40px',
+  }}
+>
+  <div
+    style={{
+      display: 'grid',
+
+      gridTemplateColumns:
+        window.innerWidth <= 768
+          ? '1fr'
+          : '1fr 1fr',
+
+      gap:
+        window.innerWidth <= 480
+          ? '10px'
+          : '20px',
+
+      width: '100%',
+    }}
+  >
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '4px',
+        minWidth: 0,
+      }}
+    >
+      <span
+        style={{
+          ...styles.idLabel,
+
+          fontSize:
+            window.innerWidth <= 480
+              ? '10px'
+              : '12px',
+
+          lineHeight: 1.4,
+
+          wordBreak: 'break-word',
+        }}
+      >
+        IDENTIFICATION
       </span>
 
-      <span style={{
-        ...styles.idValue,
-        fontSize: '1rem'
-      }}>
+      <span
+        style={{
+          ...styles.idValue,
+
+          fontSize:
+            window.innerWidth <= 480
+              ? '14px'
+              : '18px',
+
+          lineHeight: 1.3,
+
+          wordBreak: 'break-word',
+        }}
+      >
         ROZIL THAPA
       </span>
     </div>
 
-    <div>
-      <span style={{
-        ...styles.idLabel,
-        fontSize: '0.9rem'
-      }}>
-        Clearance: 
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '4px',
+        minWidth: 0,
+      }}
+    >
+      <span
+        style={{
+          ...styles.idLabel,
+
+          fontSize:
+            window.innerWidth <= 480
+              ? '10px'
+              : '12px',
+
+          lineHeight: 1.4,
+        }}
+      >
+        CLEARANCE
       </span>
 
-      <span style={{
-        ...styles.idValue,
-        fontSize: '1rem'
-      }}>
+      <span
+        style={{
+          ...styles.idValue,
+
+          fontSize:
+            window.innerWidth <= 480
+              ? '14px'
+              : '18px',
+
+          lineHeight: 1.3,
+
+          wordBreak: 'break-word',
+        }}
+      >
         FOUNDER / CEO
       </span>
     </div>

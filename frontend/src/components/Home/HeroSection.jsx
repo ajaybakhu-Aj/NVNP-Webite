@@ -283,7 +283,7 @@ function HeroSection() {
                                 width: isSmallMobile ? "100%" : "auto",
                             }}
                         >
-                            OUR STORY
+                            Features
                         </button>
                     </div>
                 </div>
