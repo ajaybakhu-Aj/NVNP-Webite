@@ -1486,7 +1486,7 @@ const FounderPage = () => {
           lineHeight: 1.4,
         }}
       >
-        CLEARANCE
+        ROLE
       </span>
 
       <span

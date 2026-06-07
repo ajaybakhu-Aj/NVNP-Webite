@@ -1,32 +1,45 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Icon from "../../utils/Icon";
-import { colors } from "../../data/constants";
+import logo from "../../assets/logo.png";
 
 export default function Header() {
   const [accountOpen, setAccountOpen] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [mobileBlogOpen, setMobileBlogOpen] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     document.body.classList.remove("light-mode");
     localStorage.removeItem("theme");
-  }, []);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setScreenWidth(window.innerWidth);
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (e) {
+        console.error("Error parsing user session:", e);
+      }
+    }
+
+    const handleClickOutside = (event) => {
+      const accountWrapper = document.querySelector(".account-wrapper");
+      if (accountWrapper && !accountWrapper.contains(event.target)) {
+        setAccountOpen(false);
+      }
     };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
   }, []);
 
-  const isDesktop = screenWidth >= 1200;
-  const isTablet = screenWidth < 1200;
-  const isMobile = screenWidth < 768;
-  const isSmallMobile = screenWidth < 480;
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+    setAccountOpen(false);
+    window.location.href = "/";
+  };
 
   const navItems = [
     {
@@ -46,301 +59,290 @@ export default function Header() {
       route: "/dealership",
     },
     {
-      label: "BLOG & EVENTS",
-      route: "/blog",
-    },
-    {
-      label: "DOWNLOADS",
-      route: "/support/downloads",
+      label: "BLOG",
+      dropdown: [
+        { label: "Blogs", route: "/blog" },
+        { label: "News and Events", route: "/events" },
+        { label: "Gallery", route: "/gallery" },
+      ],
     },
   ];
 
   return (
-    <header
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 999,
-        width: "100%",
-        background: "rgba(19,19,19,0.98)",
-        backdropFilter: "blur(12px)",
-        borderBottom: "1px solid #2a2a2a",
-      }}
-    >
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "1280px",
-          margin: "0 auto",
-          padding: isSmallMobile
-            ? "10px 12px"
-            : isMobile
-            ? "12px 16px"
-            : "16px 24px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          boxSizing: "border-box",
-        }}
-      >
+    <header className="app-header">
+      <div className="header-container">
         {/* LEFT */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: isDesktop ? "40px" : "0px",
-            flex: 1,
-            minWidth: 0,
-          }}
-        >
+        <div className="header-left">
           {/* LOGO */}
-          <Link
-            to="/"
-            style={{
-              textDecoration: "none",
-              flexShrink: 0,
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "4px",
-                fontFamily: "'Arial Black', sans-serif",
-                fontStyle: "italic",
-                whiteSpace: "nowrap",
-                maxWidth: "100%",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: isSmallMobile
-                    ? "14px"
-                    : isMobile
-                    ? "16px"
-                    : isTablet
-                    ? "22px"
-                    : "30px",
-                }}
-              >
-                <span style={{ color: "#B5E75D" }}>N</span>
-                <span style={{ color: "#FFFFFF" }}>V</span>
-                <span style={{ color: "#B5E75D" }}>//</span>
-              </span>
-
-              <span
-                style={{
-                  color: "#FFFFFF",
-                  fontSize: isSmallMobile
-                    ? "14px"
-                    : isMobile
-                    ? "16px"
-                    : isTablet
-                    ? "18px"
-                    : "26px",
-                }}
-              >
-                NIGHTVISION™
-              </span>
-            </div>
+          <Link to="/" className="logo-link">
+            <img src={logo} alt="NightVision Logo" className="logo-image" />
           </Link>
 
           {/* DESKTOP NAV */}
-          {isDesktop && (
-            <nav
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "24px",
-              }}
-            >
-              {navItems.map((item) => (
+          <nav className="desktop-nav">
+            {navItems.map((item) => {
+              if (item.dropdown) {
+                return (
+                  <div key={item.label} className="nav-dropdown-wrapper">
+                    <span className="nav-link dropdown-trigger">
+                      {item.label} <span className="dropdown-arrow">▼</span>
+                    </span>
+                    <div className="nav-dropdown">
+                      <div className="nav-dropdown-menu">
+                        {item.dropdown.map((sub) => (
+                          <Link
+                            key={sub.label}
+                            to={sub.route}
+                            className="nav-dropdown-link"
+                          >
+                            {sub.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+              return (
                 <Link
                   key={item.label}
                   to={item.route}
-                  style={{
-                    color: "#ffffff",
-                    textDecoration: "none",
-                    fontFamily: "'Arial Black', sans-serif",
-                    fontSize: "11px",
-                    letterSpacing: "1px",
-                    fontWeight: 600,
-                  }}
+                  className="nav-link"
                 >
                   {item.label}
                 </Link>
-              ))}
-            </nav>
-          )}
+              );
+            })}
+          </nav>
         </div>
 
         {/* RIGHT */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: isSmallMobile ? "10px" : "14px",
-          }}
-        >
-          {isDesktop && (
-            <span
-              style={{
-                color: colors.secondary,
-                fontSize: "11px",
-                fontFamily: "'Arial Black', sans-serif",
-                letterSpacing: "1px",
-              }}
-            >
-              SUPPORT HOTLINE: +977-9745978217
-            </span>
-          )}
+        <div className="header-right">
+          <span className="support-hotline">
+            SUPPORT HOTLINE: +977-9745978217
+          </span>
 
           {/* CART */}
-          <Link
-            to="/cart"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
+          <Link to="/cart" className="cart-link">
             <Icon
               name="shopping_cart"
-              size={isSmallMobile ? 20 : 24}
-              style={{
-                color: colors.onSurfaceVariant,
-              }}
+              size={24}
+              className="cart-icon"
             />
           </Link>
 
           {/* ACCOUNT */}
-          {!isSmallMobile && (
-            <div style={{ position: "relative" }}>
-              <div
-                onClick={() => setAccountOpen(!accountOpen)}
-                style={{
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <Icon
-                  name="account_circle"
-                  size={24}
-                  style={{
-                    color: colors.onSurfaceVariant,
-                  }}
-                />
-              </div>
-
-              {accountOpen && (
-                <div
-                  style={{
-                    position: "absolute",
-                    right: 0,
-                    top: "42px",
-                    width: "220px",
-                    background: "#1c1c1c",
-                    border: "1px solid #434938",
-                    borderRadius: "10px",
-                    overflow: "hidden",
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.4)",
-                  }}
-                >
-                  {[
-                    "My Profile",
-                    "Dashboard",
-                    "Orders",
-                    "Settings",
-                    "Logout",
-                  ].map((item) => (
-                    <Link
-                      key={item}
-                      to={`/${item.toLowerCase().replace(" ", "-")}`}
-                      style={{
-                        display: "block",
-                        padding: "14px 16px",
-                        color: "#c3c9b3",
-                        textDecoration: "none",
-                        borderBottom: "1px solid #333",
-                        fontSize: "14px",
-                      }}
-                    >
-                      {item}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* MENU */}
-          {isTablet && (
+          <div className="account-wrapper">
             <div
-              onClick={() => setMobileMenu(!mobileMenu)}
-              style={{
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-              }}
+              onClick={() => setAccountOpen(!accountOpen)}
+              className="account-trigger"
             >
               <Icon
-                name={mobileMenu ? "close" : "menu"}
-                size={28}
-                style={{
-                  color: "#ffffff",
-                }}
+                name="account_circle"
+                size={24}
+                className="account-icon"
               />
             </div>
-          )}
+
+            {accountOpen && (
+              <div className="account-dropdown">
+                {user && (
+                  <div className="dropdown-user-info" style={{ padding: "10px 14px", borderBottom: "1px solid rgba(255, 255, 255, 0.08)", fontSize: "11px", color: "#94da32", fontWeight: "600", textTransform: "uppercase" }}>
+                    USER: {user.name}
+                  </div>
+                )}
+                
+                {!user && (
+                  <>
+                    <Link
+                      to="/login"
+                      className="dropdown-link"
+                      style={{ color: "#94da32", fontWeight: "600" }}
+                      onClick={() => setAccountOpen(false)}
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      to="/signup"
+                      className="dropdown-link"
+                      style={{ color: "#94da32", fontWeight: "600", borderBottom: "1px solid rgba(255, 255, 255, 0.08)" }}
+                      onClick={() => setAccountOpen(false)}
+                    >
+                      Sign Up
+                    </Link>
+                  </>
+                )}
+
+                {[
+                  "My Profile",
+                  "Dashboard",
+                  "Orders",
+                  "Settings"
+                ].map((item) => (
+                  <Link
+                    key={item}
+                    to={`/${item.toLowerCase().replace(" ", "-")}`}
+                    className="dropdown-link"
+                    onClick={() => setAccountOpen(false)}
+                  >
+                    {item}
+                  </Link>
+                ))}
+
+                <button
+                  onClick={handleLogout}
+                  className="dropdown-link"
+                  style={{ background: "none", border: "none", width: "100%", textAlign: "left", color: "#ff5b5b", cursor: "pointer" }}
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* MENU */}
+          <div
+            onClick={() => setMobileMenu(!mobileMenu)}
+            className="menu-trigger"
+          >
+            <Icon
+              name={mobileMenu ? "close" : "menu"}
+              size={28}
+              className="menu-icon"
+            />
+          </div>
         </div>
       </div>
 
       {/* MOBILE MENU */}
-      {isTablet && mobileMenu && (
-        <div
-          style={{
-            width: "100%",
-            background: "#131313",
-            borderTop: "1px solid #2b2b2b",
-            padding: "20px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "18px",
-          }}
-        >
-          {navItems.map((item) => (
-            <Link
-              key={item.label}
-              to={item.route}
-              onClick={() => setMobileMenu(false)}
-              style={{
-                color: "#ffffff",
-                textDecoration: "none",
-                fontFamily: "'Arial Black', sans-serif",
-                fontSize: "14px",
-                letterSpacing: "1px",
-                paddingBottom: "14px",
-                borderBottom: "1px solid #2d2d2d",
-              }}
-            >
-              {item.label}
-            </Link>
-          ))}
+      {mobileMenu && (
+        <div className="mobile-menu">
+          {/* USER INFO / AUTH ACTIONS FOR MOBILE */}
+          <div className="mobile-auth-section" style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.08)", paddingBottom: "16px", marginBottom: "8px" }}>
+            {user ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                <div className="mobile-user-info" style={{ color: "#94da32", fontSize: "11px", fontWeight: "600", letterSpacing: "1.5px", textTransform: "uppercase", padding: "0 8px 4px", borderBottom: "1px solid rgba(255, 255, 255, 0.05)" }}>
+                  USER: {user.name}
+                </div>
+                {[
+                  "My Profile",
+                  "Dashboard",
+                  "Orders",
+                  "Settings"
+                ].map((item) => (
+                  <Link
+                    key={item}
+                    to={`/${item.toLowerCase().replace(" ", "-")}`}
+                    onClick={() => setMobileMenu(false)}
+                    className="mobile-menu-link"
+                    style={{ borderBottom: "none", padding: "6px 8px", fontSize: "14px" }}
+                  >
+                    {item}
+                  </Link>
+                ))}
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setMobileMenu(false);
+                  }}
+                  className="mobile-menu-link"
+                  style={{ background: "none", border: "none", width: "100%", textAlign: "left", color: "#ff5b5b", cursor: "pointer", padding: "6px 8px", fontSize: "14px", borderBottom: "none" }}
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div style={{ display: "flex", gap: "12px", padding: "0 8px" }}>
+                <Link
+                  to="/login"
+                  onClick={() => setMobileMenu(false)}
+                  style={{
+                    flex: 1,
+                    textAlign: "center",
+                    background: "#94da32",
+                    color: "#131313",
+                    padding: "10px",
+                    borderRadius: "4px",
+                    fontWeight: "600",
+                    fontSize: "12px",
+                    textDecoration: "none",
+                    fontFamily: "Space Grotesk",
+                    letterSpacing: "1px"
+                  }}
+                >
+                  LOGIN
+                </Link>
+                <Link
+                  to="/signup"
+                  onClick={() => setMobileMenu(false)}
+                  style={{
+                    flex: 1,
+                    textAlign: "center",
+                    background: "transparent",
+                    border: "1px solid #94da32",
+                    color: "#94da32",
+                    padding: "10px",
+                    borderRadius: "4px",
+                    fontWeight: "600",
+                    fontSize: "12px",
+                    textDecoration: "none",
+                    fontFamily: "Space Grotesk",
+                    letterSpacing: "1px"
+                  }}
+                >
+                  SIGN UP
+                </Link>
+              </div>
+            )}
+          </div>
 
-          <div
-            style={{
-              color: colors.secondary,
-              fontSize: "12px",
-              lineHeight: "1.8",
-              marginTop: "10px",
-            }}
-          >
-            SUPPORT HOTLINE
-            <br />
-            +977-9745978217
+          {navItems.map((item) => {
+            if (item.dropdown) {
+              return (
+                <div key={item.label} className="mobile-dropdown-wrapper">
+                  <div
+                    onClick={() => setMobileBlogOpen(!mobileBlogOpen)}
+                    className="mobile-menu-link mobile-dropdown-trigger"
+                    style={{ display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" }}
+                  >
+                    {item.label}
+                    <span style={{ fontSize: "10px", transition: "transform 0.2s", transform: mobileBlogOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
+                  </div>
+                  {mobileBlogOpen && (
+                    <div className="mobile-dropdown-subitems" style={{ paddingLeft: "16px", display: "flex", flexDirection: "column", gap: "8px", marginTop: "8px" }}>
+                      {item.dropdown.map((sub) => (
+                        <Link
+                          key={sub.label}
+                          to={sub.route}
+                          onClick={() => {
+                            setMobileMenu(false);
+                            setMobileBlogOpen(false);
+                          }}
+                          className="mobile-menu-link"
+                          style={{ borderBottom: "none", paddingBottom: "8px", paddingTop: "8px", fontSize: "13px", color: "#c3c9b3" }}
+                        >
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+            return (
+              <Link
+                key={item.label}
+                to={item.route}
+                onClick={() => setMobileMenu(false)}
+                className="mobile-menu-link"
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+
+          <div className="mobile-hotline">
+            SUPPORT HOTLINE: +977-9745978217
           </div>
         </div>
       )}

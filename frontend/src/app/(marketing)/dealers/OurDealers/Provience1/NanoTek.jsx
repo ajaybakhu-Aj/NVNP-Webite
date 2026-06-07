@@ -37,7 +37,7 @@ const DEALER = {
     ],
     about: [
         "Nano Tek Pvt. Ltd. has been the cornerstone of security infrastructure in Morang for over a decade. As an authorized NV// NIGHTVISION™ partner, they specialize in the deployment of high-tier surveillance systems for both commercial and residential sectors.",
-        "Their team of certified engineers provides end-to-end solutions, from site tactical assessment to precision hardware installation and 24/7 maintenance support. Nano Tek is recognized for maintaining the highest technical standards in the region, ensuring that every deployment meets the rigorous NV// certification benchmarks.",
+        "Their team of certified engineers provides end-to-end solutions, from site security assessment to precision hardware installation and 24/7 maintenance support. Nano Tek is recognized for maintaining the highest technical standards in the region, ensuring that every deployment meets the rigorous NV// certification benchmarks.",
     ],
     stats: [
         { value: "12+", label: "Years Active" },
@@ -311,35 +311,7 @@ const MapSection = ({ img }) => {
                     />
                 ))}
             </div>
-            {/* HUD coordinates */}
-            <div
-                style={{
-                    position: "absolute",
-                    top: 12,
-                    left: 12,
-                    fontFamily: "'Space Grotesk', monospace",
-                    fontSize: 9,
-                    letterSpacing: 2,
-                    color: C.primary,
-                    opacity: 0.8,
-                }}
-            >
-                [LAT:{DEALER.lat}]
-            </div>
-            <div
-                style={{
-                    position: "absolute",
-                    top: 12,
-                    right: 60,
-                    fontFamily: "'Space Grotesk', monospace",
-                    fontSize: 9,
-                    letterSpacing: 2,
-                    color: C.primary,
-                    opacity: 0.8,
-                }}
-            >
-                [LON:{DEALER.lng}]
-            </div>
+
             {/* Zoom controls */}
             <div style={{ position: "absolute", top: 12, right: 12, display: "flex", flexDirection: "column", gap: 4 }}>
                 {[

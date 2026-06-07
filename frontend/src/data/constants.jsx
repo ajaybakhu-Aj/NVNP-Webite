@@ -17,7 +17,7 @@ export const features = [
   { icon: "wifi", title: "Wi-Fi Plug & Play", desc: "Zero-config setup for instant deployment and cloud-ready streaming." },
   { icon: "nights_stay", title: "True Night Vision", desc: "Advanced IR matrix for crystal clear visibility in total zero-lux darkness." },
   { icon: "edgesensor_high", title: "Mobile App Control", desc: "Secure remote monitoring and push alerts directly to your smartphone." },
-  { icon: "encrypted", title: "Secured & Private", desc: "Military-grade AES encryption ensures your feeds remain for your eyes only." },
+  { icon: "encrypted", title: "Secured & Private", desc: "Enterprise-grade AES encryption ensures your feeds remain for your eyes only." },
 ];
 
 export const products = [
@@ -40,4 +40,40 @@ export const testimonials = [
   { text: '"NightVision transformed our facility\'s security protocol. The Ratri Dome clarity is unparalleled even in pitch black."', author: "— S. RAJBHANSARI, INDUSTRIALIST" },
   { text: '"The mobile app integration is flawless. I can monitor my store from anywhere in the world with zero lag."', author: "— A. SHRESTHA, RETAIL GROUP" },
   { text: '"Exceptional support and robust hardware. These cameras handle the monsoon season without a single glitch."', author: "— K. TAMANG, ESTATE MANAGER" },
+];
+
+export const DOWNLOAD_PLATFORMS = [
+  {
+    id: "windows",
+    badge: "STABLE RELEASE",
+    title: "WINDOWS",
+    desc: "Full enterprise suite with multi-monitor support and local DVR backup management.",
+    btnLabel: "Get for Windows",
+    meta: "v24.11.0 (.EXE / 420MB)",
+  },
+  {
+    id: "android",
+    badge: "MOBILE APP",
+    title: "ANDROID",
+    desc: "Real-time push notifications and biometric security lock for remote field monitoring.",
+    btnLabel: "Google Play",
+    meta: "Supports Android 10+",
+  },
+  {
+    id: "ios",
+    badge: "MOBILE OS",
+    title: "APPLE iOS",
+    desc: "Native Metal API integration for high-frame-rate surveillance playback on Retina displays.",
+    btnLabel: "App Store",
+    meta: "Optimized for iPhone 15 Pro",
+  },
+];
+
+export const DOWNLOAD_FEATURES = [
+  { icon: "security", label: "E2E Encryption" },
+  { icon: "speed", label: "Low Latency" },
+  { icon: "cloud_sync", label: "Cloud Backup" },
+  { icon: "notifications_active", label: "AI Alerts" },
+  { icon: "group", label: "Multi-User" },
+  { icon: "update", label: "Auto-Updates" },
 ];

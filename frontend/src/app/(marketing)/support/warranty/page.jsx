@@ -253,7 +253,7 @@ export default function App() {
                             opacity: heroLoaded ? 1 : 0, 
                             transition: "opacity 0.7s ease 0.5s",
                         }}>
-                            Every NV/// unit is forged for endurance. Our 1-Year 'Ironclad' Warranty ensures your perimeter remains secure without failure. In the rare event of a technical breach, we deploy immediate hardware restoration.
+                            Every NV/// unit is forged for endurance. Our 1-Year 'Ironclad' Warranty ensures your perimeter remains secure without failure. In the rare event of a technical issue, we deploy immediate hardware restoration.
                         </p>
 
                         <div style={{
@@ -267,7 +267,7 @@ export default function App() {
                             <button className="btn-primary" style={{ color: "#131313", width: isMobile ? "100%" : "auto" }}>DOWNLOAD POLICY PDF</button>
                             <Link to="/support" style={{ width: isMobile ? "100%" : "auto" }}>
                                 <button className="btn-outline" style={{ width: "100%" }}>
-                                    CONTACT TECHNICAL OPS
+                                    CONTACT SUPPORT
                                 </button>
                             </Link>
                         </div>
@@ -566,7 +566,7 @@ export default function App() {
                                         textTransform: "uppercase", 
                                         marginBottom: 6 
                                     }}>
-                                        Mission Profile
+                                        Process Details
                                     </div>
                                     <h2 style={{ 
                                         fontFamily: "'Space Grotesk'", 
@@ -575,7 +575,7 @@ export default function App() {
                                         textTransform: "uppercase", 
                                         letterSpacing: isMobile ? "1px" : "2px" 
                                     }}>
-                                        CLAIM DEPLOYMENT PROCESS
+                                        WARRANTY CLAIM PROCESS
                                     </h2>
                                 </div>
                                 <div style={{ 
@@ -613,7 +613,7 @@ export default function App() {
                                     num: "03",
                                     icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={colors.secondary} strokeWidth="1.5"><rect x="1" y="3" width="15" height="13" /><polygon points="16 8 20 8 23 11 23 16 16 16 16 8" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" /></svg>,
                                     title: "DEPLOY SUPPORT",
-                                    desc: "Our tactical response team validates the claim and ships a replacement unit or dispatches technical support.",
+                                    desc: "Our technical response team validates the claim and ships a replacement unit or dispatches technical support.",
                                 },
                             ].map((step, i) => (
                                 <FadeIn key={i} delay={i * 0.15} style={{ 

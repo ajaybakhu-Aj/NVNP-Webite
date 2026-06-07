@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ProductCard from "../products/ProductCard";
-import { colors, products } from "../../data/constants";
+import { colors } from "../../data/constants";
+import { getAllProducts } from "../../utils/productDb";
 
 export default function ProductsSection() {
+  const [productsList, setProductsList] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getAllProducts().then((data) => {
+      // Show first 6 products in the featured section
+      setProductsList(data.slice(0, 6));
+      setLoading(false);
+    });
+  }, []);
+
   return (
     <section
       style={{
@@ -67,7 +79,7 @@ export default function ProductsSection() {
           </div>
 
           <Link
-            to="/product"
+            to="/products"
             style={{
               color: colors.secondary,
               fontFamily: "'Inter', sans-serif",
@@ -85,19 +97,25 @@ export default function ProductsSection() {
         </div>
 
         {/* PRODUCTS GRID */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: 24,
-            width: "100%",
-          }}
-        >
-          {products.map((p) => (
-            <ProductCard key={p.name} {...p} />
-          ))}
-        </div>
+        {loading ? (
+          <div style={{ display: "flex", justifyContent: "center", padding: "40px 0", color: colors.secondary }}>
+            LOADING SECURE CHANNELS...
+          </div>
+        ) : (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(260px, 1fr))",
+              gap: 24,
+              width: "100%",
+            }}
+          >
+            {productsList.map((p) => (
+              <ProductCard key={p.id} {...p} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

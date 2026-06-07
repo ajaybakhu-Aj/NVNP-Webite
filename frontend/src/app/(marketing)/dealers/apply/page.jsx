@@ -215,52 +215,8 @@ export default function DealerPage() {
       <style>{scanlineStyle}</style>
       <div className="scanline" />
 
-      {/* NAV */}
-      <nav style={{
-        position: "fixed", top: 0, width: "100%", zIndex: 50,
-        background: "rgba(17,20,12,0.85)", backdropFilter: "blur(12px)",
-        borderBottom: "1px solid rgba(222,255,164,0.15)",
-      }}>
-        <div style={{
-          display: "flex", justifyContent: "space-between", alignItems: "center",
-          padding: "0 clamp(16px, 4vw, 64px)", height: "80px",
-          maxWidth: "1440px", margin: "0 auto",
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <span style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontWeight: 700, fontSize: "20px", color: "#deffa4",
-              letterSpacing: "2px",
-            }}>NV/// NIGHTVISION™</span>
-          </div>
-          <div className="nav-links-desktop" style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
-            <a href="#" className="nav-link">Shop Now</a>
-            <a href="#" className="nav-link">About</a>
-            <a href="#" className="nav-link">Contact</a>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            {["search", "shopping_cart"].map(icon => (
-              <button key={icon} style={{
-                padding: "8px", background: "transparent", border: "none",
-                color: "var(--primary)", cursor: "crosshair",
-                display: "flex", alignItems: "center", justifyContent: "center",
-              }}>
-                <span className="material-symbols-outlined">{icon}</span>
-              </button>
-            ))}
-            <button className="nav-icon-profile" style={{
-              padding: "8px", background: "transparent", border: "none",
-              color: "var(--primary)", cursor: "crosshair",
-              display: "flex", alignItems: "center",
-            }}>
-              <span className="material-symbols-outlined">person</span>
-            </button>
-          </div>
-        </div>
-      </nav>
-
       <main style={{
-        paddingTop: "clamp(100px, 14vw, 128px)",
+        paddingTop: "clamp(120px, 14vw, 140px)",
         paddingBottom: "6rem",
         paddingLeft: "clamp(16px, 4vw, 64px)",
         paddingRight: "clamp(16px, 4vw, 64px)",
@@ -308,7 +264,7 @@ export default function DealerPage() {
             {
               icon: "security",
               title: "Elite Hardware",
-              body: "Direct access to the full NV/// NIGHTVISION™ tactical hardware suite including exclusive enterprise-grade IP optics and NVR units.",
+              body: "Direct access to the full NV/// NIGHTVISION™ surveillance hardware suite including exclusive enterprise-grade IP optics and NVR units.",
               hint: "SPECIFICATIONS ATTACHED",
             },
             {
@@ -487,95 +443,7 @@ export default function DealerPage() {
         </section>
       </main>
 
-      {/* FOOTER */}
-      <footer style={{
-        background: "var(--surface-container-lowest)",
-        borderTop: "1px solid rgba(222,255,164,0.2)",
-      }}>
-        <div className="footer-grid" style={{
-          display: "flex", flexWrap: "wrap", gap: "24px",
-          padding: "4rem clamp(16px, 4vw, 64px)",
-          maxWidth: "1440px", margin: "0 auto",
-        }}>
-          <div style={{ flex: "1 1 200px", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-            <span style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontWeight: 700, fontSize: "18px", color: "var(--primary)",
-            }}>NV/// NIGHTVISION™</span>
-            <p style={{ color: "var(--on-surface-variant)", fontSize: "16px", lineHeight: "24px", maxWidth: "280px" }}>
-              Global leaders in tactical surveillance optics and enterprise-grade security infrastructure.
-            </p>
-            <div style={{ display: "flex", gap: "1rem" }}>
-              {["rss_feed", "public", "podcasts"].map(icon => (
-                <span key={icon} className="material-symbols-outlined" style={{
-                  color: "var(--primary)", cursor: "crosshair", fontSize: "22px",
-                }}>{icon}</span>
-              ))}
-            </div>
-          </div>
 
-          <div style={{ flex: "1 1 150px", display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <h4 style={{
-              fontFamily: "'Poppins', sans-serif", fontWeight: 600, fontSize: "20px",
-              color: "var(--on-surface)", textTransform: "uppercase", letterSpacing: "2px",
-            }}>Hardware</h4>
-            {["CCTV Cameras", "IP Cameras", "NVR/DVR Systems", "Accessories"].map(l => (
-              <a key={l} href="#" className="footer-link">{l}</a>
-            ))}
-          </div>
-
-          <div style={{ flex: "1 1 150px", display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <h4 style={{
-              fontFamily: "'Poppins', sans-serif", fontWeight: 600, fontSize: "20px",
-              color: "var(--on-surface)", textTransform: "uppercase", letterSpacing: "2px",
-            }}>Company</h4>
-            {["About Us", "Contact", "Legal"].map(l => (
-              <a key={l} href="#" className="footer-link">{l}</a>
-            ))}
-            <a href="/support/downloads" className="footer-link highlighted">App Downloads</a>
-          </div>
-
-          <div style={{ flex: "1 1 220px", display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <h4 style={{
-              fontFamily: "'Poppins', sans-serif", fontWeight: 600, fontSize: "20px",
-              color: "var(--on-surface)", textTransform: "uppercase", letterSpacing: "2px",
-            }}>Newsletter</h4>
-            <p style={{ color: "var(--on-surface-variant)", fontSize: "16px", lineHeight: "24px" }}>
-              Secure technical updates direct to your inbox.
-            </p>
-            <div style={{ display: "flex", border: "1px solid var(--outline-variant)" }}>
-              <input
-                type="email"
-                placeholder="ENCRYPTED EMAIL"
-                className="form-input"
-                style={{ border: "none", padding: "0.75rem", flex: 1, borderRadius: 0 }}
-              />
-              <button style={{
-                background: "var(--primary)", color: "var(--on-primary)",
-                border: "none", padding: "0 1rem", cursor: "crosshair",
-                display: "flex", alignItems: "center",
-              }}>
-                <span className="material-symbols-outlined">send</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div style={{
-          padding: "2rem clamp(16px, 4vw, 64px)",
-          borderTop: "1px solid rgba(67,73,56,0.2)",
-          maxWidth: "1440px", margin: "0 auto",
-          textAlign: "center",
-        }}>
-          <p style={{
-            fontFamily: "'Poppins', sans-serif",
-            fontSize: "12px", letterSpacing: "1px", fontWeight: 600,
-            color: "var(--on-surface-variant)", opacity: 0.6, textTransform: "uppercase",
-          }}>
-            © 2024 NV/// NIGHTVISION™ NEPAL. ALL RIGHTS RESERVED.
-          </p>
-        </div>
-      </footer>
     </>
   );
 }

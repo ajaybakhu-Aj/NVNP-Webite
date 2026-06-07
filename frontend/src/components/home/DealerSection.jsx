@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { colors } from "../../data/constants";
 
 export default function DealerSection() {
@@ -121,7 +122,8 @@ export default function DealerSection() {
           the training, and the authority.
         </p>
 
-        <button
+        <Link
+          to="/apply-dealers"
           style={{
             background: "black",
 
@@ -141,6 +143,10 @@ export default function DealerSection() {
 
             transition: "transform 0.2s",
 
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+
             width: "100%",
 
             maxWidth: "420px",
@@ -148,6 +154,7 @@ export default function DealerSection() {
             boxSizing: "border-box",
 
             lineHeight: 1.2,
+            textDecoration: "none",
           }}
           onMouseEnter={(e) =>
             (e.currentTarget.style.transform = "scale(1.05)")
@@ -157,7 +164,7 @@ export default function DealerSection() {
           }
         >
           BECOME A PARTNER
-        </button>
+        </Link>
       </div>
     </section>
   );

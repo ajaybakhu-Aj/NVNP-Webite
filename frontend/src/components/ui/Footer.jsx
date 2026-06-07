@@ -1,204 +1,103 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Icon from "../../utils/Icon";
-import { colors } from "../../data/constants";
+import logo from "../../assets/logo.png";
 
 export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer
-      style={{
-        width: "100%",
-        background: colors.surfaceContainerLowest,
-        borderTop: `1px solid ${colors.secondary}`,
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "1400px",
-          margin: "0 auto",
-          padding: "48px 24px",
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: "40px",
-          boxSizing: "border-box",
-        }}
-      >
+    <footer className="app-footer">
+      <div className="footer-container">
         {/* BRAND */}
-        <div
-          style={{
-            minWidth: 0,
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              flexWrap: "nowrap",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              fontFamily: "'Arial Black', sans-serif",
-              fontStyle: "italic",
-              fontWeight: 700,
-              fontSize: "clamp(18px, 2vw, 28px)",
-              marginBottom: "20px",
-            }}
-          >
-            <span style={{ color: colors.secondary }}>N</span>
-            <span style={{ color: "#fff" }}>V</span>
-            <span style={{ color: colors.secondary }}>//</span>
-            <span style={{ color: "#fff" }}>
-              NIGHTVISION™
-            </span>
-          </div>
+        <div className="footer-brand-col">
+          <Link to="/" className="footer-logo-link">
+            <img src={logo} alt="NightVision Logo" className="footer-logo-image" />
+          </Link>
 
-          <p
-            style={{
-              color: colors.onSurfaceVariant,
-              fontSize: "15px",
-              lineHeight: 1.8,
-              maxWidth: "420px",
-              marginBottom: "24px",
-            }}
-          >
+          <p className="footer-brand-desc">
             Dedicated to the highest standard of
             surveillance technology and national
             security for Nepal. Security is our duty.
           </p>
 
-          <div
-  style={{
-    display: "flex",
-    gap: "20px",
-    alignItems: "center",
-  }}
->
-  <a
-    href="https://www.instagram.com/nightvision_nepal/"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <Icon
-      name="instagram"
-      size={24}
-      style={{
-        color: colors.secondary,
-        cursor: "pointer",
-      }}
-    />
-  </a>
+          <div className="footer-socials">
+            <a
+              href="https://www.instagram.com/nightvision_nepal/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon
+                name="instagram"
+                size={24}
+                className="footer-social-icon"
+              />
+            </a>
 
-  <a
-    href="https://www.facebook.com/nightvisioninterprises"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <Icon
-      name="facebook"
-      size={24}
-      style={{
-        color: colors.secondary,
-        cursor: "pointer",
-      }}
-    />
-  </a>
+            <a
+              href="https://www.facebook.com/nightvisioninterprises"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon
+                name="facebook"
+                size={24}
+                className="footer-social-icon"
+              />
+            </a>
 
-  <a
-    href="https://www.tiktok.com/@nvnightvisionnp?lang=en"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <Icon
-      name="music_note"
-      size={24}
-      style={{
-        color: colors.secondary,
-        cursor: "pointer",
-      }}
-    />
-  </a>
+            <a
+              href="https://www.tiktok.com/@nvnightvisionnp?lang=en"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon
+                name="music_note"
+                size={24}
+                className="footer-social-icon"
+              />
+            </a>
 
-  <a
-    href="https://www.youtube.com/@nvnightvisionnp"
-    target="_blank"
-    rel="noopener noreferrer"
-    >
-    <Icon
-      name="youtube"
-      size={24}
-      style={{
-        color: colors.secondary,
-        cursor: "pointer",
-      }}
-    />
-  </a>
-</div>
+            <a
+              href="https://www.youtube.com/@nvnightvisionnp"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon
+                name="youtube"
+                size={24}
+                className="footer-social-icon"
+              />
+            </a>
+          </div>
         </div>
 
         {/* QUICK LINKS */}
         <div>
-          <h5
-            style={{
-              color: colors.secondary,
-              textTransform: "uppercase",
-              letterSpacing: "1.5px",
-              marginBottom: "20px",
-              fontSize: "12px",
-            }}
-          >
-            Quick Links
-          </h5>
-
-          <ul
-            style={{
-              listStyle: "none",
-              padding: 0,
-              margin: 0,
-              display: "flex",
-              flexDirection: "column",
-              gap: "14px",
-            }}
-          >
+          <h5 className="footer-section-title">Quick Links</h5>
+          <ul className="footer-links-list">
             <li>
-              <Link
-                to="/products"
-                style={linkStyle}
-              >
+              <Link to="/products" className="footer-link">
                 CCTV Cameras
               </Link>
             </li>
             <li>
-              <Link
-                to="/about"
-                style={linkStyle}
-              >
+              <Link to="/about" className="footer-link">
                 About Us
               </Link>
             </li>
             <li>
-              <Link
-                to="/contact"
-                style={linkStyle}
-              >
+              <Link to="/contact" className="footer-link">
                 Contact Us
               </Link>
             </li>
             <li>
-              <Link
-                to="/dealership"
-                style={linkStyle}
-              >
+              <Link to="/dealership" className="footer-link">
                 Dealerships
               </Link>
             </li>
             <li>
-              <Link
-                to="/blog"
-                style={linkStyle}
-              >
+              <Link to="/blog" className="footer-link">
                 Blog & Events
               </Link>
             </li>
@@ -207,60 +106,25 @@ export default function Footer() {
 
         {/* LEGAL & SUPPORT */}
         <div>
-          <h5
-            style={{
-              color: colors.secondary,
-              textTransform: "uppercase",
-              letterSpacing: "1.5px",
-              marginBottom: "20px",
-              fontSize: "12px",
-            }}
-          >
-            Legal & Support
-          </h5>
-
-          <ul
-            style={{
-              listStyle: "none",
-              padding: 0,
-              margin: 0,
-              display: "flex",
-              flexDirection: "column",
-              gap: "14px",
-            }}
-          >
+          <h5 className="footer-section-title">Legal & Support</h5>
+          <ul className="footer-links-list">
             <li>
-              <Link
-                to="/privacy"
-                style={linkStyle}
-              >
+              <Link to="/privacy" className="footer-link">
                 Privacy Policy
               </Link>
             </li>
-
             <li>
-              <Link
-                to="/terms"
-                style={linkStyle}
-              >
+              <Link to="/terms" className="footer-link">
                 Terms of Service
               </Link>
             </li>
-
             <li>
-              <Link
-                to="/support"
-                style={linkStyle}
-              >
+              <Link to="/support" className="footer-link">
                 Support Center
               </Link>
             </li>
-
             <li>
-              <Link
-                to="/support/downloads"
-                style={linkStyle}
-              >
+              <Link to="/support/downloads" className="footer-link">
                 App Downloads
               </Link>
             </li>
@@ -269,43 +133,31 @@ export default function Footer() {
 
         {/* CORPORATE */}
         <div>
-          <h5
-            style={{
-              color: colors.secondary,
-              textTransform: "uppercase",
-              letterSpacing: "1.5px",
-              marginBottom: "20px",
-              fontSize: "12px",
-            }}
-          >
-            Corporate
-          </h5>
-
-          <ul
-            style={{
-              listStyle: "none",
-              padding: 0,
-              margin: 0,
-              display: "flex",
-              flexDirection: "column",
-              gap: "14px",
-            }}
-          >
+          <h5 className="footer-section-title">Corporate</h5>
+          <ul className="footer-links-list">
             <li>
-              <Link
-                to="/warranty"
-                style={linkStyle}
-              >
+              <Link to="/warranty" className="footer-link">
                 Warranty Info
               </Link>
             </li>
-
             <li>
-              <Link
-                to="/careers"
-                style={linkStyle}
-              >
+              <Link to="/careers" className="footer-link">
                 Careers
+              </Link>
+            </li>
+            <li>
+              <Link to="/apply-dealers" className="footer-link">
+                Become a Dealer
+              </Link>
+            </li>
+            <li>
+              <Link to="/login" className="footer-link">
+                Login
+              </Link>
+            </li>
+            <li>
+              <Link to="/signup" className="footer-link">
+                Sign Up
               </Link>
             </li>
           </ul>
@@ -313,34 +165,11 @@ export default function Footer() {
       </div>
 
       {/* COPYRIGHT */}
-      <div
-        style={{
-          borderTop: `1px solid ${colors.outlineVariant}`,
-          padding: "24px 16px",
-          textAlign: "center",
-        }}
-      >
-        <p
-          style={{
-            color: colors.onSurfaceVariant,
-            fontSize: "13px",
-            letterSpacing: "1px",
-            lineHeight: 1.8,
-            margin: 0,
-          }}
-        >
-          © {year} NIGHTVISION SECURITY SYSTEMS.
-          ALL RIGHTS RESERVED. UNCOMPROMISING
-          SECURITY.
+      <div className="footer-copyright-wrapper">
+        <p className="footer-copyright-text">
+          © {year} NIGHTVISION SECURITY SYSTEMS. ALL RIGHTS RESERVED. UNCOMPROMISING SECURITY.
         </p>
       </div>
     </footer>
   );
 }
-
-const linkStyle = {
-  color: "#b8b8b8",
-  textDecoration: "none",
-  fontSize: "15px",
-  lineHeight: 1.6,
-};

@@ -34,6 +34,7 @@ function HeroSection() {
                 paddingBottom: isMobile ? "60px" : "0",
             }}
         >
+
             {/* RECORDING FRAME */}
             <div
                 style={{
@@ -269,6 +270,12 @@ function HeroSection() {
                         </Link>
 
                         <button
+                            onClick={() => {
+                                const el = document.getElementById("features");
+                                if (el) {
+                                    el.scrollIntoView({ behavior: "smooth" });
+                                }
+                            }}
                             style={{
                                 background: "transparent",
                                 color: colors.secondary,

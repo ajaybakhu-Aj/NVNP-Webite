@@ -21,52 +21,33 @@ const C = {
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const DEALER = {
-    id: "rk-services",
-    name: "RK Services",
-    zone: "Zone 3 | Bhaktapur",
-    badge: "VERIFIED DEALER",
-    address: ["Suryabinayak, Bhaktapur, Nepal"],
+    id: "night-vision",
+    name: "Night Vision CCTV",
+    zone: "Zone 3 | Kathmandu",
+    badge: "OFFICIAL DISTRIBUTOR",
+    address: ["Bhaktapur, Nepal",],
     city: "Bhaktapur 456001, Nepal",
-    lat: "27.6475° N",
-    lng: "85.4350° E",
-    phone: ["+9779841271533"],
-    whatsapp: ["+9779841271533"],
+    lat: "27.67459851823698° N",
+    lng: "85.36202529354528° E",
+    phone: ["+9779845990344"],
+    whatsapp: ["+9779845990344"],
     hours: [
         { day: "Sun – Fri", time: "09:00 – 18:00", open: true },
         { day: "Saturday", time: "CLOSED", open: false },
     ],
     about: [
-        "RK Services has been the cornerstone of security infrastructure in Bhaktapur for over a decade. As an authorized NV// NIGHTVISION™ partner, they specialize in the deployment of high-tier surveillance systems for both commercial and residential sectors.",
-        "Their team of certified engineers provides end-to-end solutions, from site tactical assessment to precision hardware installation and 24/7 maintenance support. RK Services is recognized for maintaining the highest technical standards in the region, ensuring that every deployment meets the rigorous NV// certification benchmarks.",
+        "Night Vision CCTV has been the cornerstone of security infrastructure in Bhaktapur for over a decade. As an authorized NV// NIGHTVISION™ partner, they specialize in the deployment of high-tier surveillance systems for both commercial and residential sectors.",
+        "Their team of certified engineers provides end-to-end solutions, from site security assessment to precision hardware installation and 24/7 maintenance support. Night Vision CCTV is recognized for maintaining the highest technical standards in the region, ensuring that every deployment meets the rigorous NV// certification benchmarks.",
     ],
     stats: [
-        { value: "10+", label: "Years Active" },
-        { value: "350+", label: "Deployments" },
-        { value: "99%", label: "Satisfaction" },
+        { value: "12+", label: "Years Active" },
+        { value: "500+", label: "Deployments" },
+        { value: "98%", label: "Satisfaction" },
     ],
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCp6z-IdjiJdhYmQZKXPPwYElg6ivAJVusJUHoAd6mtODdhwWtSr3ZRzq0bQ9U6-HFicgbm_DUb0UEpRW6RR8uKtCxwsbheUGHusAZBC_M1m9LPSMhtUrFOaTzChgcmTVas40HSJpwoijpuynlqj8LLW4D2Dz6wCdFVGoBi-xbWNFMFUpcWvFh1mO3xBTbLWidIfEw6Hg6xx_6QFncGkn1ZSw21PIGVtgB60S336sDWlMsKeTtl1c5Xot3g-aAeNLfzKcg2zET9cuY",
+
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCjTKoOcv5OMUCUjjkYVhLl14iTuFXtzp8MpDTdHUiO9Ve3KTxYwF88e8iwaGrhyQS93RGPez0xn5w7VZDe25EfCU-kqM70U16NSNzEh4EqBZn-btgpd8ZKhQOKYJlg4xhTecBZAJOcuUcd6NUdRnxT-7Ka7zS4_3x4qrA1jqOIQPnZ8W2VMpNuoDHhfDoGHpCpX_4EB5zHQhSsXdvxC5tTqt0tArTlIqH17mMbidfKC5h3qM_vrLn1d86G3ZIkkwexVhqP0rLahik",
 };
 
-const NEARBY = [
-    {
-        id: "suraksha",
-        name: "Suraksha Solutions",
-        zone: "Zone 1 | Kathmandu",
-        loc: "Lazimpat, Kathmandu",
-    },
-    {
-        id: "core",
-        name: "Core Systems Ltd.",
-        zone: "Zone 3 | Bhaktapur",
-        loc: "Suryabinayak, Bhaktapur",
-    },
-    {
-        id: "neo",
-        name: "Neo Security Hub",
-        zone: "Zone 1 | Kathmandu",
-        loc: "Putalisadak, Kathmandu",
-    },
-];
 
 // ─── Inline Icon SVGs ────────────────────────────────────────────────────────
 const Icon = ({ name, size = 20, color = C.primary }) => {
@@ -310,35 +291,7 @@ const MapSection = ({ img }) => {
                     />
                 ))}
             </div>
-            {/* HUD coordinates */}
-            <div
-                style={{
-                    position: "absolute",
-                    top: 12,
-                    left: 12,
-                    fontFamily: "'Space Grotesk', monospace",
-                    fontSize: 9,
-                    letterSpacing: 2,
-                    color: C.primary,
-                    opacity: 0.8,
-                }}
-            >
-                [LAT:{DEALER.lat}]
-            </div>
-            <div
-                style={{
-                    position: "absolute",
-                    top: 12,
-                    right: 60,
-                    fontFamily: "'Space Grotesk', monospace",
-                    fontSize: 9,
-                    letterSpacing: 2,
-                    color: C.primary,
-                    opacity: 0.8,
-                }}
-            >
-                [LON:{DEALER.lng}]
-            </div>
+
             {/* Zoom controls */}
             <div style={{ position: "absolute", top: 12, right: 12, display: "flex", flexDirection: "column", gap: 4 }}>
                 {[
@@ -374,8 +327,8 @@ const MapSection = ({ img }) => {
     );
 };
 
-// ─── Main RKServices component ──────────────────────────────────────────────────
-export default function RKServices() {
+// ─── Main NightVisionDealer component ──────────────────────────────────────────────────
+export default function NightVisionDealer() {
     const [toastMsg, setToastMsg] = useState(null);
 
     const showToast = (msg) => {

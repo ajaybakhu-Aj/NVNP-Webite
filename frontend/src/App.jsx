@@ -28,14 +28,24 @@ import PrivacyPolicy from "./app/(marketing)/privacy/page";
 import Checkout from "./app/(marketing)/checkout/page";
 import ProductSlug from "./app/(marketing)/products/[slug]/page";
 import WhitePearl from "./app/(marketing)/dealers/OurDealers/Provience2/WhitePearl";
-import RKServices from "./app/(marketing)/dealers/OurDealers/Province3/RKServices";
+import NightVisionDealer from "./app/(marketing)/dealers/OurDealers/Provience3/NightVision";
 import SRSuppliers from "./app/(marketing)/dealers/OurDealers/Provience4/SRSuppliers";
 import AxeTech from "./app/(marketing)/dealers/OurDealers/Provience6/AxeTech";
 import JoshiKyodai from "./app/(marketing)/dealers/OurDealers/Provience7/JoshiKyodai";
 import BlogPage from "./app/(marketing)/blog/page";
+import EventsPage from "./app/(marketing)/events/page";
+import EventDetail from "./app/(marketing)/events/EventDetail";
 import AppDownloadsPage from "./app/(marketing)/support/downloads/page";
+import GalleryPage from "./app/(marketing)/gallery/page";
 
 import PageNotFound from "./app/PageNotFound";
+import Icon from "./utils/Icon";
+import FloatingChatbot from "./components/ui/FloatingChatbot";
+import Login from "./app/(marketing)/login/page";
+import SignUp from "./app/(marketing)/signup/page";
+import MyProfile from "./app/(marketing)/my-profile/page";
+import Orders from "./app/(marketing)/orders/page";
+import Settings from "./app/(marketing)/settings/page";
 
 import "./styles/global.css";
 import NanoTek from "./app/(marketing)/dealers/OurDealers/Provience1/NanoTek";
@@ -56,6 +66,49 @@ function HomePage() {
   );
 }
 
+function GlobalSocialSidebar() {
+  return (
+    <div className="global-social-sidebar">
+      <a
+        href="https://www.facebook.com/nightvisioninterprises"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="global-social-btn btn-facebook"
+        title="Facebook"
+      >
+        <Icon name="facebook" size={18} />
+      </a>
+      <a
+        href="https://www.instagram.com/nightvision_nepal/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="global-social-btn btn-instagram"
+        title="Instagram"
+      >
+        <Icon name="instagram" size={18} />
+      </a>
+      <a
+        href="https://www.tiktok.com/@nvnightvisionnp?lang=en"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="global-social-btn btn-tiktok"
+        title="TikTok"
+      >
+        <Icon name="tiktok" size={18} />
+      </a>
+      <a
+        href="https://www.youtube.com/@nvnightvisionnp"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="global-social-btn btn-youtube"
+        title="YouTube"
+      >
+        <Icon name="youtube" size={18} />
+      </a>
+    </div>
+  );
+}
+
 function App() {
   const location = useLocation();
   const hideHeaderFooter = location.pathname === "/checkout";
@@ -72,6 +125,8 @@ function App() {
       }}
     >
       {!hideHeaderFooter && <Header />}
+      {!hideHeaderFooter && <GlobalSocialSidebar />}
+      {!hideHeaderFooter && <FloatingChatbot />}
 
       <Routes>
         {/* HOME PAGE */}
@@ -96,10 +151,6 @@ function App() {
         <Route path="/dealership" element={<Dealership />} />
 
         <Route
-          path="/cart"
-          element={<Cart />}
-        />
-        <Route
           path="/products"
           element={<Product />}
         />
@@ -114,12 +165,19 @@ function App() {
         <Route path="/product/:slug" element={<ProductSlug />} />
         <Route path="/dealer/nanotek" element={<NanoTek />} />
         <Route path="/dealer/whitepearl" element={<WhitePearl />} />
-        <Route path="/dealer/rkservices" element={<RKServices />} />
+        <Route path="/dealer/night-vision" element={<NightVisionDealer />} />
         <Route path="/dealer/srsuppliers" element={<SRSuppliers />} />
         <Route path="/dealer/axetech" element={<AxeTech />} />
         <Route path="/dealer/joshi-kyodai" element={<JoshiKyodai />} />
         <Route path="/blog" element={<BlogPage />} />
-        <Route path="/events" element={<BlogPage />} />
+        <Route path="/events" element={<EventsPage />} />
+        <Route path="/events/:slug" element={<EventDetail />} />
+        <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/my-profile" element={<MyProfile />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/settings" element={<Settings />} />
 
         {/* FALLBACK 404 PAGE */}
         <Route path="*" element={<PageNotFound />} />

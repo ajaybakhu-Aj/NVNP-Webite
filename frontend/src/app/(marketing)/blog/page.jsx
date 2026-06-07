@@ -25,7 +25,7 @@ const articles = [
     id: 1,
     tag: "Tech Report",
     date: "Oct 14, 2024",
-    author: "Commander V.",
+    author: "Vikram S.",
     title: "Integrating AI Motion Detection in High-Risk Perimeters",
     excerpt:
       "A deep dive into how neural networks are reducing false positives in enterprise-grade security environments through algorithmic refining.",
@@ -53,12 +53,12 @@ const articles = [
   },
   {
     id: 4,
-    tag: "Operations",
+    tag: "Case Studies",
     date: "Oct 05, 2024",
-    author: "Chief Eng. L.",
+    author: "Lakshman S.",
     title: "Centralized Monitoring for Multi-Site Enterprises",
     excerpt:
-      "Strategies for streamlining 50+ camera feeds into a single, actionable command dashboard without data fatigue.",
+      "Strategies for streamlining 50+ camera feeds into a single, actionable operations dashboard without data fatigue.",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuD71gPu9tVyuoN99Koj__dd45B4JaRC0b4JpA479NJwWMhtpfny_wq1_cZDgMARJmIxGuGdQDlDfkMnAF8GiCrxFFASXMQFGPyx2kBCq-CUrUwm-GRdqogZ3SGw_N943dk8-BK23oNe80HwKtLZkYi-6e5sDaDx20Dh3YB2NNjjmfec4XZeRhz67R6C63P1lNtf_zz-ijT90LzRFDuQy5DqtvFWdH9bmAlwuTnE81lcYwhM6dXXRzWyVewu23gJVxA0p8HG1XeBCwU",
   },
   {
@@ -73,7 +73,7 @@ const articles = [
   },
 ];
 
-const categories = ["All Operations", "Thermal Tech", "Case Studies", "Tactical Gear", "Software Updates"];
+const categories = ["All Articles", "Thermal Tech", "Case Studies", "Hardware & Systems", "Software Updates"];
 
 /* ─── ICON COMPONENTS ───────────────────────────── */
 const IconSearch = () => (
@@ -238,7 +238,7 @@ function ArticleCard({ article }) {
           <span style={{
             fontSize: 11, fontWeight: 600, letterSpacing: "2px",
             textTransform: "uppercase", color: C.secondary, fontFamily: C.pp,
-          }}>Read Full Dossier</span>
+          }}>Read Full Article</span>
           <span style={{ color: C.secondary, display: "flex" }}><IconArrow /></span>
         </div>
       </div>
@@ -292,14 +292,14 @@ function NewsletterCard() {
       <div style={{ position: "relative", zIndex: 1 }}>
         <h3 style={{
           fontFamily: C.sg,
-          fontSize: "clamp(18px,2.5vw,24px)",
+          fontSize: 18,
           fontWeight: 700,
-          letterSpacing: "1.5px",
+          letterSpacing: "1px",
           textTransform: "uppercase",
           color: C.onPrimary,
           marginBottom: 12,
           lineHeight: 1.2,
-        }}>Subscribe to Field Intel</h3>
+        }}>Subscribe to Updates</h3>
         <p style={{
           fontSize: 13,
           lineHeight: "20px",
@@ -308,7 +308,7 @@ function NewsletterCard() {
           marginBottom: 24,
           fontFamily: C.pp,
         }}>
-          Receive weekly technical bulletins and priority alerts on tactical hardware releases.
+          Receive weekly technical bulletins and priority alerts on new hardware releases.
         </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -334,9 +334,10 @@ function NewsletterCard() {
           />
           <button
             onClick={handleJoin}
+            className="nvbtn"
             style={{
               background: C.onPrimary,
-              color: status === "success" ? C.secondary : C.primary,
+              color: C.primary,
               padding: "14px",
               fontSize: 11,
               fontWeight: 600,
@@ -350,7 +351,7 @@ function NewsletterCard() {
             onMouseEnter={(e) => { e.target.style.transform = "scale(0.98)"; }}
             onMouseLeave={(e) => { e.target.style.transform = "scale(1)"; }}
           >
-            {status === "success" ? "Protocol Active ✓" : "Join Protocol"}
+            {status === "success" ? "Subscribed ✓" : "Subscribe"}
           </button>
         </div>
       </div>
@@ -360,7 +361,7 @@ function NewsletterCard() {
 
 /* ─── MAIN PAGE ──────────────────────────────────── */
 export default function NightWatchBlog() {
-  const [activeCategory, setActiveCategory] = useState("All Operations");
+  const [activeCategory, setActiveCategory] = useState("All Articles");
   const [activePage, setActivePage] = useState(1);
   return (
     <div style={{ background: C.bg, color: C.onSurf, fontFamily: C.pp, minHeight: "100vh", overflowX: "hidden" }}>

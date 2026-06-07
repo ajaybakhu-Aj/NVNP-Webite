@@ -1,6 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import { Phone, Mail, Clock, Send } from 'lucide-react';
 
 const NightVisionSupport = () => {
@@ -10,9 +8,7 @@ const NightVisionSupport = () => {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [activeCategory, setActiveCategory] = useState('general');
-  const [showChat, setShowChat] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
   const messagesEndRef = useRef(null);
   const isMounted = useRef(false);
 
@@ -27,18 +23,6 @@ const NightVisionSupport = () => {
       isMounted.current = true;
     }
   }, [messages]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-      if (window.innerWidth > 768) {
-        setIsSidebarOpen(false);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   const categories = [
     { id: 'general', name: 'General Questions', icon: '?' },
@@ -140,124 +124,49 @@ const NightVisionSupport = () => {
 
   const handleCategoryClick = (categoryId) => {
     setActiveCategory(categoryId);
-    if (windowWidth < 768) {
-      setIsSidebarOpen(false);
-    }
+    setIsSidebarOpen(false);
   };
 
-  const isMobile = windowWidth < 768;
-  const isTablet = windowWidth >= 768 && windowWidth < 1024;
-
   return (
-    <div style={{ backgroundColor: '#0a0a0a', color: '#ffffff', fontFamily: 'Inter, sans-serif', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div className="support-chat-page">
       {/* Hero Section */}
-      <section style={{
-        backgroundColor: '#8bc34a',
-        color: '#000000',
-        padding: isMobile ? '40px 20px' : isTablet ? '50px 30px' : '60px 40px',
-        textAlign: 'center',
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        <div style={{ position: 'relative', zIndex: 2 }}>
-          <h1 style={{ 
-            fontSize: isMobile ? '32px' : isTablet ? '40px' : '48px', 
-            fontWeight: 'bold', 
-            margin: '0 0 20px 0',
-            lineHeight: '1.2',
-          }}>
+      <section className="support-hero">
+        <div className="support-hero-content">
+          <h1 className="support-hero-title">
             24/7 EXPERT SUPPORT
           </h1>
-          <p style={{ 
-            fontSize: isMobile ? '14px' : isTablet ? '16px' : '18px', 
-            margin: 0, 
-            opacity: 0.9,
-            lineHeight: '1.5',
-          }}>
+          <p className="support-hero-desc">
             Our surveillance specialists are ready to help you. Connect with an expert instantly.
           </p>
         </div>
       </section>
 
       {/* Mobile Menu Button */}
-      {isMobile && (
-        <div style={{
-          padding: '15px 20px',
-          borderBottom: '1px solid #333333',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          backgroundColor: '#1a1a1a',
-        }}>
-          <span style={{ fontSize: '12px', color: '#999999', textTransform: 'uppercase', letterSpacing: '1px' }}>
-            {categories.find(c => c.id === activeCategory)?.name}
-          </span>
-          <button
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            style={{
-              backgroundColor: '#8bc34a',
-              border: 'none',
-              color: '#000000',
-              padding: '8px 12px',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              fontSize: '12px',
-              fontWeight: 'bold',
-            }}
-          >
-            {isSidebarOpen ? '✕ Close' : '☰ Topics'}
-          </button>
-        </div>
-      )}
+      <div className="support-mobile-header">
+        <span className="mobile-active-topic">
+          {categories.find(c => c.id === activeCategory)?.name}
+        </span>
+        <button
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          className="btn-toggle-sidebar"
+        >
+          {isSidebarOpen ? '✕ Close' : '☰ Topics'}
+        </button>
+      </div>
 
-      {/* Main Content */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: isMobile ? '1fr' : isTablet ? '250px 1fr' : '300px 1fr', 
-        flex: 1,
-        maxWidth: '1400px',
-        width: '100%',
-        margin: '0 auto',
-        gap: 0,
-      }}>
+      {/* Main Content Layout */}
+      <div className="support-main-layout">
         
         {/* Sidebar - Categories */}
-        <aside style={{
-          backgroundColor: '#1a1a1a',
-          borderRight: isMobile && !isSidebarOpen ? 'none' : '2px solid #333333',
-          borderBottom: isMobile && isSidebarOpen ? '2px solid #333333' : 'none',
-          padding: isMobile && !isSidebarOpen ? '0' : '30px 20px',
-          display: isMobile && !isSidebarOpen ? 'none' : 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-          height: isMobile ? 'auto' : 'auto',
-          order: isMobile && isSidebarOpen ? -1 : 0,
-          gridColumn: isMobile ? '1 / -1' : 'auto',
-          overflowY: isMobile ? 'auto' : 'visible',
-          maxHeight: isMobile ? '300px' : 'auto',
-        }}>
-          <h3 style={{ color: '#8bc34a', fontSize: '14px', letterSpacing: '1px', margin: '0 0 20px 0', textTransform: 'uppercase' }}>
+        <aside className={`support-sidebar ${isSidebarOpen ? 'open' : ''}`}>
+          <h3 className="sidebar-section-title">
             Support Topics
           </h3>
           {categories.map(cat => (
             <button
               key={cat.id}
               onClick={() => handleCategoryClick(cat.id)}
-              style={{
-                backgroundColor: activeCategory === cat.id ? '#8bc34a' : 'transparent',
-                color: activeCategory === cat.id ? '#000000' : '#ffffff',
-                border: activeCategory === cat.id ? 'none' : '1px solid #333333',
-                padding: '12px 16px',
-                textAlign: 'left',
-                cursor: 'pointer',
-                borderRadius: '4px',
-                fontSize: '14px',
-                fontWeight: activeCategory === cat.id ? 'bold' : '500',
-                transition: 'all 0.3s ease',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-              }}
+              className={`topic-btn ${activeCategory === cat.id ? 'active' : ''}`}
             >
               <span>{cat.icon}</span>
               {cat.name}
@@ -265,33 +174,33 @@ const NightVisionSupport = () => {
           ))}
 
           {/* Quick Contact */}
-          <div style={{ marginTop: '40px', borderTop: '1px solid #333333', paddingTop: '20px' }}>
-            <h3 style={{ color: '#8bc34a', fontSize: '12px', letterSpacing: '1px', margin: '0 0 15px 0', textTransform: 'uppercase' }}>
+          <div className="quick-contact-wrapper">
+            <h3 className="sidebar-section-title">
               Direct Contact
             </h3>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', fontSize: '12px' }}>
-                <Phone size={16} style={{ marginTop: '4px', color: '#8bc34a', flexShrink: 0 }} />
+            <div className="contact-item-list">
+              <div className="contact-item">
+                <Phone size={16} />
                 <div>
-                  <div style={{ color: '#999999', fontSize: '10px' }}>24/7 HELPLINE</div>
-                  <div style={{ color: '#8bc34a', fontWeight: 'bold' }}>+977-9745978217</div>
+                  <div className="contact-info-label">24/7 HELPLINE</div>
+                  <div className="contact-info-val">+977-9745978217</div>
                 </div>
               </div>
               
-              <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', fontSize: '12px' }}>
-                <Mail size={16} style={{ marginTop: '4px', color: '#8bc34a', flexShrink: 0 }} />
+              <div className="contact-item">
+                <Mail size={16} />
                 <div>
-                  <div style={{ color: '#999999', fontSize: '10px' }}>EMAIL</div>
-                  <div style={{ color: '#8bc34a', fontWeight: 'bold' }}>info@nightvision.com.np</div>
+                  <div className="contact-info-label">EMAIL</div>
+                  <div className="contact-info-val">info@nightvision.com.np</div>
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', fontSize: '12px' }}>
-                <Clock size={16} style={{ marginTop: '4px', color: '#8bc34a', flexShrink: 0 }} />
+              <div className="contact-item">
+                <Clock size={16} />
                 <div>
-                  <div style={{ color: '#999999', fontSize: '10px' }}>RESPONSE TIME</div>
-                  <div style={{ color: '#8bc34a', fontWeight: 'bold' }}>{'< 2 minutes'}</div>
+                  <div className="contact-info-label">RESPONSE TIME</div>
+                  <div className="contact-info-val">{'< 2 minutes'}</div>
                 </div>
               </div>
             </div>
@@ -299,78 +208,29 @@ const NightVisionSupport = () => {
         </aside>
 
         {/* Chat Area */}
-        <main style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          backgroundColor: '#0f0f0f',
-          minHeight: isMobile ? 'calc(100vh - 280px)' : 'auto',
-          gridColumn: isMobile ? '1 / -1' : 'auto',
-        }}>
+        <main className="chat-container">
           
           {/* Messages Container */}
-          <div style={{
-            flex: 1,
-            overflowY: 'auto',
-            padding: isMobile ? '20px 16px' : isTablet ? '25px 30px' : '30px 40px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '16px',
-          }}>
+          <div className="messages-viewport">
             {messages.map(msg => (
               <div
                 key={msg.id}
-                style={{
-                  display: 'flex',
-                  justifyContent: msg.sender === 'user' ? 'flex-end' : 'flex-start',
-                  animation: `fadeIn 0.3s ease-in`,
-                }}
+                className={`message-bubble-row ${msg.sender === 'user' ? 'user-side' : 'expert-side'}`}
               >
-                <div style={{
-                  maxWidth: isMobile ? '85%' : '60%',
-                  backgroundColor: msg.sender === 'user' ? '#8bc34a' : '#1a1a1a',
-                  color: msg.sender === 'user' ? '#000000' : '#ffffff',
-                  padding: '12px 16px',
-                  borderRadius: '8px',
-                  borderLeft: msg.sender === 'expert' ? '3px solid #8bc34a' : 'none',
-                  fontSize: isMobile ? '13px' : '14px',
-                  lineHeight: '1.5',
-                  wordBreak: 'break-word',
-                }}>
+                <div className="message-bubble">
                   {msg.text}
-                  <div style={{
-                    fontSize: '11px',
-                    marginTop: '6px',
-                    opacity: 0.7,
-                  }}>
+                  <span className="message-timestamp">
                     {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </div>
+                  </span>
                 </div>
               </div>
             ))}
 
             {isTyping && (
-              <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-                <div style={{
-                  width: '8px',
-                  height: '8px',
-                  backgroundColor: '#8bc34a',
-                  borderRadius: '50%',
-                  animation: 'bounce 1.4s infinite',
-                }}></div>
-                <div style={{
-                  width: '8px',
-                  height: '8px',
-                  backgroundColor: '#8bc34a',
-                  borderRadius: '50%',
-                  animation: 'bounce 1.4s infinite 0.2s',
-                }}></div>
-                <div style={{
-                  width: '8px',
-                  height: '8px',
-                  backgroundColor: '#8bc34a',
-                  borderRadius: '50%',
-                  animation: 'bounce 1.4s infinite 0.4s',
-                }}></div>
+              <div className="typing-indicator">
+                <div className="typing-dot" />
+                <div className="typing-dot" />
+                <div className="typing-dot" />
               </div>
             )}
 
@@ -379,53 +239,16 @@ const NightVisionSupport = () => {
 
           {/* Quick Replies */}
           {messages.length === 1 && (
-            <div style={{
-              padding: isMobile ? '15px 16px' : isTablet ? '20px 30px' : '0 40px 20px 40px',
-              borderTop: '1px solid #333333',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px',
-            }}>
-              <p style={{ 
-                fontSize: '12px', 
-                color: '#999999', 
-                margin: '0 0 12px 0', 
-                textTransform: 'uppercase', 
-                letterSpacing: '0.5px' 
-              }}>
+            <div className="quick-replies-section">
+              <p className="quick-replies-label">
                 Quick Questions
               </p>
-              <div style={{ 
-                display: 'flex', 
-                gap: '8px', 
-                flexWrap: 'wrap',
-              }}>
+              <div className="quick-replies-list">
                 {quickReplies[activeCategory].map((reply, idx) => (
                   <button
                     key={idx}
                     onClick={() => handleQuickReply(reply)}
-                    style={{
-                      backgroundColor: 'transparent',
-                      border: '1px solid #8bc34a',
-                      color: '#8bc34a',
-                      padding: isMobile ? '6px 10px' : '8px 12px',
-                      borderRadius: '4px',
-                      fontSize: isMobile ? '11px' : '12px',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease',
-                      flex: isMobile ? '1 1 calc(50% - 4px)' : 'auto',
-                      minWidth: isMobile ? '0' : 'auto',
-                      whiteSpace: isMobile ? 'normal' : 'nowrap',
-                      lineHeight: '1.3',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#8bc34a';
-                      e.target.style.color = '#000000';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = 'transparent';
-                      e.target.style.color = '#8bc34a';
-                    }}
+                    className="quick-reply-btn"
                   >
                     {reply}
                   </button>
@@ -435,117 +258,25 @@ const NightVisionSupport = () => {
           )}
 
           {/* Input Area */}
-          <div style={{
-            padding: isMobile ? '15px 16px' : isTablet ? '20px 30px' : '20px 40px',
-            borderTop: '1px solid #333333',
-            display: 'flex',
-            gap: '12px',
-            backgroundColor: '#1a1a1a',
-            flexShrink: 0,
-          }}>
+          <div className="chat-input-wrapper">
             <input
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage(inputValue)}
-              placeholder={isMobile ? "Ask..." : "Type your question here..."}
-              style={{
-                flex: 1,
-                backgroundColor: '#0a0a0a',
-                border: '1px solid #333333',
-                color: '#ffffff',
-                padding: isMobile ? '10px 12px' : '12px 16px',
-                borderRadius: '4px',
-                fontSize: isMobile ? '13px' : '14px',
-                outline: 'none',
-                transition: 'border-color 0.3s ease',
-                minHeight: isMobile ? '40px' : 'auto',
-              }}
-              onFocus={(e) => e.target.style.borderColor = '#8bc34a'}
-              onBlur={(e) => e.target.style.borderColor = '#333333'}
+              placeholder="Type your question here..."
+              className="chat-input"
             />
             <button
               onClick={() => handleSendMessage(inputValue)}
-              style={{
-                backgroundColor: '#8bc34a',
-                border: 'none',
-                color: '#000000',
-                padding: isMobile ? '10px 14px' : '12px 20px',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-                display: 'flex',
-                alignItems: 'center',
-                gap: isMobile ? '4px' : '8px',
-                transition: 'all 0.3s ease',
-                fontSize: isMobile ? '12px' : '14px',
-                whiteSpace: 'nowrap',
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.boxShadow = '0 0 20px rgba(139, 195, 74, 0.5)';
-                e.target.style.transform = 'scale(1.05)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.boxShadow = 'none';
-                e.target.style.transform = 'scale(1)';
-              }}
+              className="btn-chat-send"
             >
-              <Send size={isMobile ? 16 : 18} />
-              {!isMobile && 'Send'}
+              <Send size={18} />
+              <span className="send-text">Send</span>
             </button>
           </div>
         </main>
       </div>
-
-      <style>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes bounce {
-          0%, 80%, 100% {
-            transform: translateY(0);
-          }
-          40% {
-            transform: translateY(-8px);
-          }
-        }
-
-        ::-webkit-scrollbar {
-          width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-          background: #1a1a1a;
-        }
-
-        ::-webkit-scrollbar-thumb {
-          background: #8bc34a;
-          border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-          background: #7ab500;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-
-        @media (max-width: 767px) {
-          body {
-            margin: 0;
-            padding: 0;
-          }
-        }
-      `}</style>
     </div>
   );
 };

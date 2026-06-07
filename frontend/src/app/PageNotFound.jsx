@@ -119,10 +119,10 @@ function SurveillanceLens() {
 
 function DiagnosticLog() {
   const logs = [
-    "[SYSTEM_LOG] Initializing sector scan...",
-    "[SEARCH] Scanning IP_CAM_ARRAY_01...",
-    "[SEARCH] Scanning IP_CAM_ARRAY_02...",
-    "[ERROR] 404 Node Not Found.",
+    "[SYSTEM_LOG] Initializing system scan...",
+    "[SEARCH] Scanning camera network...",
+    "[SEARCH] Scanning server directories...",
+    "[ERROR] 404 Page Not Found.",
   ];
   const [visibleLines, setVisibleLines] = useState(0);
   useEffect(() => {
@@ -212,7 +212,7 @@ export default function NotFound() {
             </div>
 
             <p className={`fade-up delay-3 ${mounted ? "fade-up" : ""}`} style={{ fontSize: 15, color: COLORS.textMuted, lineHeight: 1.7, maxWidth: 400 }}>
-              The requested tactical node is unreachable. The target coordinates have been purged from the active server cluster or never existed in this sector.
+              The requested page could not be found. It may have been moved, deleted, or never existed in our directory.
             </p>
 
             {/* Diagnostic box */}
@@ -224,13 +224,13 @@ export default function NotFound() {
             }}>
               <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: COLORS.primary, letterSpacing: "0.1em", textTransform: "uppercase", opacity: 0.9 }}>DIAGNOSTIC REPORT</div>
               <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: COLORS.textMuted }}>
-                SIGNAL LOST // COORDINATES: <CoordDisplay />
+                CONNECTION FAILED // PATH: {window.location.pathname}
               </div>
               <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: COLORS.textFaint, fontStyle: "italic" }}>
-                Error Code: 0x00000194_SURVEILLANCE_FAIL
+                Error Code: 404 Not Found
               </div>
               <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: COLORS.primary, marginTop: 4, fontWeight: "bold" }}>
-                AUTO-REDIRECT TO BASE IN {countdown}S...
+                REDIRECTING TO HOME IN {countdown}S...
               </div>
             </div>
 
@@ -238,7 +238,7 @@ export default function NotFound() {
             <div className={`fade-up delay-4 ${mounted ? "fade-up" : ""}`} style={{ position: "relative" }}>
               <input
                 className="nv-search"
-                placeholder="RE-INITIATE SEARCH..."
+                placeholder="SEARCH WEBSITE..."
                 value={searchValue}
                 onChange={e => setSearchValue(e.target.value)}
               />
@@ -252,11 +252,11 @@ export default function NotFound() {
             {/* CTA buttons */}
             <div className={`fade-up delay-5 ${mounted ? "fade-up" : ""}`} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
               <button className="nv-btn-primary" onClick={() => navigate("/")}>
-                <span>RETURN TO BASE</span>
+                <span>RETURN HOME</span>
                 <span>⌂</span>
               </button>
               <button className="nv-btn-outline" onClick={() => navigate("/products")}>
-                <span>VIEW GEAR</span>
+                <span>VIEW PRODUCTS</span>
                 <span>⊞</span>
               </button>
             </div>
@@ -267,8 +267,8 @@ export default function NotFound() {
         <div style={{ position: "relative", zIndex: 10, width: "100%", maxWidth: 1000, marginTop: 64, display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, opacity: 0.45 }}>
           <DiagnosticLog />
           {[
-            ["[NETWORK] Handshake established with GATEWAY_7", "[NETWORK] Routing packets via SECURE_TUNNEL_B", "[ALERT] Unexpected termination of session 8821."],
-            ["[USER_AUTH] Level 4 clearance confirmed.", "[DATABASE] Accessing nightvision_assets_v2.db", "[QUERY] Select * from content where status='active'"],
+            ["[NETWORK] Session handshake established.", "[NETWORK] Processing request path...", "[ALERT] Page address path terminated unexpectedly."],
+            ["[USER_AUTH] Anonymous session initiated.", "[DATABASE] Accessing website_content.db", "[QUERY] Select * from site_pages where status='active'"],
           ].map((lines, i) => (
             <div key={i} style={{ border: `1px solid ${COLORS.border}`, padding: "12px 14px", height: 90 }}>
               {lines.map((l, j) => (

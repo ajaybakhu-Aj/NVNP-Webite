@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { CartContext } from "../../../Context/CartContext";
 
 const C = {
   bg: "#11140c",
@@ -44,8 +45,48 @@ function SectionCard({ title, icon, children }) {
 }
 
 export default function Checkout() {
+  const { cart, clearCart } = useContext(CartContext);
   const [payment, setPayment] = useState("khalti");
   const [createAccount, setCreateAccount] = useState(false);
+  const navigate = useNavigate();
+
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const logistics = subtotal > 0 ? 1200 : 0;
+  const total = subtotal + logistics;
+
+  const formatPrice = (amount) => {
+    return `रू ${Number(amount).toLocaleString("en-IN")}`;
+  };
+
+  const handlePlaceOrder = () => {
+    if (cart.length === 0) {
+      alert("Your cart is empty! Please add products before placing an order.");
+      navigate("/products");
+      return;
+    }
+
+    const orderId = `NV-${Math.floor(10000 + Math.random() * 90000)}`;
+    const newOrder = {
+      id: orderId,
+      date: new Date().toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }),
+      status: "Processing",
+      total: formatPrice(total),
+      paymentMethod: payment === "khalti" ? "Khalti Wallet" : "Cash On Delivery",
+      items: cart.map(item => ({
+        name: item.name,
+        qty: String(item.quantity).padStart(2, '0'),
+        price: formatPrice(item.price * item.quantity)
+      }))
+    };
+
+    const savedOrders = JSON.parse(localStorage.getItem("orders") || "[]");
+    savedOrders.unshift(newOrder);
+    localStorage.setItem("orders", JSON.stringify(savedOrders));
+
+    alert(`Order successfully placed under ID #${orderId}! Coordinating delivery.`);
+    clearCart();
+    navigate("/orders");
+  };
 
   return (
     <div className="checkout-page" style={{ background: C.bg, minHeight: "100vh", color: C.onSurface, fontFamily: "'Poppins', sans-serif" }}>
@@ -58,14 +99,14 @@ export default function Checkout() {
             Checkout Process
           </h1>
           <p style={{ color: C.onSurfaceVariant, fontSize: 15, lineHeight: 1.7, maxWidth: 560 }}>
-            Secure engineering protocol for enterprise-grade hardware procurement. Ensure all technical specifications and delivery coordinates are precise.
+            Secure checkout for enterprise-grade hardware. Ensure all technical specifications and delivery details are precise.
           </p>
         </header>
 
         <div style={{ display: "grid", gridTemplateColumns: "7fr 5fr", gap: 24 }}>
           {/* LEFT: Billing */}
           <section className="fade-in" style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-            <SectionCard title="BILLING_DETAILS_VOX" icon="☑">
+            <SectionCard title="BILLING DETAILS" icon="☑">
               <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
                   <FormField label="First Name"><input placeholder="John" type="text" /></FormField>
@@ -97,7 +138,7 @@ export default function Checkout() {
 
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
                   <FormField label="Phone"><input placeholder="+977 98XXXXXXXX" type="tel" /></FormField>
-                  <FormField label="Email Address"><input placeholder="technical@security.np" type="email" /></FormField>
+                  <FormField label="Email Address"><input placeholder="contact@mybusiness.com" type="email" /></FormField>
                 </div>
 
                 <label style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}>
@@ -107,12 +148,12 @@ export default function Checkout() {
                     onChange={e => setCreateAccount(e.target.checked)}
                     style={{ width: 18, height: 18, flexShrink: 0, accentColor: C.secondary, cursor: "pointer" }}
                   />
-                  <span style={{ fontSize: 14, color: C.onSurface }}>Create technical account for maintenance tracking?</span>
+                  <span style={{ fontSize: 14, color: C.onSurface }}>Create an account for tracking and support?</span>
                 </label>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
                   <label className="field-label">Installation Notes (Optional)</label>
-                  <textarea placeholder="Special access codes or security clearance requirements..." rows={4} />
+                  <textarea placeholder="Special notes or delivery instructions..." rows={4} />
                 </div>
               </div>
             </SectionCard>
@@ -122,46 +163,69 @@ export default function Checkout() {
           <section className="fade-in" style={{ position: "sticky", top: 88, alignSelf: "start" }}>
             <div style={{ background: C.bgHigh, border: `1px solid ${C.outlineVariant}`, padding: 32, boxShadow: "4px 4px 0 rgba(0,0,0,0.08)" }}>
               <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 15, fontWeight: 600, color: C.onSurface, marginBottom: 24, paddingBottom: 16, borderBottom: `1px solid ${C.outlineVariant}`, display: "flex", alignItems: "center", gap: 10, letterSpacing: "0.05em" }}>
-                <span style={{ color: C.secondary }}>⊠</span> YOUR_ORDER_SUMMARY
+                <span style={{ color: C.secondary }}>⊠</span> ORDER SUMMARY
               </h2>
 
               {/* Products */}
               <div style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 24 }}>
-                {[
-                  { name: "NV-900 Ultra Low-Light", qty: "02", price: "रू 42,000", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAIpQN20Gb-XCsb2Hf7zAX_SOrmNZv72frlW5-W-F6w6fX-hdW6veACVBXChuAMeIXYvLsYPIuD3wpF1zClfpyuBa04WTnHsnzgur_ztD2eEcItRWB4TILBcckUgpCV16oQCAx1r2tVOGz_CrgtijTDE2K_IylnSvhZLBu_4ysL2kZCUvodBBbpOQeseCmF16r5B99w3tBtS99kHKv86D1m3t2Uno9StYF2mXxhy7A_B-E9xQqsIVCqMverkkiav-esfSb4bobMtXQ" },
-                  { name: "NV-Core 32CH NVR", qty: "01", price: "रू 28,500", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAyxt9EKUHpE1bY5YXiKz30RKpqa9Cmy8OcFWq8KY-b_WPxQRkHSOeHECvCEURe8bZJnIKHJfsT_4g8KKEVILBDH8V36Qz6qFKbUF4ISsVh3q3cGpMBgUCsd3-4MIZ0EknI-P8C5Fd5QgWvGUQF56wvc5LMZF-Ce16pgkMujYu1TGTtP6Nvzvm5txlY-a9cjZMniBrFKxyDEUbAJYBvG0Lm5m2pY7GnM1c8MxqYkp9nsPVgMWQyQRn-iEa-uvgDG9DvaCylei2phIE" },
-                ].map((p, i) => (
-                  <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                    <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
-                      <img src={p.img} alt={p.name} className="product-img" />
-                      <div>
-                        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 12, fontWeight: 600, color: C.onSurface, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 4 }}>{p.name}</div>
-                        <div style={{ fontSize: 12, color: C.onSurfaceVariant }}>Qty: {p.qty}</div>
-                      </div>
-                    </div>
-                    <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 15, fontWeight: 600, color: C.onSurface, whiteSpace: "nowrap" }}>{p.price}</span>
+                {cart.length === 0 ? (
+                  <div style={{ color: C.onSurfaceVariant, fontSize: 14, textAlign: "center", padding: "16px 0" }}>
+                    YOUR SHOPPING CART IS EMPTY
                   </div>
-                ))}
+                ) : (
+                  cart.map((p, i) => (
+                    <div key={p.id || i} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                      <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
+                        <img
+                          src={p.img}
+                          alt={p.name}
+                          style={{
+                            width: 48,
+                            height: 48,
+                            objectFit: "cover",
+                            border: `1px solid ${C.outlineVariant}`,
+                            background: C.bgLowest
+                          }}
+                        />
+                        <div>
+                          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 12, fontWeight: 600, color: C.onSurface, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 4 }}>
+                            {p.name}
+                          </div>
+                          <div style={{ fontSize: 12, color: C.onSurfaceVariant }}>
+                            Qty: {String(p.quantity).padStart(2, '0')}
+                          </div>
+                        </div>
+                      </div>
+                      <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 15, fontWeight: 600, color: C.onSurface, whiteSpace: "nowrap" }}>
+                        {formatPrice(p.price * p.quantity)}
+                      </span>
+                    </div>
+                  ))
+                )}
               </div>
 
               {/* Totals */}
               <div style={{ borderTop: `1px solid ${C.outlineVariant}`, paddingTop: 18, marginBottom: 24, display: "flex", flexDirection: "column", gap: 10 }}>
-                {[["Subtotal", "रू 70,500"], ["Logistics (Secure Delivery)", "रू 1,200"]].map(([k, v]) => (
-                  <div key={k} style={{ display: "flex", justifyContent: "space-between" }}>
-                    <span style={{ fontSize: 14, color: C.onSurfaceVariant }}>{k}</span>
-                    <span style={{ fontSize: 14, color: C.onSurfaceVariant }}>{v}</span>
-                  </div>
-                ))}
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <span style={{ fontSize: 14, color: C.onSurfaceVariant }}>Subtotal</span>
+                  <span style={{ fontSize: 14, color: C.onSurfaceVariant }}>{formatPrice(subtotal)}</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <span style={{ fontSize: 14, color: C.onSurfaceVariant }}>Logistics (Standard Delivery)</span>
+                  <span style={{ fontSize: 14, color: C.onSurfaceVariant }}>{formatPrice(logistics)}</span>
+                </div>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 12, borderTop: `1px solid ${C.outlineVariant}`, marginTop: 4 }}>
-                  <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, fontWeight: 600, color: C.onSurface }}>Total Payload</span>
-                  <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, color: C.secondary }}>रू 71,700</span>
+                  <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, fontWeight: 600, color: C.onSurface }}>Total</span>
+                  <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, color: C.secondary }}>
+                    {formatPrice(total)}
+                  </span>
                 </div>
               </div>
 
               {/* Payment */}
               <div style={{ marginBottom: 24 }}>
                 <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: 11, fontWeight: 600, color: C.onSurfaceVariant, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 14 }}>
-                  Select Settlement Protocol
+                  Select Payment Method
                 </div>
 
                 <div className={`radio-row ${payment === "khalti" ? "selected" : ""}`} onClick={() => setPayment("khalti")}>
@@ -187,10 +251,12 @@ export default function Checkout() {
                 </div>
               </div>
 
-              <button className="exec-btn">EXECUTE PROCUREMENT</button>
+              <button onClick={handlePlaceOrder} className="exec-btn" style={{ width: "100%", cursor: cart.length === 0 ? "not-allowed" : "pointer" }}>
+                PLACE ORDER
+              </button>
 
               <div style={{ marginTop: 16, textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, color: C.onSurfaceVariant, fontSize: 12, letterSpacing: "0.06em" }}>
-                <span>🔒</span> ENCRYPTED TRANSACTION CHANNEL
+                <span>🔒</span> SECURE TRANSACTION
               </div>
             </div>
           </section>
