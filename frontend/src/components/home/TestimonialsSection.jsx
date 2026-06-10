@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Icon from "../../utils/Icon";
-import { colors, testimonials } from "../../data/constants";
+import { colors } from "../../data/constants";
+import { useSiteContents } from "../../utils/cmsDb";
 
 export default function TestimonialsSection() {
+  const contents = useSiteContents();
+
+  const items = contents.testimonials || [];
   return (
     <section
       style={{
@@ -40,7 +44,7 @@ export default function TestimonialsSection() {
             wordBreak: "break-word",
           }}
         >
-          TRUSTED BY LEADERS
+          {contents.testimonialsTitle || "TRUSTED BY LEADERS"}
         </h2>
 
         <div
@@ -55,9 +59,9 @@ export default function TestimonialsSection() {
             width: "100%",
           }}
         >
-          {testimonials.map(({ text, author }) => (
+          {items.map(({ text, author }, idx) => (
             <div
-              key={author}
+              key={idx}
               style={{
                 border: `1px solid ${colors.secondary}`,
 

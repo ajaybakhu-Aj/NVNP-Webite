@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { newsEventsData } from "../../../data/newsEvents";
+import { getAllEvents } from "../../../utils/cmsDb";
+import PageHeroBanner from "../../../components/ui/PageHeroBanner";
 
 const IconSearch = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -17,8 +18,17 @@ const IconArrowRight = () => (
 export default function EventsPage() {
   const [activeTab, setActiveTab] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [eventsList, setEventsList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredItems = newsEventsData.filter((item) => {
+  useEffect(() => {
+    getAllEvents().then((data) => {
+      setEventsList(data);
+      setLoading(false);
+    });
+  }, []);
+
+  const filteredItems = eventsList.filter((item) => {
     // Tab filtering
     if (activeTab !== "all" && item.type !== activeTab) {
       return false;
@@ -38,15 +48,12 @@ export default function EventsPage() {
 
   return (
     <div className="events-page-container">
-      {/* SCANLINE OVERLAY */}
-      <div className="scanline-overlay"></div>
+      <PageHeroBanner
+        title="NEWS & EVENTS"
+        subtitle="Latest News, Events, and Updates from NightVision Security Systems."
+      />
 
       <main className="events-main-section">
-        {/* HEADER */}
-        <header className="events-header">
-          <span className="events-sub">Latest News & Events</span>
-          <h1 className="events-title">NEWS & EVENTS</h1>
-        </header>
 
         {/* SEARCH & FILTER BAR */}
         <section className="events-search-filter-bar">
@@ -86,7 +93,21 @@ export default function EventsPage() {
         </section>
 
         {/* GRID OF NEWS / EVENTS */}
-        {filteredItems.length > 0 ? (
+        {loading ? (
+          <section
+            style={{
+              textAlign: "center",
+              padding: "60px 20px",
+              background: "#1e2117",
+              borderRadius: "8px",
+              border: "1px solid rgba(255, 255, 255, 0.05)",
+            }}
+          >
+            <p style={{ color: "#94da32", fontSize: "16px", fontFamily: "Space Grotesk" }}>
+              RETRIEVING SECURITY EVENT BROADCASTING LOGS...
+            </p>
+          </section>
+        ) : filteredItems.length > 0 ? (
           <section className="events-grid-layout">
             {filteredItems.map((item) => (
               <Link

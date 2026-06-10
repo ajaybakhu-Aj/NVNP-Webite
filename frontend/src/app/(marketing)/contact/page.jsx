@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Phone, MapPin, Mail, Globe } from 'lucide-react';
+import { saveContact, getSettings, saveActivity, useSiteContents } from '../../../utils/cmsDb';
+import PageHeroBanner from '../../../components/ui/PageHeroBanner';
+import Icon from '../../../utils/Icon';
 
 export default function NightVisionContactPage() {
   const [formData, setFormData] = useState({
@@ -17,15 +21,43 @@ export default function NightVisionContactPage() {
     }));
   };
 
+  const [settings, setSettings] = useState(null);
+  const siteContents = useSiteContents();
+
+  useEffect(() => {
+    getSettings().then(setSettings);
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({
-      subject: 'GENERAL_INQUIRY',
-      name: '',
-      email: '',
-      message: ''
+
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      alert("Please fill in all message details.");
+      return;
+    }
+
+    const newContact = {
+      id: "msg-" + Math.floor(10000 + Math.random() * 90000),
+      subject: formData.subject,
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      message: formData.message.trim(),
+      status: "Unread",
+      date: new Date().toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" })
+    };
+
+    saveContact(newContact).then(() => {
+      saveActivity(`New client message received from: ${newContact.name} (${newContact.email})`, "contact");
+      alert("Your message has been safely transmitted to our operations team. Code: " + newContact.id);
+      setFormData({
+        subject: 'GENERAL_INQUIRY',
+        name: '',
+        email: '',
+        message: ''
+      });
+    }).catch(err => {
+      console.error("Message transmission failed:", err);
+      alert("Transmission failed. Please check console.");
     });
   };
 
@@ -37,29 +69,16 @@ export default function NightVisionContactPage() {
         {/* Header */}
         
         {/* Hero Section */}
-        <section className="hero">
-          <img 
-            className="hero-bg-img"
-            src="https://lh3.googleusercontent.com/aida/ADBb0uigFZm2MU_7fFkN1PGbqxTC4_zsd19WX1rPPXQ9Dq4i5EMbGW8uL59JfytFZsh1esNLU9nligJX4Uv90jKWL6D8MLXnq26q3GTMcyBfSr1_zrrXpo67IpigOrch4RSQvHkeqBk9x4VXRJLGzluFfWso-xnep3TZtUNQtmjjVkx4xUm72ROueuOlQghaRdACvRgs6p-gLEx5sf_1mpkxK_OjtZIMzVkcxp_k_5NJOEzBPjW9mg5vXhadcbQb9GP1FJGoMGX0s4cmKw"
-            alt="surveillance"
-          />
-          <div className="hero-content">
-            <div className="hero-badge">
-              <span className="pulse-dot"></span>
-              <span className="hero-badge-text">CONTACT ACTIVE</span>
-            </div>
-            <h1 className="hero-title">CONTACT US</h1>
-            <p className="hero-subtitle">
-              OUR SURVEILLANCE SPECIALISTS ARE STANDING BY. CONNECT WITH OUR SURVEILLANCE EXPERTS FOR UNCOMPROMISING SECURITY SOLUTIONS.
-            </p>
-          </div>
-        </section>
+        <PageHeroBanner
+          title={siteContents.contactHeroTitle || "CONTACT US"}
+          subtitle={siteContents.contactHeroSubtitle || "Our surveillance specialists are standing by. Connect with our team for uncompromising security solutions."}
+        />
 
         {/* Contact Cards */}
         <section className="contact-cards">
   <div className="contact-card">
     <div className="card-icon-wrapper">
-      <span className="card-icon">📞</span>
+      <Phone size={32} className="contact-card-icon" />
     </div>
 
     <h3 className="card-title">CALL US</h3>
@@ -69,25 +88,25 @@ export default function NightVisionContactPage() {
     <div className="card-content">
       <div className="card-content-item">
         <a
-          href="tel:015925995"
+          href={`tel:${settings?.helpline1 || "015925995"}`}
           style={{
             color: "#e5e2e1",
             textDecoration: "none",
           }}
         >
-          01-5925995
+          {settings?.helpline1 || "01-5925995"}
         </a>
       </div>
 
       <div className="card-content-item">
         <a
-          href="tel:+9779745978217"
+          href={`tel:${settings?.helpline2 || "+9779745978217"}`}
           style={{
             color: "#e5e2e1",
             textDecoration: "none",
           }}
         >
-          +977-9745978217
+          {settings?.helpline2 || "+977-9745978217"}
         </a>
       </div>
     </div>
@@ -102,9 +121,9 @@ export default function NightVisionContactPage() {
     textDecoration: "none",
   }}
 >
-  <div className="contact-card featured">
+  <div className="contact-card">
     <div className="card-icon-wrapper">
-      <span className="card-icon">📍</span>
+      <MapPin size={32} className="contact-card-icon" />
     </div>
 
     <h3 className="card-title">VISIT US</h3>
@@ -118,11 +137,7 @@ export default function NightVisionContactPage() {
       className="card-content"
     >
       <div className="card-content-item">
-        Radhe Radhe
-      </div>
-
-      <div className="card-content-item">
-        Bhaktapur, NEPAL
+        {settings?.address || "Radhe Radhe, Bhaktapur, NEPAL"}
       </div>
     </address>
   </div>
@@ -130,22 +145,22 @@ export default function NightVisionContactPage() {
 
           <div className="contact-card">
             <div className="card-icon-wrapper">
-              <span className="card-icon">✉️</span>
+              <Mail size={32} className="contact-card-icon" />
             </div>
             <h3 className="card-title">E-MAIL US</h3>
             <p className="card-subtitle">COMMUNICATIONS</p>
-            <div className="card-content">
-  <div className="card-content-item">
-    <a
-      href="mailto:info@nightvision.com.np"
-      style={{
-        color: "#e5e2e1",
-        textDecoration: "none",
-      }}
-    >
-      info@nightvision.com.np
-    </a>
-  </div>
+    <div className="card-content">
+      <div className="card-content-item">
+        <a
+          href={`mailto:${settings?.email || "info@nightvision.com.np"}`}
+          style={{
+            color: "#e5e2e1",
+            textDecoration: "none",
+          }}
+        >
+          {settings?.email || "info@nightvision.com.np"}
+        </a>
+      </div>
 
   <div className="card-content-item">
     <a
@@ -189,7 +204,7 @@ export default function NightVisionContactPage() {
     {/* GOOGLE MAP */}
     <iframe
       title="Night Vision CCTV Nepal"
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d516.379656973646!2d85.3979903064471!3d27.677293954618367!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1902e459720b%3A0x446057850e6bebe5!2sNight%20Vision%20CCTV%20Nepal!5e1!3m2!1sen!2snp!4v1778740476919!5m2!1sen!2snp"
+      src={siteContents.contactMapEmbedUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d516.379656973646!2d85.3979903064471!3d27.677293954618367!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1902e459720b%3A0x446057850e6bebe5!2sNight%20Vision%20CCTV%20Nepal!5e1!3m2!1sen!2snp!4v1778740476919!5m2!1sen!2snp"}
       width="100%"
       height="100%"
       style={{
@@ -362,7 +377,7 @@ export default function NightVisionContactPage() {
       wordBreak: "break-word",
     }}
   >
-    Night Vision CCTV Nepal
+    {siteContents.contactMapTitle || "Night Vision CCTV Nepal"}
   </h3>
 
   <p
@@ -381,14 +396,14 @@ export default function NightVisionContactPage() {
       wordBreak: "break-word",
     }}
   >
-    Kathmandu, Nepal
+    {siteContents.contactMapLocationName || "Kathmandu, Nepal"}
     <br />
-    Advanced Surveillance Headquarters
+    {siteContents.contactMapLocationDesc || "Advanced Surveillance Headquarters"}
   </p>
 
   {/* GET DIRECTIONS BUTTON */}
   <a
-    href="https://maps.app.goo.gl/QohWxPHLPzi1MPCu7"
+    href={siteContents.contactMapDirectionsUrl || "https://maps.app.goo.gl/QohWxPHLPzi1MPCu7"}
     target="_blank"
     rel="noopener noreferrer"
     style={{
@@ -470,14 +485,14 @@ export default function NightVisionContactPage() {
       >
         LATITUDE:
         <span style={{ color: "#38bdf8", marginLeft: "8px" }}>
-          27.677293° N
+          {siteContents.contactMapLat || "27.677293° N"}
         </span>
 
         <br />
 
         LONGITUDE:
         <span style={{ color: "#facc15", marginLeft: "8px" }}>
-          85.397990° E
+          {siteContents.contactMapLng || "85.397990° E"}
         </span>
       </div>
     </div>
@@ -594,22 +609,6 @@ export default function NightVisionContactPage() {
                 </Link>
               ))}
             </div>
-
-            <div className="dealers-promo">
-              <img 
-                className="dealers-promo-img"
-                src="https://lh3.googleusercontent.com/aida/ADBb0uiGsiUA8BUnPz5W1BtC1A_ddnZ32Idm7Lriupd_f9XBElLTooQIq8LxpmwvL2YNhOlnIM6fajbQO37s87483wAxAmFOSFmTKe1pazPPbbgd3GXXHcrOZ_FmxNDfw6K-hg-lOOEJbFQlrv8bng4iKNBuk3CmrTpr5TWqbqgmdqqkC3E0ukVn0vtWSWzkkeMXd6jGuf93ojASN3zONE-bZ3YSRayYWo69aKBJR-yvpokSdWgCPFbDyYKkXdgIqnB5dfIG_MoXHnoS"
-                alt="dealer badge"
-              />
-              <div className="dealers-promo-content">
-                <h4>WANT TO JOIN THE NETWORK?</h4>
-                <p>WE ARE EXPANDING OUR ELITE DISTRIBUTION CHANNELS NATIONWIDE.</p>
-                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: '12px' }}>
-                  <Link to="/apply-dealers" className="dealers-promo-link" style={{ textDecoration: 'none' }}>APPLY FOR DEALERSHIP</Link>
-                  <a href="#" className="dealers-promo-link" onClick={(e) => { e.preventDefault(); alert("Dealer kit download initiated."); }}>REQUEST_DEALER_KIT.PDF</a>
-                </div>
-              </div>
-            </div>
           </div>
         </section>
 
@@ -674,29 +673,23 @@ export default function NightVisionContactPage() {
       </button>
     </Link>
 
-    {/* WINDOWS STORE */}
+    {/* WEB VIEW */}
     <Link
       to="/support/downloads"
       style={{ textDecoration: "none" }}
     >
       <button className="app-download-btn">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_logo_-_2012.svg"
-          alt="Windows Store"
-          style={{
-            width: "24px",
-            height: "24px",
-            objectFit: "contain",
-          }}
-        />
+        <div style={{ width: "24px", height: "24px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <Globe size={24} style={{ color: "#b5e75d" }} />
+        </div>
 
         <div className="app-download-btn-text">
           <span className="app-download-btn-label">
-            INSTALL FOR
+            ACCESS ON
           </span>
 
           <span className="app-download-btn-name">
-            WINDOWS
+            WEB VIEW
           </span>
         </div>
       </button>

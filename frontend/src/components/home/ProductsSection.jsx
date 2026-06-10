@@ -49,21 +49,6 @@ export default function ProductsSection() {
               minWidth: "240px",
             }}
           >
-            <span
-              style={{
-                color: colors.secondary,
-                fontFamily: "'Inter', sans-serif",
-                fontWeight: 600,
-                fontSize: 12,
-                letterSpacing: 1,
-                textTransform: "uppercase",
-                display: "block",
-                marginBottom: 8,
-              }}
-            >
-              Precision Hardware
-            </span>
-
             <h2
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",

@@ -45,11 +45,11 @@ export const testimonials = [
 export const DOWNLOAD_PLATFORMS = [
   {
     id: "windows",
-    badge: "STABLE RELEASE",
-    title: "WINDOWS",
-    desc: "Full enterprise suite with multi-monitor support and local DVR backup management.",
-    btnLabel: "Get for Windows",
-    meta: "v24.11.0 (.EXE / 420MB)",
+    badge: "WEB PORTAL",
+    title: "WEB VIEW",
+    desc: "Access the cloud command center directly from any web browser without installation.",
+    btnLabel: "Access Web View",
+    meta: "Compatible with Chrome, Safari, Firefox",
   },
   {
     id: "android",

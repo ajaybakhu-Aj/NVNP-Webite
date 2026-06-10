@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Icon from "../../../utils/Icon";
+import { getAllAdmins } from "../../../utils/cmsDb";
 
 export default function SignUpPage() {
   const [fullName, setFullName] = useState("");
@@ -70,16 +71,33 @@ export default function SignUpPage() {
 
     setIsLoading(true);
 
-    // Simulate account registration
-    setTimeout(() => {
-      setIsLoading(false);
-      setSuccess("Account registered successfully! Redirecting to login...");
-      
-      // Navigate to login page
-      setTimeout(() => {
-        navigate("/login");
-      }, 1500);
-    }, 1200);
+    // Prevent administrator registration via the signup page
+    getAllAdmins()
+      .then((adminsList) => {
+        const isAdminEmail = adminsList.some(
+          (x) => x.email.toLowerCase() === email.toLowerCase()
+        );
+        if (isAdminEmail) {
+          setIsLoading(false);
+          setError("Administrator accounts cannot be created via the sign-up page.");
+          return;
+        }
+
+        // Simulate account registration
+        setTimeout(() => {
+          setIsLoading(false);
+          setSuccess("Account registered successfully! Redirecting to login...");
+          
+          // Navigate to login page
+          setTimeout(() => {
+            navigate("/login");
+          }, 1500);
+        }, 1200);
+      })
+      .catch(() => {
+        setIsLoading(false);
+        setError("Error validating registration. Please try again.");
+      });
   };
 
   return (

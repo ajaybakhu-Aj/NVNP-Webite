@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { saveDealer, saveActivity } from "../../../../utils/cmsDb";
 
 const scanlineStyle = `
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -191,16 +192,55 @@ const scanlineStyle = `
 export default function DealerPage() {
   const [btnState, setBtnState] = useState("idle");
 
+  // Controlled states
+  const [companyName, setCompanyName] = useState("");
+  const [businessType, setBusinessType] = useState("System Integrator");
+  const [contactName, setContactName] = useState("");
+  const [email, setEmail] = useState("");
+  const [location, setLocation] = useState("");
+  const [brief, setBrief] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!companyName.trim() || !contactName.trim() || !email.trim() || !location.trim() || !brief.trim()) {
+      alert("Please fill in all details before transmitting.");
+      return;
+    }
+
     setBtnState("loading");
-    setTimeout(() => {
-      setBtnState("success");
-      setTimeout(() => {
+
+    const newApplication = {
+      id: "app-" + Math.floor(10000 + Math.random() * 90000),
+      companyName: companyName.trim(),
+      businessType,
+      contactName: contactName.trim(),
+      email: email.trim(),
+      location: location.trim(),
+      brief: brief.trim(),
+      status: "Vetting",
+      date: new Date().toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" })
+    };
+
+    saveDealer(newApplication)
+      .then(() => {
+        saveActivity(`New dealership application submitted by: ${newApplication.companyName} (${newApplication.location})`, "dealer");
+        setBtnState("success");
+        setTimeout(() => {
+          setBtnState("idle");
+          setCompanyName("");
+          setContactName("");
+          setEmail("");
+          setLocation("");
+          setBrief("");
+          setBusinessType("System Integrator");
+        }, 2000);
+      })
+      .catch((err) => {
+        console.error("Dealer application failed to save:", err);
         setBtnState("idle");
-        e.target.reset();
-      }, 2000);
-    }, 1500);
+        alert("Transmission failed. Please verify system logs.");
+      });
   };
 
   const btnLabel =
@@ -232,13 +272,6 @@ export default function DealerPage() {
             <span className="material-symbols-outlined" style={{ fontSize: "120px" }}>verified_user</span>
           </div>
           <div style={{ position: "relative", zIndex: 1 }}>
-            <p style={{
-              fontFamily: "'Poppins', sans-serif",
-              fontSize: "12px", lineHeight: "16px", letterSpacing: "4px", fontWeight: 600,
-              color: "var(--primary)", marginBottom: "1rem", textTransform: "uppercase",
-            }}>
-              PARTNERSHIP PROGRAM v4.0
-            </p>
             <h1 className="hero-title" style={{
               fontFamily: "'Space Grotesk', sans-serif",
               fontSize: "clamp(28px, 4vw, 40px)",
@@ -264,7 +297,7 @@ export default function DealerPage() {
             {
               icon: "security",
               title: "Elite Hardware",
-              body: "Direct access to the full NV/// NIGHTVISION™ surveillance hardware suite including exclusive enterprise-grade IP optics and NVR units.",
+              body: "Direct access to the full NV// NIGHTVISION™ surveillance hardware suite including exclusive enterprise-grade IP optics and NVR units.",
               hint: "SPECIFICATIONS ATTACHED",
             },
             {
@@ -362,15 +395,15 @@ export default function DealerPage() {
                 <div className="form-row" style={{ display: "flex", gap: "2rem" }}>
                   <div style={{ flex: 1 }}>
                     <label className="form-label">Company Name</label>
-                    <input className="form-input" type="text" placeholder="SECURE LOGISTICS LTD" />
+                    <input className="form-input" type="text" placeholder="SECURE LOGISTICS LTD" value={companyName} onChange={e => setCompanyName(e.target.value)} required />
                   </div>
                   <div style={{ flex: 1 }}>
                     <label className="form-label">Business Type</label>
-                    <select className="form-input" style={{ appearance: "none" }}>
-                      <option>System Integrator</option>
-                      <option>Distributor</option>
-                      <option>Retailer</option>
-                      <option>Security Consultant</option>
+                    <select className="form-input" style={{ appearance: "none" }} value={businessType} onChange={e => setBusinessType(e.target.value)}>
+                      <option value="System Integrator">System Integrator</option>
+                      <option value="Distributor">Distributor</option>
+                      <option value="Retailer">Retailer</option>
+                      <option value="Security Consultant">Security Consultant</option>
                     </select>
                   </div>
                 </div>
@@ -378,17 +411,17 @@ export default function DealerPage() {
                 <div className="form-row" style={{ display: "flex", gap: "2rem" }}>
                   <div style={{ flex: 1 }}>
                     <label className="form-label">Contact Person</label>
-                    <input className="form-input" type="text" placeholder="FULL NAME" />
+                    <input className="form-input" type="text" placeholder="FULL NAME" value={contactName} onChange={e => setContactName(e.target.value)} required />
                   </div>
                   <div style={{ flex: 1 }}>
                     <label className="form-label">Email Address</label>
-                    <input className="form-input" type="email" placeholder="CONTACT@DOMAIN.COM" />
+                    <input className="form-input" type="email" placeholder="CONTACT@DOMAIN.COM" value={email} onChange={e => setEmail(e.target.value)} required />
                   </div>
                 </div>
 
                 <div>
                   <label className="form-label">Current Territory / Location</label>
-                  <input className="form-input" type="text" placeholder="CITY, COUNTRY" />
+                  <input className="form-input" type="text" placeholder="CITY, COUNTRY" value={location} onChange={e => setLocation(e.target.value)} required />
                 </div>
 
                 <div>
@@ -398,6 +431,9 @@ export default function DealerPage() {
                     placeholder="Describe your current operations and experience with surveillance systems..."
                     rows={4}
                     style={{ resize: "vertical" }}
+                    value={brief}
+                    onChange={e => setBrief(e.target.value)}
+                    required
                   />
                 </div>
 

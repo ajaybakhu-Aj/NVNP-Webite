@@ -6,6 +6,7 @@ import {
   FaLinkedinIn,
   FaYoutube
 } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 export default function Icon({
   name,
@@ -20,6 +21,8 @@ export default function Icon({
     tiktok: FaTiktok,
     linkedin: FaLinkedinIn,
     youtube: FaYoutube,
+    x: FaXTwitter,
+    twitter: FaXTwitter,
   };
 
   const SocialIcon = socialIcons[name?.toLowerCase()];

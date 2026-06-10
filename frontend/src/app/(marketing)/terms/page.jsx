@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import { useSiteContents } from "../../../utils/cmsDb";
+import PageHeroBanner from "../../../components/ui/PageHeroBanner";
 
 const C = {
   bg: "#000000",
@@ -84,6 +86,7 @@ export default function App() {
   const [activeSection, setActiveSection] = useState("acceptance");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const siteContents = useSiteContents();
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -136,8 +139,6 @@ export default function App() {
         }
       `}</style>
 
-      <div style={scanlineStyle} />
-
       {/* Header */}
       
 
@@ -151,48 +152,12 @@ export default function App() {
         </div>
       )}
 
+      <PageHeroBanner
+        title={siteContents.termsHeroTitle || "TERMS OF SERVICE"}
+        subtitle="Legally binding agreement governing your use of NightVision surveillance solutions, digital platforms, and hardware distribution networks."
+      />
+
       <main>
-        {/* Hero */}
-        <section style={{ position: "relative", padding: "64px 24px 56px", background: "#000", borderBottom: `1px solid ${C.outlineVariant}`, overflow: "hidden" }}>
-          {/* Grid dot pattern */}
-          <div style={{
-            position: "absolute", inset: 0, zIndex: 0, opacity: 0.08,
-            backgroundImage: `radial-gradient(${C.outlineVariant} 1px, transparent 1px)`,
-            backgroundSize: "24px 24px",
-          }} />
-          <div style={{ position: "absolute", inset: 0, zIndex: 0, opacity: 0.15,
-            background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.1) 50%)",
-            backgroundSize: "100% 4px",
-          }} />
-
-          <div style={{ position: "relative", zIndex: 2, maxWidth: 1200, margin: "0 auto" }}>
-            <div style={{ display: "inline-block", position: "relative", padding: "32px 40px" }}>
-              {/* Corner brackets */}
-              {[
-                { top: 0, left: 0, borderTop: `2px solid ${C.secondaryLight}`, borderLeft: `2px solid ${C.secondaryLight}` },
-                { top: 0, right: 0, borderTop: `2px solid ${C.secondaryLight}`, borderRight: `2px solid ${C.secondaryLight}` },
-                { bottom: 0, left: 0, borderBottom: `2px solid ${C.secondaryLight}`, borderLeft: `2px solid ${C.secondaryLight}` },
-                { bottom: 0, right: 0, borderBottom: `2px solid ${C.secondaryLight}`, borderRight: `2px solid ${C.secondaryLight}` },
-              ].map((s, i) => (
-                <span key={i} style={{ position: "absolute", width: 28, height: 28, ...s }} />
-              ))}
-              <h1 className="hero-title" style={{
-                fontFamily: "'Space Grotesk'", fontSize: "clamp(36px,7vw,72px)",
-                fontWeight: 700, textTransform: "uppercase", letterSpacing: "3px",
-                color: C.secondary, lineHeight: 1.05,
-              }}>
-                TERMS OF SERVICE
-              </h1>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 16 }}>
-                <span style={{ width: 10, height: 10, background: "#dc2626", borderRadius: "50%", display: "inline-block", animation: "pulse 1.5s ease-in-out infinite", boxShadow: "0 0 6px rgba(220,38,38,0.6)" }} />
-                <span style={{ fontFamily: "'JetBrains Mono'", fontSize: 10, letterSpacing: 3, color: C.outline, textTransform: "uppercase" }}>
-                  PROTOCOL: LEGAL_COMPLIANCE_v2.4
-                </span>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Content */}
         <section style={{ maxWidth: 1200, margin: "0 auto", padding: "56px 24px" }} className="section-spacing">
           <div className="content-grid" style={{ display: "grid", gridTemplateColumns: "240px 1fr", gap: 56 }}>
@@ -229,11 +194,10 @@ export default function App() {
               <FadeIn>
                 <div style={{ background: C.surfaceLow, padding: 28, border: `1px solid ${C.outlineVariant}` }}>
                   <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 10, letterSpacing: 2, color: C.outline, textTransform: "uppercase", marginBottom: 12 }}>
-                    LAST REVISION: OCTOBER 24, 2023
+                    {siteContents.termsIntroRevision || "LAST REVISION: OCTOBER 24, 2023"}
                   </div>
-                  <p style={{ fontSize: 16, lineHeight: 1.75, color: C.onBg }}>
-                    These Terms of Service constitute a legally binding agreement made between you, whether personally or on behalf of an entity, and{" "}
-                    <strong style={{ color: C.secondary }}>NV// NIGHTVISION™ SECURITY SYSTEMS</strong>. By accessing our surveillance solutions, digital platforms, or hardware distribution networks, you acknowledge that you have read, understood, and agreed to be bound by all of these terms.
+                  <p style={{ fontSize: 16, lineHeight: 1.75, color: C.onBg, whiteSpace: "pre-wrap" }}>
+                    {siteContents.termsIntroContent || "These Terms of Service constitute a legally binding agreement made between you, whether personally or on behalf of an entity, and NV// NIGHTVISION™ SECURITY SYSTEMS. By accessing our surveillance solutions, digital platforms, or hardware distribution networks, you acknowledge that you have read, understood, and agreed to be bound by all of these terms."}
                   </p>
                 </div>
               </FadeIn>

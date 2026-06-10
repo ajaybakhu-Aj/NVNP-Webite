@@ -1,33 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { getAllProducts, addProduct, resetDatabase } from "../../../utils/productDb";
+import { useNavigate } from "react-router-dom";
+import { getAllProducts } from "../../../utils/productDb";
 import ProductCard from "../../../components/products/ProductCard";
+import Icon from "../../../utils/Icon";
+import PageHeroBanner from "../../../components/ui/PageHeroBanner";
 
-const categories = [
-  "ALL SYSTEMS",
-  "INDOOR SURVEILLANCE",
-  "OUTDOOR SURVEILLANCE",
-  "WI-FI ENABLED",
-];
-
-const PRESET_IMAGES = [
-  { label: "Bullet Camera (Standard)", url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBJXIhdE3QlNTyBvvVNsX7AvQ1FgR0bEuz9t4y2rZUZzPYH31IBG8mDdC_YSs4ZVv-SvZh4BX2N8rerYwJP9KWeiTbNl1Mi5f6YeutWhIjRBYGcd5up8aI2HRoy3_SE8gTfOBC51xZdw2cZQ75_07DCVMTgWV3hOGVfuG9iCgYLIF1hsHOFxRYhlT-DhRsnC3XP7q61WV9mDrFD4VpSEdGMCvBbvmX88LcQrCIU0n26Uvpn8Q6v8UlrMFINjCp9TI4KQSz_GrfS__w" },
-  { label: "Dome Camera (Ceiling)", url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBp1Xc0d9UMtUth6QS2N6GCirYIIla4mss3eq30soweXB3PpYj8E6HRJzdHMxBAAEBv63GF_ZiG-NkI3AvEGe0e16F-FMhLLk6qKCWN7LcvPEUP7DKzP7YeC3pA1dz_nRVx6s3TOp6jtm2KM5WnYLwI5gu-IpY2NLtvOLVPuqrtLASW4YQeyYy7_vvnJ3KzGD3Oj12-dTRSB4yQEpMxwXLDeEsBGZAm-X8KjGArbhWKJ8HfncIbAogSDovzMdnFW1erfKaDP_dgrjs" },
-  { label: "PTZ Camera (Industrial)", url: "https://lh3.googleusercontent.com/aida-public/AB6AXuDzJg1D0mnGkYwZ8Fajghv4evONVAKLuwriOPflWIo1zkQoU4AFCDPj7lS4O_WQQONg9naYxzfWmkOrYx178ceJD72fG7SJWe6hIPt068mI2Ku3wztp9tbh5Bg8e3MDrday1sCj-mvcGojpvR7jfe1Y3CdpiQo6WYeLrVI4dzPm2YQOEKsubDGCL2__a5bIoP5YtGE8aFjxaNb89gIK59qcToZ7Rp-RGg2FR3WHBuqDIRFFOJwGiK_B9Vjc13C-ehWcvJIY_mihhqk" },
-  { label: "Covert Camera (Mini)", url: "https://lh3.googleusercontent.com/aida-public/AB6AXuCfmkbSFVJ8AlzhQZHjMM4pIiv2OYIDhHkMZsWnmMTKqm9GwRMBdIZX2nZtMt94Rn9WI1BacR8uuqTkmZl_vWiGITSLb49PmCUbbZ5M81mz2w_VyCO_KCjT7d-p9hzUHt4rvyKm4OXLTA1XrWaJUvzewFlMad6e3pebPKLMVM7HknUwJL2jt6HUAMzjyO_-JJH3L6zzV8GnKhvA1im_7ZfPFJuRx-skTuwyvbK7kLrYtRHDbm4bdy8" }
-];
 
 export default function NightVision() {
+  const navigate = useNavigate();
   const [productsList, setProductsList] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("ALL SYSTEMS");
   const [loading, setLoading] = useState(true);
-  const [showAdmin, setShowAdmin] = useState(false);
 
-  // Form State
-  const [newName, setNewName] = useState("");
-  const [newPrice, setNewPrice] = useState("");
-  const [newCategory, setNewCategory] = useState("WI-FI ENABLED");
-  const [newDesc, setNewDesc] = useState("");
-  const [newImg, setNewImg] = useState(PRESET_IMAGES[0].url);
+  // Filters State
+  const [maxPrice, setMaxPrice] = useState(20000);
 
   const refreshProducts = () => {
     setLoading(true);
@@ -41,240 +26,248 @@ export default function NightVision() {
     refreshProducts();
   }, []);
 
-  const handleAddProduct = (e) => {
-    e.preventDefault();
-    if (!newName || !newPrice || !newDesc) {
-      alert("Please fill out all required fields.");
-      return;
+  // Handle Category navigation click
+  const handleCategoryToggle = (category) => {
+    let targetPath = "/products";
+    if (category === "Wireless CCTV Cameras") {
+      targetPath = "/products/wireless-cameras";
+    } else if (category === "IP CCTV Cameras") {
+      targetPath = "/products/ip-cameras";
+    } else if (category === "Network Video Recoder (NVR)") {
+      targetPath = "/products/nvr";
+    } else if (category === "POE Switch") {
+      targetPath = "/products/poe-switch";
     }
-    const slug = newName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-    
-    const productData = {
-      id: slug,
-      name: newName,
-      price: Number(newPrice),
-      category: newCategory,
-      description: newDesc,
-      img: newImg,
-      badge: "NEW SYSTEM",
-      status: "IN STOCK"
-    };
-
-    addProduct(productData).then(() => {
-      alert(`System '${newName}' successfully registered in the database!`);
-      setNewName("");
-      setNewPrice("");
-      setNewDesc("");
-      refreshProducts();
-    });
+    navigate(targetPath);
   };
 
-  const handleReset = () => {
-    if (window.confirm("Are you sure you want to reset the database to factory defaults?")) {
-      resetDatabase().then(() => {
-        alert("Database successfully reset.");
-        refreshProducts();
-      });
+  // Handle Memory Dropdown selection
+  const handleMemorySelect = (e) => {
+    const val = e.target.value;
+    if (val === "Hard Disk") {
+      navigate("/products/hard-disk");
+    } else if (val === "SD Card") {
+      navigate("/products/sd-card");
+    } else {
+      navigate("/products");
     }
   };
 
-  const filteredProducts =
-    selectedCategory === "ALL SYSTEMS"
-      ? productsList
-      : productsList.filter((p) => p.category === selectedCategory);
+  // Handle Product Type navigation click (Single Select)
+  const handleProductTypeToggle = (type) => {
+    let targetPath = "/products";
+    if (type === "Indoor CCTV Cameras") {
+      targetPath = "/products/indoor-cameras";
+    } else if (type === "Outdoor CCTV Cameras") {
+      targetPath = "/products/outdoor-cameras";
+    } else if (type === "Indoor and Outdoor CCTV Cameras") {
+      targetPath = "/products/indoor-outdoor-cameras";
+    } else if (type === "AI Cameras") {
+      targetPath = "/products/ai-cameras";
+    }
+    navigate(targetPath);
+  };
+
+  // Filter Logic
+  const filteredProducts = productsList.filter((p) => {
+    // Price Filter
+    return p.price <= maxPrice;
+  });
 
   return (
     <div className="products-page">
-      {/* HERO */}
-      <section className="products-hero">
-        <div className="products-hero-content">
-          <h1 className="products-hero-title">OUR PRODUCTS</h1>
-          <p className="products-hero-desc">
-            Advanced surveillance architecture engineered for uncompromising vigilance.
-          </p>
-        </div>
-      </section>
+      {/* HERO - Unified PageHeroBanner */}
+      <PageHeroBanner
+        title="OUR PRODUCTS"
+        subtitle="Advanced surveillance architecture engineered for uncompromising vigilance."
+      />
 
-      {/* DATABASE CONTROL PANEL */}
-      <section style={{ maxWidth: 1280, margin: "24px auto", padding: "0 24px" }}>
-        <div style={{
-          background: "#181a15",
-          border: "1px solid #434938",
-          padding: 16,
-          borderRadius: 4
-        }}>
-          <button
-            onClick={() => setShowAdmin(!showAdmin)}
-            style={{
-              width: "100%",
-              background: "transparent",
-              border: "none",
-              color: "#deffa4",
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: 14,
-              fontWeight: 600,
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              cursor: "pointer",
-              letterSpacing: 2
-            }}
-          >
-            <span>⚙️ DATABASE CONTROL PANEL (CLIENT-SIDE)</span>
-            <span>{showAdmin ? "Collapse [-]" : "Expand [+]"}</span>
-          </button>
-
-          {showAdmin && (
-            <div style={{ marginTop: 24, borderTop: "1px solid #434938", paddingTop: 24 }}>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 32 }}>
-                
-                {/* Form column */}
-                <form onSubmit={handleAddProduct} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                  <h3 style={{ color: "#fff", fontSize: 16, fontFamily: "'Space Grotesk', sans-serif", marginBottom: 8 }}>
-                    ADD PRODUCT TO DATABASE
-                  </h3>
-                  
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                    <label style={{ color: "#8d937f", fontSize: 12 }}>SYSTEM NAME *</label>
-                    <input
-                      type="text"
-                      placeholder="e.g. Netra X-900 Pro"
-                      value={newName}
-                      onChange={(e) => setNewName(e.target.value)}
-                      required
-                      style={{ background: "#0c0d0a", border: "1px solid #434938", color: "#fff", padding: "10px 14px", borderRadius: 4 }}
-                    />
-                  </div>
-
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-                    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                      <label style={{ color: "#8d937f", fontSize: 12 }}>PRICE (NPR) *</label>
-                      <input
-                        type="number"
-                        placeholder="e.g. 7400"
-                        value={newPrice}
-                        onChange={(e) => setNewPrice(e.target.value)}
-                        required
-                        style={{ background: "#0c0d0a", border: "1px solid #434938", color: "#fff", padding: "10px 14px", borderRadius: 4 }}
-                      />
-                    </div>
-                    
-                    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                      <label style={{ color: "#8d937f", fontSize: 12 }}>CATEGORY *</label>
-                      <select
-                        value={newCategory}
-                        onChange={(e) => setNewCategory(e.target.value)}
-                        style={{ background: "#0c0d0a", border: "1px solid #434938", color: "#fff", padding: "10px 14px", borderRadius: 4 }}
-                      >
-                        <option value="WI-FI ENABLED">WI-FI ENABLED</option>
-                        <option value="INDOOR SURVEILLANCE">INDOOR SURVEILLANCE</option>
-                        <option value="OUTDOOR SURVEILLANCE">OUTDOOR SURVEILLANCE</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                    <label style={{ color: "#8d937f", fontSize: 12 }}>IMAGE TEMPLATE</label>
-                    <select
-                      value={newImg}
-                      onChange={(e) => setNewImg(e.target.value)}
-                      style={{ background: "#0c0d0a", border: "1px solid #434938", color: "#fff", padding: "10px 14px", borderRadius: 4 }}
-                    >
-                      {PRESET_IMAGES.map((imgOpt) => (
-                        <option key={imgOpt.url} value={imgOpt.url}>{imgOpt.label}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                    <label style={{ color: "#8d937f", fontSize: 12 }}>SYSTEM DESCRIPTION *</label>
-                    <textarea
-                      placeholder="Enter technical description..."
-                      value={newDesc}
-                      onChange={(e) => setNewDesc(e.target.value)}
-                      required
-                      rows={3}
-                      style={{ background: "#0c0d0a", border: "1px solid #434938", color: "#fff", padding: "10px 14px", borderRadius: 4, resize: "none" }}
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    style={{
-                      background: "#94da32",
-                      color: "#111",
-                      border: "none",
-                      padding: 12,
-                      fontWeight: 700,
-                      cursor: "pointer",
-                      fontFamily: "'Inter', sans-serif",
-                      letterSpacing: 1,
-                      marginTop: 8,
-                      borderRadius: 4
-                    }}
-                  >
-                    DEPLOY SYSTEM TO DATABASE
-                  </button>
-                </form>
-
-                {/* Operations column */}
-                <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", paddingLeft: 16, borderLeft: "1px solid #434938" }}>
-                  <div>
-                    <h3 style={{ color: "#fff", fontSize: 16, fontFamily: "'Space Grotesk', sans-serif", marginBottom: 16 }}>
-                      SYSTEM STACKS & STATUS
-                    </h3>
-                    <p style={{ color: "#8d937f", fontSize: 13, lineHeight: 1.6, marginBottom: 12 }}>
-                      The systems catalog is synchronized with a client-side database. Adding or resetting records will rewrite the local IndexedDB state.
-                    </p>
-                    <div style={{ display: "flex", flexDirection: "column", gap: 8, color: "#fff", fontFamily: "monospace", fontSize: 12 }}>
-                      <div>[ACTIVE_DB]: IndexedDB (NightVisionDB)</div>
-                      <div>[STORE_NAME]: products</div>
-                      <div>[RECORD_COUNT]: {productsList.length} devices synced</div>
-                      <div>[STATUS]: ONLINE</div>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={handleReset}
-                    style={{
-                      background: "transparent",
-                      color: "#ff6b6b",
-                      border: "1px solid #ff6b6b",
-                      padding: 10,
-                      fontWeight: 700,
-                      cursor: "pointer",
-                      fontFamily: "'Inter', sans-serif",
-                      letterSpacing: 1,
-                      borderRadius: 4,
-                      marginTop: 24
-                    }}
-                  >
-                    RESET DATABASE TO FACTORY DEFAULTS
-                  </button>
-                </div>
-
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
 
       {/* PRODUCTS SECTION */}
-      <section className="products-layout">
-        {/* SIDEBAR */}
-        <aside className="categories-sidebar">
-          {categories.map((cat) => (
+      <section className="products-layout" style={{ paddingTop: "24px" }}>
+        {/* SIDEBAR FILTERS */}
+        <aside className="categories-sidebar" style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+          
+          {/* PRICE SLIDER FILTER */}
+          <div style={{ border: "1px solid #434938", padding: 16, borderRadius: 4, background: "#181a15" }}>
+            <h4 style={{ margin: "0 0 16px 0", fontSize: 14, fontFamily: "'Space Grotesk', sans-serif", color: "#deffa4", letterSpacing: 1 }}>
+              PRICE LIMIT (NPR)
+            </h4>
+            <div style={{ display: "flex", justifyContent: "space-between", color: "#8d937f", fontSize: 12, marginBottom: 8 }}>
+              <span>रू 0</span>
+              <span style={{ color: "#94da32", fontWeight: 700 }}>Up to रू {maxPrice.toLocaleString("en-IN")}</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="20000"
+              step="500"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(Number(e.target.value))}
+              style={{
+                width: "100%",
+                accentColor: "#94da32",
+                cursor: "pointer",
+                background: "#0c0d0a",
+                height: 6,
+                borderRadius: 3
+              }}
+            />
+            <div style={{ textAlign: "right", color: "#8d937f", fontSize: 10, marginTop: 4 }}>
+              Max: रू 20,000
+            </div>
+          </div>
+
+          {/* CATEGORY FILTER (Single-select checkboxes + memory dropdown) */}
+          <div style={{ border: "1px solid #434938", padding: 16, borderRadius: 4, background: "#181a15" }}>
+            <h4 style={{ margin: "0 0 16px 0", fontSize: 14, fontFamily: "'Space Grotesk', sans-serif", color: "#deffa4", letterSpacing: 1 }}>
+              CATEGORIES
+            </h4>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {[
+                "Wireless CCTV Cameras",
+                "IP CCTV Cameras",
+                "Network Video Recoder (NVR)",
+                "POE Switch"
+              ].map((cat) => {
+                return (
+                  <label key={cat} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", color: "#c3c9b3", fontSize: 13, userSelect: "none" }}>
+                    <input
+                      type="checkbox"
+                      checked={false}
+                      onChange={() => handleCategoryToggle(cat)}
+                      style={{
+                        width: 16,
+                        height: 16,
+                        accentColor: "#94da32",
+                        cursor: "pointer"
+                      }}
+                    />
+                    {cat}
+                  </label>
+                );
+              })}
+
+              {/* Memory Dropdown inside Categories */}
+              <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
+                <label style={{ color: "#8d937f", fontSize: 11, letterSpacing: 0.5 }}>MEMORY INTERFACE</label>
+                <select
+                  value=""
+                  onChange={handleMemorySelect}
+                  style={{
+                    background: "#0c0d0a",
+                    border: "1px solid #434938",
+                    color: "#fff",
+                    padding: "8px 12px",
+                    borderRadius: 4,
+                    fontSize: 12,
+                    cursor: "pointer",
+                    fontFamily: "'Space Grotesk', sans-serif"
+                  }}
+                >
+                  <option value="">Select Memory</option>
+                  <option value="Hard Disk">Hard Disk</option>
+                  <option value="SD Card">SD Card</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* PRODUCT TYPE FILTER */}
+          <div style={{ border: "1px solid #434938", padding: 16, borderRadius: 4, background: "#181a15" }}>
+            <h4 style={{ margin: "0 0 16px 0", fontSize: 14, fontFamily: "'Space Grotesk', sans-serif", color: "#deffa4", letterSpacing: 1 }}>
+              PRODUCT TYPE
+            </h4>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {[
+                "Indoor CCTV Cameras",
+                "Outdoor CCTV Cameras",
+                "Indoor and Outdoor CCTV Cameras",
+                "AI Cameras"
+              ].map((type) => {
+                return (
+                  <label key={type} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", color: "#c3c9b3", fontSize: 13, userSelect: "none" }}>
+                    <input
+                      type="checkbox"
+                      checked={false}
+                      onChange={() => handleProductTypeToggle(type)}
+                      style={{
+                        width: 16,
+                        height: 16,
+                        accentColor: "#94da32",
+                        cursor: "pointer"
+                      }}
+                    />
+                    {type}
+                  </label>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* BUILD YOUR CCTV SETUP BUTTON (Navigate to Setup Page) */}
+          <div style={{
+            border: "1px solid #94da32",
+            padding: 16,
+            borderRadius: 4,
+            background: "linear-gradient(135deg, #181a15 0%, #0d0f0a 100%)",
+            boxShadow: "0 0 15px rgba(148, 218, 50, 0.15)",
+            textAlign: "center"
+          }}>
+            <h4 style={{ margin: "0 0 8px 0", fontSize: 14, fontFamily: "'Space Grotesk', sans-serif", color: "#fff", letterSpacing: 1 }}>
+              CUSTOM SETUP
+            </h4>
+            <p style={{ color: "#8d937f", fontSize: 11, lineHeight: 1.5, marginBottom: 16 }}>
+              Configure a complete camera network interactively to match your requirements.
+            </p>
             <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`category-btn ${selectedCategory === cat ? "active" : ""}`}
+              onClick={() => navigate("/cctv-setup")}
+              style={{
+                width: "100%",
+                background: "#94da32",
+                color: "#111",
+                border: "none",
+                padding: "12px 8px",
+                fontWeight: 700,
+                cursor: "pointer",
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 12,
+                letterSpacing: 1,
+                borderRadius: 4,
+                boxShadow: "0 0 10px rgba(148, 218, 50, 0.25)",
+                transition: "transform 0.15s"
+              }}
             >
-              {cat}
+              BUILD YOUR CCTV SETUP
             </button>
-          ))}
+          </div>
+
+          {/* CLEAR FILTERS */}
+          {maxPrice < 20000 && (
+            <button
+              onClick={() => {
+                setMaxPrice(20000);
+              }}
+              style={{
+                width: "100%",
+                background: "transparent",
+                border: "1px dashed #ff6b6b",
+                color: "#ff6b6b",
+                padding: 10,
+                borderRadius: 4,
+                cursor: "pointer",
+                fontWeight: 600,
+                fontSize: 12,
+                fontFamily: "'Space Grotesk', sans-serif"
+              }}
+            >
+              RESET ALL FILTERS
+            </button>
+          )}
+
         </aside>
 
-        {/* GRID */}
+        {/* PRODUCTS GRID */}
         {loading ? (
           <div style={{ display: "flex", justifyContent: "center", padding: "100px 0", color: "#94da32", flex: 1 }}>
             LOADING DYNAMIC DATA PIPELINES...
@@ -285,13 +278,84 @@ export default function NightVision() {
               <ProductCard key={p.id} {...p} />
             ))}
             {filteredProducts.length === 0 && (
-              <div style={{ color: "#8d937f", textAlign: "center", padding: "48px 0", width: "100%", gridColumn: "1 / -1" }}>
-                NO SYSTEMS MATCHING THE SPECIFIED PARAMETERS.
+              <div style={{ color: "#8d937f", textAlign: "center", padding: "80px 0", width: "100%", gridColumn: "1 / -1", border: "1px dashed #434938", borderRadius: 4, background: "#181a15" }}>
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}><Icon name="search" size={32} style={{ color: "#94da32" }} /></div>
+                <div style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#fff", fontWeight: 700, letterSpacing: 1, marginBottom: 6 }}>
+                  NO SYSTEMS MATCHING SEARCH
+                </div>
+                <div style={{ fontSize: 13, maxWidth: 300, margin: "0 auto" }}>
+                  Try relaxing your price filters or selecting a different category.
+                </div>
               </div>
             )}
           </div>
         )}
       </section>
+
+      {/* SEO BODY TEXT SECTION */}
+      <section style={{ maxWidth: 1280, margin: "64px auto 0 auto", padding: "0 24px 64px 24px" }}>
+        <div style={{
+          borderTop: "1px solid #434938",
+          paddingTop: 48,
+          display: "grid",
+          gridTemplateColumns: "1fr",
+          gap: 32
+        }}>
+          <div>
+            <h2 style={{
+              fontSize: "clamp(24px, 4vw, 32px)",
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontWeight: 700,
+              color: "#fff",
+              textTransform: "uppercase",
+              letterSpacing: 1,
+              marginBottom: 24,
+              lineHeight: 1.2
+            }}>
+              How to Choose the Right CCTV System for Your Location
+            </h2>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: 32,
+              lineHeight: 1.7,
+              fontSize: 14,
+              color: "#c3c9b3"
+            }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                <h3 style={{ fontSize: 16, color: "#fff", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}>
+                  1. Wireless CCTV Cameras vs IP CCTV Cameras
+                </h3>
+                <p>
+                  Choosing between **Wireless CCTV Cameras** and **IP CCTV Cameras** depends on your installation constraints. Wireless models are optimized for quick setup and flexibility, ideal for residential rooms and small offices where running Ethernet cables is difficult. **IP CCTV Cameras** communicate over network lines, providing ultra-stable Gigabit streaming rates and PoE integration, preferred for robust corporate or long-distance deployments.
+                </p>
+                <h3 style={{ fontSize: 16, color: "#fff", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}>
+                  2. Selecting Camera Resolution (Megapixels)
+                </h3>
+                <p>
+                  High-megapixel values ensure you capture fine details, such as vehicle license plates or facial features, from a distance. A **2 MP** (1080p Full HD) camera offers a reliable budget entry point, while **4 MP** (Super/Quad HD) provides a significant upgrade in clarity. For high-security zones like entrances, cash registers, or parking lots, opt for **8 MP** (4K UHD) cameras to enable lossless digital zooming.
+                </p>
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                <h3 style={{ fontSize: 16, color: "#fff", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}>
+                  3. NVR and PoE Switch Networking Infrastructure
+                </h3>
+                <p>
+                  For multi-camera networks, a **Network Video Recorder (NVR)** is the brain of your setup, aggregating video streams from all IP cameras. Connect them through a **POE (Power over Ethernet) Switch** to transmit both high-speed data and electricity over a single RJ-45 cable, simplifying cable management and reducing electrical wiring overhead.
+                </p>
+                <h3 style={{ fontSize: 16, color: "#fff", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}>
+                  4. Determining Storage Capacity Needs (Hard Disk vs SD Card)
+                </h3>
+                <p>
+                  Local storage ensures continuous recording even during network outages. **Hard Disk Drives (HDD)**, especially surveillance-optimized models, are deployed inside NVRs for 24/7 continuous multi-camera archiving. **SD Cards** are compact flash memories plugged directly into wireless cameras, serving as independent edge-recording stores for motion-triggered event clips.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }

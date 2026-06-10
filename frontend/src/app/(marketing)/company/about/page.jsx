@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Icon from "../../../../utils/Icon";
+import { useSiteContents } from "../../../../utils/cmsDb";
+import PageHeroBanner from "../../../../components/ui/PageHeroBanner";
 
 export default function NightVisionAboutPage() {
+  const contents = useSiteContents();
   return (
     <>
 
@@ -11,42 +14,20 @@ export default function NightVisionAboutPage() {
         <main className="main-content">
 
           {/* HERO */}
-
-          <section
-            className="about-hero"
-            style={{
-              backgroundImage:
-                "url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format&fit=crop')",
-            }}
+          <PageHeroBanner
+            title={contents.aboutHeroTitle || "ABOUT NIGHTVISION"}
+            subtitle={contents.aboutHeroDesc || "Nepal's next-generation surveillance and security monitoring brand built for industrial security, intelligent detection, and uncompromising operational reliability."}
           >
-            <div className="scanline-overlay"></div>
-
-            <div className="hero-content">
-
-              
-
-              <h1 className="hero-title">
-                ABOUT <br /> NIGHTVISION
-              </h1>
-
-              <p className="hero-description">
-                Nepal’s next-generation surveillance and security monitoring
-                brand built for industrial security, intelligent detection,
-                and uncompromising operational reliability.
-              </p>
-
-              <div className="hero-buttons">
-                <Link to="/products" className="hero-btn-primary" style={{ textDecoration: "none", display: "inline-flex", justifyContent: "center", alignItems: "center" }}>
-                  Explore Systems
-                </Link>
-
-                <Link to="/dealership" className="hero-btn-secondary" style={{ textDecoration: "none", display: "inline-flex", justifyContent: "center", alignItems: "center" }}>
-                  Contact Sales
-                </Link>
-              </div>
-
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 4 }}>
+              <Link to="/products" className="hero-btn-primary" style={{ textDecoration: "none", display: "inline-flex", justifyContent: "center", alignItems: "center", background: "rgba(0,0,0,0.15)", color: "#000000", border: "2px solid #000000", padding: "10px 24px", fontWeight: 700, fontSize: 12, letterSpacing: 1, fontFamily: "'Poppins', sans-serif" }}>
+                Explore Systems
+              </Link>
+              <Link to="/dealership" className="hero-btn-secondary" style={{ textDecoration: "none", display: "inline-flex", justifyContent: "center", alignItems: "center", background: "#000000", color: "#94da32", padding: "10px 24px", fontWeight: 700, fontSize: 12, letterSpacing: 1, fontFamily: "'Poppins', sans-serif" }}>
+                Contact Sales
+              </Link>
             </div>
-          </section>
+          </PageHeroBanner>
+
 
           {/* STORY */}
 
@@ -57,22 +38,24 @@ export default function NightVisionAboutPage() {
               <div className="story-text">
 
                 <h2>
-                  UNCOMPROMISING
-                  <br />
-                  VIGILANCE
+                  {(() => {
+                    const title = contents.aboutStoryTitle || "UNCOMPROMISING VIGILANCE";
+                    const parts = title.split(/(UNCOMPROMISING)/i);
+                    return parts.map((part, i) => {
+                      if (part.toLowerCase() === "uncompromising") {
+                        return <React.Fragment key={i}>{part}<br /></React.Fragment>;
+                      }
+                      return part;
+                    });
+                  })()}
                 </h2>
 
                 <p>
-                  NIGHTVISION™ was founded in Kathmandu with one objective:
-                  eliminate the blind spots where security threats survive.
-                  Our systems are engineered to deliver maximum visibility,
-                  predictive intelligence, and unmatched operational durability.
+                  {contents.aboutStoryDesc1 || "NIGHTVISION™ was founded in Kathmandu with one objective: eliminate the blind spots where security threats survive. Our systems are engineered to deliver maximum visibility, predictive intelligence, and unmatched operational durability."}
                 </p>
 
                 <p>
-                  From AI-powered motion analysis to advanced thermal imaging,
-                  we develop surveillance ecosystems that protect thousands of
-                  perimeters, commercial facilities, and residential hubs across Nepal.
+                  {contents.aboutStoryDesc2 || "From AI-powered motion analysis to advanced thermal imaging, we develop surveillance ecosystems that protect thousands of perimeters, commercial facilities, and residential hubs across Nepal."}
                 </p>
 
                 <Link to="/products" className="explore-btn" style={{ textDecoration: "none", display: "inline-block", textAlign: "center" }}>
@@ -118,9 +101,7 @@ export default function NightVisionAboutPage() {
                 </h3>
 
                 <p className="card-text">
-                  To redefine global surveillance standards through intelligent,
-                  predictive security systems that actively prevent threats
-                  before they happen.
+                  {contents.aboutVision || "To redefine global surveillance standards through intelligent, predictive security systems that actively prevent threats before they happen."}
                 </p>
 
               </div>
@@ -138,9 +119,7 @@ export default function NightVisionAboutPage() {
                 </h3>
 
                 <p className="card-text">
-                  To engineer industrial-grade surveillance ecosystems that
-                  combine powerful hardware with intelligent software for
-                  unmatched reliability and operational awareness.
+                  {contents.aboutMission || "To engineer industrial-grade surveillance ecosystems that combine powerful hardware with intelligent software for unmatched reliability and operational awareness."}
                 </p>
 
               </div>
@@ -177,61 +156,21 @@ export default function NightVisionAboutPage() {
               <div className="values-header" style={{ alignItems: "center" }}>
 
                 <div className="values-title-group" style={{ flex: "1", minWidth: "280px" }}>
-                  <span>OUR CORE PILLARS</span>
-
                   <h2 className="values-title">
-                    THE PILLARS OF NIGHTVISION
+                    {contents.aboutPillarsTitle || "THE PILLARS OF NIGHTVISION"}
                   </h2>
                 </div>
 
                 <p className="values-side" style={{ maxWidth: "420px", textTransform: "none", fontSize: "14px", color: "#c3c9b3", opacity: "0.85", textAlign: "left", lineHeight: "1.6" }}>
-                  We build corporate partnership relationships on accountability, precision engineering, and the absolute trust that our operator networks will always remain protected.
+                  {contents.aboutPillarsDesc || "We build corporate partnership relationships on accountability, precision engineering, and the absolute trust that our operator networks will always remain protected."}
                 </p>
 
               </div>
 
               <div className="values-grid">
 
-                {[
-                  {
-                    icon: "psychology",
-                    title: "Continuous Innovation",
-                    text:
-                      "We invest deeply in next-generation optical engineering and neural AI algorithms to keep your perimeter steps ahead of modern security challenges.",
-                  },
-                  {
-                    icon: "workspace_premium",
-                    title: "Industrial-Grade Quality",
-                    text:
-                      "Every component undergoes rigorous stress-testing to guarantee reliable performance in critical security and extreme weather conditions.",
-                  },
-                  {
-                    icon: "support_agent",
-                    title: "Dedicated Assistance",
-                    text:
-                      "We provide reliable, direct-line operator support to ensure your security system remains fully online and vigilant at all times.",
-                  },
-                  {
-                    icon: "verified_user",
-                    title: "Ethical Integration",
-                    text:
-                      "Transparent privacy principles, secure encryption, and robust data protections engineered to keep your security records completely confidential.",
-                  },
-                  {
-                    
-                    icon: "hub",
-                    title: "Interoperable Systems",
-                    text:
-                      "Our products are engineered to seamlessly connect with existing corporate networks, home automation, and global safety infrastructures.",
-                  },
-                  {
-                    icon: "auto_graph",
-                    title: "Adaptive Performance",
-                    text:
-                      "Continuous firmware upgrades and self-learning camera models that get smarter, faster, and more secure the longer they are deployed.",
-                  },
-                ].map((item) => (
-                  <div className="value-card" key={item.num}>
+                {(contents.aboutPillars || []).map((item, idx) => (
+                  <div className="value-card" key={idx}>
 
                     <div className="value-header">
                       <span className="value-number" style={{ color: "#94da32", fontWeight: "600", fontSize: "11px", letterSpacing: "1px", textTransform: "uppercase" }}>
@@ -390,13 +329,11 @@ export default function NightVisionAboutPage() {
           <section className="cta-section">
 
             <h2 className="cta-title">
-              READY FOR THE DARK?
+              {contents.aboutCtaTitle || "READY FOR THE DARK?"}
             </h2>
 
             <p className="cta-text">
-              Join the growing network of organizations and professionals
-              who trust NIGHTVISION™ for critical surveillance and security
-              operations worldwide.
+              {contents.aboutCtaDesc || "Join the growing network of organizations and professionals who trust NIGHTVISION™ for critical surveillance and security operations worldwide."}
             </p>
 
             <div className="cta-buttons">

@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { colors } from "../../data/constants";
+import { getSettings } from "../../utils/cmsDb";
 
 export default function TickerStrip() {
-  const text =
-    "NightVision™ // CCTV Cameras Nepal // 4K Surveillance // Made for Nepal //";
+  const [tickerText, setTickerText] = useState("NightVision™ // CCTV Cameras Nepal // 4K Surveillance // Made for Nepal //");
+
+  useEffect(() => {
+    getSettings().then((config) => {
+      if (config && config.bannerText) {
+        setTickerText(config.bannerText);
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -102,7 +110,7 @@ export default function TickerStrip() {
               width: "max-content",
             }}
           >
-            {[text, text, text, text].map((t, i) => (
+            {[tickerText, tickerText, tickerText, tickerText].map((t, i) => (
               <span
                 key={i}
                 className="ticker-text"

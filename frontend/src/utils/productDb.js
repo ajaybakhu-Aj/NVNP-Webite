@@ -10,13 +10,18 @@ const SEED_PRODUCTS = [
     id: "y1-ratri-dome",
     name: "Y1-Ratri Dome",
     code: "NV-CAM-001",
-    category: "WI-FI ENABLED",
+    category: "Wireless CCTV Cameras",
+    productType: "Indoor CCTV Cameras",
+    cameraMp: "2 MP",
     tags: ["dome", "indoor", "wifi"],
     price: 4500,
     badge: "TOP RATED",
     status: "IN STOCK",
     description: "Panoramic 360° coverage with ultra-sensitive low-light sensor and two-way talk.",
     longDesc: "The Y1-Ratri Dome is a compact plug-and-play Wi-Fi surveillance camera designed for high-resolution residential and small business security. Featuring a 360° pan-tilt view, it allows you to monitor an entire room from a single device. Its night vision capability is enhanced with our proprietary Ratri low-light sensor.",
+    bodySectionLabel: "TECHNICAL DOCUMENTATION",
+    bodySectionTitle: "SYSTEM SPECIFICATIONS & FIELD ARCHITECTURE",
+    guidePdf: "/assets/guides/nightvision-user-manual.pdf",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDKHBBETCmvmUDQXf390HXH-OlLjt2T2Z4s9EC6-TW4V9RlTL9LDydP63qLr5Py_SRLNUliBf0UA5Y_fc94gecfuM7O-rD_-QNerIsTapATapXDASP7tBaQ8zVLuYLbb_eJ8KLKnrNCKfjx_ltLHGjxoWhsuAiuZ-f_Bjnoe_VT2SjWB7x_jc2-N3cjaIzw8XoX1Oypit-7Wtn5e0Q_MqH_iZ1wu78MZV0j44LdGzyX7vOrU66BFchUdarBt8rPcdnIgQ9SHW8Uhz8",
     thumbs: [
       "https://lh3.googleusercontent.com/aida-public/AB6AXuDKHBBETCmvmUDQXf390HXH-OlLjt2T2Z4s9EC6-TW4V9RlTL9LDydP63qLr5Py_SRLNUliBf0UA5Y_fc94gecfuM7O-rD_-QNerIsTapATapXDASP7tBaQ8zVLuYLbb_eJ8KLKnrNCKfjx_ltLHGjxoWhsuAiuZ-f_Bjnoe_VT2SjWB7x_jc2-N3cjaIzw8XoX1Oypit-7Wtn5e0Q_MqH_iZ1wu78MZV0j44LdGzyX7vOrU66BFchUdarBt8rPcdnIgQ9SHW8Uhz8",
@@ -45,7 +50,9 @@ const SEED_PRODUCTS = [
     id: "t5p-ratri-bullet",
     name: "T5P-Ratri Bullet",
     code: "NV-CAM-002",
-    category: "OUTDOOR SURVEILLANCE",
+    category: "IP CCTV Cameras",
+    productType: "Outdoor CCTV Cameras",
+    cameraMp: "4 MP",
     tags: ["bullet", "outdoor", "waterproof"],
     price: 6200,
     badge: "IP67 RATED",
@@ -80,7 +87,9 @@ const SEED_PRODUCTS = [
     id: "ratri-g11",
     name: "Ratri G11",
     code: "NV-CAM-003",
-    category: "OUTDOOR SURVEILLANCE",
+    category: "Wireless CCTV Cameras",
+    productType: "Outdoor CCTV Cameras",
+    cameraMp: "4 MP",
     tags: ["bullet", "outdoor", "ai"],
     price: 8499,
     badge: "BESTSELLER",
@@ -115,7 +124,9 @@ const SEED_PRODUCTS = [
     id: "netra-v6z",
     name: "Netra V6Z",
     code: "NV-CAM-004",
-    category: "INDOOR SURVEILLANCE",
+    category: "IP CCTV Cameras",
+    productType: "Indoor CCTV Cameras",
+    cameraMp: "8 MP",
     tags: ["dome", "indoor", "zoom"],
     price: 12500,
     badge: "4K RESOLUTION",
@@ -150,7 +161,9 @@ const SEED_PRODUCTS = [
     id: "cctv-netra-s8",
     name: "CCTV Netra S8",
     code: "NV-CAM-005",
-    category: "INDOOR SURVEILLANCE",
+    category: "IP CCTV Cameras",
+    productType: "Indoor and Outdoor CCTV Cameras",
+    cameraMp: "3 MP",
     tags: ["dome", "indoor", "residential"],
     price: 5800,
     badge: "ELEGANT DESIGN",
@@ -184,7 +197,9 @@ const SEED_PRODUCTS = [
     id: "f7-netra-indoor-pt",
     name: "F7-Netra Indoor PT",
     code: "NV-CAM-006",
-    category: "INDOOR SURVEILLANCE",
+    category: "Wireless CCTV Cameras",
+    productType: "Indoor CCTV Cameras",
+    cameraMp: "2 MP",
     tags: ["ptz", "indoor", "wifi"],
     price: 3299,
     badge: "BUDGET FRIENDLY",
@@ -218,7 +233,9 @@ const SEED_PRODUCTS = [
     id: "vanta-d2",
     name: "Vanta D2 Pro",
     code: "NV-CAM-007",
-    category: "OUTDOOR SURVEILLANCE",
+    category: "IP CCTV Cameras",
+    productType: "Indoor and Outdoor CCTV Cameras",
+    cameraMp: "8 MP",
     tags: ["ptz", "outdoor", "pro"],
     price: 14999,
     badge: "PRO SERIES",
@@ -252,16 +269,18 @@ const SEED_PRODUCTS = [
     id: "ghost-m1",
     name: "Ghost M1",
     code: "NV-CAM-008",
-    category: "WI-FI ENABLED",
+    category: "Wireless CCTV Cameras",
+    productType: "Indoor CCTV Cameras",
+    cameraMp: "2 MP",
     tags: ["dome", "indoor", "wifi"],
     price: 4200,
     badge: "DISCREET",
     status: "IN STOCK",
     description: "Ultra-discreet mini dome for covert indoor monitoring. Invisible design meets full HD performance.",
     longDesc: "The Ghost M1 is engineered for premium environments where security devices should be completely unseen. Its flat profile and matte finish allow flush mounting in gypsum board ceilings, delivering crisp 1080p feeds with zero visual disruption. Features built-in Wi-Fi and SD backup.",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCfmkbSFVJ8AlzhQZHjMM4pIiv2OYIDhHkMZsWnmMTKqm9GwRMBdIZX2nZtMt94Rn9WI1BacR8uuqTkmZl_vWiGITSLb49PmCUbbZ5M81mz2w_VyCO_KCjT7d-p9hzUHt4rvyKm4OXLTA1XrWaJUvzewFlMad6e3pebPKLMVM7HknUwJL2jt6HUAMzjyO_-JJH3L6zzV8GnKhvA1im_7ZfPFJuRx-skTuwyvbK7kLrYtRHDbm4bdy8",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBp1Xc0d9UMtUth6QS2N6GCirYIIla4mss3eq30soweXB3PpYj8E6HRJzdHMxBAAEBv63GF_ZiG-NkI3AvEGe0e16F-FMhLLk6qKCWN7LcvPEUP7DKzP7YeC3pA1dz_nRVx6s3TOp6jtm2KM5WnYLwI5gu-IpY2NLtvOLVPuqrtLASW4YQeyYy7_vvnJ3KzGD3Oj12-dTRSB4yQEpMxwXLDeEsBGZAm-X8KjGArbhWKJ8HfncIbAogSDovzMdnFW1erfKaDP_dgrjs",
     thumbs: [
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCfmkbSFVJ8AlzhQZHjMM4pIiv2OYIDhHkMZsWnmMTKqm9GwRMBdIZX2nZtMt94Rn9WI1BacR8uuqTkmZl_vWiGITSLb49PmCUbbZ5M81mz2w_VyCO_KCjT7d-p9hzUHt4rvyKm4OXLTA1XrWaJUvzewFlMad6e3pebPKLMVM7HknUwJL2jt6HUAMzjyO_-JJH3L6zzV8GnKhvA1im_7ZfPFJuRx-skTuwyvbK7kLrYtRHDbm4bdy8"
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuBp1Xc0d9UMtUth6QS2N6GCirYIIla4mss3eq30soweXB3PpYj8E6HRJzdHMxBAAEBv63GF_ZiG-NkI3AvEGe0e16F-FMhLLk6qKCWN7LcvPEUP7DKzP7YeC3pA1dz_nRVx6s3TOp6jtm2KM5WnYLwI5gu-IpY2NLtvOLVPuqrtLASW4YQeyYy7_vvnJ3KzGD3Oj12-dTRSB4yQEpMxwXLDeEsBGZAm-X8KjGArbhWKJ8HfncIbAogSDovzMdnFW1erfKaDP_dgrjs"
     ],
     colors: [{ name: "Ceiling White", hex: "#fbfcfc" }, { name: "Smoke Slate", hex: "#565c66" }],
     specs: [
@@ -278,77 +297,237 @@ const SEED_PRODUCTS = [
       ["Dimensions", "Ø 80 x 38mm (recessed depth 25mm)"],
       ["Weight", "120g"]
     ]
+  },
+  {
+    id: "nv-nvr-08-pro",
+    name: "NV-NVR-08 Pro",
+    code: "NV-NVR-001",
+    category: "Network Video Recoder (NVR)",
+    productType: "",
+    cameraMp: "",
+    tags: ["nvr", "network", "recorder"],
+    price: 9500,
+    badge: "8 CHANNELS",
+    status: "IN STOCK",
+    description: "Professional 8-channel Network Video Recorder supporting 4K resolution streams and smart search.",
+    longDesc: "The NV-NVR-08 Pro is designed for high-performance camera setups. It offers continuous recording across 8 channels with auto-backup, motion trigger alerts, and secure remote viewing through the NightVision cloud uplink. Fits standard racks.",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDzJg1D0mnGkYwZ8Fajghv4evONVAKLuwriOPflWIo1zkQoU4AFCDPj7lS4O_WQQONg9naYxzfWmkOrYx178ceJD72fG7SJWe6hIPt068mI2Ku3wztp9tbh5Bg8e3MDrday1sCj-mvcGojpvR7jfe1Y3CdpiQo6WYeLrVI4dzPm2YQOEKsubDGCL2__a5bIoP5YtGE8aFjxaNb89gIK59qcToZ7Rp-RGg2FR3WHBuqDIRFFOJwGiK_B9Vjc13C-ehWcvJIY_mihhqk",
+    thumbs: [
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuDzJg1D0mnGkYwZ8Fajghv4evONVAKLuwriOPflWIo1zkQoU4AFCDPj7lS4O_WQQONg9naYxzfWmkOrYx178ceJD72fG7SJWe6hIPt068mI2Ku3wztp9tbh5Bg8e3MDrday1sCj-mvcGojpvR7jfe1Y3CdpiQo6WYeLrVI4dzPm2YQOEKsubDGCL2__a5bIoP5YtGE8aFjxaNb89gIK59qcToZ7Rp-RGg2FR3WHBuqDIRFFOJwGiK_B9Vjc13C-ehWcvJIY_mihhqk"
+    ],
+    colors: [{ name: "Anodized Black", hex: "#111111" }],
+    specs: [
+      { icon: "video_library", label: "8 CHANNELS" },
+      { icon: "hd", label: "4K DECODING" },
+      { icon: "settings_input_hdmi", label: "HDMI/VGA" },
+      { icon: "cloud_upload", label: "AUTO UPLINK" }
+    ],
+    specTable: [
+      ["IP Video Input", "8 Channels"],
+      ["Output Resolution", "4K (3840x2160) / 1080p"],
+      ["Decoding Format", "H.265+/H.265/H.264+/H.264"],
+      ["SATA Interface", "1 SATA Interface (Up to 10TB Capacity)"],
+      ["Network Interface", "1 RJ-45 10/100/1000 Mbps Ethernet"],
+      ["USB Interface", "2 x USB 2.0"],
+      ["Dimensions", "260 x 225 x 48 mm"],
+      ["Weight", "1.2kg"]
+    ]
+  },
+  {
+    id: "nv-poe-08-gig",
+    name: "GigaPower 8-Port POE Switch",
+    code: "NV-NET-002",
+    category: "POE Switch",
+    productType: "",
+    cameraMp: "",
+    tags: ["poe", "switch", "network"],
+    price: 3800,
+    badge: "GIGABIT",
+    status: "IN STOCK",
+    description: "High performance 8-port PoE switch with 2 gigabit uplink ports, ideal for IP camera networks.",
+    longDesc: "Ensure reliable power and data delivery to your IP security cameras. Supports up to 30W per PoE port with a total budget of 120W, and includes intelligent protection features.",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBJXIhdE3QlNTyBvvVNsX7AvQ1FgR0bEuz9t4y2rZUZzPYH31IBG8mDdC_YSs4ZVv-SvZh4BX2N8rerYwJP9KWeiTbNl1Mi5f6YeutWhIjRBYGcd5up8aI2HRoy3_SE8gTfOBC51xZdw2cZQ75_07DCVMTgWV3hOGVfuG9iCgYLIF1hsHOFxRYhlT-DhRsnC3XP7q61WV9mDrFD4VpSEdGMCvBbvmX88LcQrCIU0n26Uvpn8Q6v8UlrMFINjCp9TI4KQSz_GrfS__w",
+    thumbs: [
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuBJXIhdE3QlNTyBvvVNsX7AvQ1FgR0bEuz9t4y2rZUZzPYH31IBG8mDdC_YSs4ZVv-SvZh4BX2N8rerYwJP9KWeiTbNl1Mi5f6YeutWhIjRBYGcd5up8aI2HRoy3_SE8gTfOBC51xZdw2cZQ75_07DCVMTgWV3hOGVfuG9iCgYLIF1hsHOFxRYhlT-DhRsnC3XP7q61WV9mDrFD4VpSEdGMCvBbvmX88LcQrCIU0n26Uvpn8Q6v8UlrMFINjCp9TI4KQSz_GrfS__w"
+    ],
+    colors: [{ name: "Steel Grey", hex: "#4a4a4a" }],
+    specs: [
+      { icon: "power", label: "8 POE PORTS" },
+      { icon: "speed", label: "10/100/1000MBPS" },
+      { icon: "offline_bolt", label: "120W BUDGET" },
+      { icon: "security", label: "6KV SURGE PROT" }
+    ],
+    specTable: [
+      ["PoE Ports", "8 x 10/100 Mbps RJ45"],
+      ["Uplink Ports", "2 x 10/100/1000 Mbps RJ45"],
+      ["PoE Standard", "IEEE 802.3af / IEEE 802.3at"],
+      ["Max PoE Power", "30W per single port, total 120W"],
+      ["Forwarding Mode", "Store-and-Forward"],
+      ["MAC Address Table", "4K"],
+      ["Surge Protection", "Differential Mode 4KV, Common Mode 6KV"],
+      ["Dimensions", "190 x 130 x 35 mm"]
+    ]
+  },
+  {
+    id: "nv-hdd-2tb-sky",
+    name: "Seagate SkyHawk 2TB HDD",
+    code: "NV-MEM-003",
+    category: "Hard Disk",
+    productType: "",
+    cameraMp: "",
+    tags: ["hdd", "memory", "storage"],
+    price: 7200,
+    badge: "SURVEILLANCE",
+    status: "IN STOCK",
+    description: "Optimized for 24/7 surveillance workloads. Smooth video recording and high reliability storage.",
+    longDesc: "Seagate SkyHawk surveillance drives are tuned for 24/7 video recording workloads. Outfitted with ImagePerfect firmware, they help minimize dropped frames and support multi-drive systems.",
+    img: "/seagate_skyhawk_hdd.png",
+    thumbs: [
+      "/seagate_skyhawk_hdd.png"
+    ],
+    colors: [{ name: "Silver", hex: "#cccccc" }],
+    specs: [
+      { icon: "dns", label: "2TB CAPACITY" },
+      { icon: "update", label: "5400 RPM" },
+      { icon: "storage", label: "SATA 6 GB/S" },
+      { icon: "verified", label: "24/7 WORKLOAD" }
+    ],
+    specTable: [
+      ["Capacity", "2TB"],
+      ["Interface", "SATA 6Gb/s"],
+      ["Cache", "256MB"],
+      ["Drive Bays Supported", "Up to 64 Cameras"],
+      ["Reliability (MTBF)", "1,000,000 hours"],
+      ["Dimensions", "147 x 101.8 x 20.2 mm"],
+      ["Weight", "415g"]
+    ]
+  },
+  {
+    id: "nv-sd-128gb-ultra",
+    name: "Sandisk Ultra 128GB MicroSD",
+    code: "NV-MEM-004",
+    category: "SD Card",
+    productType: "",
+    cameraMp: "",
+    tags: ["sd", "memory", "storage"],
+    price: 1999,
+    badge: "CLASS 10",
+    status: "IN STOCK",
+    description: "High speed microSD card, optimized for edge-recording on Wi-Fi smart cameras.",
+    longDesc: "Sandisk Ultra microSD card with Class 10 speed rating for Full HD video recording. Engineered for durability, temperature proof, waterproof, and shockproof. Ideal for smart cameras.",
+    img: "/sandisk_microsd_card.png",
+    thumbs: [
+      "/sandisk_microsd_card.png"
+    ],
+    colors: [{ name: "Red/Grey", hex: "#d9534f" }],
+    specs: [
+      { icon: "sd_card", label: "128GB STORAGE" },
+      { icon: "speed", label: "UP TO 120MB/S" },
+      { icon: "security", label: "WEATHER PROOF" },
+      { icon: "camera", label: "A1 RATED" }
+    ],
+    specTable: [
+      ["Format", "microSDXC"],
+      ["Capacity", "128GB"],
+      ["Speed Class", "Class 10, UHS-I, A1 Rating"],
+      ["Read Performance", "Up to 120MB/s"],
+      ["Operating Temperature", "-25°C to 85°C"],
+      ["Dimensions", "15 x 11 x 1 mm"]
+    ]
   }
 ];
+let memoryStore = [];
 
-// Initialize database
+function getLocalStorageProducts() {
+  try {
+    const data = localStorage.getItem("nv_products");
+    return data ? JSON.parse(data) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function setLocalStorageProducts(products) {
+  try {
+    localStorage.setItem("nv_products", JSON.stringify(products));
+  } catch (e) {
+    // Ignore
+  }
+}
+
+// Initialize memoryStore from local storage or SEED_PRODUCTS
+const localData = getLocalStorageProducts();
+if (localData && localData.length > 0) {
+  memoryStore = localData;
+} else {
+  memoryStore = [...SEED_PRODUCTS];
+  setLocalStorageProducts(memoryStore);
+}
+
+let dbInstance = null;
+let dbInitializationPromise = null;
+
 export function initDb() {
-  return new Promise((resolve, reject) => {
+  if (dbInitializationPromise) {
+    return dbInitializationPromise;
+  }
+
+  dbInitializationPromise = new Promise((resolve) => {
     if (typeof window === "undefined" || !window.indexedDB) {
-      console.warn("IndexedDB not supported. Falling back to memory storage.");
       resolve(null);
       return;
     }
 
-    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    const request = window.indexedDB.open(DB_NAME, DB_VERSION);
 
-    request.onupgradeneeded = (e) => {
-      const db = e.target.result;
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
       if (!db.objectStoreNames.contains(STORE_NAME)) {
         db.createObjectStore(STORE_NAME, { keyPath: "id" });
       }
     };
 
-    request.onsuccess = (e) => {
-      const db = e.target.result;
-      // Seed if empty
+    request.onsuccess = (event) => {
+      const db = event.target.result;
+      dbInstance = db;
+
+      // Force upsert seed products to update categories/types in the DB store
       const transaction = db.transaction(STORE_NAME, "readwrite");
       const store = transaction.objectStore(STORE_NAME);
-      const countRequest = store.count();
 
-      countRequest.onsuccess = () => {
-        if (countRequest.result === 0) {
-          console.log("Seeding database with default products...");
-          SEED_PRODUCTS.forEach((product) => {
-            store.put(product);
-          });
+      // We put all seed products to ensure they have the updated categories/productTypes/cameraMp
+      SEED_PRODUCTS.forEach((product) => {
+        store.put(product);
+      });
+
+      // Also ensure that memoryStore has the updated SEED_PRODUCTS
+      const updatedMemoryStore = [...memoryStore];
+      SEED_PRODUCTS.forEach((seedProd) => {
+        const idx = updatedMemoryStore.findIndex((p) => p.id === seedProd.id);
+        if (idx >= 0) {
+          updatedMemoryStore[idx] = { ...updatedMemoryStore[idx], ...seedProd };
+        } else {
+          updatedMemoryStore.push(seedProd);
         }
-      };
+      });
+      memoryStore = updatedMemoryStore;
+      setLocalStorageProducts(memoryStore);
 
-      resolve(db);
+      transaction.oncomplete = () => {
+        resolve(db);
+      };
+      
+      transaction.onerror = () => {
+        resolve(db);
+      };
     };
 
-    request.onerror = (e) => {
-      console.error("IndexedDB error:", e.target.error);
-      reject(e.target.error);
+    request.onerror = () => {
+      resolve(null);
     };
   });
-}
 
-// Memory fallback store (used if IndexedDB is disabled/unavailable)
-let memoryStore = [...SEED_PRODUCTS];
-const getLocalStorageProducts = () => {
-  try {
-    const saved = localStorage.getItem("nv_products_fallback");
-    if (saved) return JSON.parse(saved);
-  } catch (e) {
-    console.error("LocalStorage load error:", e);
-  }
-  return null;
-};
-const setLocalStorageProducts = (prods) => {
-  try {
-    localStorage.setItem("nv_products_fallback", JSON.stringify(prods));
-  } catch (e) {
-    console.error("LocalStorage save error:", e);
-  }
-};
-
-const localFallback = getLocalStorageProducts();
-if (localFallback) {
-  memoryStore = localFallback;
-} else {
-  setLocalStorageProducts(memoryStore);
+  return dbInitializationPromise;
 }
 
 // Get all products

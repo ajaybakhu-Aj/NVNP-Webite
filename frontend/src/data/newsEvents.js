@@ -7,7 +7,7 @@ export const newsEventsData = [
     date: "June 01, 2026",
     author: "Operations Team",
     tag: "SYSTEM LAUNCH",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCnrOG19ZEUFvu4Y8fo3JaRsuT1cM-JTtLfK1XZ-WAvXM-vcIIoVeF3elAcB7PMeMglDfZbBaCfTsSYcA3eY2kykeGLUBNNmNqQH-poowBIazkZ0pDw0ENC8msf47oiXow4TOBNqKpJAAxuuXADt8Ywb_f_MfItwJcttluIpsXTBOpCFbcqe2cN22eIdIm63ybN-VzPyjIMy1VL75r3j_NZzAuQkz7wz9AzlD6q6UxaRK7oA3A0DJDBBlPew3O1tbr0pnAkcHmRHJs",
+    image: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&w=1200&q=80",
     excerpt: "NIGHTVISION™ officially opens its state-of-the-art Operations Center in Kathmandu to support industrial monitoring and secure remote networks across Nepal.",
     content: [
       "In response to the rapidly growing demand for high-reliability enterprise security solutions in Nepal, NIGHTVISION™ has officially commissioned its first centralized Operations Center in Kathmandu. This new state-of-the-art facility integrates advanced AI-assisted surveillance feeds, real-time diagnostic systems, and a direct response pipeline to support our network of corporate, industrial, and banking clients.",
@@ -29,7 +29,7 @@ export const newsEventsData = [
     date: "June 20, 2026",
     location: "Hyatt Regency, Kathmandu",
     tag: "SUMMIT EXPO",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAXvIRiJKGZJ2iKfQ1-_kWWNz94baRJqpvDJ-GcUp_sErwdk_waTwtG02uNOKvsJ_7QqroY656QSBZTsn8vyBsnC78Rp_hKx2tKrVomEU-Kbe97E6zEym8H-vGFR_Hr-RhAA7RTjXb85FeS2KOkB-AGgw7kaZMqjDnl_QADzp_Z3QhprSkyHbcV5RuOF2a7__sTFqcZyjoamWdyDsPlaJrTQN13OX62k98e3ADcoCZlGfN1ZzV5tbeZYO2h26s17DcDdqcvLqucBTk",
+    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&q=80",
     excerpt: "Join NIGHTVISION™ at the annual Secure Nepal Summit to experience live demonstrations of our next-generation thermal imaging and neural-network motion tracking.",
     content: [
       "NIGHTVISION™ is proud to announce its key sponsorship and exhibition at the upcoming Secure Nepal Summit 2026. The summit is the premier gathering of security professionals, risk managers, and operations directors in the region, focusing on advanced surveillance technology and intelligent perimeter protection.",
@@ -51,7 +51,7 @@ export const newsEventsData = [
     date: "May 28, 2026",
     author: "Partnership Team",
     tag: "PARTNERSHIP",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCX4fwuV_29IHl2jxynNtAG8uY2KXdJGQBJXXbFnCixRjoRhSAKVea0f3RgtuKqjSp7nFg69MNgY3zDkxb6j6_XqVEWSZrOt5CcMU3b-RWH5eVvS5F50uiY8FK9i2yO4Y4SgFdiRkztRMzj6pU-ST6ecEDSgrzrsiDzmpBOxBd_H3BuzmUAnqKWoiJk3jFcYDskEuWdh0vy1AZ_81vSsNh8yzdI6wBf8ZzCD9mPeb8j6LmuZq4YBVY10SDVkWKWQ6Nd4U5RR9MNDL0",
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80",
     excerpt: "We have finalized official partnerships with premier regional technology system integrators to establish localized deployment and maintenance hubs in all provinces.",
     content: [
       "To ensure that all NIGHTVISION™ systems deployed in Nepal receive immediate local support and professional installation, we have formed the Certified Dealer Network Alliance. By partnering with leading technology distributors in every province, we guarantee that local sites receive support from certified technicians who have undergone full system training.",
@@ -73,11 +73,11 @@ export const newsEventsData = [
     date: "May 15, 2026",
     author: "R&D Software Division",
     tag: "SOFTWARE RELEASE",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD71gPu9tVyuoN99Koj__dd45B4JaRC0b4JpA479NJwWMhtpfny_wq1_cZDgMARJmIxGuGdQDlDfkMnAF8GiCrxFFASXMQFGPyx2kBCq-CUrUwm-GRdqogZ3SGw_N943dk8-BK23oNe80HwKtLZkYi-6e5sDaDx20Dh3YB2NNjjmfec4XZeRhz67R6C63P1lNtf_zz-ijT90LzRFDuQy5DqtvFWdH9bmAlwuTnE81lcYwhM6dXXRzWyVewu23gJVxA0p8HG1XeBCwU",
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80",
     excerpt: "Version 4.2 software patch brings local neural network filters to the Ratri Dome cameras, eliminating shadow false-positives and stabilizing detection triggers.",
     content: [
       "NIGHTVISION™ R&D Software Division has begun distributing the latest over-the-air firmware update, Patch v4.2, for our Dome camera series. This upgrade optimizes the built-in edge processing unit to run a lighter, more efficient motion filter model without increasing power draw or hardware temperature.",
-      "Historically, foliage movements and rapid ambient light changes (such as headlights passing through windows) caused motion alerts. Patch v4.2 introduces dynamic scene modeling, which isolates background oscillation patterns and ignores them, resulting in an estimated 85% drop in false positive alerts during testing.",
+      "Historically, foliage movements and ambient light changes (such as headlights passing through windows) caused motion alerts. Patch v4.2 introduces dynamic scene modeling, which isolates background oscillation patterns and ignores them, resulting in an estimated 85% drop in false positive alerts during testing.",
       "All active enterprise networks on our platform will receive the update automatically during scheduled low-activity hours. For offline or closed-circuit air-gapped systems, the software binary can be downloaded securely via the user dashboard and flashed via local USB connection."
     ],
     metaDetails: [
@@ -95,7 +95,7 @@ export const newsEventsData = [
     date: "June 28, 2026",
     location: "Syangboche Center, Everest Region",
     tag: "FIELD OPERATIONS",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDh5NMPJG3EEFQ4j7jc3dx3fyRKJLytXwRm1QWUOYQMhJWWKI-4ssODj5Mx0l60di23dml4TQ5ifVDMxTdU4NgQKAGfxmTQp_ww3Uwt226jOJ5zdkuBrzAfHkEZkg1Hhuz4GFgg0D1q_0uTriwFLo3GKzI04xAD9dW33l76SZKrAJPnYA6a0ITVaC8pKsks2RQgA1laG68QzPrYwdJ-4v6iAnlr1ImTvJd4RkenS-WlW_p6uKGmaSu6qcM2uLaRSTuk2RNeJ6fCLaY",
+    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
     excerpt: "NIGHTVISION™ engineers will deploy a monitoring post at 3,780m to evaluate standard sensor structural performance and lens crystallization resistance.",
     content: [
       "Deploying optical systems in high-altitude mountain environments poses unique challenges including sub-zero temperatures, intense ultraviolet radiation, and extreme wind load pressure. In our upcoming Himalayan Field Test, our engineering group will install a monitoring system at Syangboche (3,780 meters above sea level).",

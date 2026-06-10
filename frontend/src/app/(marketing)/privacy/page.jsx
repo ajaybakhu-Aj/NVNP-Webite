@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import { useSiteContents } from "../../../utils/cmsDb";
+import PageHeroBanner from "../../../components/ui/PageHeroBanner";
 
 const C = {
   bg: "#000000",
@@ -60,6 +62,7 @@ export default function App() {
   const [activeSection, setActiveSection] = useState("intro");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const siteContents = useSiteContents();
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -115,19 +118,7 @@ export default function App() {
         }
       `}</style>
 
-      {/* Scanline overlay */}
-      <div style={{
-        position: "fixed", inset: 0, zIndex: 10, pointerEvents: "none",
-        background: "linear-gradient(rgba(181,231,93,0.018) 50%, transparent 50%)",
-        backgroundSize: "100% 4px",
-      }} />
 
-      {/* Moving scan beam */}
-      <div style={{
-        position: "fixed", left: 0, right: 0, height: 2, zIndex: 11, pointerEvents: "none",
-        background: `linear-gradient(90deg, transparent, ${C.secondary}22, transparent)`,
-        animation: "scanH 6s linear infinite",
-      }} />
 
       {/* Header */}
 
@@ -144,54 +135,12 @@ export default function App() {
         </div>
       )}
 
-      <div style={{ paddingTop: 58 }}>
-        {/* Hero */}
-        <section style={{ position: "relative", textAlign: "center", padding: "80px 24px 60px", borderBottom: `1px solid ${C.outlineVariant}`, overflow: "hidden" }} className="hero-pad">
-          {/* Dot grid bg */}
-          <div style={{
-            position: "absolute", inset: 0, opacity: 0.06,
-            backgroundImage: `radial-gradient(${C.outline} 1px, transparent 1px)`,
-            backgroundSize: "24px 24px",
-          }} />
-          <div style={{ position: "relative", zIndex: 2, display: "inline-block" }}>
-            {/* Corner brackets */}
-            {[
-              { top: 0, left: 0, borderTop: `2px solid ${C.secondaryLight}`, borderLeft: `2px solid ${C.secondaryLight}` },
-              { top: 0, right: 0, borderTop: `2px solid ${C.secondaryLight}`, borderRight: `2px solid ${C.secondaryLight}` },
-              { bottom: 0, left: 0, borderBottom: `2px solid ${C.secondaryLight}`, borderLeft: `2px solid ${C.secondaryLight}` },
-              { bottom: 0, right: 0, borderBottom: `2px solid ${C.secondaryLight}`, borderRight: `2px solid ${C.secondaryLight}` },
-            ].map((s, i) => (
-              <span key={i} style={{ position: "absolute", width: 32, height: 32, ...s }} />
-            ))}
+      <PageHeroBanner
+        title={siteContents.privacyHeroTitle || "PRIVACY POLICY"}
+        subtitle="Our commitment to protecting your data with uncompromising security standards across all NightVision systems."
+      />
 
-            <div style={{ padding: "36px 48px" }}>
-              {/* Live badge */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 14 }}>
-                <span style={{
-                  width: 8, height: 8, borderRadius: "50%", display: "inline-block",
-                  background: C.secondary, animation: "pulse 1.4s ease-in-out infinite",
-                }} />
-                <span style={{ fontFamily: "'JetBrains Mono'", fontSize: 10, letterSpacing: 3, color: C.secondary, textTransform: "uppercase" }}>
-                  LIVE CONNECTION // ENCRYPTED
-                </span>
-              </div>
-
-              <h1 style={{
-                fontFamily: "'Space Grotesk'", fontSize: "clamp(36px,8vw,72px)",
-                fontWeight: 700, textTransform: "uppercase", letterSpacing: "3px",
-                color: C.onBg, lineHeight: 1.05, marginBottom: 18,
-              }}>PRIVACY POLICY</h1>
-
-              <div style={{
-                display: "inline-block",
-                fontFamily: "'JetBrains Mono'", fontSize: 10, letterSpacing: 2,
-                background: `rgba(181,231,93,0.08)`, borderLeft: `2px solid ${C.secondaryLight}`,
-                padding: "3px 10px", color: C.onSurfaceVariant, textTransform: "uppercase",
-              }}>PROTOCOL: PRIVACY_V2.0_NP</div>
-            </div>
-          </div>
-        </section>
-
+      <div>
         {/* Main Content */}
         <section style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 24px 80px", borderLeft: `1px solid rgba(67,73,56,0.3)`, borderRight: `1px solid rgba(67,73,56,0.3)` }} className="section-pad">
           <div className="content-layout" style={{ display: "grid", gridTemplateColumns: "220px 1fr", gap: 56 }}>
@@ -199,25 +148,11 @@ export default function App() {
             {/* Sidebar */}
             <aside className="hide-mob">
               <nav style={{ position: "sticky", top: 80, display: "flex", flexDirection: "column", gap: 2 }}>
-                <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 9, letterSpacing: 3, color: C.secondary, fontWeight: 700, textTransform: "uppercase", marginBottom: 14, borderBottom: `1px solid rgba(148,218,50,0.25)`, paddingBottom: 10 }}>
-                  Navigation Index
-                </div>
                 {navSections.map(s => (
                   <a key={s.id} href={`#${s.id}`} className={`sidebar-link${activeSection === s.id ? " active" : ""}`}>
                     {s.num}. {s.label}
                   </a>
                 ))}
-
-                {/* Compliance badge */}
-                <div style={{ marginTop: 32, padding: 16, background: C.surfaceLow, border: `1px solid ${C.outlineVariant}` }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, color: C.secondary, marginBottom: 8 }}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                    <span style={{ fontFamily: "'JetBrains Mono'", fontSize: 9, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase" }}>COMPLIANCE STATUS</span>
-                  </div>
-                  <p style={{ fontFamily: "'JetBrains Mono'", fontSize: 9, color: C.onSurfaceVariant, lineHeight: 1.6, letterSpacing: 0.5 }}>
-                    Aligned with the Individual Privacy Act, 2075 (2018) of Nepal. End-to-end encryption active.
-                  </p>
-                </div>
               </nav>
             </aside>
 
@@ -243,11 +178,8 @@ export default function App() {
                 <section id="intro" style={{ scrollMarginTop: 80 }}>
                   <SectionHeading num="01" title="Introduction" />
                   <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 680 }}>
-                    <p style={{ fontSize: 15, lineHeight: 1.8, color: C.onSurfaceVariant }}>
-                      At NV/// NIGHTVISION™, compromising on security is not an option. Our Privacy Policy outlines the rigid technical standards we employ to protect the data captured by our surveillance ecosystems across Nepal.
-                    </p>
-                    <p style={{ fontSize: 15, lineHeight: 1.8, color: C.onSurfaceVariant }}>
-                      We operate with uncompromising vigilance, ensuring that your personal and environmental data is handled with the highest level of industrial-grade security protocols.
+                    <p style={{ fontSize: 15, lineHeight: 1.8, color: C.onSurfaceVariant, whiteSpace: "pre-wrap" }}>
+                      {siteContents.privacyIntroContent || "At NV// NIGHTVISION™, compromising on security is not an option. Our Privacy Policy outlines the rigid technical standards we employ to protect the data captured by our surveillance ecosystems across Nepal.\n\nWe operate with uncompromising vigilance, ensuring that your personal and environmental data is handled with the highest level of industrial-grade security protocols."}
                     </p>
                   </div>
                 </section>
@@ -272,7 +204,7 @@ export default function App() {
                     ].map((item, i) => (
                       <div key={i} style={{ padding: 24, background: C.surfaceLow, border: `1px solid ${C.outlineVariant}`, position: "relative", overflow: "hidden" }}>
                         <div style={{ position: "absolute", top: 10, right: 12, opacity: 0.15, color: C.onSurfaceVariant }}>{item.icon}</div>
-                        <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 9, letterSpacing: 2, color: C.secondary, textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>{item.title}</div>
+                        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, color: C.secondary, fontWeight: 700, marginBottom: 12 }}>{item.title}</div>
                         <p style={{ fontSize: 13, color: C.onSurfaceVariant, lineHeight: 1.7 }}>{item.body}</p>
                       </div>
                     ))}
@@ -308,14 +240,6 @@ export default function App() {
                           </div>
                         ))}
                       </div>
-
-                      <div style={{
-                        marginTop: 28, paddingTop: 18, borderTop: `1px solid rgba(148,218,50,0.2)`,
-                        display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 8,
-                      }}>
-                        <span style={{ fontFamily: "'JetBrains Mono'", fontSize: 9, letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>STATUS: SECURE ARCHIVE ACTIVE</span>
-                        <span style={{ fontFamily: "'JetBrains Mono'", fontSize: 9, letterSpacing: 2, fontWeight: 700, color: C.secondary, textTransform: "uppercase" }}>ENCRYPTION LEVEL: MIL-SPEC</span>
-                      </div>
                     </div>
                   </div>
                 </section>
@@ -326,7 +250,7 @@ export default function App() {
                 <section id="cookies" style={{ scrollMarginTop: 80 }}>
                   <SectionHeading num="04" title="Cookies" />
                   <div style={{ fontSize: 15, lineHeight: 1.8, color: C.onSurfaceVariant, maxWidth: 680, marginBottom: 20 }}>
-                    NV/// NIGHTVISION™ uses strictly necessary cookies to maintain secure authenticated sessions on our digital platforms. No third-party tracking or advertising cookies are deployed across our infrastructure.
+                    NV// NIGHTVISION™ uses strictly necessary cookies to maintain secure authenticated sessions on our digital platforms. No third-party tracking or advertising cookies are deployed across our infrastructure.
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                     {[
@@ -348,12 +272,12 @@ export default function App() {
                 <section id="rights" style={{ scrollMarginTop: 80 }}>
                   <SectionHeading num="05" title="Your Rights" />
                   <div style={{ fontSize: 15, lineHeight: 1.8, color: C.onSurfaceVariant, maxWidth: 680, marginBottom: 24 }}>
-                    Under the Individual Privacy Act, 2075 (2018) of Nepal, you retain full rights to access, correct, and request deletion of any personal data collected by NV/// surveillance systems.
+                    Under the Individual Privacy Act, 2075 (2018) of Nepal, you retain full rights to access, correct, and request deletion of any personal data collected by NV// surveillance systems.
                   </div>
                   <div className="grid-2col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                     {[
                       { label: "Right to Access", desc: "Request a full export of all data associated with your account or registered hardware." },
-                      { label: "Right to Erasure", desc: "Request permanent deletion of your personal data from all NV/// systems within 30 days." },
+                      { label: "Right to Erasure", desc: "Request permanent deletion of your personal data from all NV// systems within 30 days." },
                       { label: "Right to Rectification", desc: "Correct inaccurate personal data stored in our encrypted databases." },
                       { label: "Right to Object", desc: "Opt out of specific data processing activities beyond core system operation." },
                     ].map((item, i) => (
@@ -403,9 +327,9 @@ export default function App() {
             </article>
           </div>
         </section>
-
-        {/* Footer */}
       </div>
+
+      {/* Footer */}
     </div>
   );
 }

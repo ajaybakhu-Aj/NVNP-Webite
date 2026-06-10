@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { getAllBlogs } from "../../../utils/cmsDb";
+import { useBlogTaxonomy } from "../../../utils/blogTaxonomy";
+import PageHeroBanner from "../../../components/ui/PageHeroBanner";
 
 /* ─── DESIGN TOKENS ─────────────────────────────── */
 const C = {
@@ -19,61 +23,6 @@ const C = {
   pp: "'Poppins', sans-serif",
 };
 
-/* ─── ARTICLE DATA ───────────────────────────────── */
-const articles = [
-  {
-    id: 1,
-    tag: "Tech Report",
-    date: "Oct 14, 2024",
-    author: "Vikram S.",
-    title: "Integrating AI Motion Detection in High-Risk Perimeters",
-    excerpt:
-      "A deep dive into how neural networks are reducing false positives in enterprise-grade security environments through algorithmic refining.",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCnrOG19ZEUFvu4Y8fo3JaRsuT1cM-JTtLfK1XZ-WAvXM-vcIIoVeF3elAcB7PMeMglDfZbBaCfTsSYcA3eY2kykeGLUBNNmNqQH-poowBIazkZ0pDw0ENC8msf47oiXow4TOBNqKpJAAxuuXADt8Ywb_f_MfItwJcttluIpsXTBOpCFbcqe2cN22eIdIm63ybN-VzPyjIMy1VL75r3j_NZzAuQkz7wz9AzlD6q6UxaRK7oA3A0DJDBBlPew3O1tbr0pnAkcHmRHJs",
-  },
-  {
-    id: 2,
-    tag: "Infrastructure",
-    date: "Oct 12, 2024",
-    author: "Tech Lead K.",
-    title: "Quantum Encryption for Remote IP Camera Feeds",
-    excerpt:
-      "Evaluating the necessity of quantum-resistant security protocols in the current landscape of global digital espionage and data theft.",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAXvIRiJKGZJ2iKfQ1-_kWWNz94baRJqpvDJ-GcUp_sErwdk_waTwtG02uNOKvsJ_7QqroY656QSBZTsn8vyBsnC78Rp_hKx2tKrVomEU-Kbe97E6zEym8H-vGFR_Hr-RhAA7RTjXb85FeS2KOkB-AGgw7kaZMqjDnl_QADzp_Z3QhprSkyHbcV5RuOF2a7__sTFqcZyjoamWdyDsPlaJrTQN13OX62k98e3ADcoCZlGfN1ZzV5tbeZYO2h26s17DcDdqcvLqucBTk",
-  },
-  {
-    id: 3,
-    tag: "Hardware",
-    date: "Oct 09, 2024",
-    author: "Logistics O.",
-    title: "Field Testing: NV-900 Series vs Arctic Conditions",
-    excerpt:
-      "How our latest thermal optics performed during sub-zero operations in the high Himalayas. Durability meets extreme precision.",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCX4fwuV_29IHl2jxynNtAG8uY2KXdJGQBJXXbFnCixRjoRhSAKVea0f3RgtuKqjSp7nFg69MNgY3zDkxb6j6_XqVEWSZrOt5CcMU3b-RWH5eVvS5F50uiY8FK9i2yO4Y4SgFdiRkztRMzj6pU-ST6ecEDSgrzrsiDzmpBOxBd_H3BuzmUAnqKWoiJk3jFcYDskEuWdh0vy1AZ_81vSsNh8yzdI6wBf8ZzCD9mPeb8j6LmuZq4YBVY10SDVkWKWQ6Nd4U5RR9MNDL0",
-  },
-  {
-    id: 4,
-    tag: "Case Studies",
-    date: "Oct 05, 2024",
-    author: "Lakshman S.",
-    title: "Centralized Monitoring for Multi-Site Enterprises",
-    excerpt:
-      "Strategies for streamlining 50+ camera feeds into a single, actionable operations dashboard without data fatigue.",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuD71gPu9tVyuoN99Koj__dd45B4JaRC0b4JpA479NJwWMhtpfny_wq1_cZDgMARJmIxGuGdQDlDfkMnAF8GiCrxFFASXMQFGPyx2kBCq-CUrUwm-GRdqogZ3SGw_N943dk8-BK23oNe80HwKtLZkYi-6e5sDaDx20Dh3YB2NNjjmfec4XZeRhz67R6C63P1lNtf_zz-ijT90LzRFDuQy5DqtvFWdH9bmAlwuTnE81lcYwhM6dXXRzWyVewu23gJVxA0p8HG1XeBCwU",
-  },
-  {
-    id: 5,
-    tag: "Engineering",
-    date: "Oct 01, 2024",
-    author: "R&D Labs",
-    title: "The Physics of Gen 5 Thermal Imaging Sensors",
-    excerpt:
-      "Understanding the sensitivity leap in our newest sensor array and how it redefines clarity in zero-light conditions.",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDh5NMPJG3EEFQ4j7jc3dx3fyRKJLytXwRm1QWUOYQMhJWWKI-4ssODj5Mx0l60di23dml4TQ5ifVDMxTdU4NgQKAGfxmTQp_ww3Uwt226jOJ5zdkuBrzAfHkEZkg1Hhuz4GFgg0D1q_0uTriwFLo3GKzI04xAD9dW33l76SZKrAJPnYA6a0ITVaC8pKsks2RQgA1laG68QzPrYwdJ-4v6iAnlr1ImTvJd4RkenS-WlW_p6uKGmaSu6qcM2uLaRSTuk2RNeJ6fCLaY",
-  },
-];
-
-const categories = ["All Articles", "Thermal Tech", "Case Studies", "Hardware & Systems", "Software Updates"];
 
 /* ─── ICON COMPONENTS ───────────────────────────── */
 const IconSearch = () => (
@@ -167,18 +116,6 @@ function ArticleCard({ article }) {
         cursor: "pointer",
       }}
     >
-      {/* Corner brackets */}
-      <div style={{
-        position: "absolute", top: 0, left: 0, width: 10, height: 10,
-        borderTop: `2px solid ${C.primary}`, borderLeft: `2px solid ${C.primary}`,
-        opacity: hovered ? 1 : 0, transition: "opacity 0.3s", zIndex: 2,
-      }} />
-      <div style={{
-        position: "absolute", bottom: 0, right: 0, width: 10, height: 10,
-        borderBottom: `2px solid ${C.primary}`, borderRight: `2px solid ${C.primary}`,
-        opacity: hovered ? 1 : 0, transition: "opacity 0.3s", zIndex: 2,
-      }} />
-
       {/* Image */}
       <div style={{ position: "relative", aspectRatio: "16/9", overflow: "hidden" }}>
         <img
@@ -194,22 +131,49 @@ function ArticleCard({ article }) {
           }}
           loading="lazy"
         />
-        <div style={{
-          position: "absolute", top: 12, left: 12,
-          background: C.primary, color: C.onPrimary,
-          padding: "3px 10px",
-          fontSize: 11, fontWeight: 600, letterSpacing: "1.5px",
-          textTransform: "uppercase", fontFamily: C.pp,
-        }}>{article.tag}</div>
       </div>
 
       {/* Body */}
       <div style={{ padding: "28px 28px 24px", display: "flex", flexDirection: "column", flexGrow: 1 }}>
+        <div style={{ marginBottom: 12, display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <span style={{
+            background: C.primary,
+            color: C.onPrimary,
+            padding: "3px 10px",
+            fontSize: 10,
+            fontWeight: 700,
+            letterSpacing: "1.5px",
+            textTransform: "uppercase",
+            fontFamily: C.pp,
+            borderRadius: "2px"
+          }}>{article.category || "Thermal Tech"}</span>
+          <span style={{
+            background: C.surfHi,
+            color: C.onSurfVar,
+            border: `1px solid ${C.outlineVar}`,
+            padding: "2px 8px",
+            fontSize: 10,
+            fontWeight: 600,
+            letterSpacing: "1px",
+            textTransform: "uppercase",
+            fontFamily: C.pp,
+            borderRadius: "2px"
+          }}>{article.tag}</span>
+        </div>
+
         <div style={{
           fontSize: 11, fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase",
           color: C.onSurfVar, opacity: 0.65, marginBottom: 12, fontFamily: C.pp,
         }}>
-          {article.date} — By {article.author}
+          {article.date} — By <Link 
+            to={`/author/${article.author.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}`}
+            onClick={(e) => e.stopPropagation()}
+            style={{ color: C.secondary, textDecoration: "none", fontWeight: "bold", transition: "color 0.2s" }}
+            onMouseEnter={(e) => { e.target.style.color = C.primary; }}
+            onMouseLeave={(e) => { e.target.style.color = C.secondary; }}
+          >
+            {article.author}
+          </Link>
         </div>
 
         <h3 style={{
@@ -361,8 +325,60 @@ function NewsletterCard() {
 
 /* ─── MAIN PAGE ──────────────────────────────────── */
 export default function NightWatchBlog() {
-  const [activeCategory, setActiveCategory] = useState("All Articles");
+  const [searchParams, setSearchParams] = useSearchParams();
   const [activePage, setActivePage] = useState(1);
+  const [articlesList, setArticlesList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { tags: allTags, categories: allCategories } = useBlogTaxonomy();
+
+  // Read active filters from URL params
+  const activeCategory = searchParams.get("category") || "";
+  const activeTag = searchParams.get("tag") || "";
+
+  useEffect(() => {
+    getAllBlogs().then((data) => {
+      setArticlesList(data);
+      setLoading(false);
+    });
+  }, []);
+
+  // Build dynamic filter lists from taxonomy hook
+  const categoryLabels = ["All Articles", ...allCategories.map((c) => c.label)];
+  const tagLabels = ["All Tags", ...allTags.map((t) => t.label)];
+
+  const setFilter = (type, value) => {
+    const params = new URLSearchParams(searchParams);
+    if (type === "category") {
+      if (!value || value === "All Articles") {
+        params.delete("category");
+      } else {
+        params.set("category", value);
+      }
+    }
+    if (type === "tag") {
+      if (!value || value === "All Tags") {
+        params.delete("tag");
+      } else {
+        params.set("tag", value);
+      }
+    }
+    setSearchParams(params, { replace: true });
+    setActivePage(1);
+  };
+
+  const clearFilters = () => {
+    setSearchParams({}, { replace: true });
+    setActivePage(1);
+  };
+
+  const filteredArticles = articlesList.filter((article) => {
+    const matchCategory = !activeCategory || (article.category || "").toLowerCase() === activeCategory.toLowerCase();
+    const matchTag = !activeTag || (article.tag || "").toLowerCase() === activeTag.toLowerCase();
+    return matchCategory && matchTag;
+  });
+
+  const hasActiveFilter = !!activeCategory || !!activeTag;
+
   return (
     <div style={{ background: C.bg, color: C.onSurf, fontFamily: C.pp, minHeight: "100vh", overflowX: "hidden" }}>
       <style>{`
@@ -375,7 +391,6 @@ export default function NightWatchBlog() {
         .nvicon:hover{color:#deffa4 !important;}
         .nvpage:hover{background:#b5e75d !important;color:#233600 !important;}
         .footlink:hover{color:#94da32 !important;transform:translateX(4px);}
-        /* Scanline overlay on body */
         body::before{
           content:'';position:fixed;inset:0;pointer-events:none;z-index:40;
           background:repeating-linear-gradient(to bottom,transparent,transparent 2px,rgba(181,231,93,0.03) 2px,rgba(181,231,93,0.03) 4px);
@@ -388,6 +403,7 @@ export default function NightWatchBlog() {
           .hero-section{padding-top:100px !important;}
           .footer-grid{grid-template-columns:1fr 1fr !important;}
           .footer-bottom{flex-direction:column !important;text-align:center !important;gap:12px !important;}
+          .blog-filter-row{flex-direction:column !important;}
         }
         @media(min-width:769px) and (max-width:1024px){
           .blog-grid{grid-template-columns:1fr 1fr !important;}
@@ -404,48 +420,105 @@ export default function NightWatchBlog() {
         input::placeholder{color:rgba(194,201,179,0.5);}
       `}</style>
 
+      <PageHeroBanner
+        title="RESOURCES & INSIGHTS"
+        subtitle="Expert insights, technical guides, and the latest surveillance intelligence from NightVision Security Systems."
+      />
+
       {/* ── MAIN ── */}
-      <main className="hero-section" style={{ paddingTop: 110, paddingBottom: 80, maxWidth: 1440, margin: "0 auto", padding: "110px clamp(16px,4vw,64px) 80px" }}>
+      <main className="hero-section" style={{ paddingTop: 40, paddingBottom: 80, maxWidth: 1440, margin: "0 auto", padding: "40px clamp(16px,4vw,64px) 80px" }}>
 
-        {/* Hero Header */}
-        
-
-        {/* Category Tabs */}
-        <div className="cat-scroll" style={{
-          display: "flex",
-          flexWrap: "nowrap",
-          gap: 8,
-          marginBottom: 48,
-          borderBottom: `1px solid ${C.outlineVar}`,
-          paddingBottom: 16,
-          overflowX: "auto",
-          WebkitOverflowScrolling: "touch",
-        }}>
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              style={{
-                background: activeCategory === cat ? C.primary : C.surfHi,
-                color: activeCategory === cat ? C.onPrimary : C.onSurf,
-                padding: "8px 20px",
-                fontSize: 11, fontWeight: 600, letterSpacing: "1.5px",
-                textTransform: "uppercase", border: "none", cursor: "pointer",
-                fontFamily: C.pp, transition: "all 0.2s",
-                whiteSpace: "nowrap", flexShrink: 0,
-              }}
-              onMouseEnter={(e) => { if (activeCategory !== cat) e.target.style.background = C.surfHighest; }}
-              onMouseLeave={(e) => { if (activeCategory !== cat) e.target.style.background = C.surfHi; }}
-            >{cat}</button>
-          ))}
+        {/* ── Category filter row ── */}
+        <div style={{ marginBottom: 16 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: C.onSurfVar, marginBottom: 10, fontFamily: C.sg }}>CATEGORY</div>
+          <div className="cat-scroll" style={{
+            display: "flex",
+            flexWrap: "nowrap",
+            gap: 8,
+            overflowX: "auto",
+            WebkitOverflowScrolling: "touch",
+            paddingBottom: 4,
+          }}>
+            {categoryLabels.map((cat) => {
+              const isActive = cat === "All Articles" ? !activeCategory : activeCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setFilter("category", cat)}
+                  style={{
+                    background: isActive ? C.primary : C.surfHi,
+                    color: isActive ? C.onPrimary : C.onSurf,
+                    padding: "8px 20px",
+                    fontSize: 11, fontWeight: 600, letterSpacing: "1.5px",
+                    textTransform: "uppercase", border: "none", cursor: "pointer",
+                    fontFamily: C.pp, transition: "all 0.2s",
+                    whiteSpace: "nowrap", flexShrink: 0,
+                    borderRadius: 4,
+                  }}
+                  onMouseEnter={(e) => { if (!isActive) e.target.style.background = C.surfHighest; }}
+                  onMouseLeave={(e) => { if (!isActive) e.target.style.background = C.surfHi; }}
+                >{cat}</button>
+              );
+            })}
+          </div>
         </div>
+
+        {/* ── Tag filter row ── */}
+        <div style={{ marginBottom: 16 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: C.onSurfVar, marginBottom: 10, fontFamily: C.sg }}>TAG</div>
+          <div className="cat-scroll" style={{
+            display: "flex",
+            flexWrap: "nowrap",
+            gap: 8,
+            overflowX: "auto",
+            WebkitOverflowScrolling: "touch",
+            paddingBottom: 4,
+          }}>
+            {tagLabels.map((tag) => {
+              const isActive = tag === "All Tags" ? !activeTag : activeTag === tag;
+              return (
+                <button
+                  key={tag}
+                  onClick={() => setFilter("tag", tag)}
+                  style={{
+                    background: isActive ? C.secondary : C.surfHi,
+                    color: isActive ? C.onPrimary : C.onSurf,
+                    padding: "6px 16px",
+                    fontSize: 10, fontWeight: 600, letterSpacing: "1px",
+                    textTransform: "uppercase", border: `1px solid ${isActive ? C.secondary : C.outlineVar}`, cursor: "pointer",
+                    fontFamily: C.pp, transition: "all 0.2s",
+                    whiteSpace: "nowrap", flexShrink: 0,
+                    borderRadius: 4,
+                  }}
+                  onMouseEnter={(e) => { if (!isActive) e.target.style.background = C.surfHighest; }}
+                  onMouseLeave={(e) => { if (!isActive) e.target.style.background = C.surfHi; }}
+                >{tag}</button>
+              );
+            })}
+          </div>
+        </div>
+
+
+        {/* Divider */}
+        <div style={{ borderBottom: `1px solid ${C.outlineVar}`, marginBottom: 36 }} />
 
         {/* Blog Grid */}
         <div className="blog-grid" style={{ display: "grid", gap: 24 }}>
-          {articles.map((article) => (
-            <ArticleCard key={article.id} article={article} />
-          ))}
-          <NewsletterCard />
+          {loading ? (
+            <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "48px 0", color: C.secondary, fontFamily: C.pp, fontSize: 14 }}>
+              CONNECTING TO SECURITY LOG ARCHIVES...
+            </div>
+          ) : filteredArticles.length > 0 ? (
+            filteredArticles.map((article) => (
+              <Link key={article.id} to={`/blog/${article.slug}`} style={{ textDecoration: "none" }}>
+                <ArticleCard article={article} />
+              </Link>
+            ))
+          ) : (
+            <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "48px 0", color: C.onSurfVar, fontFamily: C.pp, fontSize: 14 }}>
+              NO ARTICLES FOUND MATCHING THE SELECTED FILTERS.
+            </div>
+          )}
         </div>
 
         {/* Pagination */}

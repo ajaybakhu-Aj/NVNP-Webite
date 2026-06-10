@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { FaWindows, FaGooglePlay, FaApple } from "react-icons/fa";
+import { FaGlobe, FaGooglePlay, FaApple } from "react-icons/fa";
+import { Lock, Gauge, Cloud, Bell, Users, RefreshCw } from "lucide-react";
 import { DOWNLOAD_PLATFORMS, DOWNLOAD_FEATURES } from "../../../../data/constants";
+
+import PageHeroBanner from "../../../../components/ui/PageHeroBanner";
 
 function QRCode() {
   const cells = Array.from({ length: 64 }, (_, i) => {
@@ -26,8 +29,8 @@ function QRCode() {
 export default function AppDownloadsPage() {
   const platformIcons = {
     windows: {
-      large: <FaWindows size={48} className="platform-icon" />,
-      btn: <FaWindows size={20} />,
+      large: <FaGlobe size={48} className="platform-icon" />,
+      btn: <FaGlobe size={20} />,
     },
     android: {
       large: <FaGooglePlay size={48} className="platform-icon" />,
@@ -41,23 +44,26 @@ export default function AppDownloadsPage() {
 
   return (
     <div className="downloads-page">
-      <main>
-        {/* HERO */}
-        <section className="hero-section">
-          <div className="system-badge">
-            System Interface v4.0.2
-          </div>
-          <h1 className="hero-title">
-            CONTROL CENTER.<br />
-            <span className="text-primary">ANYWHERE.</span>
-          </h1>
-          <p className="hero-desc">
-            Deploy the NV// ecosystem across all your monitoring devices. Optimized for low-latency surveillance streams and encrypted security management.
-          </p>
-        </section>
+      <PageHeroBanner
+        title="CONTROL CENTER. ANYWHERE."
+        subtitle="Deploy the NV// ecosystem across all your monitoring devices. Optimized for low-latency surveillance streams and encrypted security management."
+      />
+
+      <main style={{ paddingTop: "48px" }}>
 
         {/* PLATFORM CARDS */}
         <section className="platforms-section">
+          {/* Security Notice Box */}
+          <div className="security-notice-box">
+            <div className="security-notice-header">
+              <span className="security-notice-dot"></span>
+              <span>SYSTEM DISPATCH: SECURE DOWNLOAD VERIFIED</span>
+            </div>
+            <p className="security-notice-text">
+              All application files, firmware packages, and web consoles in this registry have been scanned for security vulnerabilities and are certified cryptographically secure. Please ensure the SHA-256 hash matches the signature on your physical operator manual.
+            </p>
+          </div>
+
           <div className="platform-grid">
             {DOWNLOAD_PLATFORMS.map(({ id, badge, title, desc, btnLabel, meta }) => {
               const icons = platformIcons[id] || { large: null, btn: null };
@@ -73,7 +79,10 @@ export default function AppDownloadsPage() {
                     {icons.btn}
                     {btnLabel}
                   </button>
-                  <div className="platform-meta">{meta}</div>
+                  <div className="platform-meta-box">
+                    <span className="platform-meta-dot"></span>
+                    <span className="platform-meta-text">{meta}</span>
+                  </div>
                 </div>
               );
             })}
@@ -83,12 +92,18 @@ export default function AppDownloadsPage() {
         {/* FEATURE ICONS */}
         <section className="features-section">
           <div className="feature-grid">
-            {DOWNLOAD_FEATURES.map(({ icon, label }) => (
-              <div key={label} className="feature-item">
+            {DOWNLOAD_FEATURES.map(({ icon, label }, idx) => (
+              <div key={label} className="feature-card">
+                <div className="feature-card-notch" />
                 <div className="feature-icon-box">
-                  <span className="material-symbols-outlined feature-icon">{icon}</span>
+                  {idx === 0 && <Lock size={32} />}
+                  {idx === 1 && <Gauge size={32} />}
+                  {idx === 2 && <Cloud size={32} />}
+                  {idx === 3 && <Bell size={32} />}
+                  {idx === 4 && <Users size={32} />}
+                  {idx === 5 && <RefreshCw size={32} />}
                 </div>
-                <span className="feature-label">{label}</span>
+                <h3 className="feature-card-title">{label}</h3>
               </div>
             ))}
           </div>
@@ -105,7 +120,7 @@ export default function AppDownloadsPage() {
                 <div className="deploy-badge">Terminal Simulation</div>
                 <h2 className="deploy-title">READY TO DEPLOY?</h2>
                 <p className="deploy-desc">
-                  Scan the code with your mobile device to instantly pair your cameras with the NV/// mobile app.
+                  Scan the code with your mobile device to instantly pair your cameras with the NV// mobile app.
                 </p>
                 <QRCode />
               </div>

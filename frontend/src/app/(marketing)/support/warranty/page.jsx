@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useSiteContents } from "../../../../utils/cmsDb";
 
 const colors = {
     bg: "#131313",
@@ -92,6 +93,7 @@ export default function App() {
     const [cartCount] = useState(2);
     const [heroLoaded, setHeroLoaded] = useState(false);
     const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
+    const siteContents = useSiteContents();
 
     useEffect(() => {
         setTimeout(() => setHeroLoaded(true), 100);
@@ -194,7 +196,7 @@ export default function App() {
                     <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
                         <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to top, ${colors.bg} 20%, transparent 80%)`, zIndex: 1 }} />
                         <img
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAsWqi7mOfZinZloeVK7bABjdrvaSo8ReutefSSHNtFzmkBVb5gKv2eRnkK0Zg_xnXgqVasj2hKnB3nVQ8g5jx9UQ7KgNlt0YWQyIA4gsxww16R1o5U2GtC66U5ub0xCd5u8WD9sLs5MJQ1ik2IWb26FNVwMXR2810anpFienZfLUPqajNfBU6FMtOmXLOPoZC-oLRGL1UwequU_q5aN7aDrDOqC58rU9iY_qP1cS-6dnbeZ-MhjpKH3aEp1BmY-XOehPr8YHtXf8"
+                            src={siteContents.warrantyHeroBg || "https://lh3.googleusercontent.com/aida-public/AB6AXuBAsWqi7mOfZinZloeVK7bABjdrvaSo8ReutefSSHNtFzmkBVb5gKv2eRnkK0Zg_xnXgqVasj2hKnB3nVQ8g5jx9UQ7KgNlt0YWQyIA4gsxww16R1o5U2GtC66U5ub0xCd5u8WD9sLs5MJQ1ik2IWb26FNVwMXR2810anpFienZfLUPqajNfBU6FMtOmXLOPoZC-oLRGL1UwequU_q5aN7aDrDOqC58rU9iY_qP1cS-6dnbeZ-MhjpKH3aEp1BmY-XOehPr8YHtXf8"}
                             alt="Surveillance command center"
                             style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(1) brightness(0.35)", opacity: 0.5 }}
                         />
@@ -208,25 +210,6 @@ export default function App() {
                     }} />
 
                     <div style={{ position: "relative", zIndex: 3, maxWidth: isMobile ? "100%" : "900px" }}>
-                        <div style={{
-                            display: "inline-flex", 
-                            alignItems: "center", 
-                            gap: 8,
-                            background: `rgba(148,218,50,0.1)`, 
-                            border: `1px solid ${colors.secondary}`,
-                            color: colors.secondary, 
-                            padding: isMobile ? "5px 12px" : "6px 14px",
-                            fontFamily: "'JetBrains Mono'", 
-                            fontSize: isMobile ? "9px" : "11px", 
-                            letterSpacing: 3,
-                            textTransform: "uppercase", 
-                            marginBottom: 24,
-                            opacity: heroLoaded ? 1 : 0, 
-                            transition: "opacity 0.6s ease 0.2s",
-                        }}>
-                            <PulsingDot /> SYSTEM STATUS: PROTECTED
-                        </div>
-
                         <h1 style={{
                             fontFamily: "'Space Grotesk'", 
                             fontSize: isMobile ? "clamp(28px, 8vw, 48px)" : isTablet ? "clamp(40px, 6vw, 60px)" : "clamp(36px, 6vw, 72px)",
@@ -239,8 +222,7 @@ export default function App() {
                             transform: heroLoaded ? "translateY(0)" : "translateY(20px)",
                             transition: "opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s",
                         }}>
-                            UNCOMPROMISING<br />PROTECTION:{" "}
-                            <span style={{ color: colors.secondary }}>WARRANTY<br />POLICY.</span>
+                            {siteContents.warrantyHeroTitle || "UNCOMPROMISING PROTECTION: WARRANTY POLICY."}
                         </h1>
 
                         <p style={{
@@ -253,7 +235,7 @@ export default function App() {
                             opacity: heroLoaded ? 1 : 0, 
                             transition: "opacity 0.7s ease 0.5s",
                         }}>
-                            Every NV/// unit is forged for endurance. Our 1-Year 'Ironclad' Warranty ensures your perimeter remains secure without failure. In the rare event of a technical issue, we deploy immediate hardware restoration.
+                            {siteContents.warrantyHeroSubtitle || "Every NV// unit is forged for endurance. Our 1-Year 'Ironclad' Warranty ensures your perimeter remains secure without failure. In the rare event of a technical issue, we deploy immediate hardware restoration."}
                         </p>
 
                         <div style={{
@@ -294,16 +276,6 @@ export default function App() {
                             }}>
                                 <CornerBrackets />
                                 <div>
-                                    <div style={{ 
-                                        fontFamily: "'JetBrains Mono'", 
-                                        fontSize: isMobile ? "9px" : "10px", 
-                                        letterSpacing: 3, 
-                                        color: colors.secondary, 
-                                        textTransform: "uppercase", 
-                                        marginBottom: 6 
-                                    }}>
-                                        Serial Authentication
-                                    </div>
                                     <h3 style={{ 
                                         fontFamily: "'Space Grotesk'", 
                                         fontSize: isMobile ? "18px" : "22px", 
@@ -554,20 +526,9 @@ export default function App() {
                                 justifyContent: "space-between", 
                                 alignItems: isMobile ? "flex-start" : "flex-end", 
                                 marginBottom: isMobile ? "32px" : "48px",
-                                flexDirection: isMobile ? "column" : "row",
-                                gap: isMobile ? "16px" : "0",
+                                flexDirection: "column",
                             }}>
                                 <div>
-                                    <div style={{ 
-                                        fontFamily: "'JetBrains Mono'", 
-                                        fontSize: isMobile ? "9px" : "10px", 
-                                        letterSpacing: 4, 
-                                        color: colors.secondary, 
-                                        textTransform: "uppercase", 
-                                        marginBottom: 6 
-                                    }}>
-                                        Process Details
-                                    </div>
                                     <h2 style={{ 
                                         fontFamily: "'Space Grotesk'", 
                                         fontSize: isMobile ? "28px" : isTablet ? "32px" : "40px", 
@@ -577,16 +538,6 @@ export default function App() {
                                     }}>
                                         WARRANTY CLAIM PROCESS
                                     </h2>
-                                </div>
-                                <div style={{ 
-                                    fontFamily: "'JetBrains Mono'", 
-                                    fontSize: isMobile ? "9px" : "10px", 
-                                    letterSpacing: 2, 
-                                    color: colors.onSurfaceVariant, 
-                                    textTransform: "uppercase", 
-                                    paddingBottom: isMobile ? "0" : "8px" 
-                                }}>
-                                    EST. RESOLUTION: 48-72 HOURS
                                 </div>
                             </div>
                         </FadeIn>
@@ -654,37 +605,7 @@ export default function App() {
                         </div>
                     </div>
                 </section>
-
-                {/* Side labels */}
-                <div style={{ 
-                    position: "absolute", 
-                    left: 8, 
-                    top: "50%", 
-                    transform: "translateY(-50%) rotate(-90deg)", 
-                    transformOrigin: "left center", 
-                    fontFamily: "'JetBrains Mono'", 
-                    fontSize: isMobile ? "7px" : "9px", 
-                    letterSpacing: 10, 
-                    color: colors.secondary, 
-                    opacity: isMobile ? 0.08 : 0.15, 
-                    whiteSpace: "nowrap", 
-                    pointerEvents: "none" 
-                }}>AUTH_WARRANTY_V2.0</div>
-                <div style={{ 
-                    position: "absolute", 
-                    right: 8, 
-                    top: "50%", 
-                    transform: "translateY(-50%) rotate(90deg)", 
-                    transformOrigin: "right center", 
-                    fontFamily: "'JetBrains Mono'", 
-                    fontSize: isMobile ? "7px" : "9px", 
-                    letterSpacing: 10, 
-                    color: colors.secondary, 
-                    opacity: isMobile ? 0.08 : 0.15, 
-                    whiteSpace: "nowrap", 
-                    pointerEvents: "none" 
-                }}>SECURE_ENCRYPTION_ACTIVE</div>
-            </main>
+             </main>
 
             {/* Footer */}
 

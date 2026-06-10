@@ -1,6 +1,8 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CartContext } from "../../../Context/CartContext";
+import { saveActivity } from "../../../utils/cmsDb";
+import Icon from "../../../utils/Icon";
 
 const C = {
   bg: "#11140c",
@@ -50,6 +52,19 @@ export default function Checkout() {
   const [createAccount, setCreateAccount] = useState(false);
   const navigate = useNavigate();
 
+  // Form states
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [company, setCompany] = useState("");
+  const [address, setAddress] = useState("");
+  const [suite, setSuite] = useState("");
+  const [city, setCity] = useState("");
+  const [district, setDistrict] = useState("Bagmati");
+  const [postcode, setPostcode] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [notes, setNotes] = useState("");
+
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const logistics = subtotal > 0 ? 1200 : 0;
   const total = subtotal + logistics;
@@ -65,6 +80,11 @@ export default function Checkout() {
       return;
     }
 
+    if (!firstName.trim() || !lastName.trim() || !address.trim() || !city.trim() || !phone.trim() || !email.trim()) {
+      alert("Please fill in all required billing details (First Name, Last Name, Street Address, City, Phone, and Email).");
+      return;
+    }
+
     const orderId = `NV-${Math.floor(10000 + Math.random() * 90000)}`;
     const newOrder = {
       id: orderId,
@@ -72,6 +92,18 @@ export default function Checkout() {
       status: "Processing",
       total: formatPrice(total),
       paymentMethod: payment === "khalti" ? "Khalti Wallet" : "Cash On Delivery",
+      customer: {
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        company: company.trim(),
+        address: `${address.trim()} ${suite.trim()}`.trim(),
+        city: city.trim(),
+        district,
+        postcode: postcode.trim(),
+        phone: phone.trim(),
+        email: email.trim(),
+        notes: notes.trim()
+      },
       items: cart.map(item => ({
         name: item.name,
         qty: String(item.quantity).padStart(2, '0'),
@@ -82,6 +114,8 @@ export default function Checkout() {
     const savedOrders = JSON.parse(localStorage.getItem("orders") || "[]");
     savedOrders.unshift(newOrder);
     localStorage.setItem("orders", JSON.stringify(savedOrders));
+
+    saveActivity(`New customer order placed: ID #${orderId} for ${newOrder.customer.firstName} ${newOrder.customer.lastName} (${newOrder.total})`, "order");
 
     alert(`Order successfully placed under ID #${orderId}! Coordinating delivery.`);
     clearCart();
@@ -109,36 +143,36 @@ export default function Checkout() {
             <SectionCard title="BILLING DETAILS" icon="☑">
               <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-                  <FormField label="First Name"><input placeholder="John" type="text" /></FormField>
-                  <FormField label="Last Name"><input placeholder="Doe" type="text" /></FormField>
+                  <FormField label="First Name"><input placeholder="John" type="text" value={firstName} onChange={e => setFirstName(e.target.value)} required /></FormField>
+                  <FormField label="Last Name"><input placeholder="Doe" type="text" value={lastName} onChange={e => setLastName(e.target.value)} required /></FormField>
                 </div>
 
                 <FormField label="Organization / Company Name (Optional)">
-                  <input placeholder="Global Security Corp" type="text" />
+                  <input placeholder="Global Security Corp" type="text" value={company} onChange={e => setCompany(e.target.value)} />
                 </FormField>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                   <label className="field-label">Street Address</label>
-                  <input placeholder="Industrial Park, Block 4" type="text" style={{ marginBottom: 8 }} />
-                  <input placeholder="Suite, Unit, Floor (Optional)" type="text" />
+                  <input placeholder="Industrial Park, Block 4" type="text" value={address} onChange={e => setAddress(e.target.value)} style={{ marginBottom: 8 }} required />
+                  <input placeholder="Suite, Unit, Floor (Optional)" type="text" value={suite} onChange={e => setSuite(e.target.value)} />
                 </div>
 
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20 }}>
-                  <FormField label="Town / City"><input placeholder="Kathmandu" type="text" /></FormField>
+                  <FormField label="Town / City"><input placeholder="Kathmandu" type="text" value={city} onChange={e => setCity(e.target.value)} required /></FormField>
                   <FormField label="District">
-                    <select>
-                      <option>Bagmati</option>
-                      <option>Gandaki</option>
-                      <option>Lumbini</option>
-                      <option>Koshi</option>
+                    <select value={district} onChange={e => setDistrict(e.target.value)}>
+                      <option value="Bagmati">Bagmati</option>
+                      <option value="Gandaki">Gandaki</option>
+                      <option value="Lumbini">Lumbini</option>
+                      <option value="Koshi">Koshi</option>
                     </select>
                   </FormField>
-                  <FormField label="Postcode"><input placeholder="44600" type="text" /></FormField>
+                  <FormField label="Postcode"><input placeholder="44600" type="text" value={postcode} onChange={e => setPostcode(e.target.value)} /></FormField>
                 </div>
 
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-                  <FormField label="Phone"><input placeholder="+977 98XXXXXXXX" type="tel" /></FormField>
-                  <FormField label="Email Address"><input placeholder="contact@mybusiness.com" type="email" /></FormField>
+                  <FormField label="Phone"><input placeholder="+977 98XXXXXXXX" type="tel" value={phone} onChange={e => setPhone(e.target.value)} required /></FormField>
+                  <FormField label="Email Address"><input placeholder="contact@mybusiness.com" type="email" value={email} onChange={e => setEmail(e.target.value)} required /></FormField>
                 </div>
 
                 <label style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}>
@@ -153,7 +187,7 @@ export default function Checkout() {
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
                   <label className="field-label">Installation Notes (Optional)</label>
-                  <textarea placeholder="Special notes or delivery instructions..." rows={4} />
+                  <textarea placeholder="Special notes or delivery instructions..." value={notes} onChange={e => setNotes(e.target.value)} rows={4} />
                 </div>
               </div>
             </SectionCard>
@@ -246,7 +280,7 @@ export default function Checkout() {
                   </div>
                   <div style={{ flex: 1, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 15, fontWeight: 600, color: C.onSurface }}>Cash On Delivery</span>
-                    <span style={{ color: C.onSurfaceVariant, fontSize: 18 }}>🚚</span>
+                    <Icon name="local_shipping" size={18} style={{ color: C.onSurfaceVariant }} />
                   </div>
                 </div>
               </div>
@@ -256,7 +290,7 @@ export default function Checkout() {
               </button>
 
               <div style={{ marginTop: 16, textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, color: C.onSurfaceVariant, fontSize: 12, letterSpacing: "0.06em" }}>
-                <span>🔒</span> SECURE TRANSACTION
+                <Icon name="lock" size={14} style={{ color: C.onSurfaceVariant }} /> SECURE TRANSACTION
               </div>
             </div>
           </section>

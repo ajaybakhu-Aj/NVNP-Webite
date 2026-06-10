@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { colors, feedImages } from "../../data/constants";
+import { useSiteContents } from "../../utils/cmsDb";
 
 export default function WhySection() {
+  const contents = useSiteContents();
+
+  const whyFeats = contents.whyFeatures || [];
   return (
     <section
       style={{
@@ -136,24 +140,6 @@ export default function WhySection() {
             width: "100%",
           }}
         >
-          <span
-            style={{
-              color: colors.secondary,
-
-              fontFamily: "'Inter', sans-serif",
-
-              fontWeight: 600,
-
-              fontSize: 12,
-
-              letterSpacing: 1,
-
-              textTransform: "uppercase",
-            }}
-          >
-            The NightVision Edge
-          </span>
-
           <h2
             style={{
               fontFamily: "'Space Grotesk', sans-serif",
@@ -169,7 +155,7 @@ export default function WhySection() {
               wordBreak: "break-word",
             }}
           >
-            UNCOMPROMISING VIGILANCE TECHNOLOGY
+            {contents.whyTitle || "UNCOMPROMISING VIGILANCE TECHNOLOGY"}
           </h2>
 
           <p
@@ -183,10 +169,7 @@ export default function WhySection() {
               wordBreak: "break-word",
             }}
           >
-            We don't just sell cameras; we deploy
-            comprehensive security ecosystems tailored
-            for the unique challenges of Nepal's
-            infrastructure.
+            {contents.whySubtitle || "We don't just sell cameras; we deploy comprehensive security ecosystems tailored for the unique challenges of Nepal's infrastructure."}
           </p>
 
           {/* FEATURES */}
@@ -204,14 +187,9 @@ export default function WhySection() {
               width: "100%",
             }}
           >
-            {[
-              ["Weatherproof", "IP67 RATED"],
-              ["24/7 Monitoring", "ZERO DOWNTIME"],
-              ["Remote Access", "GLOBAL LINK"],
-              ["Smart Alerts", "AI DETECTION"],
-            ].map(([val, label]) => (
+            {whyFeats.map((feat, idx) => (
               <div
-                key={label}
+                key={idx}
                 style={{
                   borderLeft: `4px solid ${colors.secondary}`,
 
@@ -239,7 +217,7 @@ export default function WhySection() {
                     wordBreak: "break-word",
                   }}
                 >
-                  {val}
+                  {feat.val}
                 </div>
 
                 <div
@@ -259,7 +237,7 @@ export default function WhySection() {
                     wordBreak: "break-word",
                   }}
                 >
-                  {label}
+                  {feat.label}
                 </div>
               </div>
             ))}

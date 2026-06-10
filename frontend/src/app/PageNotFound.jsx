@@ -224,7 +224,7 @@ export default function NotFound() {
             }}>
               <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: COLORS.primary, letterSpacing: "0.1em", textTransform: "uppercase", opacity: 0.9 }}>DIAGNOSTIC REPORT</div>
               <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: COLORS.textMuted }}>
-                CONNECTION FAILED // PATH: {window.location.pathname}
+                CONNECTION FAILED - PATH: {window.location.pathname}
               </div>
               <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: COLORS.textFaint, fontStyle: "italic" }}>
                 Error Code: 404 Not Found

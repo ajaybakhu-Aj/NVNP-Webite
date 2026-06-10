@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { newsEventsData } from "../../../data/newsEvents";
+import { getEventBySlug, getAllEvents } from "../../../utils/cmsDb";
+import Icon from "../../../utils/Icon";
 
 const IconArrowLeft = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -16,9 +17,31 @@ const IconArrowRight = () => (
 
 export default function EventDetail() {
   const { slug } = useParams();
+  const [zoomImage, setZoomImage] = useState(false);
+  const [item, setItem] = useState(null);
+  const [relatedItems, setRelatedItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Find matching news/event item
-  const item = newsEventsData.find((e) => e.slug === slug);
+  useEffect(() => {
+    setLoading(true);
+    getEventBySlug(slug).then((evt) => {
+      setItem(evt);
+      if (evt) {
+        getAllEvents().then((all) => {
+          setRelatedItems(all.filter((e) => e.slug !== slug).slice(0, 2));
+        });
+      }
+      setLoading(false);
+    });
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div style={{ background: "#11140c", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", color: "#94da32", fontFamily: "Space Grotesk, sans-serif" }}>
+        DECRYPTING SECURE SIGNAL TRANSMISSION...
+      </div>
+    );
+  }
 
   // Fallback for invalid slug
   if (!item) {
@@ -36,18 +59,13 @@ export default function EventDetail() {
     );
   }
 
-  // Get related items (excluding current)
-  const relatedItems = newsEventsData
-    .filter((e) => e.slug !== slug)
-    .slice(0, 2);
-
   return (
     <div className="event-detail-container">
       {/* SCANLINE OVERLAY */}
       <div className="scanline-overlay"></div>
 
       {/* HERO BANNER */}
-      <section className="event-detail-hero">
+      <section className="event-detail-hero" style={{ cursor: "zoom-in" }} onClick={() => setZoomImage(true)}>
         <div className="event-detail-hero-bg">
           <img
             src={item.image}
@@ -110,10 +128,44 @@ export default function EventDetail() {
             {item.metaDetails &&
               item.metaDetails.map((meta, index) => (
                 <div className="event-detail-ledger-row" key={index}>
-                  <span className="event-detail-ledger-label">{meta.label}</span>
+                   <span className="event-detail-ledger-label">{meta.label}</span>
                   <span className="event-detail-ledger-value">{meta.value}</span>
                 </div>
               ))}
+
+            {item.pdf && (
+              <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid rgba(148, 218, 50, 0.15)" }}>
+                <a
+                  href={item.pdf}
+                  download={`${item.slug}-brief.pdf`}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 8,
+                    width: "100%",
+                    background: "#94da32",
+                    color: "#070805",
+                    textDecoration: "none",
+                    padding: "12px 16px",
+                    fontFamily: "Space Grotesk, sans-serif",
+                    fontSize: 12,
+                    fontWeight: 700,
+                    letterSpacing: "1px",
+                    textTransform: "uppercase",
+                    border: "none",
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                    transition: "all 0.2s"
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.filter = "brightness(1.1)"}
+                  onMouseOut={(e) => e.currentTarget.style.filter = "brightness(1)"}
+                >
+                  <Icon name="download" size={18} />
+                  <span>Download PDF</span>
+                </a>
+              </div>
+            )}
           </div>
         </aside>
       </div>
@@ -157,6 +209,84 @@ export default function EventDetail() {
             ))}
           </div>
         </section>
+      )}
+
+      {/* Centered Lightbox Zoom Overlay */}
+      {zoomImage && (
+        <div 
+          className="lightbox-overlay" 
+          onClick={() => setZoomImage(false)} 
+          style={{ 
+            display: "flex", 
+            justifyContent: "center", 
+            alignItems: "center",
+            position: "fixed",
+            inset: 0,
+            zIndex: 999999,
+            backgroundColor: "rgba(7, 8, 5, 0.95)",
+            backdropFilter: "blur(10px)",
+            padding: "20px"
+          }}
+        >
+          <div 
+            className="lightbox-content" 
+            onClick={(e) => e.stopPropagation()} 
+            style={{ 
+              maxWidth: "90vw", 
+              maxHeight: "90vh", 
+              width: "auto",
+              height: "auto",
+              background: "none", 
+              border: "none", 
+              boxShadow: "none", 
+              padding: 0,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              position: "relative"
+            }}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setZoomImage(false)}
+              className="lightbox-close-btn"
+              aria-label="Close Preview"
+              style={{ 
+                position: "absolute", 
+                top: "16px", 
+                right: "16px", 
+                background: "rgba(17, 20, 12, 0.85)",
+                border: "1px solid #94da32",
+                color: "#e2e4d5",
+                width: "40px",
+                height: "40px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                zIndex: 1000,
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)"
+              }}
+            >
+              <Icon name="close" size={20} />
+            </button>
+
+            <div style={{ position: "relative", display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <img
+                src={item.image}
+                alt=""
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "85vh",
+                  objectFit: "contain",
+                  border: "2px solid #94da32",
+                  boxShadow: "0 0 25px rgba(148, 218, 50, 0.35)",
+                  display: "block"
+                }}
+              />
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

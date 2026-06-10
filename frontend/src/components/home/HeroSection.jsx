@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Icon from "../../utils/Icon";
 import { colors } from "../../data/constants";
+import { useSiteContents } from "../../utils/cmsDb";
 
 function HeroSection() {
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const contents = useSiteContents();
 
     useEffect(() => {
         const handleResize = () => {
@@ -210,17 +212,26 @@ function HeroSection() {
                             color: "#fff",
                         }}
                     >
-                        ADVANCED{" "}
-                        <span
-                            style={{
-                                color: colors.secondary,
-                                textShadow: `0 0 12px ${colors.secondary}`,
-                            }}
-                        >
-                            SURVEILLANCE
-                        </span>
-                        <br />
-                        FOR PEACE OF MIND
+                        {(() => {
+                            const title = contents.heroTitle || "ADVANCED SURVEILLANCE FOR PEACE OF MIND";
+                            const parts = title.split(/(SURVEILLANCE)/i);
+                            return parts.map((part, i) => {
+                                if (part.toLowerCase() === "surveillance") {
+                                    return (
+                                        <span
+                                            key={i}
+                                            style={{
+                                                color: colors.secondary,
+                                                textShadow: `0 0 12px ${colors.secondary}`,
+                                            }}
+                                        >
+                                            {part}
+                                        </span>
+                                    );
+                                }
+                                return part;
+                            });
+                        })()}
                     </h1>
 
                     {/* DESCRIPTION */}
@@ -233,9 +244,7 @@ function HeroSection() {
                             color: "#ccc",
                         }}
                     >
-                        Smart AI-powered surveillance systems engineered for
-                        continuous monitoring, encrypted live streaming, and
-                        real-time security response.
+                        {contents.heroSubtitle || "Smart AI-powered surveillance systems engineered for continuous monitoring, encrypted live streaming, and real-time security response."}
                     </p>
 
                     {/* BUTTONS */}
@@ -266,7 +275,7 @@ function HeroSection() {
                                 boxSizing: "border-box",
                             }}
                         >
-                            VIEW CCTV CAMERAS
+                            {(!contents.heroBtnText || contents.heroBtnText.toLowerCase().includes("cctv")) ? "VIEW OUR PRODUCTS" : contents.heroBtnText}
                         </Link>
 
                         <button
@@ -290,7 +299,7 @@ function HeroSection() {
                                 width: isSmallMobile ? "100%" : "auto",
                             }}
                         >
-                            Features
+                            {contents.heroBtn2Text || "Features"}
                         </button>
                     </div>
                 </div>
@@ -307,97 +316,93 @@ function HeroSection() {
                 >
                     <div
                         style={{
-                            width: isSmallMobile
-                                ? 260
-                                : isMobile
-                                ? 320
-                                : isTablet
-                                ? 400
-                                : 460,
-                            height: isSmallMobile
-                                ? 260
-                                : isMobile
-                                ? 320
-                                : isTablet
-                                ? 400
-                                : 460,
                             position: "relative",
+                            width: "100%",
+                            height: isSmallMobile
+                                ? "360px"
+                                : isMobile
+                                ? "440px"
+                                : isTablet
+                                ? "560px"
+                                : "680px",
                             display: "flex",
                             justifyContent: "center",
-                            alignItems: "center",
+                            alignItems: "flex-end",
+                            overflow: "hidden",
                         }}
                     >
-                        {/* OUTER RING */}
+                        {/* GREEN HALO GLOW */}
+                        <div
+    style={{
+        position: "absolute",
+        bottom: isMobile ? "40px" : "80px",
+        left: "50%",
+        transform: "translateX(-50%)",
+
+        width: isMobile ? "280px" : "600px",
+        height: isMobile ? "280px" : "600px",
+
+        borderRadius: "50%",
+
+        background:
+            "radial-gradient(circle, rgba(148,218,50,0.25) 0%, rgba(148,218,50,0.08) 35%, rgba(148,218,50,0) 75%)",
+
+        filter: "blur(60px)",
+        zIndex: 1,
+    }}
+/>
+
+                        {/* BRAND AMBASSADOR IMAGE */}
+                       <img
+    src="/hero_pointing_cctv.png"
+    style={{
+        position: "relative",
+        zIndex: 2,
+
+        maxHeight: isSmallMobile
+            ? "320px"
+            : isMobile
+            ? "420px"
+            : isTablet
+            ? "550px"
+            : "760px",
+
+        width: "auto",
+        maxWidth: "100%",
+
+        objectFit: "contain",
+        objectPosition: "bottom center",
+
+        filter: `
+            drop-shadow(0 15px 40px rgba(0,0,0,0.45))
+            drop-shadow(0 0 30px rgba(148,218,50,0.15))
+        `,
+
+        transform: isMobile ? "translateY(10px)" : "translateY(20px)",
+    }}
+/>
+
+                        {/* TRUSTED LEADERSHIP CARD */}
                         <div
                             style={{
                                 position: "absolute",
-                                inset: 0,
-                                border: `1px solid rgba(181,231,93,0.15)`,
-                                borderRadius: "50%",
-                                animation: "spin 10s linear infinite",
-                            }}
-                        />
-
-                        {/* MIDDLE RING */}
-                        <div
-                            style={{
-                                position: "absolute",
-                                inset: isMobile ? 25 : 35,
-                                border: `1px solid rgba(181,231,93,0.35)`,
-                                borderRadius: "50%",
-                                animation:
-                                    "spinReverse 15s linear infinite",
-                            }}
-                        />
-
-                        {/* INNER RING */}
-                        <div
-                            style={{
-                                position: "absolute",
-                                inset: isMobile ? 50 : 70,
-                                border: `1px solid rgba(181,231,93,0.15)`,
-                                borderRadius: "50%",
-                            }}
-                        />
-
-                        {/* CAMERA */}
-                        <div
-                            style={{
-                                width: isSmallMobile
-                                    ? 90
-                                    : isMobile
-                                    ? 110
-                                    : 140,
-                                height: isSmallMobile
-                                    ? 90
-                                    : isMobile
-                                    ? 110
-                                    : 140,
-                                borderRadius: "50%",
-                                border: `2px solid ${colors.secondary}`,
+                                top: isMobile ? "20px" : "60px",
+                                right: isMobile ? "10px" : "20px",
+                                zIndex: 15,
+                                textAlign: "left",
                                 display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                background: "rgba(0,0,0,0.5)",
+                                flexDirection: "column",
+                                alignItems: "flex-start",
+                                padding: "12px 16px",
+                                background: "rgba(19, 19, 19, 0.75)",
                                 backdropFilter: "blur(12px)",
-                                zIndex: 10,
-                                boxShadow: `0 0 15px ${colors.secondary}`,
+                                border: "1px solid rgba(255,255,255,0.05)",
+                                borderLeft: `3px solid ${colors.secondary}`,
                             }}
                         >
-                            <Icon
-                                name="videocam"
-                                size={
-                                    isSmallMobile
-                                        ? 40
-                                        : isMobile
-                                        ? 50
-                                        : 70
-                                }
-                                fill
-                                style={{
-                                    color: colors.secondary,
-                                }}
-                            />
+                        
+                            
+                            
                         </div>
                     </div>
                 </div>

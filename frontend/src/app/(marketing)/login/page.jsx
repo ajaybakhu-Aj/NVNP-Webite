@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Icon from "../../../utils/Icon";
+import { getAllAdmins } from "../../../utils/cmsDb";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -32,20 +33,38 @@ export default function LoginPage() {
 
     // Simulate server verification delay
     setTimeout(() => {
-      setIsLoading(false);
-      
-      // Store session details
-      const mockUser = {
-        email: email,
-        name: email.split("@")[0].toUpperCase(),
-        role: "Operator",
-        loginTime: new Date().toISOString()
-      };
-      
-      localStorage.setItem("user", JSON.stringify(mockUser));
-      
-      // Force direct reload to update app shell header context
-      window.location.href = "/";
+      getAllAdmins().then((adminsList) => {
+        const adminRecord = adminsList.find(x => x.email.toLowerCase() === email.toLowerCase());
+        if (adminRecord) {
+          // This email belongs to an admin!
+          if (adminRecord.password === password) {
+            const adminUser = {
+              email: adminRecord.email,
+              name: adminRecord.name,
+              role: adminRecord.role || "Admin",
+              loginTime: new Date().toISOString()
+            };
+            localStorage.setItem("user", JSON.stringify(adminUser));
+            window.location.href = "/admin";
+          } else {
+            setIsLoading(false);
+            setError("Incorrect password for administrator account.");
+          }
+        } else {
+          // Regular user (Operator simulation)
+          const mockUser = {
+            email: email,
+            name: email.split("@")[0].toUpperCase(),
+            role: "Operator",
+            loginTime: new Date().toISOString()
+          };
+          localStorage.setItem("user", JSON.stringify(mockUser));
+          window.location.href = "/";
+        }
+      }).catch(() => {
+        setIsLoading(false);
+        setError("Error connecting to database. Please try again.");
+      });
     }, 1200);
   };
 
@@ -127,11 +146,18 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="auth-footer">
-          <span>New user? </span>
-          <Link to="/signup" className="auth-link">
-            Sign Up
-          </Link>
+        <div className="auth-footer" style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
+          <div>
+            <span>New user? </span>
+            <Link to="/signup" className="auth-link">
+              Sign Up
+            </Link>
+          </div>
+          <div>
+            <Link to="/forgot-password" className="auth-link" style={{ fontSize: "13px" }}>
+              Forgot Password?
+            </Link>
+          </div>
         </div>
       </div>
     </div>

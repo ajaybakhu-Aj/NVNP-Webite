@@ -1,13 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Icon from "../../utils/Icon";
+import { useSiteContents } from "../../utils/cmsDb";
+import { getAllProducts } from "../../utils/productDb";
 import logo from "../../assets/logo.png";
 
 export default function Header() {
+  const siteContents = useSiteContents();
   const [accountOpen, setAccountOpen] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [mobileBlogOpen, setMobileBlogOpen] = useState(false);
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+  const searchInputRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.body.classList.remove("light-mode");
@@ -29,6 +39,10 @@ export default function Header() {
       }
     };
     document.addEventListener("click", handleClickOutside);
+
+    // Load products for search
+    getAllProducts().then((prods) => setAllProducts(prods));
+
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
@@ -43,23 +57,26 @@ export default function Header() {
 
   const navItems = [
     {
-      label: "CCTV CAMERAS",
+      label: "PRODUCTS",
       route: "/products",
     },
     {
-      label: "ABOUT US",
-      route: "/about",
+      label: "ABOUT",
+      dropdown: [
+        { label: "About Us", route: "/about" },
+        { label: "About CEO", route: "/founder" },
+      ],
     },
     {
       label: "CONTACT US",
       route: "/contact",
     },
     {
-      label: "DEALERSHIPS",
+      label: "DEALERS",
       route: "/dealership",
     },
     {
-      label: "BLOG",
+      label: "RESOURCES",
       dropdown: [
         { label: "Blogs", route: "/blog" },
         { label: "News and Events", route: "/events" },
@@ -67,6 +84,47 @@ export default function Header() {
       ],
     },
   ];
+
+  // ── Search logic ──────────────────────────────────────────────────────────
+  const openSearch = useCallback(() => {
+    setSearchOpen(true);
+    setSearchQuery("");
+    setSearchResults([]);
+    setTimeout(() => searchInputRef.current?.focus(), 100);
+  }, []);
+
+  const closeSearch = useCallback(() => {
+    setSearchOpen(false);
+    setSearchQuery("");
+    setSearchResults([]);
+  }, []);
+
+  useEffect(() => {
+    if (!searchOpen) return;
+    const handleEsc = (e) => { if (e.key === "Escape") closeSearch(); };
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, [searchOpen, closeSearch]);
+
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    const q = searchQuery.toLowerCase();
+    const matched = allProducts.filter((p) => {
+      const name = (p.name || "").toLowerCase();
+      const cat = (p.category || "").toLowerCase();
+      const type = (p.productType || "").toLowerCase();
+      return name.includes(q) || cat.includes(q) || type.includes(q);
+    });
+    setSearchResults(matched.slice(0, 12));
+  }, [searchQuery, allProducts]);
+
+  const handleResultClick = (product) => {
+    closeSearch();
+    navigate(`/product/${product.id}`);
+  };
 
   return (
     <header className="app-header">
@@ -113,21 +171,39 @@ export default function Header() {
                 </Link>
               );
             })}
+
+            {/* SUPPORT HOTLINE — inside nav so gap is identical to nav items */}
+            <div className="support-hotline">
+              <div className="hotline-label">SUPPORT HOTLINE</div>
+              <a href={`tel:${siteContents.supportHelpline || "+977-9745978217"}`} className="hotline-number">
+                {siteContents.supportHelpline || "+977-9745978217"}
+              </a>
+            </div>
           </nav>
         </div>
 
         {/* RIGHT */}
         <div className="header-right">
-          <span className="support-hotline">
-            SUPPORT HOTLINE: +977-9745978217
-          </span>
+          {/* SEARCH */}
+          <div
+            onClick={openSearch}
+            className="search-trigger"
+            title="Search products"
+            style={{ cursor: "pointer", display: "flex", alignItems: "center" }}
+          >
+            <Icon
+              name="search"
+              size={24}
+              className="header-icon search-icon"
+            />
+          </div>
 
           {/* CART */}
           <Link to="/cart" className="cart-link">
             <Icon
               name="shopping_cart"
               size={24}
-              className="cart-icon"
+              className="header-icon cart-icon"
             />
           </Link>
 
@@ -140,7 +216,7 @@ export default function Header() {
               <Icon
                 name="account_circle"
                 size={24}
-                className="account-icon"
+                className="header-icon account-icon"
               />
             </div>
 
@@ -175,13 +251,14 @@ export default function Header() {
 
                 {[
                   "My Profile",
+                  ...(user && user.role === "Admin" ? ["System Console"] : []),
                   "Dashboard",
                   "Orders",
                   "Settings"
                 ].map((item) => (
                   <Link
                     key={item}
-                    to={`/${item.toLowerCase().replace(" ", "-")}`}
+                    to={item === "System Console" ? "/admin" : `/${item.toLowerCase().replace(" ", "-")}`}
                     className="dropdown-link"
                     onClick={() => setAccountOpen(false)}
                   >
@@ -208,7 +285,7 @@ export default function Header() {
             <Icon
               name={mobileMenu ? "close" : "menu"}
               size={28}
-              className="menu-icon"
+              className="header-icon menu-icon"
             />
           </div>
         </div>
@@ -266,7 +343,7 @@ export default function Header() {
                     fontWeight: "600",
                     fontSize: "12px",
                     textDecoration: "none",
-                    fontFamily: "Space Grotesk",
+                    fontFamily: "Poppins",
                     letterSpacing: "1px"
                   }}
                 >
@@ -286,7 +363,7 @@ export default function Header() {
                     fontWeight: "600",
                     fontSize: "12px",
                     textDecoration: "none",
-                    fontFamily: "Space Grotesk",
+                    fontFamily: "Poppins",
                     letterSpacing: "1px"
                   }}
                 >
@@ -298,17 +375,21 @@ export default function Header() {
 
           {navItems.map((item) => {
             if (item.dropdown) {
+              const isAbout = item.label === "ABOUT";
+              const isOpen = isAbout ? mobileAboutOpen : mobileBlogOpen;
+              const toggleOpen = () => isAbout ? setMobileAboutOpen(!mobileAboutOpen) : setMobileBlogOpen(!mobileBlogOpen);
+
               return (
                 <div key={item.label} className="mobile-dropdown-wrapper">
                   <div
-                    onClick={() => setMobileBlogOpen(!mobileBlogOpen)}
+                    onClick={toggleOpen}
                     className="mobile-menu-link mobile-dropdown-trigger"
                     style={{ display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" }}
                   >
                     {item.label}
-                    <span style={{ fontSize: "10px", transition: "transform 0.2s", transform: mobileBlogOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
+                    <span style={{ fontSize: "10px", transition: "transform 0.2s", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
                   </div>
-                  {mobileBlogOpen && (
+                  {isOpen && (
                     <div className="mobile-dropdown-subitems" style={{ paddingLeft: "16px", display: "flex", flexDirection: "column", gap: "8px", marginTop: "8px" }}>
                       {item.dropdown.map((sub) => (
                         <Link
@@ -316,6 +397,7 @@ export default function Header() {
                           to={sub.route}
                           onClick={() => {
                             setMobileMenu(false);
+                            setMobileAboutOpen(false);
                             setMobileBlogOpen(false);
                           }}
                           className="mobile-menu-link"
@@ -342,7 +424,244 @@ export default function Header() {
           })}
 
           <div className="mobile-hotline">
-            SUPPORT HOTLINE: +977-9745978217
+            SUPPORT HOTLINE: {siteContents.supportHelpline || "+977-9745978217"}
+          </div>
+        </div>
+      )}
+
+      {/* ── SEARCH OVERLAY ── */}
+      {searchOpen && (
+        <div
+          className="search-overlay"
+          onClick={closeSearch}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 99999,
+            background: "rgba(7,8,5,0.92)",
+            backdropFilter: "blur(12px)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            paddingTop: "clamp(80px,15vh,160px)",
+            padding: "clamp(80px,15vh,160px) 16px 40px",
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: "100%",
+              maxWidth: 680,
+              display: "flex",
+              flexDirection: "column",
+              gap: 20,
+            }}
+          >
+            {/* Close button */}
+            <button
+              onClick={closeSearch}
+              style={{
+                alignSelf: "flex-end",
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(148,218,50,0.3)",
+                color: "#e2e4d5",
+                width: 40,
+                height: 40,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                borderRadius: 8,
+                marginBottom: 8,
+              }}
+            >
+              <Icon name="close" size={20} />
+            </button>
+
+            {/* Search input */}
+            <div style={{ position: "relative" }}>
+              <span
+                style={{
+                  position: "absolute",
+                  left: 20,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  color: "#8d937f",
+                  display: "flex",
+                }}
+              >
+                <Icon name="search" size={22} />
+              </span>
+              <input
+                ref={searchInputRef}
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search products by name, category, or type…"
+                style={{
+                  width: "100%",
+                  background: "#1e2117",
+                  border: "2px solid #94da32",
+                  borderRadius: 12,
+                  padding: "18px 20px 18px 54px",
+                  color: "#e2e4d5",
+                  fontSize: 16,
+                  fontFamily: "Poppins, sans-serif",
+                  outline: "none",
+                  boxShadow: "0 0 30px rgba(148,218,50,0.15)",
+                }}
+              />
+            </div>
+
+            {/* Results */}
+            {searchQuery.trim() && (
+              <div
+                style={{
+                  background: "#1e2117",
+                  border: "1px solid #434938",
+                  borderRadius: 12,
+                  maxHeight: "50vh",
+                  overflowY: "auto",
+                }}
+              >
+                {searchResults.length === 0 ? (
+                  <div
+                    style={{
+                      padding: "40px 20px",
+                      textAlign: "center",
+                      color: "#8d937f",
+                      fontFamily: "Space Grotesk, sans-serif",
+                      fontSize: 13,
+                    }}
+                  >
+                    No products found matching "{searchQuery}"
+                  </div>
+                ) : (
+                  searchResults.map((product, idx) => (
+                    <div
+                      key={product.id}
+                      onClick={() => handleResultClick(product)}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 16,
+                        padding: "14px 20px",
+                        cursor: "pointer",
+                        borderBottom: idx < searchResults.length - 1 ? "1px solid #434938" : "none",
+                        transition: "background 0.15s",
+                      }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(148,218,50,0.08)"; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+                    >
+                      {/* Thumbnail */}
+                      <div
+                        style={{
+                          width: 48,
+                          height: 48,
+                          borderRadius: 8,
+                          overflow: "hidden",
+                          flexShrink: 0,
+                          background: "#282b21",
+                          border: "1px solid #434938",
+                        }}
+                      >
+                        <img
+                          src={product.img}
+                          alt={product.name}
+                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        />
+                      </div>
+
+                      {/* Info */}
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div
+                          style={{
+                            fontFamily: "Poppins, sans-serif",
+                            fontSize: 14,
+                            fontWeight: 600,
+                            color: "#e2e4d5",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {product.name}
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            gap: 8,
+                            marginTop: 4,
+                            flexWrap: "wrap",
+                          }}
+                        >
+                          {product.category && (
+                            <span
+                              style={{
+                                fontSize: 10,
+                                fontWeight: 600,
+                                letterSpacing: "0.5px",
+                                color: "#94da32",
+                                background: "rgba(148,218,50,0.1)",
+                                padding: "2px 8px",
+                                borderRadius: 4,
+                                fontFamily: "Space Grotesk, sans-serif",
+                              }}
+                            >
+                              {product.category}
+                            </span>
+                          )}
+                          {product.productType && (
+                            <span
+                              style={{
+                                fontSize: 10,
+                                fontWeight: 600,
+                                letterSpacing: "0.5px",
+                                color: "#c3c9b3",
+                                background: "rgba(255,255,255,0.05)",
+                                padding: "2px 8px",
+                                borderRadius: 4,
+                                fontFamily: "Space Grotesk, sans-serif",
+                              }}
+                            >
+                              {product.productType}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Price */}
+                      <div
+                        style={{
+                          fontFamily: "Space Grotesk, sans-serif",
+                          fontSize: 14,
+                          fontWeight: 700,
+                          color: "#deffa4",
+                          flexShrink: 0,
+                        }}
+                      >
+                        Rs. {product.price?.toLocaleString()}
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+
+            {/* Hint */}
+            {!searchQuery.trim() && (
+              <div
+                style={{
+                  textAlign: "center",
+                  color: "#8d937f",
+                  fontFamily: "Space Grotesk, sans-serif",
+                  fontSize: 12,
+                  marginTop: 12,
+                }}
+              >
+                Search by product name, category, or type. Press <span style={{ color: "#deffa4", fontWeight: 700 }}>ESC</span> to close.
+              </div>
+            )}
           </div>
         </div>
       )}

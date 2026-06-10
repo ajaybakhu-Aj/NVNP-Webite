@@ -1,8 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useSiteContents } from '../../../../utils/cmsDb';
+import PageHeroBanner from '../../../../components/ui/PageHeroBanner';
+import Icon from '../../../../utils/Icon';
+import { Rocket, Award, Cpu, Handshake, Lock, Globe } from 'lucide-react';
+
+
 
 const FounderPage = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
+  const contents = useSiteContents();
+
+  const bioSections = (contents.founderBioSections && contents.founderBioSections[0]?.text?.includes("grandfather"))
+    ? contents.founderBioSections
+    : [
+        {
+          num: "01",
+          title: "Early Life",
+          text: "Rozil was then raised by his grandfather, Ram Bahadur Thapa, a respected General Manager at DDC Nepal (Dairy Development Corporation). As a disciplined government employee, Ram Bahadur Thapa provided him a lesson in honesty, discipline, and responsibility.",
+          textSec: "Rozil was a visionary person from his childhood who believed in the creation of opportunity rather than staying on order and staying on the safe side of the job. He carried his father’s spirit and legacy of doing something bold. At a very early age, his life carried the mark of enthusiasm, vision, and determination."
+        },
+        {
+          num: "02",
+          title: "Education",
+          text: "Rozil completed his Secondary Education Examination (SEE) from Modern Boarding Secondary School, Bhaktapur. After completing his SEE level, he then joined Kathmandu World School for the Higher Secondary level (+2) and completed with a 3.45 GPA. After the completion of higher school education, most of his friends and colleagues planned to go abroad, but he started learning and getting involved in surveillance technology.",
+          textSec: "Later, he joined TIME International College for his bachelor’s studies. At the time, he was deeply involved and engaged in the surveillance technology sector. While most of Rozil’s friends were studying business, he was practically learning and living in the real business world."
+        }
+      ];
+
+  const startTitle = (contents.founderStartText && contents.founderStartText.includes("gaining 2 years")) ? (contents.founderStartTitle || "Starting the Brand") : "Starting the Brand";
+  
+  const startText = (contents.founderStartText && contents.founderStartText.includes("gaining 2 years"))
+    ? contents.founderStartText
+    : "After gaining 2 years of on-the-field experience, he started learning more about business models, import systems, global technological trends, and the psychology of customers. Over the next 4 years, he continued learning about the technical side of the industry and continued learning about the market from backend logistics to front-line sales. His knowledge and experience in the surveillance technology sector helped to shape his brand later.\n\nIn 2023, Rozil took a big step from being a technician to a brand owner by launching NightVision®, a fully registered and trademarked Nepali CCTV brand. He established the brand with the objective of delivering high-quality, affordable, and reliable surveillance technology. NightVision is a brand built to make Nepal proud in the world of innovation and technology.";
+
+  const startQuote = contents.founderStartQuote || "I never wanted to follow the government path. I wanted to finish what my father started — to be a builder, a creator, a businessman.";
+
+  const marketTitle = (contents.founderMarketText && contents.founderMarketText.includes("Timi dekhdaina")) ? (contents.founderMarketTitle || "Success") : "Success";
+
+  const marketText = (contents.founderMarketText && contents.founderMarketText.includes("Timi dekhdaina"))
+    ? contents.founderMarketText
+    : "Since the launch of Night Vision, the company has seen strong and steady growth. The company adopted a bold marketing campaign with “Timi dekhdaina, tara Night Vision dekcha” as the brand slogan. Under the leadership of Rozil, the company has progressed and earned recognition all over Nepal for its quality and trust in a short period.\n\nNight Vision is preparing to take a leap and enter the global markets where the company will introduce its products to international markets like Australia, Vietnam, and others. From a local CCTV installation company, the brand today offers a variety of NVRs, WiFi cameras, and LAN-powered surveillance devices that are engineered to meet modern security requirements.";
+
+  const marketQuote = contents.founderMarketQuote || "Timi dekhdaina, tara Night Vision dekcha";
+
+  const visionTitle = (contents.founderVisionText && contents.founderVisionText.includes("Mission")) ? (contents.founderVisionTitle || "Brand Vision / Mission") : "Brand Vision / Mission";
+
+  const visionQuote = (contents.founderVisionQuote && contents.founderVisionQuote.includes("dream"))
+    ? contents.founderVisionQuote
+    : "I didn’t just want to sell cameras. I wanted to create a brand that makes people feel secure, proud, and connected. NightVision is that dream — and we’re just getting started.";
+
+  const visionText = (contents.founderVisionText && contents.founderVisionText.includes("Nepali technological innovation"))
+    ? contents.founderVisionText
+    : "Rozil envisions Night Vision as a brand that will globally stand for Nepali technological innovation, reliability, and trust. Also, his mission is to offer quality, innovative technology, and affordable surveillance solutions to customers.\n\nHe believes in building not just products, but trust. The commitment to quality, trust, and customer empowerment is the foundation for Night Vision's philosophy, products, and services.\n\nThe foundation for moving from founding Night Vision to making it a premier CCTV brand globally comes from a deep place of legacy and passion. Night Vision is not just about products and profit for Rozil, but is something that honors his father’s dream.";
+
+  const highlights = (contents.founderHighlights && contents.founderHighlights[2]?.title?.includes("Trademark"))
+    ? contents.founderHighlights
+    : [
+        { icon: "rocket_launch", title: "Post-School Launch", desc: "Founded NightVision International Pvt. Ltd. immediately after high school graduation, turning a garage startup into a nationwide enterprise." },
+        { icon: "verified", title: "6+ Years Experience", desc: "Over half a decade of hands-on deployment in some of Nepal's most challenging environmental conditions." },
+        { icon: "settings", title: "Registered Trademark", desc: "NightVision® is a fully registered and trademarked Nepali brand, built to make Nepal proud in the world of technology." },
+        { icon: "groups", title: "Business Strategy", desc: "Operational in both Business-to-Business (B2B) corporate channels and Direct-to-Consumer (D2C) retail retail channels." },
+        { icon: "security", title: "Global Footprint", desc: "Preparing for international expansion in 2025–2026, targeting tech deployments in emerging global markets." },
+        { icon: "public", title: "Core Philosophy", desc: "Guided by three fundamental pillars of operation: Uncompromising Innovation, Absolute Trust, and Visionary Legacy." }
+      ];
 
   const styles = {
     // Global
@@ -35,7 +96,7 @@ const FounderPage = () => {
       width: '100%',
       height: '100%',
       zIndex: 0,
-      backgroundImage: 'url(https://lh3.googleusercontent.com/aida/ADBb0uigFZm2MU_7fFkN1PGbqxTC4_zsd19WX1rPPXQ9Dq4i5EMbGW8uL59JfytFZsh1esNLU9nligJX4Uv90jKWL6D8MLXnq26q3GTMcyBfSr1_zrrXpo67IpigOrch4RSQvHkeqBk9x4VXRJLGzluFfWso-xnep3TZtUNQtmjjVkx4xUm72ROueuOlQghaRdACvRgs6p-gLEx5sf_1mpkxK_OjtZIMzVkcxp_k_5NJOEzBPjW9mg5vXhadcbQb9GP1FJGoMGX0s4cmKw)',
+      backgroundImage: `url(${contents.founderHeroBg || 'https://lh3.googleusercontent.com/aida/ADBb0uigFZm2MU_7fFkN1PGbqxTC4_zsd19WX1rPPXQ9Dq4i5EMbGW8uL59JfytFZsh1esNLU9nligJX4Uv90jKWL6D8MLXnq26q3GTMcyBfSr1_zrrXpo67IpigOrch4RSQvHkeqBk9x4VXRJLGzluFfWso-xnep3TZtUNQtmjjVkx4xUm72ROueuOlQghaRdACvRgs6p-gLEx5sf_1mpkxK_OjtZIMzVkcxp_k_5NJOEzBPjW9mg5vXhadcbQb9GP1FJGoMGX0s4cmKw'})`,
       backgroundPosition: 'center',
       backgroundSize: 'cover',
       filter: 'grayscale(100%) opacity(0.4)',
@@ -156,6 +217,25 @@ const FounderPage = () => {
       fontWeight: 700,
       color: '#e5e2e1',
       fontFamily: "'Space Grotesk', sans-serif",
+    },
+
+    socialIconsContainer: {
+      display: 'flex',
+      gap: '16px',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+    },
+
+    socialIconLink: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '54px',
+      height: '54px',
+      border: '1px solid #434938',
+      color: '#c3c9b3',
+      textDecoration: 'none',
+      transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
     },
 
     bioContent: {
@@ -497,7 +577,7 @@ const FounderPage = () => {
       left: 0,
       width: '100%',
       height: '100%',
-      backgroundImage: 'url(https://lh3.googleusercontent.com/aida/ADBb0uhFVruSlJhZ5q-sF8CoXAilTa0DbK8uG-4sf3f4cpUJsFuLNX3etF96ADT1UNmyuTuuJJTAVn4JPrUlNFDZt9xkUjNOaYf07xOE23xXpdgNxYTpTDkoXxMnvfQl_5jtL2ZclokCg18NynmRL3LwcqH5dgcnubOAPzSN7_Wmsj1wL7UqcbVy6U_7Snk7bUo4x_eCcpEGWTkQnkl6cD5H1Sla2en4IKIA1dWJFZBHVJWeERaVCKF_AciL8ixQPWy-N5f1jEqv-lJdXw)',
+      backgroundImage: `url(${contents.founderVisionBg || 'https://lh3.googleusercontent.com/aida/ADBb0uhFVruSlJhZ5q-sF8CoXAilTa0DbK8uG-4sf3f4cpUJsFuLNX3etF96ADT1UNmyuTuuJJTAVn4JPrUlNFDZt9xkUjNOaYf07xOE23xXpdgNxYTpTDkoXxMnvfQl_5jtL2ZclokCg18NynmRL3LwcqH5dgcnubOAPzSN7_Wmsj1wL7UqcbVy6U_7Snk7bUo4x_eCcpEGWTkQnkl6cD5H1Sla2en4IKIA1dWJFZBHVJWeERaVCKF_AciL8ixQPWy-N5f1jEqv-lJdXw'})`,
       backgroundPosition: 'center',
       backgroundSize: 'cover',
       filter: 'grayscale(100%) brightness(0.2)',
@@ -648,13 +728,13 @@ const FounderPage = () => {
     /* TABLET & SMALL DESKTOP (max 1024px) */
     @media (max-width: 1024px) {
       /* Hero Section */
-      section:first-of-type {
+      .disabled-hero {
         height: 60vh !important;
         padding: 40px 24px !important;
         padding-bottom: 60px !important;
       }
 
-      h1 {
+      .disabled-h1 {
         font-size: 48px !important;
         max-width: 100% !important;
         letter-spacing: 2px !important;
@@ -697,6 +777,12 @@ const FounderPage = () => {
       .idValue {
         font-size: 18px !important;
       }
+
+      .socialIconLink {
+        width: 48px !important;
+        height: 48px !important;
+      }
+
 
       /* Starting Brand Section */
       section:nth-of-type(3) {
@@ -804,13 +890,13 @@ const FounderPage = () => {
       }
 
       /* Hero Section */
-      section:first-of-type {
+      .disabled-hero {
         height: 50vh !important;
         padding: 32px 16px !important;
         padding-bottom: 50px !important;
       }
 
-      h1 {
+      .disabled-h1 {
         font-size: 36px !important;
         margin-bottom: 16px !important;
         letter-spacing: 1px !important;
@@ -885,6 +971,12 @@ const FounderPage = () => {
       .idValue {
         font-size: 13px !important;
       }
+
+      .socialIconLink {
+        width: 44px !important;
+        height: 44px !important;
+      }
+
 
       /* Starting Brand */
       section:nth-of-type(3) {
@@ -1020,14 +1112,14 @@ const FounderPage = () => {
     /* SMALL MOBILE (max 480px) */
     @media (max-width: 480px) {
       /* Hero Section */
-      section:first-of-type {
+      .disabled-hero {
         height: 45vh !important;
         padding: 24px 12px !important;
         padding-bottom: 40px !important;
         align-items: flex-end !important;
       }
 
-      h1 {
+      .disabled-h1 {
         font-size: 28px !important;
         letter-spacing: 1px !important;
         margin-bottom: 12px !important;
@@ -1048,7 +1140,7 @@ const FounderPage = () => {
       }
 
       /* Hero Subtitle */
-      section:first-of-type p {
+      .disabled-hero p {
         font-size: 13px !important;
         padding-left: 12px !important;
         max-width: 100% !important;
@@ -1110,6 +1202,12 @@ const FounderPage = () => {
       .idLabel {
         font-size: 8px !important;
       }
+
+      .socialIconLink {
+        width: 40px !important;
+        height: 40px !important;
+      }
+
 
       /* Starting Brand */
       section:nth-of-type(3) {
@@ -1267,7 +1365,7 @@ const FounderPage = () => {
 
     /* EXTRA SMALL (max 360px) */
     @media (max-width: 360px) {
-      h1 {
+      .disabled-h1 {
         font-size: 24px !important;
         margin-bottom: 10px !important;
       }
@@ -1288,7 +1386,7 @@ const FounderPage = () => {
         font-size: 24px !important;
       }
 
-      section:first-of-type {
+      .disabled-hero {
         height: 40vh !important;
       }
 
@@ -1299,12 +1397,12 @@ const FounderPage = () => {
 
     /* TABLET LANDSCAPE (1024px and below, landscape orientation) */
     @media (max-width: 1024px) and (orientation: landscape) {
-      section:first-of-type {
+      .disabled-hero {
         height: auto !important;
         min-height: 80vh !important;
       }
 
-      h1 {
+      .disabled-h1 {
         font-size: 42px !important;
       }
 
@@ -1315,13 +1413,13 @@ const FounderPage = () => {
 
     /* MOBILE LANDSCAPE (480px and below, landscape) */
     @media (max-width: 480px) and (orientation: landscape) {
-      section:first-of-type {
+      .disabled-hero {
         height: auto !important;
         min-height: 100vh !important;
         padding: 20px 12px !important;
       }
 
-      h1 {
+      .disabled-h1 {
         font-size: 26px !important;
       }
 
@@ -1349,20 +1447,11 @@ const FounderPage = () => {
         {/* Header */}
 
         {/* Hero Section */}
-        <section style={styles.hero}>
-          <div style={styles.heroBg}></div>
-          <div style={styles.heroOverlay}></div>
-          <div style={styles.heroContent}>
-            <div style={styles.archiveLabel}>
-              <span style={styles.pulseDot}></span>
-              <span>ARCHIVE_FOUNDER_BIO // 001</span>
-            </div>
-            <h1 style={styles.h1}>Rozil Thapa: The Vision Behind NightVision</h1>
-            <p style={styles.heroSubtitle}>
-              Architect of Nepal's most resilient security infrastructure. An uncompromising pursuit of technical dominance.
-            </p>
-          </div>
-        </section>
+        <PageHeroBanner
+          title={contents.founderHeroTitle || "Rozil Thapa: The Vision Behind NightVision"}
+          subtitle={contents.founderHeroSubtitle || "Architect of Nepal's most resilient security infrastructure. An uncompromising pursuit of technical dominance."}
+        />
+
 
         {/* Bio Section */}
         <section style={styles.bioSection}>
@@ -1372,186 +1461,100 @@ const FounderPage = () => {
             onMouseLeave={() => setImgHovered(false)}
           >
             <img
-              src="https://lh3.googleusercontent.com/aida/ADBb0uiGsiUA8BUnPz5W1BtC1A_ddnZ32Idm7Lriupd_f9XBElLTooQIq8LxpmwvL2YNhOlnIM6fajbQO37s87483wAxAmFOSFmTKe1pazPPbbgd3GXXHcrOZ_FmxNDfw6K-hg-lOOEJbFQlrv8bng4iKNBuk3CmrTpr5TWqbqgmdqqkC3E0ukVn0vtWSWzkkeMXd6jGuf93ojASN3zONE-bZ3YSRayYWo69aKBJR-yvpokSdWgCPFbDyYKkXdgIqnB5dfIG_MoXHnoS"
-              alt="Rozil Thapa"
+              src={(!contents.founderImage || contents.founderImage.includes("googleusercontent.com")) ? "/founder.jpg" : contents.founderImage}
+              alt={contents.founderName || "Rozil Thapa"}
               style={{
                 ...styles.bioImageImg,
                 transform: imgHovered ? 'scale(1.05)' : 'scale(1)',
               }}
             />
-            <div
-  style={{
-    ...styles.idCard,
-
-    padding:
-      window.innerWidth <= 480
-        ? '12px'
-        : window.innerWidth <= 768
-        ? '16px'
-        : '24px',
-
-    left:
-      window.innerWidth <= 480
-        ? '12px'
-        : '40px',
-
-    right:
-      window.innerWidth <= 480
-        ? '12px'
-        : '40px',
-
-    bottom:
-      window.innerWidth <= 480
-        ? '12px'
-        : '40px',
-  }}
->
-  <div
-    style={{
-      display: 'grid',
-
-      gridTemplateColumns:
-        window.innerWidth <= 768
-          ? '1fr'
-          : '1fr 1fr',
-
-      gap:
-        window.innerWidth <= 480
-          ? '10px'
-          : '20px',
-
-      width: '100%',
-    }}
-  >
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '4px',
-        minWidth: 0,
-      }}
-    >
-      <span
-        style={{
-          ...styles.idLabel,
-
-          fontSize:
-            window.innerWidth <= 480
-              ? '10px'
-              : '12px',
-
-          lineHeight: 1.4,
-
-          wordBreak: 'break-word',
-        }}
-      >
-        IDENTIFICATION
-      </span>
-
-      <span
-        style={{
-          ...styles.idValue,
-
-          fontSize:
-            window.innerWidth <= 480
-              ? '14px'
-              : '18px',
-
-          lineHeight: 1.3,
-
-          wordBreak: 'break-word',
-        }}
-      >
-        ROZIL THAPA
-      </span>
-    </div>
-
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '4px',
-        minWidth: 0,
-      }}
-    >
-      <span
-        style={{
-          ...styles.idLabel,
-
-          fontSize:
-            window.innerWidth <= 480
-              ? '10px'
-              : '12px',
-
-          lineHeight: 1.4,
-        }}
-      >
-        ROLE
-      </span>
-
-      <span
-        style={{
-          ...styles.idValue,
-
-          fontSize:
-            window.innerWidth <= 480
-              ? '14px'
-              : '18px',
-
-          lineHeight: 1.3,
-
-          wordBreak: 'break-word',
-        }}
-      >
-        FOUNDER / CEO
-      </span>
-    </div>
-  </div>
-</div>
           </div>
           <div style={styles.bioContent}>
-            <div style={styles.bioItem}>
-              <div style={styles.bioNumber}>01</div>
-              <h2 style={styles.bioTitle}>Early Life</h2>
-              <p style={styles.bioText}>
-                Born and raised in the heart of Kathmandu, Rozil Thapa's early fascination with mechanics and electronics wasn't just a hobby—it was a precursor to a security revolution.
-              </p>
-              <p style={styles.bioTextSecondary}>
-                His childhood was defined by a relentless curiosity for how things worked, often dismantling and reassembling household gadgets to understand their internal logic. This technical foundation would later become the bedrock of NightVision's engineering philosophy.
-              </p>
-            </div>
+            {(contents.founderBioSections || []).map((section, idx) => {
+              const isInactive = idx > 0;
+              return (
+                <div key={idx} style={isInactive ? { ...styles.bioItem, ...styles.bioItemInactive } : styles.bioItem}>
+                  <div style={isInactive ? { ...styles.bioNumber, ...styles.bioNumberInactive } : styles.bioNumber}>
+                    {section.num || `0${idx + 1}`}
+                  </div>
+                  <h2 style={styles.bioTitle}>{section.title}</h2>
+                  <p style={styles.bioText}>{section.text}</p>
+                  <p style={styles.bioTextSecondary}>{section.textSec}</p>
+                </div>
+              );
+            })}
 
-            <div style={{ ...styles.bioItem, ...styles.bioItemInactive }}>
-              <div style={{ ...styles.bioNumber, ...styles.bioNumberInactive }}>02</div>
-              <h2 style={styles.bioTitle}>Education</h2>
-              <p style={styles.bioText}>
-                While academic institutions provided the framework, Thapa's true education occurred in the field.
-              </p>
-              <p style={styles.bioTextSecondary}>
-                Balancing formal studies with rigorous self-taught engineering, he mastered the complexities of digital surveillance before he had even turned twenty. Focusing on network architecture and optical precision, his journey prioritizes real-world application over theoretical abstractions.
-              </p>
+            {/* Social Media Icons Row */}
+            <div style={{ display: 'flex', justifyContent: 'center', width: '100%', paddingLeft: '48px', boxSizing: 'border-box', marginTop: '40px' }}>
+              <div style={styles.socialIconsContainer} className="socialIconsContainer">
+                {[
+                  { name: 'facebook', url: contents.socialFacebook || "https://www.facebook.com/nightvisioninterprises", label: 'Facebook', hoverColor: '#1877F2' },
+                  { name: 'instagram', url: contents.socialInstagram || "https://www.instagram.com/nightvision_nepal/", label: 'Instagram', hoverColor: '#E1306C' },
+                  { name: 'linkedin', url: contents.socialLinkedin || "https://linkedin.com/", label: 'LinkedIn', hoverColor: '#0077B5' }
+                ].map((social, idx) => (
+                  <a
+                    key={idx}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={styles.socialIconLink}
+                    className="socialIconLink"
+                    title={social.label}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = social.hoverColor;
+                      e.currentTarget.style.color = social.hoverColor;
+                      e.currentTarget.style.transform = 'translateY(-3px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = '#434938';
+                      e.currentTarget.style.color = '#c3c9b3';
+                      e.currentTarget.style.transform = 'none';
+                    }}
+                  >
+                    <Icon name={social.name} size={24} />
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
         {/* Starting the Brand */}
         <section style={styles.startBrand}>
-          <div style={styles.estBg}>EST.2018</div>
+          <div style={styles.estBg}>{contents.founderEst || "EST.2018"}</div>
           <div style={styles.startContent}>
-            <h2 style={styles.sectionTitle}>Starting the Brand</h2>
+            <h2 style={styles.sectionTitle}>{startTitle}</h2>
             <div style={styles.startGrid}>
-              <p style={styles.startText}>
-                NightVision wasn't founded in a boardroom; it was born in a garage immediately following high school graduation. With limited capital but unlimited resolve, Rozil Thapa identified a critical gap in the Nepali market: the lack of high-fidelity, industrial-grade security solutions designed for local terrains.
-              </p>
+              <div>
+                <p style={styles.startText}>
+                  {startText}
+                </p>
+                <div style={{
+                  padding: '24px',
+                  borderLeft: '4px solid #94da32',
+                  backgroundColor: 'rgba(19, 19, 19, 0.4)',
+                  marginTop: '32px',
+                  fontStyle: 'italic',
+                  color: '#c3c9b3',
+                  fontSize: '18px',
+                  fontFamily: "'Space Grotesk', sans-serif"
+                }}>
+                  "{startQuote}"
+                  <span style={{ display: 'block', fontSize: '14px', fontStyle: 'normal', color: '#94da32', marginTop: '8px', fontWeight: 600 }}>— ROZIL THAPA</span>
+                </div>
+              </div>
               <div style={styles.statBoxes}>
-                <div style={styles.statBox}>
-                  <div style={styles.statNumber}>01</div>
-                  <div style={styles.statLabel}>Initial Prototype<br />Built & Tested</div>
-                </div>
-                <div style={{ ...styles.statBox, ...styles.statBoxInactive }}>
-                  <div style={{ ...styles.statNumber, ...styles.statNumberInactive }}>24/7</div>
-                  <div style={{ ...styles.statLabel, ...styles.statLabelInactive }}>Agile Development<br />Continuous Cycle</div>
-                </div>
+                {(contents.founderStartStats || []).map((stat, idx) => {
+                  const isInactive = idx > 0;
+                  return (
+                    <div key={idx} style={isInactive ? { ...styles.statBox, ...styles.statBoxInactive } : styles.statBox}>
+                      <div style={isInactive ? { ...styles.statNumber, ...styles.statNumberInactive } : styles.statNumber}>
+                        {stat.val}
+                      </div>
+                      <div style={isInactive ? { ...styles.statLabel, ...styles.statLabelInactive } : styles.statLabel} dangerouslySetInnerHTML={{ __html: stat.label ? stat.label.replace(/\n/g, '<br />') : "" }} />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -1561,13 +1564,12 @@ const FounderPage = () => {
         <section style={styles.marketSection}>
           <div style={styles.marketLeft}>
             <div style={{ maxWidth: '600px' }}>
-              <div style={styles.phaseLabel}>PHASE_03</div>
-              <h2 style={styles.marketTitle}>Market Dominance</h2>
+              <h2 style={styles.marketTitle}>{marketTitle}</h2>
               <p style={styles.marketText}>
-                Within six years, NightVision transitioned from a startup to the gold standard of security in Nepal. Thapa's insistence on "Uncompromising Vigilance" resonated with high-end clients, government bodies, and industrial sectors alike.
+                {marketText}
               </p>
               <div style={styles.quote}>
-                "The market didn't need another camera vendor; it needed a security partner who understands the terrain."
+                "{marketQuote}"
               </div>
             </div>
           </div>
@@ -1577,8 +1579,8 @@ const FounderPage = () => {
             onMouseLeave={() => setMarketImgHovered(false)}
           >
             <img
-              src="https://lh3.googleusercontent.com/aida/ADBb0ug9YQUIw0MrZtq_29TVpL-FnrRS4-3iO3i2xoUtfnLiEZe_x1qPNnIFn8RajYtk_3kUu4Lecu7tOfey1nC1fDG_afuxXijuyUz9pN7g86X1H10jaMDlqyeOIEEiGQvC1HhjCzxAXW4rYIekvJrK-trj0VvG2TcXCFJOVjtrbWxiyOVuUZaAbzTAwLZaRmCzGd_wGeeF0B0QC1GgBSLdCKyV-GWpYAkfufJgXCH9Uxfm-BaDCmosaS_A-O9GqeSpQeUk2eXxaetlEg"
-              alt="Market dominance"
+              src={contents.founderMarketImg || "https://lh3.googleusercontent.com/aida/ADBb0ug9YQUIw0MrZtq_29TVpL-FnrRS4-3iO3i2xoUtfnLiEZe_x1qPNnIFn8RajYtk_3kUu4Lecu7tOfey1nC1fDG_afuxXijuyUz9pN7g86X1H10jaMDlqyeOIEEiGQvC1HhjCzxAXW4rYIekvJrK-trj0VvG2TcXCFJOVjtrbWxiyOVuUZaAbzTAwLZaRmCzGd_wGeeF0B0QC1GgBSLdCKyV-GWpYAkfufJgXCH9Uxfm-BaDCmosaS_A-O9GqeSpQeUk2eXxaetlEg"}
+              alt={marketTitle}
               style={{
                 ...styles.marketRightImg,
                 filter: marketImgHovered ? 'grayscale(0%)' : 'grayscale(100%)',
@@ -1589,16 +1591,9 @@ const FounderPage = () => {
 
         {/* Key Highlights */}
         <section style={styles.highlights}>
-          <h2 style={styles.highlightsTitle}>Key Highlights</h2>
+          <h2 style={styles.highlightsTitle}>{contents.founderHighlightsTitle || "Key Highlights"}</h2>
           <div style={styles.cardsGrid}>
-            {[
-              { icon: '🚀', title: 'Post-School Launch', desc: 'Founded NightVision immediately after high school, bypassing traditional corporate paths to lead through innovation.' },
-              { icon: '✓', title: '6+ Years Experience', desc: 'Over half a decade of hands-on deployment in some of Nepal\'s most challenging environmental conditions.' },
-              { icon: '⚙️', title: 'R&D Leadership', desc: 'Personally oversees the research and development of all NV-Series optical sensors and firmware protocols.' },
-              { icon: '👥', title: 'Strategic Partnerships', desc: 'Developed a nationwide network of authorized dealerships, ensuring technical support is never more than an hour away.' },
-              { icon: '🔒', title: 'Patented Encryption', desc: 'Architected the proprietary end-to-end encryption used in all NightVision cloud and local storage systems.' },
-              { icon: '🌍', title: 'Regional Expansion', desc: 'Led the expansion of the brand into critical infrastructure projects across the Himalayas.' },
-            ].map((item, idx) => (
+            {(contents.founderHighlights || []).map((item, idx) => (
               <div
                 key={idx}
                 style={{
@@ -1614,7 +1609,14 @@ const FounderPage = () => {
                     borderColor: hoveredCard === idx ? '#94da32' : '#434938',
                   }}
                 ></div>
-                <div style={styles.cardIcon}>{item.icon}</div>
+                <div style={styles.cardIcon}>
+                  {idx === 0 && <Rocket size={32} style={{ color: "#94da32" }} />}
+                  {idx === 1 && <Award size={32} style={{ color: "#94da32" }} />}
+                  {idx === 2 && <Cpu size={32} style={{ color: "#94da32" }} />}
+                  {idx === 3 && <Handshake size={32} style={{ color: "#94da32" }} />}
+                  {idx === 4 && <Lock size={32} style={{ color: "#94da32" }} />}
+                  {idx === 5 && <Globe size={32} style={{ color: "#94da32" }} />}
+                </div>
                 <h3 style={styles.cardTitle}>{item.title}</h3>
                 <p style={styles.cardText}>{item.desc}</p>
               </div>
@@ -1627,12 +1629,12 @@ const FounderPage = () => {
           <div style={styles.visionBg}></div>
           <div style={styles.visionOverlay}></div>
           <div style={styles.visionContent}>
-            <h2 style={styles.visionTitle}>Brand Vision</h2>
+            <h2 style={styles.visionTitle}>{contents.founderVisionTitle || "Brand Vision"}</h2>
             <blockquote style={styles.visionQuote}>
-              "Security is not a product; it is a state of mind achieved through technical absolute. My vision for NightVision is to create an ecosystem where the presence of our tech is invisible, but its protection is invincible."
+              "{contents.founderVisionQuote || "Security is not a product; it is a state of mind achieved through technical absolute. My vision for NightVision is to create an ecosystem where the presence of our tech is invisible, but its protection is invincible."}"
             </blockquote>
             <p style={styles.visionText}>
-              Looking forward, Rozil Thapa aims to integrate advanced AI-driven predictive analytics into every CCTV node, transforming passive monitoring into active threat prevention. The future of NightVision is not just seeing the dark, but predicting what it hides.
+              {contents.founderVisionText || "Looking forward, Rozil Thapa aims to integrate advanced AI-driven predictive analytics into every CCTV node, transforming passive monitoring into active threat prevention. The future of NightVision is not just seeing the dark, but predicting what it hides."}
             </p>
           </div>
         </section>
@@ -1641,33 +1643,28 @@ const FounderPage = () => {
         <section style={styles.cta}>
           <div style={styles.ctaBefore}></div>
           <div style={styles.ctaContent}>
-            <h2 style={styles.ctaTitle}>Ready to secure your perimeter?</h2>
+            <h2 style={styles.ctaTitle}>{contents.founderCtaTitle || "Ready to secure your perimeter?"}</h2>
             <div style={styles.ctaButtons}>
               <button
                 style={{ ...styles.btn, ...styles.btnPrimary }}
                 onMouseEnter={(e) => (e.target.style.backgroundColor = '#75b800')}
                 onMouseLeave={(e) => (e.target.style.backgroundColor = '#94da32')}
               >
-                Consult with our team
+                {contents.founderCtaBtn1 || "Consult with our team"}
               </button>
-              <Link to="/product">
-  <button
-    style={{ ...styles.btn, ...styles.btnPrimary }}
-    onMouseEnter={(e) =>
-      (e.target.style.backgroundColor = '#75b800')
-    }
-    onMouseLeave={(e) =>
-      (e.target.style.backgroundColor = '#94da32')
-    }
-  >
-    Explore our products
-  </button>
-</Link>
+              <Link to="/products">
+                <button
+                  style={{ ...styles.btn, ...styles.btnPrimary }}
+                  onMouseEnter={(e) => (e.target.style.backgroundColor = '#75b800')}
+                  onMouseLeave={(e) => (e.target.style.backgroundColor = '#94da32')}
+                >
+                  {contents.founderCtaBtn2 || "Explore our products"}
+                </button>
+              </Link>
             </div>
           </div>
         </section>
 
-        
       </div>
     </>
   );

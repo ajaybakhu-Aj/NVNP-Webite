@@ -3,11 +3,13 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { CartContext } from "../../../../Context/CartContext";
 import Icon from "../../../../utils/Icon";
 import { getProductById, getAllProducts } from "../../../../utils/productDb";
+import { useSiteContents } from "../../../../utils/cmsDb";
 
 export default function ProductDetail() {
   const { slug } = useParams();
   const { addToCart } = useContext(CartContext);
   const navigate = useNavigate();
+  const siteContents = useSiteContents();
 
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -18,6 +20,23 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("specs");
 
+  const checkIsPurchased = () => {
+    if (!product) return false;
+    try {
+      const userSession = localStorage.getItem("user");
+      if (!userSession) return false;
+      const savedOrders = JSON.parse(localStorage.getItem("orders") || "[]");
+      return savedOrders.some(order => 
+        order.items && order.items.some(item => 
+          item.name.toLowerCase().includes(product.name.toLowerCase())
+        )
+      );
+    } catch (e) {
+      return false;
+    }
+  };
+  const isPurchased = checkIsPurchased();
+
   useEffect(() => {
     setLoading(true);
     getProductById(slug).then((prod) => {
@@ -27,9 +46,9 @@ export default function ProductDetail() {
         setActiveColor(prod.colors && prod.colors[0] ? prod.colors[0].name : "Standard");
         setQuantity(1);
 
-        // Fetch related products
+        // Fetch related products strictly from the same category
         getAllProducts().then((allProds) => {
-          const filtered = allProds.filter((p) => p.id !== prod.id).slice(0, 3);
+          const filtered = allProds.filter((p) => p.id !== prod.id && p.category === prod.category).slice(0, 3);
           setRelatedProducts(filtered);
         });
       } else {
@@ -42,6 +61,19 @@ export default function ProductDetail() {
       setLoading(false);
     });
   }, [slug]);
+
+  useEffect(() => {
+    if (product) {
+      document.title = `${product.name} | NIGHTVISION™ Security`;
+      let metaDescriptionTag = document.querySelector('meta[name="description"]');
+      if (!metaDescriptionTag) {
+        metaDescriptionTag = document.createElement('meta');
+        metaDescriptionTag.setAttribute('name', 'description');
+        document.head.appendChild(metaDescriptionTag);
+      }
+      metaDescriptionTag.setAttribute('content', product.description || "");
+    }
+  }, [product]);
 
   const handleAddToCart = () => {
     if (!product) return;
@@ -61,6 +93,31 @@ export default function ProductDetail() {
     };
     
     addToCart(cartProduct, quantity);
+  };
+
+  const handleDownloadGuide = (e) => {
+    e.preventDefault();
+    const pdfUrl = product.guidePdf || "/assets/guides/nightvision-user-manual.pdf";
+    const fileName = `${product.name.toLowerCase().replace(/\s+/g, "-")}-guide.pdf`;
+
+    if (pdfUrl.startsWith("data:")) {
+      const link = document.createElement("a");
+      link.href = pdfUrl;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      return;
+    }
+
+    const link = document.createElement("a");
+    link.href = pdfUrl;
+    link.download = fileName;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleBuyNow = () => {
@@ -197,7 +254,7 @@ export default function ProductDetail() {
               </div>
             )}
 
-            <div className="actions-row" style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+            <div className="actions-row" style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 24 }}>
               <div className="qty-selector" style={{ flexShrink: 0 }}>
                 <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="qty-btn">-</button>
                 <div className="qty-val">
@@ -235,6 +292,65 @@ export default function ProductDetail() {
                 <Icon name="chevron_right" size={18} />
                 BUY NOW
               </button>
+            </div>
+
+            {isPurchased ? (
+              <div style={{ marginTop: 16, marginBottom: 24 }}>
+                <button
+                  type="button"
+                  onClick={handleDownloadGuide}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 8,
+                    background: "rgba(148, 218, 50, 0.1)",
+                    border: "1px solid #94da32",
+                    color: "#94da32",
+                    padding: "14px 24px",
+                    fontFamily: "'Space Grotesk', monospace",
+                    fontSize: 12,
+                    fontWeight: 700,
+                    letterSpacing: 2,
+                    textTransform: "uppercase",
+                    cursor: "pointer",
+                    transition: "all 0.2s",
+                    width: "100%"
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.background = "#94da32";
+                    e.currentTarget.style.color = "#111";
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.background = "rgba(148, 218, 50, 0.1)";
+                    e.currentTarget.style.color = "#94da32";
+                  }}
+                >
+                  <Icon name="download" size={18} />
+                  DOWNLOAD PRODUCT GUIDE (PDF)
+                </button>
+              </div>
+            ) : product.guidePdf && (
+              <p style={{ marginTop: 8, marginBottom: 24, color: "#8d937f", fontSize: 12, fontFamily: "'Space Grotesk', monospace", letterSpacing: 1 }}>
+                Product guide available after purchase.
+              </p>
+            )}
+
+            {/* KEY FEATURES */}
+            <div style={{ borderTop: "1px solid #434938", paddingTop: 24 }}>
+              <h4 style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#deffa4", fontSize: 13, fontWeight: 700, letterSpacing: 1, marginBottom: 16, textTransform: "uppercase" }}>
+                KEY FEATURES
+              </h4>
+              {product.specs && (
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12 }}>
+                  {product.specs.map((s, i) => (
+                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <Icon name={s.icon} size={18} style={{ color: "#94da32" }} />
+                      <span style={{ color: "#fff", fontSize: 13, fontFamily: "'Space Grotesk', sans-serif" }}>{s.label}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -296,11 +412,57 @@ export default function ProductDetail() {
           </div>
         </div>
 
-        {/* Related Section */}
+        {/* PRODUCT BODY TEXT SECTION — above related products */}
+        <section className="product-body-section">
+          {product.longDesc && (
+            <div style={{ marginBottom: 32 }}>
+              <div className="product-body-section__label">
+                <span className="product-body-section__dot" />
+                <span>ABOUT THIS PRODUCT</span>
+              </div>
+              <h3 className="product-body-section__title">
+                {product.bodySectionTitle || `About ${product.name}`}
+              </h3>
+              <p className="product-body-section__text">
+                {product.longDesc}
+              </p>
+            </div>
+          )}
+
+          <div style={{ marginBottom: 32 }}>
+            <div className="product-body-section__label">
+              <span className="product-body-section__dot" />
+              <span>ABOUT NIGHTVISION CAMERAS</span>
+            </div>
+            <h3 className="product-body-section__title">
+              High-Performance Vigilance Engineering
+            </h3>
+            <p className="product-body-section__text">
+              NightVision is Nepal's premier security surveillance brand, innovating the design, development, and production of high-quality Closed-Circuit Television (CCTV) cameras. Our products are forged with the highest standards of hardware and software integration, ensuring reliable remote streaming, zero downtime, and end-to-end data encryption.
+            </p>
+          </div>
+
+          <div style={{ marginBottom: 16 }}>
+            <div className="product-body-section__label">
+              <span className="product-body-section__dot" />
+              <span>IMPORTANCE OF SECURITY CAMERAS</span>
+            </div>
+            <h3 className="product-body-section__title">
+              Proactive Perimeter Defense & Peace of Mind
+            </h3>
+            <p className="product-body-section__text">
+              In modern environments, security cameras are vital. They deter unauthorized access, document critical site operations, and provide immediate visual verification when anomalies occur. A robust camera network provides peace of mind, continuous protection, and absolute situational awareness.
+            </p>
+          </div>
+        </section>
+
+        {/* Related Section — above footer */}
         {relatedProducts.length > 0 && (
           <div className="related-section">
             <h3 className="related-title">
-              RELATED_SYSTEM_PROT
+              {!siteContents.relatedProductsTitle || siteContents.relatedProductsTitle === "RELATED_SYSTEM_PROT"
+                ? "Related Products"
+                : siteContents.relatedProductsTitle}
             </h3>
             <div className="related-grid">
               {relatedProducts.map(p => (

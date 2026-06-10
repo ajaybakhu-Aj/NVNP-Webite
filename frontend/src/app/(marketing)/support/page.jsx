@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Phone, Mail, Clock, Send } from 'lucide-react';
+import { Phone, Mail, Clock, Send, HelpCircle, Settings, Wrench, CreditCard, Check } from 'lucide-react';
+import { useSiteContents } from '../../../utils/cmsDb';
+import PageHeroBanner from "../../../components/ui/PageHeroBanner";
+
 
 const NightVisionSupport = () => {
   const [messages, setMessages] = useState([
@@ -11,6 +14,12 @@ const NightVisionSupport = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const messagesEndRef = useRef(null);
   const isMounted = useRef(false);
+
+  const siteContents = useSiteContents();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -25,11 +34,11 @@ const NightVisionSupport = () => {
   }, [messages]);
 
   const categories = [
-    { id: 'general', name: 'General Questions', icon: '?' },
-    { id: 'technical', name: 'Technical Support', icon: '⚙️' },
-    { id: 'installation', name: 'Installation', icon: '🔧' },
-    { id: 'billing', name: 'Billing & Orders', icon: '💳' },
-    { id: 'warranty', name: 'Warranty Claims', icon: '✓' },
+    { id: 'general', name: 'General Questions', icon: <HelpCircle size={18} /> },
+    { id: 'technical', name: 'Technical Support', icon: <Settings size={18} /> },
+    { id: 'installation', name: 'Installation', icon: <Wrench size={18} /> },
+    { id: 'billing', name: 'Billing & Orders', icon: <CreditCard size={18} /> },
+    { id: 'warranty', name: 'Warranty Claims', icon: <Check size={18} /> },
   ];
 
   const quickReplies = {
@@ -129,17 +138,12 @@ const NightVisionSupport = () => {
 
   return (
     <div className="support-chat-page">
-      {/* Hero Section */}
-      <section className="support-hero">
-        <div className="support-hero-content">
-          <h1 className="support-hero-title">
-            24/7 EXPERT SUPPORT
-          </h1>
-          <p className="support-hero-desc">
-            Our surveillance specialists are ready to help you. Connect with an expert instantly.
-          </p>
-        </div>
-      </section>
+      {/* Hero Section - Unified PageHeroBanner */}
+      <PageHeroBanner
+        title={siteContents.supportHeroTitle || "24/7 EXPERT SUPPORT"}
+        subtitle={siteContents.supportHeroDesc || "Our surveillance specialists are ready to help you. Connect with an expert instantly."}
+      />
+
 
       {/* Mobile Menu Button */}
       <div className="support-mobile-header">
@@ -184,7 +188,11 @@ const NightVisionSupport = () => {
                 <Phone size={16} />
                 <div>
                   <div className="contact-info-label">24/7 HELPLINE</div>
-                  <div className="contact-info-val">+977-9745978217</div>
+                  <div className="contact-info-val">
+                    <a href={`tel:${siteContents.supportHelpline || "+977-9745978217"}`} style={{ color: "inherit", textDecoration: "none" }}>
+                      {siteContents.supportHelpline || "+977-9745978217"}
+                    </a>
+                  </div>
                 </div>
               </div>
               
@@ -192,7 +200,11 @@ const NightVisionSupport = () => {
                 <Mail size={16} />
                 <div>
                   <div className="contact-info-label">EMAIL</div>
-                  <div className="contact-info-val">info@nightvision.com.np</div>
+                  <div className="contact-info-val">
+                    <a href={`mailto:${siteContents.supportEmail || "info@nightvision.com.np"}`} style={{ color: "inherit", textDecoration: "none" }}>
+                      {siteContents.supportEmail || "info@nightvision.com.np"}
+                    </a>
+                  </div>
                 </div>
               </div>
 
