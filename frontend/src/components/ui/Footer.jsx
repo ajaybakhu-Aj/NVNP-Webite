@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Icon from "../../utils/Icon";
-import logo from "../../assets/logo.png";
 import { useSiteContents } from "../../utils/cmsDb";
+import logoImg from "../../../public/logo.png";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -175,8 +175,12 @@ export default function Footer() {
       <div className="footer-subscribe-brand-section">
         {/* Left Side: Brand, Logo & Socials */}
         <div className="footer-sub-brand-left">
-          <Link to="/" className="footer-logo-link" style={{ display: "inline-block", marginBottom: 8 }}>
-            <img src={logo} alt="NightVision Logo" className="footer-logo-image" style={{ height: 32, width: "auto", display: "block" }} />
+          <Link to="/" style={{ display: "inline-block", marginBottom: "24px" }}>
+            <img
+              src={logoImg}
+              alt="NightVision"
+              style={{ height: "48px", width: "auto" }}
+            />
           </Link>
           <p style={{
             fontSize: 9,

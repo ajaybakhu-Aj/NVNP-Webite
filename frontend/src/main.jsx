@@ -21,3 +21,12 @@ ReactDOM.createRoot(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+// Unregister any dangling service workers from previous PWA attempts
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+    for (let registration of registrations) {
+      registration.unregister();
+    }
+  });
+}

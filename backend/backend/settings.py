@@ -63,6 +63,7 @@ SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     
     # Enforces lowercase and strips www. prefix
     'core.middleware.SEOCanonicalMiddleware',
@@ -157,6 +158,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = []
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+WHITENOISE_ROOT = os.path.join(BASE_DIR, '..', 'frontend', 'dist')
 
 # Media Files
 MEDIA_URL = '/media/'
