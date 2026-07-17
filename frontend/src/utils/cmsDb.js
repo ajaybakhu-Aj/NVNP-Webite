@@ -4,6 +4,7 @@
 import { useState, useEffect } from "react";
 import { articles as SEED_BLOGS } from "../data/blogData";
 import { newsEventsData as SEED_EVENTS } from "../data/newsEvents";
+import { apiPost } from "./api";
 
 const DB_NAME = "NightVisionCMSDB";
 const DB_VERSION = 5;
@@ -134,6 +135,7 @@ const SEED_SITE_CONTENTS = {
   heroSubtitle: "Smart AI-powered surveillance systems engineered for continuous monitoring, encrypted live streaming, and real-time security response.",
   heroBtnText: "VIEW OUR PRODUCTS",
   heroBtn2Text: "Features",
+  heroImage: "/hero_pointing_cctv.png",
   featuresTitle: "NV NightVision",
   featuresSubtitle: "Advanced and Reliable Security Solutions to meet increasing demands of dynamic and ever-changing security landscape by innovating design, development and production of high-quality Closed-Circuit Television.",
   features: [
@@ -166,6 +168,10 @@ const SEED_SITE_CONTENTS = {
   expandNetworkTitle: "EXPAND THE NETWORK",
   expandNetworkDesc: "Join the elite force of NightVision security providers across Nepal. We provide the gear, the training, and the authority.",
   expandNetworkBtn: "BECOME A PARTNER",
+  expandNetworkBgText: "DEALER",
+
+  homeProductsTitle: "ELITE SERIES CAMERAS",
+  homeProductsLinkText: "EXPLORE FULL CATALOG →",
 
   homeBlogTitle: "Our Blogs",
   homeBlogSubtitle: "Find out how Night Vision offers the best CCTV camera in Nepal and is transforming security in all sectors. From homes to organizations, see how trusted surveillance works in real life.",
@@ -852,8 +858,25 @@ function deleteStoreItem(storeName, id) {
   });
 }
 
+// --- API FETCH HELPERS ---
+async function safeFetch(url, options = {}) {
+  try {
+    const res = await fetch(url, options);
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch (e) {
+    console.warn(`Fetch to ${url} failed, using local/IndexedDB fallback:`, e);
+  }
+  return null;
+}
+
 // --- BLOGS EXPORTS ---
-export function getAllBlogs() {
+export async function getAllBlogs() {
+  const apiData = await safeFetch('/api/blogs/');
+  if (apiData && apiData.length > 0) {
+    return apiData;
+  }
   return getStoreList(STORES.BLOGS);
 }
 
@@ -864,19 +887,29 @@ export function getBlogBySlug(slug) {
   });
 }
 
-export function saveBlog(blog) {
+export async function saveBlog(blog) {
   if (!blog.slug) {
     blog.slug = blog.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
   }
-  return saveStoreItem(STORES.BLOGS, blog);
+  // Django is the system of record — the save must succeed on the server.
+  // IndexedDB is only refreshed afterwards as an offline read cache.
+  const result = await apiPost("/api/blogs/save/", blog);
+  await saveStoreItem(STORES.BLOGS, { ...blog, id: result.id ?? blog.id ?? blog.slug });
+  return result;
 }
 
-export function deleteBlog(id) {
-  return deleteStoreItem(STORES.BLOGS, id);
+export async function deleteBlog(id) {
+  const result = await apiPost("/api/blogs/delete/", { id });
+  await deleteStoreItem(STORES.BLOGS, id);
+  return result;
 }
 
 // --- EVENTS EXPORTS ---
-export function getAllEvents() {
+export async function getAllEvents() {
+  const apiData = await safeFetch('/api/events/');
+  if (apiData && apiData.length > 0) {
+    return apiData;
+  }
   return getStoreList(STORES.EVENTS);
 }
 
@@ -887,19 +920,27 @@ export function getEventBySlug(slug) {
   });
 }
 
-export function saveEvent(event) {
+export async function saveEvent(event) {
   if (!event.slug) {
     event.slug = event.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
   }
-  return saveStoreItem(STORES.EVENTS, event);
+  const result = await apiPost("/api/events/save/", event);
+  await saveStoreItem(STORES.EVENTS, { ...event, id: result.id ?? event.id ?? event.slug });
+  return result;
 }
 
-export function deleteEvent(id) {
-  return deleteStoreItem(STORES.EVENTS, id);
+export async function deleteEvent(id) {
+  const result = await apiPost("/api/events/delete/", { id });
+  await deleteStoreItem(STORES.EVENTS, id);
+  return result;
 }
 
 // --- GALLERY EXPORTS ---
-export function getAllGalleryItems() {
+export async function getAllGalleryItems() {
+  const apiData = await safeFetch('/api/gallery/');
+  if (apiData && apiData.length > 0) {
+    return apiData;
+  }
   return getStoreList(STORES.GALLERY);
 }
 
@@ -912,7 +953,11 @@ export function deleteGalleryItem(id) {
 }
 
 // --- DEALERS EXPORTS ---
-export function getAllDealers() {
+export async function getAllDealers() {
+  const apiData = await safeFetch('/api/dealers/');
+  if (apiData && apiData.length > 0) {
+    return apiData;
+  }
   return getStoreList(STORES.DEALERS).then((list) => {
     const targetName = "Western Optics Nepal";
     const toDelete = list.filter(
@@ -931,12 +976,16 @@ export function getAllDealers() {
   });
 }
 
-export function saveDealer(dealer) {
-  return saveStoreItem(STORES.DEALERS, dealer);
+export async function saveDealer(dealer) {
+  const result = await apiPost("/api/dealers/save/", dealer);
+  await saveStoreItem(STORES.DEALERS, { ...dealer, id: dealer.id || result.slug });
+  return result;
 }
 
-export function deleteDealer(id) {
-  return deleteStoreItem(STORES.DEALERS, id);
+export async function deleteDealer(id) {
+  const result = await apiPost("/api/dealers/delete/", { id });
+  await deleteStoreItem(STORES.DEALERS, id);
+  return result;
 }
 
 // --- CONTACTS EXPORTS ---
@@ -953,7 +1002,11 @@ export function deleteContact(id) {
 }
 
 // --- SETTINGS EXPORTS ---
-export function getSettings() {
+export async function getSettings() {
+  const apiData = await safeFetch('/api/global-config/');
+  if (apiData && Object.keys(apiData).length > 0) {
+    return apiData;
+  }
   return getStoreList(STORES.SETTINGS).then((list) => {
     const config = list.find((x) => x.id === "global_config");
     if (config) return config;
@@ -961,15 +1014,23 @@ export function getSettings() {
   });
 }
 
-export function saveSettings(settings) {
+export async function saveSettings(settings) {
   const settingsWithId = { ...settings, id: "global_config" };
+  // Server save must succeed (staff session + CSRF); local store is cache.
+  await apiPost('/api/global-config/', settingsWithId);
   return saveStoreItem(STORES.SETTINGS, settingsWithId);
 }
 
-export function getSiteContents() {
+export async function getSiteContents() {
+  const apiData = await safeFetch('/api/site-contents/');
+  if (apiData && Object.keys(apiData).length > 0) {
+    // Merge over defaults so keys added after the server blob was last
+    // saved still resolve (server values always win).
+    return { ...SEED_SITE_CONTENTS, ...apiData };
+  }
   return getStoreList(STORES.SETTINGS).then((list) => {
     const item = list.find((x) => x.id === "site_contents");
-    return item || SEED_SITE_CONTENTS;
+    return item ? { ...SEED_SITE_CONTENTS, ...item } : SEED_SITE_CONTENTS;
   });
 }
 
@@ -986,8 +1047,10 @@ export function deleteTeamMember(id) {
   return deleteStoreItem(STORES.TEAM_MEMBERS, id);
 }
 
-export function saveSiteContents(contents) {
+export async function saveSiteContents(contents) {
   const contentsWithId = { ...contents, id: "site_contents" };
+  // Server save must succeed (staff session + CSRF); local store is cache.
+  await apiPost('/api/site-contents/', contentsWithId);
   return saveStoreItem(STORES.SETTINGS, contentsWithId).then((res) => {
     if (typeof window !== "undefined") {
       window.dispatchEvent(new Event("siteContentsUpdated"));
@@ -1162,3 +1225,102 @@ export function resetCmsDatabase() {
       });
   });
 }
+
+
+export const DEFAULT_HOMEPAGE_SETTINGS = {
+  hero: {
+    heading: "ADVANCED SURVEILLANCE FOR PEACE OF MIND",
+    subheading: "Smart AI-powered surveillance systems engineered for continuous monitoring, encrypted live streaming, and real-time security response.",
+    body_text: "Highly secured application and hardware for absolute privacy.",
+    button_text: "VIEW OUR PRODUCTS",
+    button_url: "/products",
+    image_url: "/hero_pointing_cctv.png"
+  },
+  about: {
+    heading: "UNCOMPROMISING VIGILANCE TECHNOLOGY",
+    subheading: "We don't just sell cameras; we deploy comprehensive security ecosystems tailored for the unique challenges of Nepal's infrastructure.",
+    body_text: "Weatherproof IP67 rated, Zero Downtime, Global Link, and Smart AI detection.",
+    button_text: "ABOUT US",
+    button_url: "/company/about",
+    image_url: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80"
+  },
+  features: {
+    heading: "NV NightVision Features",
+    subheading: "Advanced and Reliable Security Solutions to meet increasing demands.",
+    body_text: "Easy Installation, Advanced Features, Durable, Secured.",
+    button_text: "Our Products",
+    button_url: "/products",
+    image_url: "",
+    items: [
+      { icon: "power", title: "Easy Installation", desc: "Does not require any wiring and function as Wi-Fi Based plug and play surveillance devices." },
+      { icon: "near_me", title: "Advanced Features", desc: "Night Vision Cameras are designed and developed with advanced feature and keeping practical usage in consideration." },
+      { icon: "thunderstorm", title: "Durable", desc: "Manufactured to be used for indoor and outdoor purpose to last long from temperature -20 degree to 50+ degree Celsius." },
+      { icon: "shield", title: "Secured", desc: "Highly secured application and hardware for absolute privacy which also comes with private mode." }
+    ]
+  },
+  cta: {
+    heading: "READY FOR THE DARK?",
+    subheading: "Join the growing network of organizations and professionals who trust NIGHTVISION™.",
+    body_text: "We provide the gear, the training, and the authority to become a partner.",
+    button_text: "BECOME A PARTNER",
+    button_url: "/dealers",
+    image_url: ""
+  }
+};
+
+export async function getHomepageSettings() {
+  const apiData = await safeFetch('/api/homepage-settings/');
+  if (apiData && Object.keys(apiData).length > 0) {
+    return { ...DEFAULT_HOMEPAGE_SETTINGS, ...apiData };
+  }
+  return getStoreList(STORES.SETTINGS).then((list) => {
+    const item = list.find((x) => x.id === "homepage_settings");
+    return item ? { ...DEFAULT_HOMEPAGE_SETTINGS, ...item } : DEFAULT_HOMEPAGE_SETTINGS;
+  });
+}
+
+export async function saveHomepageSettings(settings) {
+  const settingsWithId = { ...settings, id: "homepage_settings" };
+  await apiPost('/api/homepage-settings/', settingsWithId);
+  return saveStoreItem(STORES.SETTINGS, settingsWithId).then((res) => {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("homepageSettingsUpdated"));
+      localStorage.setItem("nv_cms_homepage_settings_ts", Date.now().toString());
+    }
+    return res;
+  });
+}
+
+export function useHomepageSettings() {
+  const [settings, setSettings] = useState(DEFAULT_HOMEPAGE_SETTINGS);
+
+  useEffect(() => {
+    let active = true;
+
+    function load() {
+      getHomepageSettings().then((dbSettings) => {
+        if (active && dbSettings) {
+          setSettings(dbSettings);
+        }
+      });
+    }
+
+    load();
+
+    if (typeof window !== "undefined") {
+      window.addEventListener("homepageSettingsUpdated", load);
+      window.addEventListener("storage", load);
+    }
+
+    return () => {
+      active = false;
+      if (typeof window !== "undefined") {
+        window.removeEventListener("homepageSettingsUpdated", load);
+        window.removeEventListener("storage", load);
+      }
+    };
+  }, []);
+
+  return settings;
+}
+

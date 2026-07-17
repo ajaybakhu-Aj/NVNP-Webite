@@ -170,7 +170,11 @@ export default function NightVisionAboutPage() {
 
               <div className="values-grid">
 
-                {(contents.aboutPillars || []).map((item, idx) => (
+                {((contents.aboutPillars && contents.aboutPillars.length > 0 && contents.aboutPillars[0]?.title) ? contents.aboutPillars : [
+                  { icon: "security", title: "Uncompromising Security", text: "Industrial-grade hardware for zero-fail operations." },
+                  { icon: "memory", title: "Intelligent Systems", text: "AI-driven analytics for predictive threat detection." },
+                  { icon: "public", title: "Nationwide Support", text: "Dedicated service teams across all major provinces." }
+                ]).map((item, idx) => (
                   <div className="value-card" key={idx}>
 
                     <div className="value-header">
@@ -178,7 +182,7 @@ export default function NightVisionAboutPage() {
                       </span>
 
                       <span className="value-icon" style={{ display: "inline-flex", padding: "8px", borderRadius: "8px", background: "rgba(148, 218, 50, 0.1)", border: "1px solid rgba(148, 218, 50, 0.2)" }}>
-                        <Icon name={item.icon} size={20} />
+                        <Icon name={item.icon || "star"} size={20} />
                       </span>
                     </div>
 

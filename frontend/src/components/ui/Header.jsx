@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Icon from "../../utils/Icon";
 import { useSiteContents } from "../../utils/cmsDb";
 import { getAllProducts } from "../../utils/productDb";
+import { authLogout } from "../../utils/api";
 import logo from "../../assets/logo.png";
 
 export default function Header() {
@@ -49,6 +50,7 @@ export default function Header() {
   }, []);
 
   const handleLogout = () => {
+    authLogout().catch(() => {});
     localStorage.removeItem("user");
     setUser(null);
     setAccountOpen(false);
@@ -128,7 +130,7 @@ export default function Header() {
 
   return (
     <header className="app-header">
-      <div className="header-container">
+      <div className="header-container max-w-[1280px] mx-auto px-[20px] md:px-[24px] w-full">
         {/* LEFT */}
         <div className="header-left">
           {/* LOGO */}
@@ -255,16 +257,30 @@ export default function Header() {
                   "Dashboard",
                   "Orders",
                   "Settings"
-                ].map((item) => (
-                  <Link
-                    key={item}
-                    to={item === "System Console" ? "/admin" : `/${item.toLowerCase().replace(" ", "-")}`}
-                    className="dropdown-link"
-                    onClick={() => setAccountOpen(false)}
-                  >
-                    {item}
-                  </Link>
-                ))}
+                ].map((item) => {
+                  if (item === "System Console") {
+                    return (
+                      <a
+                        key={item}
+                        href="/admin/"
+                        className="dropdown-link"
+                        onClick={() => setAccountOpen(false)}
+                      >
+                        System Console
+                      </a>
+                    );
+                  }
+                  return (
+                    <Link
+                      key={item}
+                      to={`/${item.toLowerCase().replace(" ", "-")}`}
+                      className="dropdown-link"
+                      onClick={() => setAccountOpen(false)}
+                    >
+                      {item}
+                    </Link>
+                  );
+                })}
 
                 <button
                   onClick={handleLogout}

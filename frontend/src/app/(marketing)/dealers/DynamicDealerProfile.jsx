@@ -89,13 +89,13 @@ export default function DynamicDealerProfile() {
   const isPlatinum = dealer.isPlatinum || dealer.status === "PLATINUM PARTNER";
 
   return (
-    <div style={{ fontFamily: "'Poppins', sans-serif", background: C.dark, color: C.onSurface, minHeight: "100vh", paddingTop: "80px", cursor: "default" }}>
+    <div style={{ fontFamily: "'Poppins', sans-serif", background: C.dark, color: C.onSurface, minHeight: "100vh", paddingTop: "80px" }}>
       {/* Google Fonts Link */}
       <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
       
       <style>{`
         .dealer-header { padding: 48px 24px; border-bottom: 1px solid ${C.outline}; position: relative; }
-        .dealer-main-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px; padding: 48px 24px; max-width: 1440px; margin: 0 auto; }
+        .dealer-main-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px; padding: 48px 24px; max-width: 1280px; margin: 0 auto; }
         .info-pill { display: inline-flex; align-items: center; border: 1px solid ${C.primary}; background: rgba(181, 231, 93, 0.08); padding: 4px 14px; margin-bottom: 24px; font-family: 'Space Grotesk', monospace; font-size: 10px; letter-spacing: 2px; color: C.primary; }
         @media (max-width: 991px) {
           .dealer-main-grid { grid-template-columns: 1fr; gap: 24px; }
@@ -104,7 +104,7 @@ export default function DynamicDealerProfile() {
 
       {/* ── HERO HEADER ── */}
       <header className="dealer-header">
-        <div style={{ maxWidth: 1440, margin: "0 auto" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <div style={{
             display: "inline-flex",
             alignItems: "center",

@@ -269,11 +269,11 @@ export default function NightVision() {
 
         {/* PRODUCTS GRID */}
         {loading ? (
-          <div style={{ display: "flex", justifyContent: "center", padding: "100px 0", color: "#94da32", flex: 1 }}>
+          <div style={{ display: "flex", justifyContent: "center", padding: "100px 0", color: "#94da32", flex: 1, minHeight: "800px" }}>
             LOADING DYNAMIC DATA PIPELINES...
           </div>
         ) : (
-          <div className="products-grid" style={{ flex: 1 }}>
+          <div className="products-grid" style={{ flex: 1, minHeight: "800px" }}>
             {filteredProducts.map((p) => (
               <ProductCard key={p.id} {...p} />
             ))}

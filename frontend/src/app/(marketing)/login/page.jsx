@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Icon from "../../../utils/Icon";
-import { getAllAdmins } from "../../../utils/cmsDb";
+import { authLogin } from "../../../utils/api";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -10,7 +10,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
 
@@ -19,53 +19,25 @@ export default function LoginPage() {
       return;
     }
 
-    if (!email.includes("@")) {
-      setError("Please enter a valid email address.");
-      return;
-    }
-
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return;
-    }
-
     setIsLoading(true);
 
-    // Simulate server verification delay
-    setTimeout(() => {
-      getAllAdmins().then((adminsList) => {
-        const adminRecord = adminsList.find(x => x.email.toLowerCase() === email.toLowerCase());
-        if (adminRecord) {
-          // This email belongs to an admin!
-          if (adminRecord.password === password) {
-            const adminUser = {
-              email: adminRecord.email,
-              name: adminRecord.name,
-              role: adminRecord.role || "Admin",
-              loginTime: new Date().toISOString()
-            };
-            localStorage.setItem("user", JSON.stringify(adminUser));
-            window.location.href = "/admin";
-          } else {
-            setIsLoading(false);
-            setError("Incorrect password for administrator account.");
-          }
-        } else {
-          // Regular user (Operator simulation)
-          const mockUser = {
-            email: email,
-            name: email.split("@")[0].toUpperCase(),
-            role: "Operator",
-            loginTime: new Date().toISOString()
-          };
-          localStorage.setItem("user", JSON.stringify(mockUser));
-          window.location.href = "/";
-        }
-      }).catch(() => {
-        setIsLoading(false);
-        setError("Error connecting to database. Please try again.");
-      });
-    }, 1200);
+    try {
+      const result = await authLogin(email.trim(), password);
+      const user = {
+        ...result.user,
+        loginTime: new Date().toISOString(),
+      };
+      // Cached for UI display only — real authorization is the Django session.
+      localStorage.setItem("user", JSON.stringify(user));
+      window.location.href = user.role === "Admin" ? "/admin/" : "/";
+    } catch (err) {
+      setIsLoading(false);
+      if (err.status === 401) {
+        setError("Invalid email or password.");
+      } else {
+        setError(err.message || "Error connecting to server. Please try again.");
+      }
+    }
   };
 
   return (

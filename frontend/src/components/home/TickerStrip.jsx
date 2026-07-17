@@ -4,14 +4,30 @@ import { getSettings } from "../../utils/cmsDb";
 
 export default function TickerStrip() {
   const [tickerText, setTickerText] = useState("NightVision™ // CCTV Cameras Nepal // 4K Surveillance // Made for Nepal //");
+  const [enabled, setEnabled] = useState(true);
+  const [scrollSeconds, setScrollSeconds] = useState(18);
 
   useEffect(() => {
     getSettings().then((config) => {
-      if (config && config.bannerText) {
+      if (!config) return;
+      if (config.bannerText) {
         setTickerText(config.bannerText);
+      }
+      // bannerEnabled/bannerSpeed are editable in the backend admin
+      // (Site Settings -> global_config -> Scrolling Announcement Ticker).
+      if (config.bannerEnabled === false) {
+        setEnabled(false);
+      }
+      const speed = parseInt(config.bannerSpeed, 10);
+      if (!Number.isNaN(speed) && speed >= 5 && speed <= 120) {
+        setScrollSeconds(speed);
       }
     });
   }, []);
+
+  if (!enabled) {
+    return null;
+  }
 
   return (
     <>
@@ -39,7 +55,7 @@ export default function TickerStrip() {
 
             white-space: nowrap;
 
-            animation: marqueeScroll 18s linear infinite;
+            animation: marqueeScroll ${scrollSeconds}s linear infinite;
           }
 
           @media (max-width: 1024px) {

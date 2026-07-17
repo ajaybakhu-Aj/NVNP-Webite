@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { colors, feedImages } from "../../data/constants";
-import { useSiteContents } from "../../utils/cmsDb";
+import { useSiteContents, useHomepageSettings } from "../../utils/cmsDb";
 
 export default function WhySection() {
   const contents = useSiteContents();
+  const homeSettings = useHomepageSettings();
 
   const whyFeats = contents.whyFeatures || [];
   return (
@@ -140,6 +141,19 @@ export default function WhySection() {
             width: "100%",
           }}
         >
+          <span
+            style={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: 3,
+              textTransform: "uppercase",
+              color: colors.secondary,
+            }}
+          >
+            {contents.whyTag || "The NightVision Edge"}
+          </span>
+
           <h2
             style={{
               fontFamily: "'Space Grotesk', sans-serif",
@@ -155,7 +169,7 @@ export default function WhySection() {
               wordBreak: "break-word",
             }}
           >
-            {contents.whyTitle || "UNCOMPROMISING VIGILANCE TECHNOLOGY"}
+            {homeSettings.about?.heading || contents.whyTitle || "UNCOMPROMISING VIGILANCE TECHNOLOGY"}
           </h2>
 
           <p
@@ -169,8 +183,23 @@ export default function WhySection() {
               wordBreak: "break-word",
             }}
           >
-            {contents.whySubtitle || "We don't just sell cameras; we deploy comprehensive security ecosystems tailored for the unique challenges of Nepal's infrastructure."}
+            {homeSettings.about?.subheading || contents.whySubtitle || "We don't just sell cameras; we deploy comprehensive security ecosystems tailored for the unique challenges of Nepal's infrastructure."}
           </p>
+
+          {homeSettings.about?.body_text && (
+            <p
+              style={{
+                color: colors.onSurfaceVariant,
+                fontSize: "14px",
+                lineHeight: 1.6,
+                opacity: 0.8,
+                marginTop: -8,
+                wordBreak: "break-word",
+              }}
+            >
+              {homeSettings.about.body_text}
+            </p>
+          )}
 
           {/* FEATURES */}
           <div

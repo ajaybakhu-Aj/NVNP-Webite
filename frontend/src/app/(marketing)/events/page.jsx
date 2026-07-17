@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getAllEvents } from "../../../utils/cmsDb";
+import { getAllEvents, useSiteContents } from "../../../utils/cmsDb";
 import PageHeroBanner from "../../../components/ui/PageHeroBanner";
 
 const IconSearch = () => (
@@ -16,6 +16,7 @@ const IconArrowRight = () => (
 );
 
 export default function EventsPage() {
+  const contents = useSiteContents();
   const [activeTab, setActiveTab] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [eventsList, setEventsList] = useState([]);
@@ -49,8 +50,8 @@ export default function EventsPage() {
   return (
     <div className="events-page-container">
       <PageHeroBanner
-        title="NEWS & EVENTS"
-        subtitle="Latest News, Events, and Updates from NightVision Security Systems."
+        title={contents.eventsHeroTitle || "NEWS & EVENTS"}
+        subtitle={contents.eventsHeroSubtitle || "Latest News, Events, and Updates from NightVision Security Systems."}
       />
 
       <main className="events-main-section">

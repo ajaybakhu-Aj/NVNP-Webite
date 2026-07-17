@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { CartContext } from "../../../../Context/CartContext";
 import Icon from "../../../../utils/Icon";
 import { getProductById, getAllProducts } from "../../../../utils/productDb";
@@ -62,18 +63,7 @@ export default function ProductDetail() {
     });
   }, [slug]);
 
-  useEffect(() => {
-    if (product) {
-      document.title = `${product.name} | NIGHTVISION™ Security`;
-      let metaDescriptionTag = document.querySelector('meta[name="description"]');
-      if (!metaDescriptionTag) {
-        metaDescriptionTag = document.createElement('meta');
-        metaDescriptionTag.setAttribute('name', 'description');
-        document.head.appendChild(metaDescriptionTag);
-      }
-      metaDescriptionTag.setAttribute('content', product.description || "");
-    }
-  }, [product]);
+  // Removed manual head mutation in favor of React Helmet Async hydration binding
 
   const handleAddToCart = () => {
     if (!product) return;
@@ -143,17 +133,17 @@ export default function ProductDetail() {
 
   if (loading) {
     return (
-      <div className="product-detail-page" style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
+      <main className="product-detail-page" style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
         <div style={{ color: "#94da32", fontFamily: "'Space Mono', monospace", letterSpacing: 2 }}>
           CONNECTING DIGITAL UPLINK FOR DEVICE '{slug.toUpperCase()}'...
         </div>
-      </div>
+      </main>
     );
   }
 
   if (!product) {
     return (
-      <div className="product-detail-page" style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
+      <main className="product-detail-page" style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
         <div style={{ textAlign: "center", background: "#181a15", border: "1px solid #ff6b6b", padding: 40, maxWidth: 500, borderRadius: 4 }}>
           <h1 style={{ color: "#ff6b6b", fontFamily: "'Space Grotesk', sans-serif", fontSize: 24, marginBottom: 16 }}>
             SYSTEM NOT REGISTERED
@@ -173,12 +163,20 @@ export default function ProductDetail() {
             RETURN TO CATALOG
           </Link>
         </div>
-      </div>
+      </main>
     );
   }
 
   return (
-    <div className="product-detail-page">
+    <article className="product-detail-page" style={{ minHeight: "1200px" }}>
+      <Helmet>
+        <title>{product.name} | NIGHTVISION™ Security</title>
+        <meta name="description" content={product.description || "Enterprise-grade surveillance CCTV system."} />
+        <meta property="og:title" content={product.name} />
+        <meta property="og:description" content={product.description || ""} />
+        <meta property="og:type" content="product" />
+      </Helmet>
+
       <div className="hud-scanline" style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 999 }} />
 
       <main>
@@ -393,7 +391,14 @@ export default function ProductDetail() {
 
             {activeTab === "intel" && (
               <div className="intel-content">
-                <p>{product.longDesc || product.description}</p>
+                {String(product.longDesc || product.description || "").trim().startsWith("<") ? (
+                  <div
+                    className="blog-html-block"
+                    dangerouslySetInnerHTML={{ __html: product.longDesc || product.description }}
+                  />
+                ) : (
+                  <p>{product.longDesc || product.description}</p>
+                )}
                 <p>NIGHTVISION™ products are designed for durability, ease of deployment, and high integration capability with custom security networks. Supported under global SLA agreements.</p>
               </div>
             )}
@@ -423,11 +428,51 @@ export default function ProductDetail() {
               <h3 className="product-body-section__title">
                 {product.bodySectionTitle || `About ${product.name}`}
               </h3>
-              <p className="product-body-section__text">
-                {product.longDesc}
-              </p>
+              {String(product.longDesc).trim().startsWith("<") ? (
+                <div
+                  className="blog-html-block product-body-section__text"
+                  dangerouslySetInnerHTML={{ __html: product.longDesc }}
+                />
+              ) : (
+                <p className="product-body-section__text">
+                  {product.longDesc}
+                </p>
+              )}
             </div>
           )}
+
+          {product.detailedInfo && (
+            <div style={{ marginBottom: 32 }}>
+              <div className="product-body-section__label">
+                <span className="product-body-section__dot" />
+                <span>DETAILED INFORMATION</span>
+              </div>
+              <div
+                className="blog-html-block product-body-section__text"
+                dangerouslySetInnerHTML={{ __html: product.detailedInfo }}
+              />
+            </div>
+          )}
+
+          {product.videoUrl && (() => {
+            const idMatch = String(product.videoUrl).match(/(?:youtu\.be\/|v=|embed\/)([\w-]{6,})/);
+            return idMatch ? (
+              <div style={{ marginBottom: 32 }}>
+                <div className="product-body-section__label">
+                  <span className="product-body-section__dot" />
+                  <span>PRODUCT VIDEO</span>
+                </div>
+                <div style={{ position: "relative", paddingTop: "56.25%", maxWidth: 720 }}>
+                  <iframe
+                    title={`${product.name} video`}
+                    src={`https://www.youtube.com/embed/${idMatch[1]}`}
+                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: "1px solid rgba(148, 218, 50, 0.25)", borderRadius: 8 }}
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            ) : null;
+          })()}
 
           <div style={{ marginBottom: 32 }}>
             <div className="product-body-section__label">
@@ -480,6 +525,6 @@ export default function ProductDetail() {
           </div>
         )}
       </main>
-    </div>
+    </article>
   );
 }

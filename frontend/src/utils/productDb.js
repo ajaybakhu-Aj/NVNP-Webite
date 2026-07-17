@@ -530,8 +530,25 @@ export function initDb() {
   return dbInitializationPromise;
 }
 
+// API FETCH HELPERS
+async function safeFetch(url, options = {}) {
+  try {
+    const res = await fetch(url, options);
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch (e) {
+    console.warn(`Fetch to ${url} failed, using local/IndexedDB fallback:`, e);
+  }
+  return null;
+}
+
 // Get all products
-export function getAllProducts() {
+export async function getAllProducts() {
+  const apiData = await safeFetch('/api/products/');
+  if (apiData && apiData.length > 0) {
+    return apiData;
+  }
   return new Promise((resolve) => {
     initDb()
       .then((db) => {
@@ -558,7 +575,12 @@ export function getAllProducts() {
 }
 
 // Get product by ID
-export function getProductById(id) {
+export async function getProductById(id) {
+  const apiData = await safeFetch('/api/products/');
+  if (apiData && apiData.length > 0) {
+    const prod = apiData.find((p) => p.id === id || p.slug === id);
+    if (prod) return prod;
+  }
   return new Promise((resolve) => {
     initDb()
       .then((db) => {
@@ -587,91 +609,65 @@ export function getProductById(id) {
   });
 }
 
-// Add or update a product
-export function addProduct(product) {
-  return new Promise((resolve, reject) => {
-    // Add default values for missing specifications
-    const completeProduct = {
-      code: `NV-CAM-${Math.floor(100 + Math.random() * 900)}`,
-      badge: "NEW ARRIVAL",
-      status: "IN STOCK",
-      thumbs: [product.img],
-      colors: product.colors || [{ name: "Standard", hex: "#777777" }],
-      specs: product.specs || [
-        { icon: "hd", label: "FULL HD" },
-        { icon: "wifi", label: "WI-FI ENABLED" },
-        { icon: "security", label: "SECURE" }
-      ],
-      specTable: product.specTable || [
-        ["Resolution", "1080p HD"],
-        ["IP Rating", "Weatherproof Protection"],
-        ["Connectivity", "Wi-Fi / Ethernet"],
-        ["Audio", "Built-in Microphone"]
-      ],
-      ...product
-    };
+// Add or update a product. Django is the system of record — the server
+// save must succeed; local stores are only refreshed as an offline cache.
+export async function addProduct(product) {
+  const completeProduct = {
+    code: `NV-CAM-${Math.floor(100 + Math.random() * 900)}`,
+    badge: "NEW ARRIVAL",
+    status: "IN STOCK",
+    thumbs: [product.img],
+    colors: product.colors || [{ name: "Standard", hex: "#777777" }],
+    specs: product.specs || [
+      { icon: "hd", label: "FULL HD" },
+      { icon: "wifi", label: "WI-FI ENABLED" },
+      { icon: "security", label: "SECURE" }
+    ],
+    specTable: product.specTable || [],
+    ...product
+  };
 
-    // Push to fallback
-    const idx = memoryStore.findIndex((p) => p.id === completeProduct.id);
-    if (idx >= 0) {
-      memoryStore[idx] = completeProduct;
-    } else {
-      memoryStore.push(completeProduct);
+  const { apiPost } = await import("./api");
+  const result = await apiPost("/api/products/save/", completeProduct);
+  if (result && result.id) {
+    completeProduct.id = result.id;
+  }
+
+  // refresh local cache (best effort)
+  const idx = memoryStore.findIndex((p) => p.id === completeProduct.id);
+  if (idx >= 0) {
+    memoryStore[idx] = completeProduct;
+  } else {
+    memoryStore.push(completeProduct);
+  }
+  setLocalStorageProducts(memoryStore);
+  try {
+    const db = await initDb();
+    if (db) {
+      db.transaction(STORE_NAME, "readwrite").objectStore(STORE_NAME).put(completeProduct);
     }
-    setLocalStorageProducts(memoryStore);
-
-    initDb()
-      .then((db) => {
-        if (!db) {
-          resolve(completeProduct);
-          return;
-        }
-
-        const transaction = db.transaction(STORE_NAME, "readwrite");
-        const store = transaction.objectStore(STORE_NAME);
-        const request = store.put(completeProduct);
-
-        request.onsuccess = () => {
-          resolve(completeProduct);
-        };
-        request.onerror = (e) => {
-          reject(e.target.error);
-        };
-      })
-      .catch(() => {
-        resolve(completeProduct);
-      });
-  });
+  } catch {
+    /* cache refresh is best-effort */
+  }
+  return completeProduct;
 }
 
-// Delete product
-export function deleteProduct(id) {
-  return new Promise((resolve, reject) => {
-    memoryStore = memoryStore.filter((p) => p.id !== id);
-    setLocalStorageProducts(memoryStore);
+// Delete product (server first, then local cache)
+export async function deleteProduct(id) {
+  const { apiPost } = await import("./api");
+  await apiPost("/api/products/delete/", { id });
 
-    initDb()
-      .then((db) => {
-        if (!db) {
-          resolve(true);
-          return;
-        }
-
-        const transaction = db.transaction(STORE_NAME, "readwrite");
-        const store = transaction.objectStore(STORE_NAME);
-        const request = store.delete(id);
-
-        request.onsuccess = () => {
-          resolve(true);
-        };
-        request.onerror = (e) => {
-          reject(e.target.error);
-        };
-      })
-      .catch(() => {
-        resolve(true);
-      });
-  });
+  memoryStore = memoryStore.filter((p) => p.id !== id);
+  setLocalStorageProducts(memoryStore);
+  try {
+    const db = await initDb();
+    if (db) {
+      db.transaction(STORE_NAME, "readwrite").objectStore(STORE_NAME).delete(id);
+    }
+  } catch {
+    /* cache refresh is best-effort */
+  }
+  return true;
 }
 
 // Reset database back to default seed list

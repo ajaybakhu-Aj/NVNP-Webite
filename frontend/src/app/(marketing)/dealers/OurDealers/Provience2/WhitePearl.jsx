@@ -200,7 +200,7 @@ const MapSection = ({ img }) => {
                 aspectRatio: "16/10",
                 overflow: "hidden",
                 background: C.surfaceHi,
-                cursor: "crosshair",
+                
                 border: `1px solid ${C.outline}`,
             }}
         >
@@ -329,7 +329,7 @@ const MapSection = ({ img }) => {
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            cursor: "crosshair",
+                            
                             transition: "border-color 0.15s",
                         }}
                         onMouseEnter={(e) => (e.currentTarget.style.borderColor = C.primary)}
@@ -362,7 +362,7 @@ export default function WhitePearl() {
         color: C.onSurface,
         minHeight: "100vh",
         position: "relative",
-        cursor: "crosshair",
+        
         paddingTop: "64px", // To account for global sticky header
     };
 
@@ -388,16 +388,16 @@ export default function WhitePearl() {
         .slide-in { animation: slideIn 0.5s ease both }
 
         .dealer-header {
-            padding: 56px 48px 48px;
+            padding: 56px 24px 48px;
         }
         .dealer-main-grid {
             display: grid;
             grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
             gap: 32px;
-            padding: 48px;
+            padding: 48px 24px;
         }
         .dealer-nearby-section {
-            padding: 64px 48px;
+            padding: 64px 24px;
         }
         .nearby-dealers-grid {
             display: grid;
@@ -451,7 +451,7 @@ export default function WhitePearl() {
                 }}
             >
                 <Scanlines opacity={0.04} />
-                <div style={{ maxWidth: 1440, margin: "0 auto", position: "relative", zIndex: 2 }}>
+                <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 2 }}>
                     {/* Badge */}
                     <div
                         style={{
@@ -528,7 +528,7 @@ export default function WhitePearl() {
             <main
                 className="dealer-main-grid"
                 style={{
-                    maxWidth: 1440,
+                    maxWidth: 1280,
                     margin: "0 auto",
                 }}
             >
@@ -711,7 +711,7 @@ export default function WhitePearl() {
                                     textTransform: "uppercase",
                                     height: 52,
                                     border: "none",
-                                    cursor: "crosshair",
+                                    
                                     display: "flex",
                                     alignItems: "center",
                                     justifyContent: "center",
@@ -754,7 +754,7 @@ export default function WhitePearl() {
                                             letterSpacing: 2,
                                             textTransform: "uppercase",
                                             height: 48,
-                                            cursor: "crosshair",
+                                            
                                             display: "flex",
                                             alignItems: "center",
                                             justifyContent: "center",
@@ -857,7 +857,7 @@ export default function WhitePearl() {
                 className="dealer-nearby-section"
                 style={{ background: C.surface, borderTop: `1px solid ${C.outline}` }}
             >
-                <div style={{ maxWidth: 1440, margin: "0 auto" }}>
+                <div style={{ maxWidth: 1280, margin: "0 auto" }}>
                     <div
                         style={{
                             display: "flex",
@@ -964,7 +964,7 @@ function DealerCard({ dealer, delay, onViewIntel }) {
                 padding: 28,
                 transition: "border-color 0.2s, transform 0.2s",
                 transform: hovered ? "translateY(-3px)" : "none",
-                cursor: "crosshair",
+                
                 animation: `fadeUp 0.5s ${delay}ms ease both`,
             }}
         >
@@ -1011,7 +1011,7 @@ function DealerCard({ dealer, delay, onViewIntel }) {
                     fontSize: 10,
                     letterSpacing: 3,
                     textTransform: "uppercase",
-                    cursor: "crosshair",
+                    
                     transition: "all 0.2s",
                     display: "flex",
                     alignItems: "center",

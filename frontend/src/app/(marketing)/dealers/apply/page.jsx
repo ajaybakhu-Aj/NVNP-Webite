@@ -260,7 +260,7 @@ export default function DealerPage() {
         paddingBottom: "6rem",
         paddingLeft: "clamp(16px, 4vw, 64px)",
         paddingRight: "clamp(16px, 4vw, 64px)",
-        maxWidth: "1440px",
+        maxWidth: "1280px",
         margin: "0 auto",
       }}>
         {/* HEADER */}

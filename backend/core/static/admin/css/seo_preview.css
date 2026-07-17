@@ -1,0 +1,17 @@
+/* Custom CSS to polish the SEO Admin panels */
+#seo-preview-wrapper h4 {
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+#serp-preview {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+#og-preview {
+    transition: transform 0.2s ease;
+}
+
+#og-preview:hover {
+    transform: translateY(-2px);
+}

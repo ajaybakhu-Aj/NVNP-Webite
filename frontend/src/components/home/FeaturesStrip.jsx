@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Icon from "../../utils/Icon";
 import cameraImg from "../../assets/white_dome_camera.png";
-import { useSiteContents } from "../../utils/cmsDb";
+import { useSiteContents, useHomepageSettings } from "../../utils/cmsDb";
 
 export default function FeaturesStrip() {
   const contents = useSiteContents();
+  const homeSettings = useHomepageSettings();
 
-  const feats = contents.features || [];
+  const feats = homeSettings.features?.items || contents.features || [];
 
   return (
     <section id="features" className="features-section-container">
@@ -14,10 +15,15 @@ export default function FeaturesStrip() {
         
         {/* HEADER */}
         <div className="features-section-header">
-          <h2 className="features-section-title">{contents.featuresTitle || "NV NightVision"}</h2>
+          <h2 className="features-section-title">{homeSettings.features?.heading || contents.featuresTitle || "NV NightVision"}</h2>
           <p className="features-section-subtitle">
-            {contents.featuresSubtitle || "Advanced and Reliable Security Solutions to meet increasing demands of dynamic and ever-changing security landscape by innovating design, development and production of high-quality Closed-Circuit Television."}
+            {homeSettings.features?.subheading || contents.featuresSubtitle || "Advanced and Reliable Security Solutions to meet increasing demands of dynamic and ever-changing security landscape by innovating design, development and production of high-quality Closed-Circuit Television."}
           </p>
+          {homeSettings.features?.body_text && (
+            <p className="features-section-subtitle" style={{ marginTop: 8, fontSize: 13, opacity: 0.8 }}>
+              Highlights: {homeSettings.features.body_text}
+            </p>
+          )}
         </div>
 
         {/* THREE COLUMN GRID */}
@@ -38,11 +44,11 @@ export default function FeaturesStrip() {
             ))}
           </div>
 
-          {/* Center Column: Product Visual */}
+          {/* Center Column: Product Visual (editable via backend homepage settings) */}
           <div className="features-center-column">
             <div className="features-center-image-wrapper">
               <img
-                src={cameraImg}
+                src={homeSettings.features?.image_url || cameraImg}
                 alt="NIGHTVISION Dome Camera"
                 className="features-center-image"
               />

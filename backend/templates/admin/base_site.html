@@ -1,0 +1,158 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">NightVision CMS Dashboard</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    /* NightVision CMS Custom Theme Overrides */
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+
+    :root, [data-theme="light"], [data-theme="dark"] {
+        /* Force Dark Mode for NightVision Theme */
+        --primary: #94da32;
+        --primary-fg: #131313;
+        
+        --body-fg: #e5e2e1;
+        --body-bg: #131313;
+        --body-quiet-color: #c3c9b3;
+        --body-loud-color: #ffffff;
+        
+        --header-color: #94da32;
+        --header-branding-color: #131313;
+        --header-bg: #94da32;
+        --header-link-color: #131313;
+        
+        --breadcrumbs-fg: #c3c9b3;
+        --breadcrumbs-link-fg: #e5e2e1;
+        --breadcrumbs-bg: #20201f;
+        
+        --link-fg: #b5e75d;
+        --link-hover-color: #94da32;
+        --link-selected-fg: #94da32;
+        
+        --hairline-color: #434938;
+        --border-color: #434938;
+        
+        --error-fg: #ff4d4f;
+        --message-success-bg: #284300;
+        --message-warning-bg: #ffc107;
+        --message-error-bg: #ff4d4f;
+        
+        --darkened-bg: #1b1b1b;
+        --selected-bg: #2a2a2a;
+        --selected-row: #2a2a2a;
+        
+        --button-fg: #131313;
+        --button-bg: #94da32;
+        --button-hover-bg: #b5e75d;
+        
+        --default-button-bg: #434938;
+        --default-button-hover-bg: #94da32;
+        
+        --close-button-bg: #434938;
+        --close-button-hover-bg: #ff4d4f;
+        
+        --delete-button-bg: #ff4d4f;
+        --delete-button-hover-bg: #ff7875;
+        
+        --object-tools-fg: #94da32;
+        --object-tools-bg: #20201f;
+        --object-tools-hover-bg: #2a2a2a;
+    }
+    
+    /* Additional Customizations for High-Tech Aesthetic */
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    
+    #header {
+        border-bottom: 2px solid #b5e75d;
+        box-shadow: 0 4px 15px rgba(148, 218, 50, 0.2);
+    }
+    
+    #branding h1 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+    
+    .module h2, .module caption, .inline-group h2 {
+        background: #20201f;
+        color: #94da32;
+        border-top: 2px solid #94da32;
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+    
+    .module h2 a, .module caption a, .inline-group h2 a {
+        color: #94da32 !important;
+    }
+    
+    div.breadcrumbs {
+        border-bottom: 1px solid #434938;
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    /* Form Inputs */
+    input[type=text], input[type=password], input[type=email], input[type=url], input[type=number], input[type=tel], textarea, select, .vTextField {
+        background-color: #0e0e0e;
+        color: #e5e2e1;
+        border: 1px solid #434938;
+        border-radius: 4px;
+        padding: 8px 12px;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    
+    input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=url]:focus, input[type=number]:focus, input[type=tel]:focus, textarea:focus, select:focus, .vTextField:focus {
+        border-color: #94da32;
+        box-shadow: 0 0 0 2px rgba(148, 218, 50, 0.2);
+        outline: none;
+    }
+    
+    /* Buttons */
+    .button, input[type=submit], input[type=button], .submit-row input, a.button {
+        border-radius: 4px;
+        font-family: 'Space Grotesk', sans-serif;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: all 0.2s ease;
+    }
+    
+    .button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover, a.button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(148, 218, 50, 0.3);
+    }
+    
+    /* Hide the light/dark theme toggle to enforce our forced Dark UI */
+    #theme-toggle {
+        display: none !important;
+    }
+
+    /* Sidebar nav links hover effect */
+    #nav-sidebar a:hover, #nav-sidebar a:focus {
+        color: #131313;
+        background-color: #94da32;
+    }
+
+    /* Object Tools (Add buttons) */
+    .object-tools a.addlink {
+        border-radius: 4px;
+        padding: 8px 16px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+</style>
+{% endblock %}

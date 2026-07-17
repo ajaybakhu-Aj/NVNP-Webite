@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useSiteContents } from "./utils/cmsDb";
+import { authMe } from "./utils/api";
 
 import Header from "./components/ui/Header";
 import HeroSection from "./components/home/HeroSection";
@@ -70,6 +71,49 @@ import Settings from "./app/(marketing)/settings/page";
 import "./styles/global.css";
 import NanoTek from "./app/(marketing)/dealers/OurDealers/Provience1/NanoTek";
 import DynamicDealerProfile from "./app/(marketing)/dealers/DynamicDealerProfile";
+
+/* SEO / marketing pages — lazy-loaded so they don't bloat the main bundle */
+const lazyPage = (loader) => React.lazy(loader);
+const BlogCategoryAiSecurity = lazyPage(() => import("./app/(marketing)/blog/category/ai-security/page"));
+const BlogCategoryBusinessSecurity = lazyPage(() => import("./app/(marketing)/blog/category/business-security/page"));
+const BlogCategoryBuyingGuides = lazyPage(() => import("./app/(marketing)/blog/category/buying-guides/page"));
+const BlogCategoryHomeSecurity = lazyPage(() => import("./app/(marketing)/blog/category/home-security/page"));
+const BlogCategoryInstallationGuides = lazyPage(() => import("./app/(marketing)/blog/category/installation-guides/page"));
+const CaseStudiesPage = lazyPage(() => import("./app/(marketing)/case-studies/page"));
+const CaseStudyDetail = lazyPage(() => import("./app/(marketing)/case-studies/[slug]/page"));
+const CctvInstallationPage = lazyPage(() => import("./app/(marketing)/cctv-installation/page"));
+const CctvInstallKathmandu = lazyPage(() => import("./app/(marketing)/cctv-installation/kathmandu/page"));
+const CctvInstallLalitpur = lazyPage(() => import("./app/(marketing)/cctv-installation/lalitpur/page"));
+const CctvInstallBhaktapur = lazyPage(() => import("./app/(marketing)/cctv-installation/bhaktapur/page"));
+const CctvInstallPokhara = lazyPage(() => import("./app/(marketing)/cctv-installation/pokhara/page"));
+const CctvInstallChitwan = lazyPage(() => import("./app/(marketing)/cctv-installation/chitwan/page"));
+const CctvInstallButwal = lazyPage(() => import("./app/(marketing)/cctv-installation/butwal/page"));
+const CctvInstallBiratnagar = lazyPage(() => import("./app/(marketing)/cctv-installation/biratnagar/page"));
+const CompanyPage = lazyPage(() => import("./app/(marketing)/company/page"));
+const CareersPage = lazyPage(() => import("./app/(marketing)/company/careers/page"));
+const MediaPage = lazyPage(() => import("./app/(marketing)/company/media/page"));
+const MissionPage = lazyPage(() => import("./app/(marketing)/company/mission/page"));
+const ComparePage = lazyPage(() => import("./app/(marketing)/compare/page"));
+const DealerBenefitsPage = lazyPage(() => import("./app/(marketing)/dealers/benefits/page"));
+const DealerSuccessStoriesPage = lazyPage(() => import("./app/(marketing)/dealers/success-stories/page"));
+const DealerTrainingPage = lazyPage(() => import("./app/(marketing)/dealers/training/page"));
+const ReviewsPage = lazyPage(() => import("./app/(marketing)/reviews/page"));
+const SolutionsPage = lazyPage(() => import("./app/(marketing)/solutions/page"));
+const SolutionHomeSecurity = lazyPage(() => import("./app/(marketing)/solutions/home-security/page"));
+const SolutionHospitalSecurity = lazyPage(() => import("./app/(marketing)/solutions/hospital-security/page"));
+const SolutionHotelSecurity = lazyPage(() => import("./app/(marketing)/solutions/hotel-security/page"));
+const SolutionOfficeSecurity = lazyPage(() => import("./app/(marketing)/solutions/office-security/page"));
+const SolutionRetailSecurity = lazyPage(() => import("./app/(marketing)/solutions/retail-security/page"));
+const SolutionSchoolSecurity = lazyPage(() => import("./app/(marketing)/solutions/school-security/page"));
+const SolutionWarehouseSecurity = lazyPage(() => import("./app/(marketing)/solutions/warehouse-security/page"));
+const SupportFaqPage = lazyPage(() => import("./app/(marketing)/support/faq/page"));
+const SupportManualsPage = lazyPage(() => import("./app/(marketing)/support/manuals/page"));
+
+const routeLoadingFallback = (
+  <main style={{ minHeight: "60vh", display: "flex", justifyContent: "center", alignItems: "center", color: "#94da32", fontFamily: "Space Grotesk, sans-serif" }}>
+    LOADING MODULE...
+  </main>
+);
 
 /* HOME PAGE */
 function HomePage() {
@@ -178,93 +222,6 @@ function GlobalSocialSidebar() {
 }
 
 
-function GlobalTrafficSidebar() {
-  const siteContents = useSiteContents();
-
-  const [activeSessions, setActiveSessions] = useState(1482);
-  const [dailyHits, setDailyHits] = useState(84290);
-  const [bandwidth, setBandwidth] = useState(28.4);
-  const [latency, setLatency] = useState(18);
-  const [threats, setThreats] = useState(427);
-
-  useEffect(() => {
-    if (siteContents) {
-      const s = parseInt(siteContents.trafficActiveSessions) || 1482;
-      const h = parseInt(siteContents.trafficDailyHits) || 84290;
-      const b = parseFloat(siteContents.trafficBandwidth) || 28.4;
-      const t = parseInt(siteContents.trafficThreatsBlocked) || 427;
-
-      setActiveSessions(s);
-      setDailyHits(h);
-      setBandwidth(b);
-      setThreats(t);
-    }
-  }, [siteContents]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveSessions(prev => Math.max(10, prev + Math.floor(Math.random() * 9) - 4));
-      setDailyHits(prev => prev + Math.floor(Math.random() * 3));
-      setBandwidth(prev => {
-        const base = parseFloat(siteContents.trafficBandwidth) || 28.4;
-        const change = (Math.random() * 4 - 2);
-        return Math.max(0.1, parseFloat((base + change).toFixed(1)));
-      });
-      setLatency(Math.floor(12 + Math.random() * 14));
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [siteContents]);
-
-  return (
-    <div className="global-traffic-sidebar">
-      <div className="sidebar-vertical-label">
-        <span className="live-dot-glowing"></span>
-        <span className="label-text">📡 TELEMETRY FEED</span>
-      </div>
-
-      <div className="sidebar-expanded-panel">
-        <div className="panel-header">
-          <span className="header-status-badge">SECURE LINK: ACTIVE</span>
-          <h4 className="panel-title">SYS MONITORING</h4>
-        </div>
-
-        <div className="panel-grid">
-          <div className="metric-row">
-            <span className="metric-label">ACTIVE SESSIONS</span>
-            <span className="metric-value text-green">{activeSessions.toLocaleString()}</span>
-          </div>
-
-          <div className="metric-row">
-            <span className="metric-label">PAGE VIEW HITS</span>
-            <span className="metric-value text-blue">{dailyHits.toLocaleString()}</span>
-          </div>
-
-          <div className="metric-row">
-            <span className="metric-label">BANDWIDTH FLOW</span>
-            <span className="metric-value text-yellow">{bandwidth} MB/s</span>
-          </div>
-
-          <div className="metric-row">
-            <span className="metric-label">SYS LATENCY</span>
-            <span className="metric-value text-cyan">{latency} ms</span>
-          </div>
-
-          <div className="metric-row">
-            <span className="metric-label">THREATS BLOCKED</span>
-            <span className="metric-value text-red">{threats}</span>
-          </div>
-        </div>
-
-        <div className="panel-footer">
-          <span className="footer-status">FEED SYNC: ONLINE</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-
 
 function App() {
   const location = useLocation();
@@ -277,18 +234,31 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    // The Django session is the source of truth for authentication.
+    // localStorage only caches the user for instant UI display.
     const checkAdmin = () => {
-      try {
-        const savedUser = localStorage.getItem("user");
-        if (savedUser) {
-          const parsed = JSON.parse(savedUser);
-          setIsAdmin(parsed.role === "Admin" || parsed.role === "Super Admin");
-        } else {
-          setIsAdmin(false);
-        }
-      } catch (e) {
-        setIsAdmin(false);
-      }
+      authMe()
+        .then((res) => {
+          if (res.authenticated) {
+            setIsAdmin(res.user.role === "Admin");
+            localStorage.setItem(
+              "user",
+              JSON.stringify({ ...res.user, loginTime: new Date().toISOString() })
+            );
+          } else {
+            setIsAdmin(false);
+            localStorage.removeItem("user");
+          }
+        })
+        .catch(() => {
+          // Backend unreachable — fall back to the cached user for UI only.
+          try {
+            const savedUser = JSON.parse(localStorage.getItem("user") || "null");
+            setIsAdmin(savedUser?.role === "Admin" || savedUser?.role === "Super Admin");
+          } catch {
+            setIsAdmin(false);
+          }
+        });
     };
     checkAdmin();
     window.addEventListener("storage", checkAdmin);
@@ -422,9 +392,9 @@ function App() {
     >
       {!hideHeaderFooter && <Header />}
       {!hideHeaderFooter && <GlobalSocialSidebar />}
-      {!hideHeaderFooter && isAdmin && <GlobalTrafficSidebar />}
-      {!hideHeaderFooter && <FloatingChatbot />}
+            {!hideHeaderFooter && <FloatingChatbot />}
 
+      <React.Suspense fallback={routeLoadingFallback}>
       <Routes>
         {/* HOME PAGE */}
         <Route path="/" element={<HomePage />} />
@@ -498,9 +468,69 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/settings" element={<Settings />} />
 
+        {/* BLOG CATEGORY LANDING PAGES */}
+        <Route path="/blog/category/ai-security" element={<BlogCategoryAiSecurity />} />
+        <Route path="/blog/category/business-security" element={<BlogCategoryBusinessSecurity />} />
+        <Route path="/blog/category/buying-guides" element={<BlogCategoryBuyingGuides />} />
+        <Route path="/blog/category/home-security" element={<BlogCategoryHomeSecurity />} />
+        <Route path="/blog/category/installation-guides" element={<BlogCategoryInstallationGuides />} />
+
+        {/* CASE STUDIES */}
+        <Route path="/case-studies" element={<CaseStudiesPage />} />
+        <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
+
+        {/* LOCAL SEO: CCTV INSTALLATION CITY PAGES */}
+        <Route path="/cctv-installation" element={<CctvInstallationPage />} />
+        <Route path="/cctv-installation/kathmandu" element={<CctvInstallKathmandu />} />
+        <Route path="/cctv-installation/lalitpur" element={<CctvInstallLalitpur />} />
+        <Route path="/cctv-installation/bhaktapur" element={<CctvInstallBhaktapur />} />
+        <Route path="/cctv-installation/pokhara" element={<CctvInstallPokhara />} />
+        <Route path="/cctv-installation/chitwan" element={<CctvInstallChitwan />} />
+        <Route path="/cctv-installation/butwal" element={<CctvInstallButwal />} />
+        <Route path="/cctv-installation/biratnagar" element={<CctvInstallBiratnagar />} />
+
+        {/* COMPANY */}
+        <Route path="/company" element={<CompanyPage />} />
+        <Route path="/company/about" element={<AboutUs />} />
+        <Route path="/company/careers" element={<CareersPage />} />
+        <Route path="/company/founder" element={<Founder />} />
+        <Route path="/company/media" element={<MediaPage />} />
+        <Route path="/company/mission" element={<MissionPage />} />
+        <Route path="/company/team" element={<TeamPage />} />
+
+        {/* COMPARE & REVIEWS */}
+        <Route path="/compare" element={<ComparePage />} />
+        <Route path="/reviews" element={<ReviewsPage />} />
+
+        {/* DEALERS */}
+        <Route path="/dealers" element={<Dealership />} />
+        <Route path="/dealers/apply" element={<ApplyDealersPage />} />
+        <Route path="/dealers/benefits" element={<DealerBenefitsPage />} />
+        <Route path="/dealers/success-stories" element={<DealerSuccessStoriesPage />} />
+        <Route path="/dealers/training" element={<DealerTrainingPage />} />
+
+        {/* SOLUTIONS */}
+        <Route path="/solutions" element={<SolutionsPage />} />
+        <Route path="/solutions/home-security" element={<SolutionHomeSecurity />} />
+        <Route path="/solutions/hospital-security" element={<SolutionHospitalSecurity />} />
+        <Route path="/solutions/hotel-security" element={<SolutionHotelSecurity />} />
+        <Route path="/solutions/office-security" element={<SolutionOfficeSecurity />} />
+        <Route path="/solutions/retail-security" element={<SolutionRetailSecurity />} />
+        <Route path="/solutions/school-security" element={<SolutionSchoolSecurity />} />
+        <Route path="/solutions/warehouse-security" element={<SolutionWarehouseSecurity />} />
+
+        {/* SUPPORT */}
+        <Route path="/support/faq" element={<SupportFaqPage />} />
+        <Route path="/support/manuals" element={<SupportManualsPage />} />
+        <Route path="/support/warranty" element={<Warranty />} />
+
+        {/* CANONICAL PRODUCT DETAIL (matches backend /products/<slug>/ redirects) */}
+        <Route path="/products/:slug" element={<ProductSlug />} />
+
         {/* FALLBACK 404 PAGE */}
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      </React.Suspense>
       {!hideHeaderFooter && <Footer />}
     </div>
   );

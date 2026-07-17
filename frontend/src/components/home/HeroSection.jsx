@@ -1,219 +1,85 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Icon from "../../utils/Icon";
 import { colors } from "../../data/constants";
-import { useSiteContents } from "../../utils/cmsDb";
+import { useSiteContents, useHomepageSettings } from "../../utils/cmsDb";
 
 function HeroSection() {
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const contents = useSiteContents();
-
-    useEffect(() => {
-        const handleResize = () => {
-            setScreenWidth(window.innerWidth);
-        };
-
-        window.addEventListener("resize", handleResize);
-
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-    const isTablet = screenWidth <= 1024;
-    const isMobile = screenWidth <= 768;
-    const isSmallMobile = screenWidth <= 480;
+    const homeSettings = useHomepageSettings();
 
     return (
         <section
+            className="relative w-full flex flex-col justify-center items-center py-16 md:py-0 min-h-[600px] md:min-h-[75vh]"
             style={{
-                position: "relative",
-                minHeight: "100vh",
-                display: "flex",
-                alignItems: "center",
-                overflow: "hidden",
                 borderBottom: `1px solid ${colors.outlineVariant}`,
                 background: "#131313",
-                paddingTop: isMobile ? "100px" : "0",
-                paddingBottom: isMobile ? "60px" : "0",
             }}
         >
-
             {/* RECORDING FRAME */}
-            <div
-                style={{
-                    position: "absolute",
-                    inset: isMobile ? 10 : 20,
-                    pointerEvents: "none",
-                    zIndex: 5,
-                    overflow: "hidden",
-                }}
-            >
+            <div className="absolute inset-[10px] md:inset-[20px] pointer-events-none z-[5] overflow-hidden">
                 {/* SCANLINE */}
                 <div
+                    className="absolute top-0 left-0 w-full h-[4px] z-[2]"
                     style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: 4,
-                        background: `linear-gradient(
-              to right,
-              transparent,
-              ${colors.secondary},
-              transparent
-            )`,
-                        boxShadow: `
-              0 0 12px ${colors.secondary},
-              0 0 24px ${colors.secondary}
-            `,
+                        background: `linear-gradient(to right, transparent, ${colors.secondary}, transparent)`,
+                        boxShadow: `0 0 12px ${colors.secondary}, 0 0 24px ${colors.secondary}`,
                         animation: "scanlineMove 2.8s linear infinite",
-                        zIndex: 2,
                     }}
                 />
 
                 {/* CORNERS */}
                 {[
-                    {
-                        top: 0,
-                        left: 0,
-                        borderTop: `3px solid ${colors.secondary}`,
-                        borderLeft: `3px solid ${colors.secondary}`,
-                    },
-                    {
-                        top: 0,
-                        right: 0,
-                        borderTop: `3px solid ${colors.secondary}`,
-                        borderRight: `3px solid ${colors.secondary}`,
-                    },
-                    {
-                        bottom: 0,
-                        left: 0,
-                        borderBottom: `3px solid ${colors.secondary}`,
-                        borderLeft: `3px solid ${colors.secondary}`,
-                    },
-                    {
-                        bottom: 0,
-                        right: 0,
-                        borderBottom: `3px solid ${colors.secondary}`,
-                        borderRight: `3px solid ${colors.secondary}`,
-                    },
+                    { className: "top-0 left-0 border-t-[3px] border-l-[3px]" },
+                    { className: "top-0 right-0 border-t-[3px] border-r-[3px]" },
+                    { className: "bottom-0 left-0 border-b-[3px] border-l-[3px]" },
+                    { className: "bottom-0 right-0 border-b-[3px] border-r-[3px]" },
                 ].map((corner, index) => (
                     <div
                         key={index}
-                        style={{
-                            position: "absolute",
-                            width: isMobile ? 40 : 70,
-                            height: isMobile ? 40 : 70,
-                            ...corner,
-                        }}
+                        className={`absolute w-[40px] h-[40px] md:w-[70px] md:h-[70px] ${corner.className}`}
+                        style={{ borderColor: colors.secondary }}
                     />
                 ))}
 
                 {/* REC */}
                 <div
-                    style={{
-                        position: "absolute",
-                        top: isMobile ? 10 : 16,
-                        right: isMobile ? 10 : 16,
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 8,
-                        color: "#fff",
-                        fontSize: isMobile ? 10 : 12,
-                        fontWeight: 700,
-                        letterSpacing: 2,
-                        padding: isMobile ? "6px 10px" : "8px 14px",
-                        background: "rgba(0,0,0,0.6)",
-                        border: "1px solid rgba(255,255,255,0.08)",
-                        backdropFilter: "blur(8px)",
-                    }}
+                    className="absolute top-[10px] right-[10px] md:top-[16px] md:right-[16px] flex items-center gap-[8px] text-white text-[10px] md:text-[12px] font-bold tracking-[2px] px-[10px] py-[6px] md:px-[14px] md:py-[8px] bg-black/60 border border-white/10 backdrop-blur-[8px]"
                 >
                     <span
-                        style={{
-                            width: 8,
-                            height: 8,
-                            borderRadius: "50%",
-                            background: "#ff2d2d",
-                            animation: "recordingPulse 1s infinite",
-                        }}
+                        className="w-[8px] h-[8px] rounded-full bg-[#ff2d2d]"
+                        style={{ animation: "recordingPulse 1s infinite" }}
                     />
-
                     REC
                 </div>
             </div>
 
             {/* MAIN CONTENT */}
-            <div
-                style={{
-                    maxWidth: 1280,
-                    margin: "0 auto",
-                    padding: isMobile ? "0 20px" : "0 24px",
-                    width: "100%",
-                    display: "grid",
-                    gridTemplateColumns: isTablet ? "1fr" : "1fr 1fr",
-                    gap: isMobile ? 50 : 80,
-                    alignItems: "center",
-                    position: "relative",
-                    zIndex: 10,
-                }}
-            >
+            <div className="max-w-[1280px] mx-auto px-[20px] md:px-[24px] w-full flex flex-col lg:flex-row gap-[50px] md:gap-[80px] items-center relative z-10">
                 {/* LEFT SIDE */}
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: isMobile ? 20 : 28,
-                        order: isTablet ? 2 : 1,
-                        textAlign: isTablet ? "center" : "left",
-                        alignItems: isTablet ? "center" : "flex-start",
-                    }}
-                >
+                <div className="flex flex-col gap-[20px] md:gap-[28px] order-2 lg:order-1 text-center lg:text-left items-center lg:items-start w-full lg:w-1/2">
                     {/* STATUS */}
                     <div
+                        className="inline-flex items-center gap-[8px] border px-[12px] py-[6px] md:px-[14px] md:py-[8px] w-fit text-[10px] md:text-[12px] font-bold tracking-[2px] bg-black/40 backdrop-blur-[8px]"
                         style={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                            gap: 8,
                             color: colors.secondary,
-                            border: `1px solid ${colors.secondary}`,
-                            padding: isMobile ? "6px 12px" : "8px 14px",
-                            width: "fit-content",
-                            fontSize: isMobile ? 10 : 12,
-                            fontWeight: 700,
-                            letterSpacing: 2,
-                            background: "rgba(0,0,0,0.4)",
-                            backdropFilter: "blur(8px)",
+                            borderColor: colors.secondary,
                         }}
                     >
                         <span
-                            style={{
-                                width: 8,
-                                height: 8,
-                                borderRadius: "50%",
-                                background: "#ff2d2d",
-                                animation: "recordingPulse 1s infinite",
-                            }}
+                            className="w-[8px] h-[8px] rounded-full bg-[#ff2d2d]"
+                            style={{ animation: "recordingPulse 1s infinite" }}
                         />
-
                         LIVE SURVEILLANCE ACTIVE
                     </div>
 
                     {/* TITLE */}
                     <h1
-                        style={{
-                            fontFamily: "'Space Grotesk', sans-serif",
-                            fontSize: isSmallMobile
-                                ? "34px"
-                                : isMobile
-                                    ? "44px"
-                                    : "clamp(52px, 6vw, 78px)",
-                            lineHeight: 1,
-                            fontWeight: 700,
-                            letterSpacing: isMobile ? -1 : -3,
-                            color: "#fff",
-                        }}
+                        className="font-bold text-white text-[34px] min-[480px]:text-[44px] md:text-[clamp(52px,6vw,78px)] leading-[1] tracking-[-1px] md:tracking-[-3px]"
+                        style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                     >
                         {(() => {
-                            const title = contents.heroTitle || "ADVANCED SURVEILLANCE FOR PEACE OF MIND";
+                            const title = homeSettings.hero?.heading || contents.heroTitle || "ADVANCED SURVEILLANCE FOR PEACE OF MIND";
                             const parts = title.split(/(SURVEILLANCE)/i);
                             return parts.map((part, i) => {
                                 if (part.toLowerCase() === "surveillance") {
@@ -236,46 +102,18 @@ function HeroSection() {
 
                     {/* DESCRIPTION */}
                     <p
-                        style={{
-                            maxWidth: 600,
-                            opacity: 0.7,
-                            fontSize: isMobile ? 14 : 16,
-                            lineHeight: 1.8,
-                            color: "#ccc",
-                        }}
+                        className="max-w-[600px] opacity-70 text-[14px] md:text-[16px] leading-[1.8] text-[#ccc]"
                     >
-                        {contents.heroSubtitle || "Smart AI-powered surveillance systems engineered for continuous monitoring, encrypted live streaming, and real-time security response."}
+                        {homeSettings.hero?.subheading || contents.heroSubtitle || "Smart AI-powered surveillance systems engineered for continuous monitoring, encrypted live streaming, and real-time security response."}
                     </p>
 
                     {/* BUTTONS */}
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: isSmallMobile ? "column" : "row",
-                            width: isSmallMobile ? "100%" : "auto",
-                            gap: 16,
-                            marginTop: 8,
-                        }}
-                    >
+                    <div className="flex flex-col min-[480px]:flex-row w-full min-[480px]:w-auto gap-[20px] mt-[40px] md:mt-[48px] relative z-20">
                         <Link
-                            to="/product"
-                            style={{
-                                background: colors.secondary,
-                                color: "#111",
-                                padding: isMobile
-                                    ? "16px 22px"
-                                    : "18px 34px",
-                                border: "none",
-                                fontWeight: 700,
-                                letterSpacing: 1,
-                                textDecoration: "none",
-                                textAlign: "center",
-                                fontSize: isMobile ? 13 : 14,
-                                width: isSmallMobile ? "100%" : "auto",
-                                boxSizing: "border-box",
-                            }}
+                            to={homeSettings.hero?.button_url || "/product"}
+                            className="hero-btn-1 flex justify-center items-center border-none font-extrabold tracking-[2px] uppercase no-underline text-center text-[13px] md:text-[15px] w-full min-[480px]:w-auto box-border transition-all duration-300 rounded-full"
                         >
-                            {(!contents.heroBtnText || contents.heroBtnText.toLowerCase().includes("cctv")) ? "VIEW OUR PRODUCTS" : contents.heroBtnText}
+                            {homeSettings.hero?.button_text || ((!contents.heroBtnText || contents.heroBtnText.toLowerCase().includes("cctv")) ? "VIEW OUR PRODUCTS" : contents.heroBtnText)}
                         </Link>
 
                         <button
@@ -285,19 +123,7 @@ function HeroSection() {
                                     el.scrollIntoView({ behavior: "smooth" });
                                 }
                             }}
-                            style={{
-                                background: "transparent",
-                                color: colors.secondary,
-                                padding: isMobile
-                                    ? "16px 22px"
-                                    : "18px 34px",
-                                border: `1px solid ${colors.secondary}`,
-                                fontWeight: 700,
-                                letterSpacing: 1,
-                                cursor: "pointer",
-                                fontSize: isMobile ? 13 : 14,
-                                width: isSmallMobile ? "100%" : "auto",
-                            }}
+                            className="hero-btn-2 flex justify-center items-center font-extrabold tracking-[2px] uppercase cursor-pointer text-[13px] md:text-[15px] w-full min-[480px]:w-auto box-border transition-all duration-300 rounded-full"
                         >
                             {contents.heroBtn2Text || "Features"}
                         </button>
@@ -305,104 +131,31 @@ function HeroSection() {
                 </div>
 
                 {/* RIGHT VISUAL */}
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        position: "relative",
-                        order: isTablet ? 1 : 2,
-                    }}
-                >
-                    <div
-                        style={{
-                            position: "relative",
-                            width: "100%",
-                            height: isSmallMobile
-                                ? "360px"
-                                : isMobile
-                                    ? "440px"
-                                    : isTablet
-                                        ? "560px"
-                                        : "680px",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "flex-end",
-                            overflow: "hidden",
-                        }}
-                    >
+                <div className="flex justify-center items-center relative order-1 lg:order-2 w-full lg:w-1/2">
+                    <div className="relative w-full h-[360px] min-[480px]:h-[440px] md:h-[560px] lg:h-[680px] flex justify-center items-end overflow-hidden">
                         {/* GREEN HALO GLOW */}
                         <div
+                            className="absolute left-1/2 -translate-x-1/2 rounded-full bottom-[40px] md:bottom-[80px] w-[280px] md:w-[600px] h-[280px] md:h-[600px] z-[1] blur-[60px]"
                             style={{
-                                position: "absolute",
-                                bottom: isMobile ? "40px" : "80px",
-                                left: "50%",
-                                transform: "translateX(-50%)",
-
-                                width: isMobile ? "280px" : "600px",
-                                height: isMobile ? "280px" : "600px",
-
-                                borderRadius: "50%",
-
-                                background:
-                                    "radial-gradient(circle, rgba(148,218,50,0.50) 0%, rgba(148,218,50,0.16) 35%, rgba(148,218,50,0) 75%)",
-
-                                filter: "blur(60px)",
-                                zIndex: 1,
+                                background: "radial-gradient(circle, rgba(148,218,50,0.50) 0%, rgba(148,218,50,0.16) 35%, rgba(148,218,50,0) 75%)",
                             }}
                         />
 
                         {/* BRAND AMBASSADOR IMAGE */}
                         <img
-                            src="/hero_pointing_cctv.png"
+                            src={homeSettings.hero?.image_url || contents.heroImage || "/hero_pointing_cctv.png"}
+                            alt="Hero"
+                            className="relative z-[2] w-auto max-w-full object-contain object-bottom translate-y-[10px] md:translate-y-[20px] max-h-[320px] min-[480px]:max-h-[420px] md:max-h-[550px] lg:max-h-[760px]"
                             style={{
-                                position: "relative",
-                                zIndex: 2,
-
-                                maxHeight: isSmallMobile
-                                    ? "320px"
-                                    : isMobile
-                                        ? "420px"
-                                        : isTablet
-                                            ? "550px"
-                                            : "760px",
-
-                                width: "auto",
-                                maxWidth: "100%",
-
-                                objectFit: "contain",
-                                objectPosition: "bottom center",
-
-                                filter: `
-                                    drop-shadow(0 15px 40px rgba(0,0,0,0.45))
-                                    drop-shadow(0 0 30px rgba(148,218,50,0.30))
-                                `,
-
-                                transform: isMobile ? "translateY(10px)" : "translateY(20px)",
+                                filter: `drop-shadow(0 15px 40px rgba(0,0,0,0.45)) drop-shadow(0 0 30px rgba(148,218,50,0.30))`,
                             }}
                         />
 
                         {/* TRUSTED LEADERSHIP CARD */}
                         <div
-                            style={{
-                                position: "absolute",
-                                top: isMobile ? "20px" : "60px",
-                                right: isMobile ? "10px" : "20px",
-                                zIndex: 15,
-                                textAlign: "left",
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "flex-start",
-                                padding: "12px 16px",
-                                background: "rgba(19, 19, 19, 0.75)",
-                                backdropFilter: "blur(12px)",
-                                border: "1px solid rgba(255,255,255,0.05)",
-                                borderLeft: `3px solid ${colors.secondary}`,
-                            }}
+                            className="absolute z-[15] text-left flex flex-col items-start py-[12px] px-[16px] bg-[#131313]/75 backdrop-blur-[12px] border border-white/5 border-l-[3px] top-[20px] md:top-[60px] right-[10px] md:right-[20px]"
+                            style={{ borderLeftColor: colors.secondary }}
                         >
-
-
-
                         </div>
                     </div>
                 </div>
@@ -412,55 +165,43 @@ function HeroSection() {
             <style>
                 {`
           @keyframes scanlineMove {
-            0% {
-              transform: translateY(0);
-              opacity: 0;
-            }
-
-            5% {
-              opacity: 1;
-            }
-
-            95% {
-              opacity: 1;
-            }
-
-            100% {
-              transform: translateY(calc(100vh - 40px));
-              opacity: 0;
-            }
+            0% { transform: translateY(0); opacity: 0; }
+            5% { opacity: 1; }
+            95% { opacity: 1; }
+            100% { transform: translateY(calc(100vh - 40px)); opacity: 0; }
           }
-
           @keyframes recordingPulse {
-            0%, 100% {
-              opacity: 1;
-              transform: scale(1);
-            }
-
-            50% {
-              opacity: 0.3;
-              transform: scale(0.8);
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.8); }
+          }
+          .hero-btn-1 {
+            background: ${colors.secondary};
+            color: #111;
+            box-shadow: 0 4px 16px rgba(148,218,50,0.2);
+            padding: 14px 28px;
+          }
+          @media (min-width: 768px) {
+            .hero-btn-1, .hero-btn-2 {
+              padding: 16px 32px !important;
             }
           }
-
-          @keyframes spin {
-            from {
-              transform: rotate(0deg);
-            }
-
-            to {
-              transform: rotate(360deg);
-            }
+          .hero-btn-1:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 32px rgba(148,218,50,0.6);
+            background: #a3eb3f;
           }
-
-          @keyframes spinReverse {
-            from {
-              transform: rotate(360deg);
-            }
-
-            to {
-              transform: rotate(0deg);
-            }
+          .hero-btn-2 {
+            background: rgba(148,218,50,0.05);
+            color: ${colors.secondary};
+            border: 2px solid ${colors.secondary};
+            backdrop-filter: blur(4px);
+            padding: 14px 28px;
+          }
+          .hero-btn-2:hover {
+            background: ${colors.secondary};
+            color: #111;
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 32px rgba(148,218,50,0.5);
           }
         `}
             </style>

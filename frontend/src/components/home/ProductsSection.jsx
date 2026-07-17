@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import ProductCard from "../products/ProductCard";
 import { colors } from "../../data/constants";
 import { getAllProducts } from "../../utils/productDb";
+import { useSiteContents } from "../../utils/cmsDb";
 
 export default function ProductsSection() {
+  const contents = useSiteContents();
   const [productsList, setProductsList] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -59,7 +61,7 @@ export default function ProductsSection() {
                 wordBreak: "break-word",
               }}
             >
-              ELITE SERIES CAMERAS
+              {contents.homeProductsTitle || "ELITE SERIES CAMERAS"}
             </h2>
           </div>
 
@@ -77,7 +79,7 @@ export default function ProductsSection() {
               flexShrink: 0,
             }}
           >
-            EXPLORE FULL CATALOG →
+            {contents.homeProductsLinkText || "EXPLORE FULL CATALOG →"}
           </Link>
         </div>
 

@@ -31,9 +31,14 @@ import {
   saveSiteContents,
   getAllTeamMembers,
   saveTeamMember,
-  deleteTeamMember
+  deleteTeamMember,
+  getHomepageSettings,
+  saveHomepageSettings
 } from "../../../utils/cmsDb";
+import { authLogin, authLogout, authMe, uploadImage } from "../../../utils/api";
+import RichTextEditor from "../../../components/ui/RichTextEditor";
 import Icon from "../../../utils/Icon";
+import MediaPicker from "../../../components/ui/MediaPicker";
 
 const C = {
   bg: "#f8fafc", // Slate 50
@@ -74,9 +79,13 @@ export default function AdminDashboard() {
   const [settAddress, setSettAddress] = useState("");
   const [settEmail, setSettEmail] = useState("");
   const [settBannerText, setSettBannerText] = useState("");
+  const [settBannerEnabled, setSettBannerEnabled] = useState(true);
+  const [settBannerSpeed, setSettBannerSpeed] = useState(18);
   const [settSystemAlert, setSettSystemAlert] = useState("");
   const [siteContents, setSiteContents] = useState(null);
   const [siteCustomSubTab, setSiteCustomSubTab] = useState("home");
+  const [homepageSettings, setHomepageSettings] = useState(null);
+  const [homeSubTab, setHomeSubTab] = useState("hero");
 
   const [expandedOrder, setExpandedOrder] = useState(null);
 
@@ -203,16 +212,24 @@ export default function AdminDashboard() {
   }, [isTrafficPaused]);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    if (savedUser) {
-      try {
-        const parsed = JSON.parse(savedUser);
-        setUser(parsed);
-      } catch (e) {
-        console.error("Error loading profile session:", e);
-      }
-    }
-    setAuthLoading(false);
+    // Verify the Django session server-side; localStorage is UI cache only.
+    authMe()
+      .then((res) => {
+        if (res.authenticated && res.user.role === "Admin") {
+          const session = { ...res.user, loginTime: new Date().toISOString() };
+          localStorage.setItem("user", JSON.stringify(session));
+          setUser(session);
+        } else {
+          localStorage.removeItem("user");
+          setUser(null);
+        }
+        setAuthLoading(false);
+      })
+      .catch(() => {
+        // Backend unreachable — show login form rather than trusting cache.
+        setUser(null);
+        setAuthLoading(false);
+      });
     loadAllData();
   }, []);
 
@@ -221,30 +238,30 @@ export default function AdminDashboard() {
     setAuthError("");
     setAuthSubmitting(true);
 
-    verifyAdminCredentials(adminEmail.trim(), adminPassword)
-      .then((matchedAdmin) => {
-        if (!matchedAdmin) {
-          setAuthError("Invalid email address or password. Access denied.");
+    authLogin(adminEmail.trim(), adminPassword)
+      .then((result) => {
+        if (result.user.role !== "Admin") {
+          authLogout().catch(() => {});
+          setAuthError("This account does not have administrator access.");
           setAuthSubmitting(false);
           return;
         }
 
-        const adminSession = {
-          email: matchedAdmin.email,
-          name: matchedAdmin.name,
-          role: matchedAdmin.role || "Admin",
-          loginTime: new Date().toISOString()
-        };
+        const adminSession = { ...result.user, loginTime: new Date().toISOString() };
         localStorage.setItem("user", JSON.stringify(adminSession));
         setUser(adminSession);
         setAuthSubmitting(false);
-        
+
         // Refresh Header & other states
         window.dispatchEvent(new Event("storage"));
         window.location.reload();
       })
-      .catch(() => {
-        setAuthError("Database authentication error. Please try again.");
+      .catch((err) => {
+        setAuthError(
+          err.status === 401
+            ? "Invalid email address or password. Access denied."
+            : err.message || "Authentication error. Please try again."
+        );
         setAuthSubmitting(false);
       });
   };
@@ -260,6 +277,7 @@ export default function AdminDashboard() {
     getAllAdmins().then(setAdminUsers);
     getAllTeamMembers().then(setTeamMembers);
     getSiteContents().then(setSiteContents);
+    getHomepageSettings().then(setHomepageSettings);
     getSettings().then((config) => {
       setSettings(config);
       if (config) {
@@ -268,6 +286,8 @@ export default function AdminDashboard() {
         setSettAddress(config.address || "");
         setSettEmail(config.email || "");
         setSettBannerText(config.bannerText || "");
+        setSettBannerEnabled(config.bannerEnabled !== false);
+        setSettBannerSpeed(parseInt(config.bannerSpeed, 10) || 18);
         setSettSystemAlert(config.systemAlert || "");
       }
     });
@@ -294,18 +314,22 @@ export default function AdminDashboard() {
   };
 
   const handleDelete = (type, id) => {
+    const onFail = (err) => {
+      addLog(`DELETE_FAILED: ${err.message}`);
+      alert(`Delete failed: ${err.message}`);
+    };
     if (window.confirm(`Are you sure you want to delete this ${type}?`)) {
       addLog(`COMMAND: DELETE // TYPE: ${type.toUpperCase()} // ID: ${id}`);
       if (type === "product") {
-        deleteProduct(id).then(() => { loadAllData(); addLog("DELETE_OK."); });
+        deleteProduct(id).then(() => { loadAllData(); addLog("DELETE_OK."); }).catch(onFail);
       } else if (type === "blog") {
-        deleteBlog(id).then(() => { loadAllData(); addLog("DELETE_OK."); });
+        deleteBlog(id).then(() => { loadAllData(); addLog("DELETE_OK."); }).catch(onFail);
       } else if (type === "event") {
-        deleteEvent(id).then(() => { loadAllData(); addLog("DELETE_OK."); });
+        deleteEvent(id).then(() => { loadAllData(); addLog("DELETE_OK."); }).catch(onFail);
       } else if (type === "gallery") {
         deleteGalleryItem(id).then(() => { loadAllData(); addLog("DELETE_OK."); });
       } else if (type === "dealer") {
-        deleteDealer(id).then(() => { loadAllData(); addLog("DELETE_OK."); });
+        deleteDealer(id).then(() => { loadAllData(); addLog("DELETE_OK."); }).catch(onFail);
       } else if (type === "contact") {
         deleteContact(id).then(() => { loadAllData(); addLog("DELETE_OK."); });
       } else if (type === "admin_user") {
@@ -345,6 +369,9 @@ export default function AdminDashboard() {
       saveDealer(updated).then(() => {
         loadAllData();
         addLog(`DEALER_STATUS_UPDATE: ID #${dealerId} // STATUS: ${newStatus}`);
+      }).catch((err) => {
+        addLog(`DEALER_STATUS_UPDATE_FAILED: ${err.message}`);
+        alert(`Update failed: ${err.message}`);
       });
     }
   };
@@ -369,12 +396,17 @@ export default function AdminDashboard() {
       address: settAddress.trim(),
       email: settEmail.trim(),
       bannerText: settBannerText.trim(),
+      bannerEnabled: settBannerEnabled,
+      bannerSpeed: parseInt(settBannerSpeed, 10) || 18,
       systemAlert: settSystemAlert.trim()
     };
     saveSettings(updatedSettings).then(() => {
       loadAllData();
       addLog("Global website settings updated successfully.");
       alert("Website settings updated successfully!");
+    }).catch((err) => {
+      addLog(`SETTINGS_SAVE_FAILED: ${err.message}`);
+      alert(`Settings save failed: ${err.message}`);
     });
   };
 
@@ -383,7 +415,13 @@ export default function AdminDashboard() {
     setEditItem(item);
     if (item) {
       addLog(`Opened edit form for ${type} ID #${item.id}`);
-      if (type === "blog" || type === "event") {
+      if (type === "blog") {
+        // Blog content is HTML blocks — join for the rich text editor
+        setFormData({
+          ...item,
+          content: item.content ? item.content.join("\n\n") : ""
+        });
+      } else if (type === "event") {
         // Convert array content to string split by newlines for easy editing
         setFormData({
           ...item,
@@ -392,6 +430,7 @@ export default function AdminDashboard() {
       } else if (type === "product") {
         setFormData({
           ...item,
+          specTable: Array.isArray(item.specTable) ? item.specTable : [],
           customThumbs: item.thumbs ? item.thumbs.filter(t => t !== item.img) : []
         });
       } else {
@@ -410,6 +449,9 @@ export default function AdminDashboard() {
           price: 5000,
           description: "",
           longDesc: "",
+          detailedInfo: "",
+          videoUrl: "",
+          specTable: [],
           bodySectionLabel: "TECHNICAL DOCUMENTATION",
           bodySectionTitle: "SYSTEM SPECIFICATIONS & FIELD ARCHITECTURE",
           guidePdf: "",
@@ -484,9 +526,15 @@ export default function AdminDashboard() {
 
     const dataToSave = { ...formData };
 
-    // Post processing for split content arrays
-    if (formType === "blog" || formType === "event") {
-      dataToSave.content = typeof dataToSave.content === "string" 
+    // Post processing for content
+    if (formType === "blog") {
+      // Rich-text HTML is kept as one block; legacy plain text splits by line
+      const raw = typeof dataToSave.content === "string" ? dataToSave.content.trim() : "";
+      dataToSave.content = raw.startsWith("<")
+        ? [raw]
+        : raw.split("\n").filter(p => p.trim() !== "");
+    } else if (formType === "event") {
+      dataToSave.content = typeof dataToSave.content === "string"
         ? dataToSave.content.split("\n").filter(p => p.trim() !== "")
         : [];
     }
@@ -506,6 +554,9 @@ export default function AdminDashboard() {
         loadAllData();
         setFormType(null);
         addLog("Product saved successfully.");
+      }).catch((err) => {
+        addLog(`PRODUCT_SAVE_FAILED: ${err.message}`);
+        alert(`Product save failed: ${err.message}`);
       });
     } else if (formType === "blog") {
       if (!editItem) {
@@ -515,6 +566,9 @@ export default function AdminDashboard() {
         loadAllData();
         setFormType(null);
         addLog("Blog saved successfully.");
+      }).catch((err) => {
+        addLog(`BLOG_SAVE_FAILED: ${err.message}`);
+        alert(`Blog save failed: ${err.message}`);
       });
     } else if (formType === "event") {
       if (!editItem) {
@@ -524,6 +578,9 @@ export default function AdminDashboard() {
         loadAllData();
         setFormType(null);
         addLog("News/Event updated successfully.");
+      }).catch((err) => {
+        addLog(`EVENT_SAVE_FAILED: ${err.message}`);
+        alert(`Event save failed: ${err.message}`);
       });
     } else if (formType === "gallery") {
       saveGalleryItem(dataToSave).then(() => {
@@ -554,6 +611,9 @@ export default function AdminDashboard() {
         loadAllData();
         setFormType(null);
         addLog(`Dealer application for ${dataToSave.companyName} saved successfully.`);
+      }).catch((err) => {
+        addLog(`DEALER_SAVE_FAILED: ${err.message}`);
+        alert(`Dealer save failed: ${err.message}`);
       });
     }
   };
@@ -682,6 +742,7 @@ export default function AdminDashboard() {
               <button 
                 type="button"
                 onClick={() => {
+                  authLogout().catch(() => {});
                   localStorage.removeItem("user");
                   setUser(null);
                   window.dispatchEvent(new Event("storage"));
@@ -728,6 +789,7 @@ export default function AdminDashboard() {
 
             <button
               onClick={() => {
+                authLogout().catch(() => {});
                 localStorage.removeItem("user");
                 window.dispatchEvent(new Event("storage"));
                 window.location.href = "/";
@@ -822,6 +884,7 @@ export default function AdminDashboard() {
               { id: "orders", name: "Orders Logs", icon: "shopping_cart" },
               { id: "dealers", name: "Add Dealers", icon: "person_add" },
               { id: "contacts", name: "Client Messages", icon: "mail" },
+              { id: "homepage_settings", name: "Home Page Settings", icon: "home" },
               { id: "customize", name: "Edit Site Contents", icon: "edit_note" },
               { id: "settings", name: "System Settings", icon: "settings" },
               { id: "admins", name: "User Accounts", icon: "manage_accounts" },
@@ -1557,6 +1620,428 @@ export default function AdminDashboard() {
               </div>
             )}
 
+            {/* TAB CONTENT: HOME PAGE SETTINGS */}
+            {activeTab === "homepage_settings" && !formType && (
+              <div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24, borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 16 }}>
+                  <div>
+                    <h2 style={{ fontFamily: C.sg, fontSize: 20, fontWeight: 700 }}>HOME PAGE SETTINGS</h2>
+                    <p style={{ fontSize: 11, color: C.onSurfVar, marginTop: 4 }}>Configure dynamic contents for each section of the website's live landing page.</p>
+                  </div>
+                  <button 
+                    type="button" 
+                    onClick={() => {
+                      if (window.confirm("Are you sure you want to save all home page setting changes?")) {
+                        saveHomepageSettings(homepageSettings).then(() => {
+                          loadAllData();
+                          addLog("Website dynamic home page settings updated.", "admin");
+                          alert("Home page settings saved successfully!");
+                        }).catch((err) => {
+                          addLog(`HOMEPAGE_SETTINGS_SAVE_FAILED: ${err.message}`);
+                          alert(`Home page settings save failed: ${err.message}`);
+                        });
+                      }
+                    }} 
+                    style={{ background: C.secondary, color: C.onPrimary, border: "none", padding: "10px 20px", fontSize: 11, fontWeight: 700, letterSpacing: "1px", cursor: "pointer", fontFamily: C.sg, borderRadius: "6px" }}
+                  >
+                    SAVE CHANGES
+                  </button>
+                </div>
+
+                <div style={{ display: "flex", gap: 10, marginBottom: 30, borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 12, overflowX: "auto" }}>
+                  {[
+                    { id: "hero", name: "Hero Section" },
+                    { id: "about", name: "About Section" },
+                    { id: "features", name: "Features Section" },
+                    { id: "cta", name: "CTA Section" }
+                  ].map((subTab) => (
+                    <button
+                      key={subTab.id}
+                      type="button"
+                      onClick={() => setHomeSubTab(subTab.id)}
+                      style={{
+                        padding: "8px 16px",
+                        background: homeSubTab === subTab.id ? C.primary : "transparent",
+                        color: homeSubTab === subTab.id ? C.onPrimary : C.onSurfVar,
+                        border: `1px solid ${homeSubTab === subTab.id ? C.primary : "transparent"}`,
+                        borderRadius: "4px",
+                        fontSize: 11,
+                        fontWeight: 700,
+                        cursor: "pointer",
+                        fontFamily: C.sg,
+                        transition: "all 0.2s"
+                      }}
+                    >
+                      {subTab.name}
+                    </button>
+                  ))}
+                </div>
+
+                {homepageSettings ? (
+                  <div style={{ display: "flex", flexDirection: "column", gap: 24, background: C.surface, padding: 24, borderRadius: 8, border: `1px solid ${C.outlineVar}` }}>
+                    
+                    {/* HERO SECTION EDITING */}
+                    {homeSubTab === "hero" && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                        <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10 }}>
+                          <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>HERO SECTION CONFIGURATION</h3>
+                        </div>
+                        
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>HEADING</label>
+                          <input 
+                            type="text" 
+                            value={homepageSettings.hero?.heading || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              hero: { ...homepageSettings.hero, heading: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>SUBHEADING</label>
+                          <textarea 
+                            rows={3}
+                            value={homepageSettings.hero?.subheading || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              hero: { ...homepageSettings.hero, subheading: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical", borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BODY TEXT (FALLBACK/EXTRA DETAILS)</label>
+                          <textarea 
+                            rows={2}
+                            value={homepageSettings.hero?.body_text || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              hero: { ...homepageSettings.hero, body_text: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical", borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON TEXT</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.hero?.button_text || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                hero: { ...homepageSettings.hero, button_text: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON URL</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.hero?.button_url || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                hero: { ...homepageSettings.hero, button_url: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                        </div>
+
+                        <div style={{ marginBottom: 16 }}>
+                          <MediaPicker
+                            label="Hero Image"
+                            value={homepageSettings.hero?.image_url || ""}
+                            altText="Home Hero Image"
+                            addLog={addLog}
+                            onChange={(url) => setHomepageSettings(prev => ({
+                              ...prev,
+                              hero: { ...prev.hero, image_url: url }
+                            }))}
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ABOUT SECTION EDITING */}
+                    {homeSubTab === "about" && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                        <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10 }}>
+                          <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>ABOUT SECTION CONFIGURATION</h3>
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>HEADING</label>
+                          <input 
+                            type="text" 
+                            value={homepageSettings.about?.heading || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              about: { ...homepageSettings.about, heading: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>SUBHEADING</label>
+                          <textarea 
+                            rows={3}
+                            value={homepageSettings.about?.subheading || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              about: { ...homepageSettings.about, subheading: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical", borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BODY TEXT</label>
+                          <textarea 
+                            rows={3}
+                            value={homepageSettings.about?.body_text || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              about: { ...homepageSettings.about, body_text: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical", borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON TEXT</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.about?.button_text || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                about: { ...homepageSettings.about, button_text: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON URL</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.about?.button_url || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                about: { ...homepageSettings.about, button_url: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                        </div>
+
+                        <div style={{ marginBottom: 16 }}>
+                          <MediaPicker
+                            label="About Image"
+                            value={homepageSettings.about?.image_url || ""}
+                            altText="Home About Image"
+                            addLog={addLog}
+                            onChange={(url) => setHomepageSettings(prev => ({
+                              ...prev,
+                              about: { ...prev.about, image_url: url }
+                            }))}
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* FEATURES SECTION EDITING */}
+                    {homeSubTab === "features" && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                        <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10 }}>
+                          <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>FEATURES SECTION CONFIGURATION</h3>
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>HEADING</label>
+                          <input 
+                            type="text" 
+                            value={homepageSettings.features?.heading || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              features: { ...homepageSettings.features, heading: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>SUBHEADING</label>
+                          <textarea 
+                            rows={3}
+                            value={homepageSettings.features?.subheading || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              features: { ...homepageSettings.features, subheading: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical", borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BODY TEXT (COMMA SEPARATED FEATURES)</label>
+                          <textarea 
+                            rows={2}
+                            value={homepageSettings.features?.body_text || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              features: { ...homepageSettings.features, body_text: e.target.value }
+                            })} 
+                            placeholder="e.g. Weatherproof IP67, AI Motion detection, 24/7 Service"
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical", borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON TEXT</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.features?.button_text || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                features: { ...homepageSettings.features, button_text: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON URL</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.features?.button_url || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                features: { ...homepageSettings.features, button_url: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                        </div>
+
+                        <div style={{ marginBottom: 16 }}>
+                          <MediaPicker
+                            label="Features Image"
+                            value={homepageSettings.features?.image_url || ""}
+                            altText="Features Image"
+                            addLog={addLog}
+                            onChange={(url) => setHomepageSettings(prev => ({
+                              ...prev,
+                              features: { ...prev.features, image_url: url }
+                            }))}
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* CTA SECTION EDITING */}
+                    {homeSubTab === "cta" && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                        <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10 }}>
+                          <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>CTA (CALL TO ACTION) SECTION CONFIGURATION</h3>
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>HEADING</label>
+                          <input 
+                            type="text" 
+                            value={homepageSettings.cta?.heading || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              cta: { ...homepageSettings.cta, heading: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>SUBHEADING</label>
+                          <textarea 
+                            rows={3}
+                            value={homepageSettings.cta?.subheading || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              cta: { ...homepageSettings.cta, subheading: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical", borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BODY TEXT</label>
+                          <textarea 
+                            rows={3}
+                            value={homepageSettings.cta?.body_text || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              cta: { ...homepageSettings.cta, body_text: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical", borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON TEXT</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.cta?.button_text || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                cta: { ...homepageSettings.cta, button_text: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON URL</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.cta?.button_url || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                cta: { ...homepageSettings.cta, button_url: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                        </div>
+
+                        <div style={{ marginBottom: 16 }}>
+                          <MediaPicker
+                            label="CTA Image"
+                            value={homepageSettings.cta?.image_url || ""}
+                            altText="CTA Image"
+                            addLog={addLog}
+                            onChange={(url) => setHomepageSettings(prev => ({
+                              ...prev,
+                              cta: { ...prev.cta, image_url: url }
+                            }))}
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                  </div>
+                ) : (
+                  <div style={{ textAlign: "center", padding: 40, color: C.onSurfVar }}>
+                    Loading home page settings configuration...
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* TAB CONTENT: EDIT SITE CONTENTS */}
             {activeTab === "customize" && !formType && (
               <div>
@@ -1570,6 +2055,9 @@ export default function AdminDashboard() {
                           loadAllData();
                           addLog("Website dynamic contents updated.", "admin");
                           alert("Site contents saved successfully!");
+                        }).catch((err) => {
+                          addLog(`CONTENTS_SAVE_FAILED: ${err.message}`);
+                          alert(`Site contents save failed: ${err.message}`);
                         });
                       }
                     }} 
@@ -1652,13 +2140,23 @@ export default function AdminDashboard() {
                             </div>
                             <div>
                               <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>SECONDARY BUTTON TEXT</label>
-                              <input 
-                                type="text" 
-                                value={siteContents.heroBtn2Text || ""} 
-                                onChange={(e) => setSiteContents({ ...siteContents, heroBtn2Text: e.target.value })} 
-                                style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }} 
+                              <input
+                                type="text"
+                                value={siteContents.heroBtn2Text || ""}
+                                onChange={(e) => setSiteContents({ ...siteContents, heroBtn2Text: e.target.value })}
+                                style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }}
                               />
                             </div>
+                          </div>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>HERO IMAGE URL (right-side ambassador picture)</label>
+                            <input
+                              type="text"
+                              value={siteContents.heroImage || ""}
+                              onChange={(e) => setSiteContents({ ...siteContents, heroImage: e.target.value })}
+                              placeholder="/hero_pointing_cctv.png"
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }}
+                            />
                           </div>
                         </div>
 
@@ -1844,34 +2342,14 @@ export default function AdminDashboard() {
                             style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical" }} 
                           />
                         </div>
-                        <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 16, alignItems: "end" }}>
-                          <div>
-                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>FOUNDER PHOTO URL</label>
-                            <input 
-                              type="text" 
-                              value={siteContents.homeFounderImg || ""} 
-                              onChange={(e) => setSiteContents({ ...siteContents, homeFounderImg: e.target.value })} 
-                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }} 
-                            />
-                          </div>
-                          <div>
-                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>OR CHOOSE IMAGE FILE</label>
-                            <input 
-                              type="file" 
-                              accept="image/*" 
-                              onChange={(e) => {
-                                const file = e.target.files[0];
-                                if (file) {
-                                  const reader = new FileReader();
-                                  reader.onloadend = () => {
-                                    setSiteContents({ ...siteContents, homeFounderImg: reader.result });
-                                  };
-                                  reader.readAsDataURL(file);
-                                }
-                              }} 
-                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: "9px 12px", color: C.onSurf, outline: "none", fontSize: 11, cursor: "pointer" }} 
-                            />
-                          </div>
+                        <div style={{ marginBottom: 16 }}>
+                          <MediaPicker
+                            label="Founder Photo"
+                            value={siteContents.homeFounderImg || ""}
+                            altText="Founder Photo"
+                            addLog={addLog}
+                            onChange={(url) => setSiteContents({ ...siteContents, homeFounderImg: url })}
+                          />
                         </div>
 
                         <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10, marginTop: 10 }}>
@@ -1935,25 +2413,69 @@ export default function AdminDashboard() {
                         </div>
 
                         <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10, marginTop: 10 }}>
+                          <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>FEATURED PRODUCTS SECTION (ELITE SERIES)</h3>
+                        </div>
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>SECTION TITLE</label>
+                            <input
+                              type="text"
+                              value={siteContents.homeProductsTitle || ""}
+                              onChange={(e) => setSiteContents({ ...siteContents, homeProductsTitle: e.target.value })}
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }}
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>CATALOG LINK TEXT</label>
+                            <input
+                              type="text"
+                              value={siteContents.homeProductsLinkText || ""}
+                              onChange={(e) => setSiteContents({ ...siteContents, homeProductsLinkText: e.target.value })}
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }}
+                            />
+                          </div>
+                        </div>
+
+                        <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10, marginTop: 10 }}>
                           <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>EXPAND PARTNERS NETWORK (FOOTER CALL-OUT)</h3>
                         </div>
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                           <div>
                             <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>TITLE</label>
-                            <input 
-                              type="text" 
-                              value={siteContents.expandNetworkTitle || ""} 
-                              onChange={(e) => setSiteContents({ ...siteContents, expandNetworkTitle: e.target.value })} 
-                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }} 
+                            <input
+                              type="text"
+                              value={siteContents.expandNetworkTitle || ""}
+                              onChange={(e) => setSiteContents({ ...siteContents, expandNetworkTitle: e.target.value })}
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }}
                             />
                           </div>
                           <div>
                             <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON LABEL</label>
-                            <input 
-                              type="text" 
-                              value={siteContents.expandNetworkBtn || ""} 
-                              onChange={(e) => setSiteContents({ ...siteContents, expandNetworkBtn: e.target.value })} 
-                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }} 
+                            <input
+                              type="text"
+                              value={siteContents.expandNetworkBtn || ""}
+                              onChange={(e) => setSiteContents({ ...siteContents, expandNetworkBtn: e.target.value })}
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }}
+                            />
+                          </div>
+                        </div>
+                        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 16 }}>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>DESCRIPTION</label>
+                            <textarea
+                              rows={2}
+                              value={siteContents.expandNetworkDesc || ""}
+                              onChange={(e) => setSiteContents({ ...siteContents, expandNetworkDesc: e.target.value })}
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical" }}
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BACKGROUND WATERMARK TEXT</label>
+                            <input
+                              type="text"
+                              value={siteContents.expandNetworkBgText || ""}
+                              onChange={(e) => setSiteContents({ ...siteContents, expandNetworkBgText: e.target.value })}
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }}
                             />
                           </div>
                         </div>
@@ -1972,34 +2494,14 @@ export default function AdminDashboard() {
                               style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }} 
                             />
                           </div>
-                          <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 16, alignItems: "end" }}>
-                            <div>
-                              <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>PROMOTIONAL/BLOG BANNER PICTURE URL</label>
-                              <input 
-                                type="text" 
-                                value={siteContents.homeBlogBanner || ""} 
-                                onChange={(e) => setSiteContents({ ...siteContents, homeBlogBanner: e.target.value })} 
-                                style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }} 
-                              />
-                            </div>
-                            <div>
-                              <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>OR CHOOSE IMAGE FILE</label>
-                              <input 
-                                type="file" 
-                                accept="image/*" 
-                                onChange={(e) => {
-                                  const file = e.target.files[0];
-                                  if (file) {
-                                    const reader = new FileReader();
-                                    reader.onloadend = () => {
-                                      setSiteContents({ ...siteContents, homeBlogBanner: reader.result });
-                                    };
-                                    reader.readAsDataURL(file);
-                                  }
-                                }} 
-                                style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: "9px 12px", color: C.onSurf, outline: "none", fontSize: 11, cursor: "pointer" }} 
-                              />
-                            </div>
+                          <div>
+                            <MediaPicker
+                              label="Promotional/Blog Banner Picture"
+                              value={siteContents.homeBlogBanner || ""}
+                              altText="Promotional/Blog Banner"
+                              addLog={addLog}
+                              onChange={(url) => setSiteContents({ ...siteContents, homeBlogBanner: url })}
+                            />
                           </div>
                         </div>
                         <div>
@@ -2278,34 +2780,14 @@ export default function AdminDashboard() {
                               style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical" }} 
                             />
                           </div>
-                          <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 16, alignItems: "end" }}>
-                            <div>
-                              <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>HERO BACKGROUND IMAGE URL</label>
-                              <input 
-                                type="text" 
-                                value={siteContents.founderHeroBg || ""} 
-                                onChange={(e) => setSiteContents({ ...siteContents, founderHeroBg: e.target.value })} 
-                                style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }} 
-                              />
-                            </div>
-                            <div>
-                              <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>CHOOSE IMAGE FILE</label>
-                              <input 
-                                type="file" 
-                                accept="image/*" 
-                                onChange={(e) => {
-                                  const file = e.target.files[0];
-                                  if (file) {
-                                    const reader = new FileReader();
-                                    reader.onloadend = () => {
-                                      setSiteContents({ ...siteContents, founderHeroBg: reader.result });
-                                    };
-                                    reader.readAsDataURL(file);
-                                  }
-                                }} 
-                                style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: "9px 12px", color: C.onSurf, outline: "none", fontSize: 11, cursor: "pointer" }} 
-                              />
-                            </div>
+                          <div style={{ marginBottom: 16 }}>
+                            <MediaPicker
+                              label="Hero Background Image"
+                              value={siteContents.founderHeroBg || ""}
+                              altText="Founder Hero Background"
+                              addLog={addLog}
+                              onChange={(url) => setSiteContents({ ...siteContents, founderHeroBg: url })}
+                            />
                           </div>
                         </div>
 
@@ -2359,34 +2841,14 @@ export default function AdminDashboard() {
                             />
                           </div>
                         </div>
-                        <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 16, alignItems: "end" }}>
-                          <div>
-                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>FOUNDER IMAGE URL</label>
-                            <input 
-                              type="text" 
-                              value={siteContents.founderImage || ""} 
-                              onChange={(e) => setSiteContents({ ...siteContents, founderImage: e.target.value })} 
-                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }} 
-                            />
-                          </div>
-                          <div>
-                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>CHOOSE IMAGE FILE</label>
-                            <input 
-                              type="file" 
-                              accept="image/*" 
-                              onChange={(e) => {
-                                  const file = e.target.files[0];
-                                  if (file) {
-                                    const reader = new FileReader();
-                                    reader.onloadend = () => {
-                                      setSiteContents({ ...siteContents, founderImage: reader.result });
-                                    };
-                                    reader.readAsDataURL(file);
-                                  }
-                              }} 
-                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: "9px 12px", color: C.onSurf, outline: "none", fontSize: 11, cursor: "pointer" }} 
-                            />
-                          </div>
+                        <div style={{ marginBottom: 16 }}>
+                          <MediaPicker
+                            label="Founder Image"
+                            value={siteContents.founderImage || ""}
+                            altText="Founder Image"
+                            addLog={addLog}
+                            onChange={(url) => setSiteContents({ ...siteContents, founderImage: url })}
+                          />
                         </div>
 
                         <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10, marginTop: 10 }}>
@@ -2582,34 +3044,14 @@ export default function AdminDashboard() {
                             style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical" }} 
                           />
                         </div>
-                        <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 16, alignItems: "end" }}>
-                          <div>
-                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>DOMINANCE GRAPHICS URL</label>
-                            <input 
-                              type="text" 
-                              value={siteContents.founderMarketImg || ""} 
-                              onChange={(e) => setSiteContents({ ...siteContents, founderMarketImg: e.target.value })} 
-                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }} 
-                            />
-                          </div>
-                          <div>
-                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>CHOOSE IMAGE FILE</label>
-                            <input 
-                              type="file" 
-                              accept="image/*" 
-                              onChange={(e) => {
-                                const file = e.target.files[0];
-                                if (file) {
-                                  const reader = new FileReader();
-                                  reader.onloadend = () => {
-                                    setSiteContents({ ...siteContents, founderMarketImg: reader.result });
-                                  };
-                                  reader.readAsDataURL(file);
-                                }
-                              }} 
-                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: "9px 12px", color: C.onSurf, outline: "none", fontSize: 11, cursor: "pointer" }} 
-                            />
-                          </div>
+                        <div style={{ marginBottom: 16 }}>
+                          <MediaPicker
+                            label="Dominance Graphics"
+                            value={siteContents.founderMarketImg || ""}
+                            altText="Dominance Graphics"
+                            addLog={addLog}
+                            onChange={(url) => setSiteContents({ ...siteContents, founderMarketImg: url })}
+                          />
                         </div>
 
                         <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10, marginTop: 10 }}>
@@ -2726,34 +3168,14 @@ export default function AdminDashboard() {
                             style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical" }} 
                           />
                         </div>
-                        <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 16, alignItems: "end" }}>
-                          <div>
-                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>VISION BACKGROUND IMAGE URL</label>
-                            <input 
-                              type="text" 
-                              value={siteContents.founderVisionBg || ""} 
-                              onChange={(e) => setSiteContents({ ...siteContents, founderVisionBg: e.target.value })} 
-                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }} 
-                            />
-                          </div>
-                          <div>
-                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>CHOOSE IMAGE FILE</label>
-                            <input 
-                              type="file" 
-                              accept="image/*" 
-                              onChange={(e) => {
-                                const file = e.target.files[0];
-                                if (file) {
-                                  const reader = new FileReader();
-                                  reader.onloadend = () => {
-                                    setSiteContents({ ...siteContents, founderVisionBg: reader.result });
-                                  };
-                                  reader.readAsDataURL(file);
-                                }
-                              }} 
-                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: "9px 12px", color: C.onSurf, outline: "none", fontSize: 11, cursor: "pointer" }} 
-                            />
-                          </div>
+                        <div style={{ marginBottom: 16 }}>
+                          <MediaPicker
+                            label="Vision Background Image"
+                            value={siteContents.founderVisionBg || ""}
+                            altText="Vision Background"
+                            addLog={addLog}
+                            onChange={(url) => setSiteContents({ ...siteContents, founderVisionBg: url })}
+                          />
                         </div>
 
                         <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10, marginTop: 10 }}>
@@ -2816,34 +3238,14 @@ export default function AdminDashboard() {
                               style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical" }} 
                             />
                           </div>
-                          <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 16, alignItems: "end" }}>
-                            <div>
-                              <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>HERO BACKGROUND IMAGE URL</label>
-                              <input 
-                                type="text" 
-                                value={siteContents.contactHeroImg || ""} 
-                                onChange={(e) => setSiteContents({ ...siteContents, contactHeroImg: e.target.value })} 
-                                style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }} 
-                              />
-                            </div>
-                            <div>
-                              <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>CHOOSE IMAGE FILE</label>
-                              <input 
-                                type="file" 
-                                accept="image/*" 
-                                onChange={(e) => {
-                                  const file = e.target.files[0];
-                                  if (file) {
-                                    const reader = new FileReader();
-                                    reader.onloadend = () => {
-                                      setSiteContents({ ...siteContents, contactHeroImg: reader.result });
-                                    };
-                                    reader.readAsDataURL(file);
-                                  }
-                                }} 
-                                style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: "9px 12px", color: C.onSurf, outline: "none", fontSize: 11, cursor: "pointer" }} 
-                              />
-                            </div>
+                          <div style={{ marginBottom: 16 }}>
+                            <MediaPicker
+                              label="Hero Background Image"
+                              value={siteContents.contactHeroImg || ""}
+                              altText="Contact Hero Background"
+                              addLog={addLog}
+                              onChange={(url) => setSiteContents({ ...siteContents, contactHeroImg: url })}
+                            />
                           </div>
                         </div>
 
@@ -3354,6 +3756,9 @@ export default function AdminDashboard() {
                           loadAllData();
                           addLog("Website dynamic contents updated.", "admin");
                           alert("Site contents saved successfully!");
+                        }).catch((err) => {
+                          addLog(`CONTENTS_SAVE_FAILED: ${err.message}`);
+                          alert(`Site contents save failed: ${err.message}`);
                         });
                       }
                     }}
@@ -3428,6 +3833,28 @@ export default function AdminDashboard() {
                       onChange={(e) => setSettBannerText(e.target.value)}
                       style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical" }}
                     />
+                    <div style={{ display: "flex", alignItems: "center", gap: 24, marginTop: 10, flexWrap: "wrap" }}>
+                      <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", fontSize: 11, fontWeight: 700 }}>
+                        <input
+                          type="checkbox"
+                          checked={settBannerEnabled}
+                          onChange={(e) => setSettBannerEnabled(e.target.checked)}
+                          style={{ width: 15, height: 15, accentColor: C.primary }}
+                        />
+                        SHOW SCROLLING TICKER ON THE WEBSITE
+                      </label>
+                      <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 11, fontWeight: 700 }}>
+                        SCROLL DURATION (SECONDS)
+                        <input
+                          type="number"
+                          min={5}
+                          max={120}
+                          value={settBannerSpeed}
+                          onChange={(e) => setSettBannerSpeed(e.target.value)}
+                          style={{ width: 70, background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: "6px 8px", color: C.onSurf, outline: "none", fontSize: 12 }}
+                        />
+                      </label>
+                    </div>
                   </div>
 
                   <div>
@@ -3925,49 +4352,35 @@ export default function AdminDashboard() {
                       </div>
                     </div>
 
-                    <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 20, alignItems: "end" }}>
-                      <div>
-                        <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6, color: C.onSurfVar }}>IMAGE URL</label>
-                        <input required type="text" value={formData.img || ""} onChange={(e) => setFormData({ ...formData, img: e.target.value })} style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: "6px" }} />
-                      </div>
-                      <div>
-                        <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6, color: C.onSurfVar }}>OR CHOOSE IMAGE FILE</label>
-                        <input type="file" accept="image/*" onChange={(e) => {
-                          const file = e.target.files[0];
-                          if (file) {
-                            const reader = new FileReader();
-                            reader.onloadend = () => {
-                              setFormData({ ...formData, img: reader.result });
-                            };
-                            reader.readAsDataURL(file);
-                          }
-                        }} style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: "9px 12px", color: C.onSurf, outline: "none", fontSize: 11, borderRadius: "6px", cursor: "pointer" }} />
-                      </div>
+                    <div style={{ marginBottom: 16 }}>
+                      <MediaPicker
+                        label="Product Main Image"
+                        value={formData.img || ""}
+                        altText="Product Main Image"
+                        addLog={addLog}
+                        onChange={(url) => setFormData(prev => ({ ...prev, img: url }))}
+                      />
                     </div>
 
                     <div style={{ border: `1px dashed ${C.outline}`, padding: 20, borderRadius: 6, background: C.surfCont }}>
                       <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 8, color: C.onSurf }}>ADDITIONAL PRODUCT PHOTOS (CAROUSEL THUMBNAILS)</label>
-                      <input type="file" multiple accept="image/*" onChange={(e) => {
-                        const files = Array.from(e.target.files);
-                        if (files.length > 0) {
-                          const promises = files.map(file => {
-                            return new Promise((resolve) => {
-                              const reader = new FileReader();
-                              reader.onloadend = () => resolve(reader.result);
-                              reader.readAsDataURL(file);
-                            });
-                          });
-                          Promise.all(promises).then((results) => {
-                            setFormData({
-                              ...formData,
-                              customThumbs: [...(formData.customThumbs || []), ...results]
-                            });
-                          });
-                        }
-                      }} style={{ width: "100%", background: C.surface, border: `1px solid ${C.outline}`, padding: "8px 12px", color: C.onSurf, outline: "none", fontSize: 11, borderRadius: "6px", cursor: "pointer", marginBottom: 12 }} />
+                      <MediaPicker
+                        label="Add Gallery Photo"
+                        value=""
+                        altText="Product Gallery Image"
+                        addLog={addLog}
+                        onChange={(url) => {
+                          if (url) {
+                            setFormData((prev) => ({
+                              ...prev,
+                              customThumbs: [...(prev.customThumbs || []), url]
+                            }));
+                          }
+                        }}
+                      />
                       
                       {formData.customThumbs && formData.customThumbs.length > 0 && (
-                        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 8 }}>
+                        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 16 }}>
                           {formData.customThumbs.map((t, idx) => (
                             <div key={idx} style={{ position: "relative", width: 64, height: 64, border: `1px solid ${C.outline}`, borderRadius: 4, overflow: "hidden" }}>
                               <img src={t} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
@@ -3987,8 +4400,80 @@ export default function AdminDashboard() {
                     </div>
 
                     <div>
-                      <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6, color: C.onSurfVar }}>LONG DETAILED DESCRIPTION (BODY TEXT)</label>
-                      <textarea required rows={4} value={formData.longDesc || ""} onChange={(e) => setFormData({ ...formData, longDesc: e.target.value })} style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical" }} />
+                      <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6, color: C.onSurfVar }}>PRODUCT OVERVIEW (rich text — use the Format menu for headings)</label>
+                      <RichTextEditor
+                        value={formData.longDesc || ""}
+                        onChange={(htmlVal) => setFormData((prev) => ({ ...prev, longDesc: htmlVal }))}
+                        rows={7}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6, color: C.onSurfVar }}>DETAILED INFORMATION (rich text — shown below the specs, e.g. related prices, comparisons)</label>
+                      <RichTextEditor
+                        value={formData.detailedInfo || ""}
+                        onChange={(htmlVal) => setFormData((prev) => ({ ...prev, detailedInfo: htmlVal }))}
+                        rows={6}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6, color: C.onSurfVar }}>PRODUCT VIDEO URL (YouTube)</label>
+                      <input type="text" placeholder="https://www.youtube.com/watch?v=..." value={formData.videoUrl || ""} onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })} style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }} />
+                    </div>
+
+                    <div style={{ border: `1px dashed ${C.outline}`, padding: 20, borderRadius: 6, background: C.surfCont }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                        <label style={{ fontSize: 11, fontWeight: 700, color: C.onSurf }}>TECHNICAL SPECIFICATIONS TABLE</label>
+                        <button
+                          type="button"
+                          onClick={() => setFormData((prev) => ({ ...prev, specTable: [...(prev.specTable || []), ["", ""]] }))}
+                          style={{ background: C.primary, color: C.onPrimary, border: "none", padding: "6px 14px", fontSize: 11, fontWeight: 700, cursor: "pointer", borderRadius: 4, fontFamily: C.sg }}
+                        >
+                          + ADD SPEC ROW
+                        </button>
+                      </div>
+                      {(formData.specTable || []).length === 0 && (
+                        <div style={{ fontSize: 12, color: C.onSurfVar, marginBottom: 4 }}>
+                          No specification rows yet. Click "+ ADD SPEC ROW" to add entries like Resolution → 4MP.
+                        </div>
+                      )}
+                      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                        {(formData.specTable || []).map((row, idx) => (
+                          <div key={idx} style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr 36px", gap: 8, alignItems: "center" }}>
+                            <input
+                              type="text"
+                              placeholder="Label (e.g. Resolution)"
+                              value={row[0] || ""}
+                              onChange={(e) => {
+                                const updated = (formData.specTable || []).map((r) => [...r]);
+                                updated[idx][0] = e.target.value;
+                                setFormData((prev) => ({ ...prev, specTable: updated }));
+                              }}
+                              style={{ width: "100%", background: C.surface, border: `1px solid ${C.outlineVar}`, padding: 10, color: C.onSurf, outline: "none", fontSize: 12 }}
+                            />
+                            <input
+                              type="text"
+                              placeholder="Value (e.g. 4MP Quad HD)"
+                              value={row[1] || ""}
+                              onChange={(e) => {
+                                const updated = (formData.specTable || []).map((r) => [...r]);
+                                updated[idx][1] = e.target.value;
+                                setFormData((prev) => ({ ...prev, specTable: updated }));
+                              }}
+                              style={{ width: "100%", background: C.surface, border: `1px solid ${C.outlineVar}`, padding: 10, color: C.onSurf, outline: "none", fontSize: 12 }}
+                            />
+                            <button
+                              type="button"
+                              title="Remove row"
+                              onClick={() => setFormData((prev) => ({ ...prev, specTable: (prev.specTable || []).filter((_, i) => i !== idx) }))}
+                              style={{ background: "rgba(255,107,107,0.1)", color: "#ff6b6b", border: "1px solid #ff6b6b", borderRadius: 4, height: 34, cursor: "pointer", fontWeight: 700 }}
+                            >
+                              ×
+                            </button>
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
@@ -4057,9 +4542,14 @@ export default function AdminDashboard() {
                       </div>
                     </div>
 
-                    <div>
-                      <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6, color: C.onSurfVar }}>COVER IMAGE URL</label>
-                      <input required type="text" value={formData.img || ""} onChange={(e) => setFormData({ ...formData, img: e.target.value })} style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }} />
+                    <div style={{ marginBottom: 16 }}>
+                      <MediaPicker
+                        label="Blog Cover Image"
+                        value={formData.img || ""}
+                        altText="Blog Cover Image"
+                        addLog={addLog}
+                        onChange={(url) => setFormData(prev => ({ ...prev, img: url }))}
+                      />
                     </div>
 
                     <div>
@@ -4094,8 +4584,12 @@ export default function AdminDashboard() {
                     </div>
 
                     <div>
-                      <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6, color: C.onSurfVar }}>BODY PARAGRAPHS (Press ENTER to start a new paragraph)</label>
-                      <textarea required rows={6} placeholder="Type paragraphs here. Every double line break represents a new paragraph block in the layout." value={formData.content || ""} onChange={(e) => setFormData({ ...formData, content: e.target.value })} style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical" }} />
+                      <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6, color: C.onSurfVar }}>ARTICLE CONTENT (rich text — use the Format menu for H1/H2 headings, lists, and links)</label>
+                      <RichTextEditor
+                        value={formData.content || ""}
+                        onChange={(htmlVal) => setFormData((prev) => ({ ...prev, content: htmlVal }))}
+                        rows={14}
+                      />
                     </div>
                   </div>
                 )}
@@ -4133,9 +4627,14 @@ export default function AdminDashboard() {
                       </div>
                     </div>
 
-                    <div>
-                      <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6, color: C.onSurfVar }}>IMAGE URL</label>
-                      <input required type="text" value={formData.image || ""} onChange={(e) => setFormData({ ...formData, image: e.target.value })} style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13 }} />
+                    <div style={{ marginBottom: 16 }}>
+                      <MediaPicker
+                        label="Event Image"
+                        value={formData.image || ""}
+                        altText="Event Image"
+                        addLog={addLog}
+                        onChange={(url) => setFormData(prev => ({ ...prev, image: url }))}
+                      />
                     </div>
 
                     <div>
@@ -4195,24 +4694,14 @@ export default function AdminDashboard() {
                       </div>
                     </div>
 
-                    <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 20, alignItems: "end" }}>
-                      <div>
-                        <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6, color: C.onSurfVar }}>IMAGE URL</label>
-                        <input required type="text" value={formData.img || ""} onChange={(e) => setFormData({ ...formData, img: e.target.value })} style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: "6px" }} />
-                      </div>
-                      <div>
-                        <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6, color: C.onSurfVar }}>OR CHOOSE IMAGE FILE</label>
-                        <input type="file" accept="image/*" onChange={(e) => {
-                          const file = e.target.files[0];
-                          if (file) {
-                            const reader = new FileReader();
-                            reader.onloadend = () => {
-                              setFormData({ ...formData, img: reader.result });
-                            };
-                            reader.readAsDataURL(file);
-                          }
-                        }} style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: "9px 12px", color: C.onSurf, outline: "none", fontSize: 11, borderRadius: "6px", cursor: "pointer" }} />
-                      </div>
+                    <div style={{ marginBottom: 16 }}>
+                      <MediaPicker
+                        label="Gallery Image"
+                        value={formData.img || ""}
+                        altText="Gallery Image"
+                        addLog={addLog}
+                        onChange={(url) => setFormData(prev => ({ ...prev, img: url }))}
+                      />
                     </div>
                   </div>
                 )}

@@ -11,7 +11,7 @@ const FounderPage = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
   const contents = useSiteContents();
 
-  const bioSections = (contents.founderBioSections && contents.founderBioSections[0]?.text?.includes("grandfather"))
+  const bioSections = (contents.founderBioSections && contents.founderBioSections.length > 0 && contents.founderBioSections[0]?.title)
     ? contents.founderBioSections
     : [
         {
@@ -28,33 +28,25 @@ const FounderPage = () => {
         }
       ];
 
-  const startTitle = (contents.founderStartText && contents.founderStartText.includes("gaining 2 years")) ? (contents.founderStartTitle || "Starting the Brand") : "Starting the Brand";
+  const startTitle = contents.founderStartTitle || "Starting the Brand";
   
-  const startText = (contents.founderStartText && contents.founderStartText.includes("gaining 2 years"))
-    ? contents.founderStartText
-    : "After gaining 2 years of on-the-field experience, he started learning more about business models, import systems, global technological trends, and the psychology of customers. Over the next 4 years, he continued learning about the technical side of the industry and continued learning about the market from backend logistics to front-line sales. His knowledge and experience in the surveillance technology sector helped to shape his brand later.\n\nIn 2023, Rozil took a big step from being a technician to a brand owner by launching NightVision®, a fully registered and trademarked Nepali CCTV brand. He established the brand with the objective of delivering high-quality, affordable, and reliable surveillance technology. NightVision is a brand built to make Nepal proud in the world of innovation and technology.";
+  const startText = contents.founderStartText || "After gaining 2 years of on-the-field experience, he started learning more about business models, import systems, global technological trends, and the psychology of customers. Over the next 4 years, he continued learning about the technical side of the industry and continued learning about the market from backend logistics to front-line sales. His knowledge and experience in the surveillance technology sector helped to shape his brand later.\n\nIn 2023, Rozil took a big step from being a technician to a brand owner by launching NightVision®, a fully registered and trademarked Nepali CCTV brand. He established the brand with the objective of delivering high-quality, affordable, and reliable surveillance technology. NightVision is a brand built to make Nepal proud in the world of innovation and technology.";
 
   const startQuote = contents.founderStartQuote || "I never wanted to follow the government path. I wanted to finish what my father started — to be a builder, a creator, a businessman.";
 
-  const marketTitle = (contents.founderMarketText && contents.founderMarketText.includes("Timi dekhdaina")) ? (contents.founderMarketTitle || "Success") : "Success";
+  const marketTitle = contents.founderMarketTitle || "Success";
 
-  const marketText = (contents.founderMarketText && contents.founderMarketText.includes("Timi dekhdaina"))
-    ? contents.founderMarketText
-    : "Since the launch of Night Vision, the company has seen strong and steady growth. The company adopted a bold marketing campaign with “Timi dekhdaina, tara Night Vision dekcha” as the brand slogan. Under the leadership of Rozil, the company has progressed and earned recognition all over Nepal for its quality and trust in a short period.\n\nNight Vision is preparing to take a leap and enter the global markets where the company will introduce its products to international markets like Australia, Vietnam, and others. From a local CCTV installation company, the brand today offers a variety of NVRs, WiFi cameras, and LAN-powered surveillance devices that are engineered to meet modern security requirements.";
+  const marketText = contents.founderMarketText || "Since the launch of Night Vision, the company has seen strong and steady growth. The company adopted a bold marketing campaign with “Timi dekhdaina, tara Night Vision dekcha” as the brand slogan. Under the leadership of Rozil, the company has progressed and earned recognition all over Nepal for its quality and trust in a short period.\n\nNight Vision is preparing to take a leap and enter the global markets where the company will introduce its products to international markets like Australia, Vietnam, and others. From a local CCTV installation company, the brand today offers a variety of NVRs, WiFi cameras, and LAN-powered surveillance devices that are engineered to meet modern security requirements.";
 
   const marketQuote = contents.founderMarketQuote || "Timi dekhdaina, tara Night Vision dekcha";
 
-  const visionTitle = (contents.founderVisionText && contents.founderVisionText.includes("Mission")) ? (contents.founderVisionTitle || "Brand Vision / Mission") : "Brand Vision / Mission";
+  const visionTitle = contents.founderVisionTitle || "Brand Vision / Mission";
 
-  const visionQuote = (contents.founderVisionQuote && contents.founderVisionQuote.includes("dream"))
-    ? contents.founderVisionQuote
-    : "I didn’t just want to sell cameras. I wanted to create a brand that makes people feel secure, proud, and connected. NightVision is that dream — and we’re just getting started.";
+  const visionQuote = contents.founderVisionQuote || "I didn’t just want to sell cameras. I wanted to create a brand that makes people feel secure, proud, and connected. NightVision is that dream — and we’re just getting started.";
 
-  const visionText = (contents.founderVisionText && contents.founderVisionText.includes("Nepali technological innovation"))
-    ? contents.founderVisionText
-    : "Rozil envisions Night Vision as a brand that will globally stand for Nepali technological innovation, reliability, and trust. Also, his mission is to offer quality, innovative technology, and affordable surveillance solutions to customers.\n\nHe believes in building not just products, but trust. The commitment to quality, trust, and customer empowerment is the foundation for Night Vision's philosophy, products, and services.\n\nThe foundation for moving from founding Night Vision to making it a premier CCTV brand globally comes from a deep place of legacy and passion. Night Vision is not just about products and profit for Rozil, but is something that honors his father’s dream.";
+  const visionText = contents.founderVisionText || "Rozil envisions Night Vision as a brand that will globally stand for Nepali technological innovation, reliability, and trust. Also, his mission is to offer quality, innovative technology, and affordable surveillance solutions to customers.\n\nHe believes in building not just products, but trust. The commitment to quality, trust, and customer empowerment is the foundation for Night Vision's philosophy, products, and services.\n\nThe foundation for moving from founding Night Vision to making it a premier CCTV brand globally comes from a deep place of legacy and passion. Night Vision is not just about products and profit for Rozil, but is something that honors his father’s dream.";
 
-  const highlights = (contents.founderHighlights && contents.founderHighlights[2]?.title?.includes("Trademark"))
+  const highlights = (contents.founderHighlights && contents.founderHighlights.length > 0 && contents.founderHighlights[0]?.title)
     ? contents.founderHighlights
     : [
         { icon: "rocket_launch", title: "Post-School Launch", desc: "Founded NightVision International Pvt. Ltd. immediately after high school graduation, turning a garage startup into a nationwide enterprise." },
@@ -163,11 +155,18 @@ const FounderPage = () => {
 
     // Bio Section
     bioSection: {
+      borderTop: '1px solid #434938',
+      borderBottom: '1px solid #434938',
+      backgroundColor: '#0e0e0e',
+    },
+
+    bioGrid: {
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
       minHeight: '100vh',
-      borderTop: '1px solid #434938',
-      borderBottom: '1px solid #434938',
+      maxWidth: '1280px',
+      margin: '0 auto',
+      width: '100%',
     },
 
     bioImage: {
@@ -321,6 +320,7 @@ const FounderPage = () => {
       position: 'relative',
       zIndex: 10,
       maxWidth: '1280px',
+      margin: '0 auto',
     },
 
     sectionTitle: {
@@ -430,10 +430,17 @@ const FounderPage = () => {
 
     // Market Dominance
     marketSection: {
-      display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
       borderTop: '1px solid #434938',
       borderBottom: '1px solid #434938',
+      backgroundColor: '#131313',
+    },
+
+    marketGrid: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      maxWidth: '1280px',
+      margin: '0 auto',
+      width: '100%',
     },
 
     marketLeft: {
@@ -659,6 +666,8 @@ const FounderPage = () => {
       position: 'relative',
       zIndex: 10,
       textAlign: 'center',
+      maxWidth: '1280px',
+      margin: '0 auto',
     },
 
     ctaTitle: {
@@ -741,18 +750,18 @@ const FounderPage = () => {
       }
 
       /* Bio Section */
-      section:nth-of-type(2) {
+      .bioGrid {
         grid-template-columns: 1fr !important;
         min-height: auto !important;
       }
 
-      section:nth-of-type(2) > div:first-child {
+      .bioGrid > div:first-child {
         border-right: none !important;
         border-bottom: 1px solid #434938 !important;
         min-height: 400px !important;
       }
 
-      section:nth-of-type(2) > div:last-child {
+      .bioGrid > div:last-child {
         padding: 64px 24px !important;
       }
 
@@ -821,16 +830,16 @@ const FounderPage = () => {
       }
 
       /* Market Section */
-      section:nth-of-type(4) {
+      .marketGrid {
         grid-template-columns: 1fr !important;
       }
 
-      section:nth-of-type(4) > div:first-child {
+      .marketGrid > div:first-child {
         order: 1 !important;
         padding: 64px 24px !important;
       }
 
-      section:nth-of-type(4) > div:last-child {
+      .marketGrid > div:last-child {
         order: 2 !important;
         border-left: none !important;
         border-top: 1px solid #434938 !important;
@@ -920,11 +929,11 @@ const FounderPage = () => {
       }
 
       /* Bio Section */
-      section:nth-of-type(2) > div:first-child {
+      .bioGrid > div:first-child {
         min-height: 350px !important;
       }
 
-      section:nth-of-type(2) > div:last-child {
+      .bioGrid > div:last-child {
         padding: 50px 20px !important;
       }
 
@@ -1147,11 +1156,11 @@ const FounderPage = () => {
       }
 
       /* Bio Section */
-      section:nth-of-type(2) > div:first-child {
+      .bioGrid > div:first-child {
         min-height: 320px !important;
       }
 
-      section:nth-of-type(2) > div:last-child {
+      .bioGrid > div:last-child {
         padding: 40px 16px !important;
       }
 
@@ -1249,7 +1258,7 @@ const FounderPage = () => {
       }
 
       /* Market Section */
-      section:nth-of-type(4) > div:first-child {
+      .marketGrid > div:first-child {
         padding: 40px 12px !important;
       }
 
@@ -1276,7 +1285,7 @@ const FounderPage = () => {
         margin-top: 12px !important;
       }
 
-      section:nth-of-type(4) > div:last-child {
+      .marketGrid > div:last-child {
         min-height: 250px !important;
       }
 
@@ -1427,7 +1436,7 @@ const FounderPage = () => {
         font-size: 18px !important;
       }
 
-      section:nth-of-type(2) > div:first-child {
+      .bioGrid > div:first-child {
         min-height: 300px !important;
       }
 
@@ -1455,34 +1464,37 @@ const FounderPage = () => {
 
         {/* Bio Section */}
         <section style={styles.bioSection}>
-          <div
-            style={styles.bioImage}
-            onMouseEnter={() => setImgHovered(true)}
-            onMouseLeave={() => setImgHovered(false)}
-          >
-            <img
-              src={(!contents.founderImage || contents.founderImage.includes("googleusercontent.com")) ? "/founder.jpg" : contents.founderImage}
-              alt={contents.founderName || "Rozil Thapa"}
-              style={{
-                ...styles.bioImageImg,
-                transform: imgHovered ? 'scale(1.05)' : 'scale(1)',
-              }}
-            />
-          </div>
-          <div style={styles.bioContent}>
-            {(contents.founderBioSections || []).map((section, idx) => {
-              const isInactive = idx > 0;
-              return (
-                <div key={idx} style={isInactive ? { ...styles.bioItem, ...styles.bioItemInactive } : styles.bioItem}>
-                  <div style={isInactive ? { ...styles.bioNumber, ...styles.bioNumberInactive } : styles.bioNumber}>
-                    {section.num || `0${idx + 1}`}
+          <div style={styles.bioGrid} className="bioGrid">
+            <div
+              style={styles.bioImage}
+              onMouseEnter={() => setImgHovered(true)}
+              onMouseLeave={() => setImgHovered(false)}
+            >
+              <img
+                src={(!contents.founderImage || contents.founderImage.includes("googleusercontent.com")) ? "/founder.jpg" : contents.founderImage}
+                alt={contents.founderName || "Rozil Thapa"}
+                style={{
+                  ...styles.bioImageImg,
+                  transform: imgHovered ? 'scale(1.05)' : 'scale(1)',
+                }}
+              />
+            </div>
+            <div style={styles.bioContent}>
+            <div style={{ maxWidth: '640px', margin: '0 auto', width: '100%' }}>
+              {(contents.founderBioSections || []).map((section, idx) => {
+                const isInactive = idx > 0;
+                return (
+                  <div key={idx} style={isInactive ? { ...styles.bioItem, ...styles.bioItemInactive } : styles.bioItem}>
+                    <div style={isInactive ? { ...styles.bioNumber, ...styles.bioNumberInactive } : styles.bioNumber}>
+                      {section.num || `0${idx + 1}`}
+                    </div>
+                    <h2 style={styles.bioTitle}>{section.title}</h2>
+                    <p style={styles.bioText}>{section.text}</p>
+                    <p style={styles.bioTextSecondary}>{section.textSec}</p>
                   </div>
-                  <h2 style={styles.bioTitle}>{section.title}</h2>
-                  <p style={styles.bioText}>{section.text}</p>
-                  <p style={styles.bioTextSecondary}>{section.textSec}</p>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
 
             {/* Social Media Icons Row */}
             <div style={{ display: 'flex', justifyContent: 'center', width: '100%', paddingLeft: '48px', boxSizing: 'border-box', marginTop: '40px' }}>
@@ -1516,6 +1528,7 @@ const FounderPage = () => {
                 ))}
               </div>
             </div>
+          </div>
           </div>
         </section>
 
@@ -1551,7 +1564,14 @@ const FounderPage = () => {
                       <div style={isInactive ? { ...styles.statNumber, ...styles.statNumberInactive } : styles.statNumber}>
                         {stat.val}
                       </div>
-                      <div style={isInactive ? { ...styles.statLabel, ...styles.statLabelInactive } : styles.statLabel} dangerouslySetInnerHTML={{ __html: stat.label ? stat.label.replace(/\n/g, '<br />') : "" }} />
+                      <div style={isInactive ? { ...styles.statLabel, ...styles.statLabelInactive } : styles.statLabel}>
+                        {(stat.label || "").split("\n").map((line, lineIdx, lines) => (
+                          <React.Fragment key={lineIdx}>
+                            {line}
+                            {lineIdx < lines.length - 1 && <br />}
+                          </React.Fragment>
+                        ))}
+                      </div>
                     </div>
                   );
                 })}
@@ -1562,9 +1582,10 @@ const FounderPage = () => {
 
         {/* Market Dominance */}
         <section style={styles.marketSection}>
-          <div style={styles.marketLeft}>
-            <div style={{ maxWidth: '600px' }}>
-              <h2 style={styles.marketTitle}>{marketTitle}</h2>
+          <div style={styles.marketGrid} className="marketGrid">
+            <div style={styles.marketLeft}>
+              <div style={{ maxWidth: '600px' }}>
+                <h2 style={styles.marketTitle}>{marketTitle}</h2>
               <p style={styles.marketText}>
                 {marketText}
               </p>
@@ -1587,40 +1608,43 @@ const FounderPage = () => {
               }}
             />
           </div>
+          </div>
         </section>
 
         {/* Key Highlights */}
         <section style={styles.highlights}>
-          <h2 style={styles.highlightsTitle}>{contents.founderHighlightsTitle || "Key Highlights"}</h2>
-          <div style={styles.cardsGrid}>
-            {(contents.founderHighlights || []).map((item, idx) => (
-              <div
-                key={idx}
-                style={{
-                  ...styles.card,
-                  ...(hoveredCard === idx ? styles.cardHover : {}),
-                }}
-                onMouseEnter={() => setHoveredCard(idx)}
-                onMouseLeave={() => setHoveredCard(null)}
-              >
+          <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+            <h2 style={styles.highlightsTitle}>{contents.founderHighlightsTitle || "Key Highlights"}</h2>
+            <div style={styles.cardsGrid}>
+              {(contents.founderHighlights || []).map((item, idx) => (
                 <div
+                  key={idx}
                   style={{
-                    ...styles.cardAfter,
-                    borderColor: hoveredCard === idx ? '#94da32' : '#434938',
+                    ...styles.card,
+                    ...(hoveredCard === idx ? styles.cardHover : {}),
                   }}
-                ></div>
-                <div style={styles.cardIcon}>
-                  {idx === 0 && <Rocket size={32} style={{ color: "#94da32" }} />}
-                  {idx === 1 && <Award size={32} style={{ color: "#94da32" }} />}
-                  {idx === 2 && <Cpu size={32} style={{ color: "#94da32" }} />}
-                  {idx === 3 && <Handshake size={32} style={{ color: "#94da32" }} />}
-                  {idx === 4 && <Lock size={32} style={{ color: "#94da32" }} />}
-                  {idx === 5 && <Globe size={32} style={{ color: "#94da32" }} />}
+                  onMouseEnter={() => setHoveredCard(idx)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                >
+                  <div
+                    style={{
+                      ...styles.cardAfter,
+                      borderColor: hoveredCard === idx ? '#94da32' : '#434938',
+                    }}
+                  ></div>
+                  <div style={styles.cardIcon}>
+                    {idx === 0 && <Rocket size={32} style={{ color: "#94da32" }} />}
+                    {idx === 1 && <Award size={32} style={{ color: "#94da32" }} />}
+                    {idx === 2 && <Cpu size={32} style={{ color: "#94da32" }} />}
+                    {idx === 3 && <Handshake size={32} style={{ color: "#94da32" }} />}
+                    {idx === 4 && <Lock size={32} style={{ color: "#94da32" }} />}
+                    {idx === 5 && <Globe size={32} style={{ color: "#94da32" }} />}
+                  </div>
+                  <h3 style={styles.cardTitle}>{item.title}</h3>
+                  <p style={styles.cardText}>{item.desc}</p>
                 </div>
-                <h3 style={styles.cardTitle}>{item.title}</h3>
-                <p style={styles.cardText}>{item.desc}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
 

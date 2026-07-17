@@ -1,8 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { colors } from "../../data/constants";
+import { useSiteContents, useHomepageSettings } from "../../utils/cmsDb";
 
 export default function DealerSection() {
+  const contents = useSiteContents();
+  const homeSettings = useHomepageSettings();
+
   return (
     <section
       style={{
@@ -54,7 +58,7 @@ export default function DealerSection() {
             userSelect: "none",
           }}
         >
-          DEALER
+          {contents.expandNetworkBgText || "DEALER"}
         </span>
       </div>
 
@@ -97,7 +101,7 @@ export default function DealerSection() {
             wordBreak: "break-word",
           }}
         >
-          EXPAND THE NETWORK
+          {homeSettings.cta?.heading || contents.expandNetworkTitle || "EXPAND THE NETWORK"}
         </h2>
 
         <p
@@ -117,13 +121,28 @@ export default function DealerSection() {
             wordBreak: "break-word",
           }}
         >
-          Join the elite force of NightVision security
-          providers across Nepal. We provide the gear,
-          the training, and the authority.
+          {homeSettings.cta?.subheading || contents.expandNetworkDesc ||
+            "Join the elite force of NightVision security providers across Nepal. We provide the gear, the training, and the authority."}
         </p>
 
+        {homeSettings.cta?.body_text && (
+          <p
+            style={{
+              color: colors.onSecondaryContainer,
+              fontSize: "14px",
+              lineHeight: 1.6,
+              opacity: 0.8,
+              maxWidth: 672,
+              margin: "-32px auto 48px",
+              wordBreak: "break-word",
+            }}
+          >
+            {homeSettings.cta.body_text}
+          </p>
+        )}
+
         <Link
-          to="/apply-dealers"
+          to={homeSettings.cta?.button_url || "/apply-dealers"}
           style={{
             background: "black",
 
@@ -163,7 +182,7 @@ export default function DealerSection() {
             (e.currentTarget.style.transform = "scale(1)")
           }
         >
-          BECOME A PARTNER
+          {homeSettings.cta?.button_text || contents.expandNetworkBtn || "BECOME A PARTNER"}
         </Link>
       </div>
     </section>
