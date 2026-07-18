@@ -666,7 +666,7 @@ def api_products(request):
         }
         if isinstance(p.technical_specifications, dict):
             prod_data.update(p.technical_specifications)
-        if p.image and 'img' not in prod_data:
+        if p.image:
             prod_data['img'] = p.image.url
         data.append(prod_data)
     return JsonResponse(data, safe=False)

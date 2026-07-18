@@ -379,6 +379,14 @@ export default function NightWatchBlog() {
 
   const hasActiveFilter = !!activeCategory || !!activeTag;
 
+  // Pagination logic
+  const ITEMS_PER_PAGE = 12;
+  const totalPages = Math.ceil(filteredArticles.length / ITEMS_PER_PAGE) || 1;
+  const currentArticles = filteredArticles.slice(
+    (activePage - 1) * ITEMS_PER_PAGE,
+    activePage * ITEMS_PER_PAGE
+  );
+
   return (
     <div style={{ background: C.bg, color: C.onSurf, fontFamily: C.pp, minHeight: "100vh", overflowX: "hidden" }}>
       <style>{`
@@ -508,8 +516,8 @@ export default function NightWatchBlog() {
             <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "48px 0", color: C.secondary, fontFamily: C.pp, fontSize: 14 }}>
               CONNECTING TO SECURITY LOG ARCHIVES...
             </div>
-          ) : filteredArticles.length > 0 ? (
-            filteredArticles.map((article) => (
+          ) : currentArticles.length > 0 ? (
+            currentArticles.map((article) => (
               <Link key={article.id} to={`/blog/${article.slug}`} style={{ textDecoration: "none" }}>
                 <ArticleCard article={article} />
               </Link>
@@ -522,32 +530,66 @@ export default function NightWatchBlog() {
         </div>
 
         {/* Pagination */}
-        <nav style={{ marginTop: 64, display: "flex", justifyContent: "center", alignItems: "center", gap: 8 }}>
-          {[null, 1, 2, 3, null].map((page, i) => {
-            const isArrow = page === null;
-            const isLeft = i === 0;
-            const isActive = page === activePage;
-            return (
-              <button
-                key={i}
-                className={isArrow ? "nvpage" : "nvpage"}
-                onClick={() => !isArrow && setActivePage(page)}
-                style={{
-                  width: 44, height: 44,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  background: isActive ? C.primary : C.surfCont,
-                  color: isActive ? C.onPrimary : C.onSurf,
-                  border: `1px solid ${C.outlineVar}`,
-                  cursor: "pointer",
-                  fontFamily: C.pp, fontSize: 14, fontWeight: isActive ? 700 : 400,
-                  transition: "all 0.2s",
-                }}
-              >
-                {isArrow ? (isLeft ? <IconChevLeft /> : <IconChevRight />) : page}
-              </button>
-            );
-          })}
-        </nav>
+        {totalPages > 1 && (
+          <nav style={{ marginTop: 64, display: "flex", justifyContent: "center", alignItems: "center", gap: 8 }}>
+            <button
+              className="nvpage"
+              onClick={() => setActivePage(p => Math.max(1, p - 1))}
+              disabled={activePage === 1}
+              style={{
+                width: 44, height: 44,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                background: C.surfCont,
+                color: activePage === 1 ? C.outlineVar : C.onSurf,
+                border: `1px solid ${C.outlineVar}`,
+                cursor: activePage === 1 ? "not-allowed" : "pointer",
+                transition: "all 0.2s",
+              }}
+            >
+              <IconChevLeft />
+            </button>
+            
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+              const isActive = page === activePage;
+              return (
+                <button
+                  key={page}
+                  className="nvpage"
+                  onClick={() => setActivePage(page)}
+                  style={{
+                    width: 44, height: 44,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    background: isActive ? C.primary : C.surfCont,
+                    color: isActive ? C.onPrimary : C.onSurf,
+                    border: `1px solid ${C.outlineVar}`,
+                    cursor: "pointer",
+                    fontFamily: C.pp, fontSize: 14, fontWeight: isActive ? 700 : 400,
+                    transition: "all 0.2s",
+                  }}
+                >
+                  {page}
+                </button>
+              );
+            })}
+
+            <button
+              className="nvpage"
+              onClick={() => setActivePage(p => Math.min(totalPages, p + 1))}
+              disabled={activePage === totalPages}
+              style={{
+                width: 44, height: 44,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                background: C.surfCont,
+                color: activePage === totalPages ? C.outlineVar : C.onSurf,
+                border: `1px solid ${C.outlineVar}`,
+                cursor: activePage === totalPages ? "not-allowed" : "pointer",
+                transition: "all 0.2s",
+              }}
+            >
+              <IconChevRight />
+            </button>
+          </nav>
+        )}
       </main>
 
     </div>

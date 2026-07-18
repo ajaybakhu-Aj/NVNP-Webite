@@ -124,7 +124,7 @@ class SecurityRestrictionMiddleware:
             # We will exclude /api/auth/ for authentication and /api/quote/ for quote submission, 
             # and other public endpoints.
             # Wait, the prompt specifically asked to restrict /api/ if unauthenticated.
-            public_api_prefixes = ['/api/auth/', '/api/quote/', '/api/blog/', '/api/products/', '/api/dealers/', '/api/events/', '/api/site-contents/', '/api/global-config/', '/api/homepage-settings/']
+            public_api_prefixes = ['/api/auth/', '/api/quote/', '/api/blogs/', '/api/products/', '/api/dealers/', '/api/events/', '/api/gallery/', '/api/site-contents/', '/api/global-config/', '/api/homepage-settings/']
             
             is_public = any(path.startswith(prefix) for prefix in public_api_prefixes)
             

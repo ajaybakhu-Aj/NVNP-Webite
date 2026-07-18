@@ -4,7 +4,6 @@ import Icon from "../../utils/Icon";
 import { useSiteContents } from "../../utils/cmsDb";
 import { getAllProducts } from "../../utils/productDb";
 import { authLogout } from "../../utils/api";
-import logoImg from "../../../public/logo.png";
 
 export default function Header() {
   const siteContents = useSiteContents();
@@ -135,7 +134,7 @@ export default function Header() {
         <div className="header-left">
           {/* LOGO */}
           <Link to="/" className="logo-link">
-            <img src={logoImg} alt="NightVision Logo" className="logo-image" />
+            <img src="/logo.png" alt="NightVision Logo" className="logo-image" />
           </Link>
 
           {/* DESKTOP NAV */}
