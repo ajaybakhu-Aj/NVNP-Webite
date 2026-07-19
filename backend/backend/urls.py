@@ -76,8 +76,13 @@ urlpatterns += [
     re_path(r'^(?!api|admin|media|static|tinymce).*$', views.serve_react_app, name='serve_react_app'),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# In cPanel Passenger environments where Apache doesn't serve static/media natively due to Passenger root takeover,
+# we must explicitly serve media files through Django even in production.
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$', serve, {
+        'document_root': settings.MEDIA_ROOT,
+    }),
+]
 
 # JSON error handlers
 handler404 = 'core.views.custom_404_view'
