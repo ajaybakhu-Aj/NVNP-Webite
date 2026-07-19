@@ -1,0 +1,11 @@
+---
+deployment:
+  tasks:
+    # 1. Sync the frontend build to the root of the repository deployment path
+    - /bin/cp -R frontend/dist/* ./
+    
+    # 2. Rename the cPanel routing template to the active .htaccess
+    - /bin/cp .htaccess_cpanel_template .htaccess
+    
+    # Note: The Python App will automatically use the backend/ folder if 
+    # the Application Root in cPanel Python setup is set to this repository path + /backend

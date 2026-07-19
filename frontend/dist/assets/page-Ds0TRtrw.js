@@ -1,0 +1,1 @@
+import{a as r}from"./rolldown-runtime-W-g5d7YK.js";import{N as s,et as a}from"./vendor-BmaNczZL.js";var c=r(a(),1),e=s();function o(){return(0,e.jsxs)("div",{style:{padding:"40px"},children:[(0,e.jsx)("h1",{children:"DealersSuccessStories Page"}),(0,e.jsx)("p",{children:"Path: src/app/(marketing)/dealers/success-stories/page.jsx"})]})}export{o as default};

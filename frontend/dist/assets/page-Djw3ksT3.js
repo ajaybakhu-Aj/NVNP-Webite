@@ -1,0 +1,1 @@
+import{a as e}from"./rolldown-runtime-W-g5d7YK.js";import{N as i,et as t}from"./vendor-BmaNczZL.js";var o=e(t(),1),r=i();function c(){return(0,r.jsxs)("div",{style:{padding:"40px"},children:[(0,r.jsx)("h1",{children:"SolutionsOfficeSecurity Page"}),(0,r.jsx)("p",{children:"Path: src/app/(marketing)/solutions/office-security/page.jsx"})]})}export{c as default};
