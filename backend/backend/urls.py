@@ -68,7 +68,8 @@ urlpatterns += [
     }),
     
     # Also explicitly serve root images (like logo.png) from the cPanel root folder if they are requested directly
-    re_path(r'^(?P<path>.*\.(png|jpg|jpeg|svg|ico|webp|gif))$', serve, {
+    # Regex [^/]+ ensures it only matches files in the root directory, not inside /media/ or /assets/
+    re_path(r'^(?P<path>[^/]+\.(png|jpg|jpeg|svg|ico|webp|gif))$', serve, {
         'document_root': os.path.join(settings.BASE_DIR, '..'),
     }),
 
