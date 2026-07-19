@@ -17,4 +17,4 @@ __pycache__/
 venv/
 
 # Collected static files
-staticfiles/
+# staticfiles/ (Commented out so we can deploy to cPanel via Git)
