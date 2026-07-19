@@ -637,6 +637,9 @@ def api_blog_posts(request):
                 extra = json.loads(p.schema_override)
                 if 'image' in extra:
                     img = extra['image']
+                    # Append a cache-buster to bypass any cached 404 errors from previous routing bugs
+                    if '?' not in img:
+                        img += '?v=2'
         except Exception:
             pass
         
@@ -671,7 +674,10 @@ def api_products(request):
         if isinstance(p.technical_specifications, dict):
             prod_data.update(p.technical_specifications)
         if p.image:
-            prod_data['img'] = p.image.url
+            img_url = p.image.url
+            if '?' not in img_url:
+                img_url += '?v=2'
+            prod_data['img'] = img_url
         data.append(prod_data)
     return JsonResponse(data, safe=False)
 
