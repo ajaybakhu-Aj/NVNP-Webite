@@ -57,8 +57,23 @@ urlpatterns = [
 ]
 
 from django.urls import re_path
+import os
+from django.conf import settings
+from django.views.static import serve
+
 urlpatterns += [
-    re_path(r'^(?!api|admin|media|static|assets|tinymce).*$', views.serve_react_app, name='serve_react_app'),
+    # Explicitly serve React assets from the cPanel root folder (../assets)
+    re_path(r'^assets/(?P<path>.*)$', serve, {
+        'document_root': os.path.join(settings.BASE_DIR, '..', 'assets'),
+    }),
+    
+    # Also explicitly serve root images (like logo.png) from the cPanel root folder if they are requested directly
+    re_path(r'^(?P<path>.*\.(png|jpg|jpeg|svg|ico|webp|gif))$', serve, {
+        'document_root': os.path.join(settings.BASE_DIR, '..'),
+    }),
+
+    # Catch-all for React index.html
+    re_path(r'^(?!api|admin|media|static|tinymce).*$', views.serve_react_app, name='serve_react_app'),
 ]
 
 if settings.DEBUG:

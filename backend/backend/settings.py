@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     # Custom SEO App
     'core.apps.CoreConfig',
     'tinymce',
+    'corsheaders',
 ]
 
 SITE_ID = 1
@@ -72,6 +73,7 @@ MIDDLEWARE = [
     'core.middleware.LegacyRedirectMiddleware',
     
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',  # Handles APPEND_SLASH redirects
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -218,3 +220,11 @@ TINYMCE_DEFAULT_CONFIG = {
 
 # Environment configuration
 ENVIRONMENT = os.environ.get('ENVIRONMENT', 'production')
+
+# CORS Configuration
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+CORS_ALLOW_CREDENTIALS = True
+

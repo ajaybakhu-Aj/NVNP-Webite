@@ -8,6 +8,8 @@ from .models import Product, BlogPost, Category, Event, Dealer
 import json
 from django.http import JsonResponse
 from .models import QuoteRequest
+from django.views.decorators.cache import cache_page
+
 
 
 # JSON error handlers (this backend serves no HTML besides the admin)
@@ -624,6 +626,7 @@ def custom_admin_index_view(request):
     context.update(admin.site.each_context(request))
     return render(request, 'admin/index.html', context)
 
+@cache_page(60 * 15)
 def api_blog_posts(request):
     posts = BlogPost.objects.all().order_by('-date_published')
     data = []
@@ -650,6 +653,7 @@ def api_blog_posts(request):
         })
     return JsonResponse(data, safe=False)
 
+@cache_page(60 * 15)
 def api_products(request):
     products = Product.objects.all()
     data = []
@@ -671,6 +675,7 @@ def api_products(request):
         data.append(prod_data)
     return JsonResponse(data, safe=False)
 
+@cache_page(60 * 15)
 def api_dealers(request):
     dealers = Dealer.objects.all()
     data = []
@@ -701,6 +706,7 @@ def api_dealers(request):
         })
     return JsonResponse(data, safe=False)
 
+@cache_page(60 * 15)
 def api_events(request):
     events = Event.objects.all()
     data = []
@@ -731,6 +737,7 @@ def api_events(request):
         })
     return JsonResponse(data, safe=False)
 
+@cache_page(60 * 15)
 def api_gallery(request):
     from .models import GalleryItem
     items = GalleryItem.objects.all().order_by('-id')
@@ -749,6 +756,7 @@ def api_gallery(request):
         })
     return JsonResponse(data, safe=False)
 
+@cache_page(60 * 15)
 def api_site_contents(request):
     setting = SiteSetting.objects.filter(key='site_contents').first()
     if request.method == 'POST':
@@ -768,6 +776,7 @@ def api_site_contents(request):
     val = setting.value if setting else {}
     return JsonResponse(val)
 
+@cache_page(60 * 15)
 def api_global_config(request):
     setting = SiteSetting.objects.filter(key='global_config').first()
     if request.method == 'POST':
@@ -788,6 +797,7 @@ def api_global_config(request):
     return JsonResponse(val)
 
 
+@cache_page(60 * 15)
 def api_homepage_settings(request):
     setting = SiteSetting.objects.filter(key='homepage_settings').first()
     if request.method in ('POST', 'PUT'):
@@ -872,7 +882,13 @@ def serve_react_app(request):
         with open(index_path, 'r', encoding='utf-8') as f:
             html = f.read()
     except FileNotFoundError:
-        return HttpResponse(f"React frontend not found at {index_path}. Have you built the project?", status=500)
+        # Fallback for cPanel: User might have extracted dist directly into the root folder
+        cpanel_root_index = os.path.join(settings.BASE_DIR, '..', 'index.html')
+        try:
+            with open(cpanel_root_index, 'r', encoding='utf-8') as f:
+                html = f.read()
+        except FileNotFoundError:
+            return HttpResponse(f"React frontend not found. Have you built and uploaded the dist folder?", status=500)
 
     # Route mapping for SEO
     path = request.path
