@@ -10544,10 +10544,10 @@ a {
   flex-direction: column;
   gap: 12px;
   z-index: 9999;
-  background: rgba(19, 19, 19, 0.8);
+  background: var(--nv-surfCont);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(148, 218, 50, 0.25);
+  border: 1px solid var(--nv-outlineVar);
   border-right: none;
   padding: 16px 36px 16px 12px;
   /* offset right padding to expand hover capture zone */
@@ -10558,7 +10558,7 @@ a {
 
 .global-social-sidebar:hover {
   transform: translateY(-50%) translateX(0);
-  border-color: rgba(148, 218, 50, 0.7);
+  border-color: var(--nv-secondary);
   box-shadow: -4px 0 32px rgba(148, 218, 50, 0.15);
 }
 
@@ -10598,8 +10598,9 @@ a {
 }
 
 .global-social-btn.btn-tiktok {
-  background-color: #010101;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: var(--nv-bg);
+  border: 1px solid var(--nv-outlineVar);
+  color: var(--nv-onSurf) !important;
 }
 
 .global-social-btn.btn-tiktok:hover {
@@ -10625,7 +10626,8 @@ a {
 
 .global-social-btn.btn-x {
   background-color: var(--nv-bg, #11140c);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--nv-outlineVar);
+  color: var(--nv-onSurf) !important;
 }
 
 .global-social-btn.btn-x:hover {
