@@ -10,7 +10,7 @@ function HeroSection() {
 
     return (
         <section
-            className="relative w-full block md:flex md:flex-col md:justify-center md:items-center pt-[80px] pb-[60px] md:py-0 md:min-h-[85vh]"
+            className="relative w-full flex flex-col md:justify-center md:items-center pt-[80px] pb-[60px] md:py-0 md:min-h-[85vh]"
             style={{
                 borderBottom: `1px solid ${colors.outlineVariant}`,
                 background: colors.background,
@@ -56,9 +56,39 @@ function HeroSection() {
             </div>
 
             {/* MAIN CONTENT */}
-            <div className="max-w-[1280px] mx-auto px-[20px] md:px-[24px] w-full flex flex-col lg:flex-row gap-[50px] md:gap-[80px] items-center relative z-10">
-                {/* LEFT SIDE */}
-                <div className="flex flex-col gap-[20px] md:gap-[28px] order-2 lg:order-1 text-center lg:text-left items-center lg:items-start w-full lg:w-1/2">
+            <div className="max-w-[1280px] mx-auto px-[20px] md:px-[24px] w-full flex flex-col lg:flex-row-reverse gap-[50px] md:gap-[80px] items-center relative z-10">
+                {/* RIGHT VISUAL (IMAGE FIRST IN DOM FOR MOBILE TOP) */}
+                <div className="flex justify-center items-center relative w-full lg:w-1/2">
+                    <div className="relative w-full h-[280px] min-[480px]:h-[440px] md:h-[560px] lg:h-[680px] flex justify-center items-end overflow-hidden">
+                        {/* GREEN HALO GLOW */}
+                        <div
+                            className="absolute left-1/2 -translate-x-1/2 rounded-full bottom-[40px] md:bottom-[80px] w-[280px] md:w-[600px] h-[280px] md:h-[600px] z-[1] blur-[60px]"
+                            style={{
+                                background: "radial-gradient(circle, rgba(148,218,50,0.50) 0%, rgba(148,218,50,0.16) 35%, rgba(148,218,50,0) 75%)",
+                            }}
+                        />
+
+                        {/* BRAND AMBASSADOR IMAGE */}
+                        <img
+                            src={homeSettings.hero?.image_url || contents.heroImage || "/hero_pointing_cctv.png"}
+                            alt="Hero"
+                            className="relative z-[2] w-auto max-w-full object-contain object-bottom translate-y-[10px] md:translate-y-[20px] max-h-[260px] min-[480px]:max-h-[420px] md:max-h-[550px] lg:max-h-[760px]"
+                            style={{
+                                filter: `drop-shadow(0 15px 40px rgba(0,0,0,0.45)) drop-shadow(0 0 30px rgba(148,218,50,0.30))`,
+                            }}
+                        />
+
+                        {/* TRUSTED LEADERSHIP CARD */}
+                        <div
+                            className="absolute z-[15] text-left flex flex-col items-start py-[12px] px-[16px] backdrop-blur-[12px] border border-l-[3px] top-[20px] md:top-[60px] right-[10px] md:right-[20px]"
+                            style={{ background: 'var(--nv-surfCont)', borderLeftColor: colors.secondary, borderColor: colors.outlineVariant }}
+                        >
+                        </div>
+                    </div>
+                </div>
+
+                {/* LEFT SIDE (TEXT SECOND IN DOM FOR MOBILE BOTTOM) */}
+                <div className="flex flex-col gap-[20px] md:gap-[28px] text-center lg:text-left items-center lg:items-start w-full lg:w-1/2">
                     {/* STATUS */}
                     <div
                         className="inline-flex items-center gap-[8px] border px-[12px] py-[6px] md:px-[14px] md:py-[8px] w-fit text-[10px] md:text-[12px] font-bold tracking-[2px] backdrop-blur-[8px]"
@@ -131,36 +161,6 @@ function HeroSection() {
                         >
                             {contents.heroBtn2Text || "Features"}
                         </button>
-                    </div>
-                </div>
-
-                {/* RIGHT VISUAL */}
-                <div className="flex justify-center items-center relative order-1 lg:order-2 w-full lg:w-1/2">
-                    <div className="relative w-full h-[280px] min-[480px]:h-[440px] md:h-[560px] lg:h-[680px] flex justify-center items-end overflow-hidden">
-                        {/* GREEN HALO GLOW */}
-                        <div
-                            className="absolute left-1/2 -translate-x-1/2 rounded-full bottom-[40px] md:bottom-[80px] w-[280px] md:w-[600px] h-[280px] md:h-[600px] z-[1] blur-[60px]"
-                            style={{
-                                background: "radial-gradient(circle, rgba(148,218,50,0.50) 0%, rgba(148,218,50,0.16) 35%, rgba(148,218,50,0) 75%)",
-                            }}
-                        />
-
-                        {/* BRAND AMBASSADOR IMAGE */}
-                        <img
-                            src={homeSettings.hero?.image_url || contents.heroImage || "/hero_pointing_cctv.png"}
-                            alt="Hero"
-                            className="relative z-[2] w-auto max-w-full object-contain object-bottom translate-y-[10px] md:translate-y-[20px] max-h-[260px] min-[480px]:max-h-[420px] md:max-h-[550px] lg:max-h-[760px]"
-                            style={{
-                                filter: `drop-shadow(0 15px 40px rgba(0,0,0,0.45)) drop-shadow(0 0 30px rgba(148,218,50,0.30))`,
-                            }}
-                        />
-
-                        {/* TRUSTED LEADERSHIP CARD */}
-                        <div
-                            className="absolute z-[15] text-left flex flex-col items-start py-[12px] px-[16px] backdrop-blur-[12px] border border-l-[3px] top-[20px] md:top-[60px] right-[10px] md:right-[20px]"
-                            style={{ background: 'var(--nv-surfCont)', borderLeftColor: colors.secondary, borderColor: colors.outlineVariant }}
-                        >
-                        </div>
                     </div>
                 </div>
             </div>
