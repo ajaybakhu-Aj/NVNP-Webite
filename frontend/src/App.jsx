@@ -61,6 +61,8 @@ import TeamPage from "./app/(marketing)/company/team/page";
 import PageNotFound from "./app/PageNotFound";
 import Icon from "./utils/Icon";
 import FloatingChatbot from "./components/ui/FloatingChatbot";
+import ThemeToggle from "./components/ui/ThemeToggle";
+import { useTheme } from "./context/ThemeContext";
 import Login from "./app/(marketing)/login/page";
 import SignUp from "./app/(marketing)/signup/page";
 import ForgotPasswordPage from "./app/(marketing)/login/ForgotPasswordPage";
@@ -226,6 +228,7 @@ function GlobalSocialSidebar() {
 function App() {
   const location = useLocation();
   const siteContents = useSiteContents();
+  const { theme: C } = useTheme();
   const hideHeaderFooter =
     location.pathname === "/checkout" ||
     location.pathname === "/admin" ||
@@ -386,13 +389,15 @@ function App() {
   return (
     <div
       style={{
-        background: "#131313",
+        background: C.bg,
         minHeight: "100vh",
+        transition: "background-color 0.3s ease",
       }}
     >
       {!hideHeaderFooter && <Header />}
       {!hideHeaderFooter && <GlobalSocialSidebar />}
-            {!hideHeaderFooter && <FloatingChatbot />}
+      {!hideHeaderFooter && <FloatingChatbot />}
+      <ThemeToggle />
 
       <React.Suspense fallback={routeLoadingFallback}>
       <Routes>

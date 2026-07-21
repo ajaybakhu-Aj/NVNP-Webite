@@ -9,7 +9,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="fixed bottom-6 right-6 z-50 p-3 rounded-full shadow-lg transition-transform hover:scale-110 active:scale-95"
+      className="fixed bottom-6 left-6 z-50 p-3 rounded-full shadow-lg transition-transform hover:scale-110 active:scale-95"
       style={{
         backgroundColor: C.surface,
         border: `1px solid ${C.outlineVar}`,
