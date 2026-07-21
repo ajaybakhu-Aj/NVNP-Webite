@@ -7,7 +7,7 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { CartProvider } from "./Context/CartContext";
 import { HelmetProvider } from "react-helmet-async";
-import { ThemeProvider } from "./context/ThemeContext";
+import { ThemeProvider } from "./Context/ThemeContext";
 
 ReactDOM.createRoot(
   document.getElementById("root")

@@ -62,7 +62,7 @@ import PageNotFound from "./app/PageNotFound";
 import Icon from "./utils/Icon";
 import FloatingChatbot from "./components/ui/FloatingChatbot";
 import ThemeToggle from "./components/ui/ThemeToggle";
-import { useTheme } from "./context/ThemeContext";
+import { useTheme } from "./Context/ThemeContext";
 import Login from "./app/(marketing)/login/page";
 import SignUp from "./app/(marketing)/signup/page";
 import ForgotPasswordPage from "./app/(marketing)/login/ForgotPasswordPage";
