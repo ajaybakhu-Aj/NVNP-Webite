@@ -13490,8 +13490,3 @@ html.light .footer-sub-brand-left a[href="/"]:hover {
   box-shadow: 0 12px 28px rgba(148, 218, 50, 0.25), 0 4px 12px rgba(0,0,0,0.3);
   border-color: rgba(148, 218, 50, 0.4);
 }
-
-/* HEADER LOGO INVERSION FOR LIGHT MODE (Keeps it readable without a box) */
-html.light .app-header img[src*="logo.png"] {
-  filter: brightness(0);
-}
