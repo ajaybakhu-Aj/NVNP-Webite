@@ -10,7 +10,7 @@ function HeroSection() {
 
     return (
         <section
-            className="relative w-full flex flex-col md:justify-center md:items-center pt-[60px] pb-[40px] md:py-0 min-h-auto md:min-h-[85vh]"
+            className="relative w-full block md:flex md:flex-col md:justify-center md:items-center pt-[80px] pb-[60px] md:py-0 md:min-h-[85vh]"
             style={{
                 borderBottom: `1px solid ${colors.outlineVariant}`,
                 background: colors.background,

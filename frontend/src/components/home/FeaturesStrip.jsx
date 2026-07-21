@@ -16,9 +16,12 @@ export default function FeaturesStrip() {
         {/* HEADER */}
         <div className="features-section-header">
           <h2 className="features-section-title">{homeSettings.features?.heading || contents.featuresTitle || "NV NightVision"}</h2>
-          <p className="features-section-subtitle">
-            {homeSettings.features?.subheading || contents.featuresSubtitle || "Advanced and Reliable Security Solutions to meet increasing demands of dynamic and ever-changing security landscape by innovating design, development and production of high-quality Closed-Circuit Television."}
-          </p>
+          <p 
+            className="features-section-subtitle"
+            dangerouslySetInnerHTML={{
+              __html: homeSettings.features?.subheading || contents.featuresSubtitle || "Advanced and Reliable Security Solutions to meet increasing demands of dynamic and ever-changing security landscape by innovating design, development and production of high-quality Closed-Circuit Television."
+            }}
+          />
           {homeSettings.features?.body_text && (
             <p className="features-section-subtitle" style={{ marginTop: 8, fontSize: 13, opacity: 0.8 }}>
               Highlights: {homeSettings.features.body_text}
