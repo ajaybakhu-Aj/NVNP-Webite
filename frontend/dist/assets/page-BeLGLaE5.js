@@ -1,1 +1,0 @@
-import{a as r}from"./rolldown-runtime-W-g5d7YK.js";import{N as i,et as a}from"./vendor-BmaNczZL.js";var p=r(a(),1),e=i();function n(){return(0,e.jsxs)("div",{style:{padding:"40px"},children:[(0,e.jsx)("h1",{children:"Reviews Page"}),(0,e.jsx)("p",{children:"Path: src/app/(marketing)/reviews/page.jsx"})]})}export{n as default};

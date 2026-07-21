@@ -1,0 +1,1 @@
+import{a as e}from"./rolldown-runtime-W-g5d7YK.js";import{F as i,nt as a}from"./vendor-DVxM7Xps.js";var g=e(a(),1),r=i();function o(){return(0,r.jsxs)("div",{style:{padding:"40px"},children:[(0,r.jsx)("h1",{children:"BlogCategoryBuyingGuides Page"}),(0,r.jsx)("p",{children:"Path: src/app/(marketing)/blog/category/buying-guides/page.jsx"})]})}export{o as default};

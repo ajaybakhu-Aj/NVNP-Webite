@@ -1,1 +1,0 @@
-import{a as r}from"./rolldown-runtime-W-g5d7YK.js";import{N as a,et as t}from"./vendor-BmaNczZL.js";var n=r(t(),1),e=a();function p(){return(0,e.jsxs)("div",{style:{padding:"40px"},children:[(0,e.jsx)("h1",{children:"DealersBenefits Page"}),(0,e.jsx)("p",{children:"Path: src/app/(marketing)/dealers/benefits/page.jsx"})]})}export{p as default};

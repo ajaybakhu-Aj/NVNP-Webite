@@ -1,0 +1,1 @@
+import{a as e}from"./rolldown-runtime-W-g5d7YK.js";import{F as t,nt as a}from"./vendor-DVxM7Xps.js";var s=e(a(),1),r=t();function c(){return(0,r.jsxs)("div",{style:{padding:"40px"},children:[(0,r.jsx)("h1",{children:"BlogCategoryAiSecurity Page"}),(0,r.jsx)("p",{children:"Path: src/app/(marketing)/blog/category/ai-security/page.jsx"})]})}export{c as default};

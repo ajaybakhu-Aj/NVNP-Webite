@@ -1,0 +1,1 @@
+import{a as t}from"./rolldown-runtime-W-g5d7YK.js";import{F as r,nt as n}from"./vendor-DVxM7Xps.js";var s=t(n(),1),a=r();function m(){return(0,a.jsxs)("div",{style:{padding:"40px"},children:[(0,a.jsx)("h1",{children:"CctvInstallationKathmandu Page"}),(0,a.jsx)("p",{children:"Path: src/app/(marketing)/cctv-installation/kathmandu/page.jsx"})]})}export{m as default};

@@ -1,0 +1,1 @@
+import{a}from"./rolldown-runtime-W-g5d7YK.js";import{F as t,nt as e}from"./vendor-DVxM7Xps.js";var s=a(e(),1),r=t();function o(){return(0,r.jsxs)("div",{style:{padding:"40px"},children:[(0,r.jsx)("h1",{children:"SupportFaq Page"}),(0,r.jsx)("p",{children:"Path: src/app/(marketing)/support/faq/page.jsx"})]})}export{o as default};

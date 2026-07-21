@@ -1,0 +1,1 @@
+import{a}from"./rolldown-runtime-W-g5d7YK.js";import{F as e,nt as t}from"./vendor-DVxM7Xps.js";var p=a(t(),1),r=e();function s(){return(0,r.jsxs)("div",{style:{padding:"40px"},children:[(0,r.jsx)("h1",{children:"Company Page"}),(0,r.jsx)("p",{children:"Path: src/app/(marketing)/company/page.jsx"})]})}export{s as default};
