@@ -42,6 +42,7 @@ export default function TestimonialsSection() {
             lineHeight: 1.2,
 
             wordBreak: "break-word",
+            color: "var(--nv-onSurf)",
           }}
         >
           {contents.testimonialsTitle || "TRUSTED BY LEADERS"}
@@ -115,6 +116,7 @@ export default function TestimonialsSection() {
                   lineHeight: 1.6,
 
                   wordBreak: "break-word",
+                  color: "var(--nv-onSurf)",
                 }}
               >
                 {text}
@@ -122,7 +124,7 @@ export default function TestimonialsSection() {
 
               <div
                 style={{
-                  color: colors.secondary,
+                  color: "var(--nv-onSurf)",
 
                   fontFamily: "'Inter', sans-serif",
 

@@ -148,7 +148,7 @@ export default function WhySection() {
               fontWeight: 700,
               letterSpacing: 3,
               textTransform: "uppercase",
-              color: colors.secondary,
+              color: "var(--nv-text-accent)",
             }}
           >
             {contents.whyTag || "The NightVision Edge"}
@@ -167,6 +167,7 @@ export default function WhySection() {
               lineHeight: 1.2,
 
               wordBreak: "break-word",
+              color: "var(--nv-onSurf)",
             }}
           >
             {homeSettings.about?.heading || contents.whyTitle || "UNCOMPROMISING VIGILANCE TECHNOLOGY"}
@@ -239,7 +240,7 @@ export default function WhySection() {
 
                     fontWeight: 700,
 
-                    color: colors.secondary,
+                    color: "var(--nv-text-accent)",
 
                     lineHeight: 1.3,
 

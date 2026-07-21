@@ -59,6 +59,7 @@ export default function ProductsSection() {
                 letterSpacing: 2,
                 lineHeight: 1.2,
                 wordBreak: "break-word",
+                color: "var(--nv-onSurf)",
               }}
             >
               {contents.homeProductsTitle || "ELITE SERIES CAMERAS"}

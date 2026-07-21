@@ -141,6 +141,7 @@ export default function FounderSection() {
               position: "relative",
 
               wordBreak: "break-word",
+              color: "var(--nv-onSurf)",
             }}
           >
             <span

@@ -17,6 +17,7 @@
   --nv-secondary: #94da32;
   --nv-outline: #8d937f;
   --nv-outlineVar: #434938;
+  --nv-text-accent: #94da32;
 }
 
 html.light {
@@ -33,6 +34,7 @@ html.light {
   --nv-secondary: #65a30d;
   --nv-outline: #9ca3af;
   --nv-outlineVar: #e5e7eb;
+  --nv-text-accent: #000000;
 }
 
 * {
@@ -12944,7 +12946,7 @@ skinny-bar-fix-class {
   font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(28px, 4vw, 42px);
   font-weight: 700;
-  color: #ffffff;
+  color: var(--nv-onSurf, #ffffff);
   margin-bottom: 16px;
 }
 
@@ -13019,10 +13021,10 @@ skinny-bar-fix-class {
 
 .features-item-title {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-  color: #ffffff;
-  letter-spacing: 0.5px;
+  font-size: clamp(18px, 2.5vw, 22px);
+  font-weight: 700;
+  color: var(--nv-text-accent);
+  margin-bottom: 12px;
 }
 
 .features-item-desc {
