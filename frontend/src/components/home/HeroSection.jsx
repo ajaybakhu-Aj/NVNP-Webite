@@ -13,7 +13,7 @@ function HeroSection() {
             className="relative w-full flex flex-col justify-center items-center py-16 md:py-0 min-h-[600px] md:min-h-[75vh]"
             style={{
                 borderBottom: `1px solid ${colors.outlineVariant}`,
-                background: "#131313",
+                background: colors.background,
             }}
         >
             {/* RECORDING FRAME */}
@@ -44,7 +44,8 @@ function HeroSection() {
 
                 {/* REC */}
                 <div
-                    className="absolute top-[10px] right-[10px] md:top-[16px] md:right-[16px] flex items-center gap-[8px] text-white text-[10px] md:text-[12px] font-bold tracking-[2px] px-[10px] py-[6px] md:px-[14px] md:py-[8px] bg-black/60 border border-white/10 backdrop-blur-[8px]"
+                    className="absolute top-[10px] right-[10px] md:top-[16px] md:right-[16px] flex items-center gap-[8px] text-[10px] md:text-[12px] font-bold tracking-[2px] px-[10px] py-[6px] md:px-[14px] md:py-[8px] border backdrop-blur-[8px]"
+                    style={{ background: 'var(--nv-surfCont)', borderColor: colors.outlineVariant, color: colors.onSurface }}
                 >
                     <span
                         className="w-[8px] h-[8px] rounded-full bg-[#ff2d2d]"
@@ -60,8 +61,9 @@ function HeroSection() {
                 <div className="flex flex-col gap-[20px] md:gap-[28px] order-2 lg:order-1 text-center lg:text-left items-center lg:items-start w-full lg:w-1/2">
                     {/* STATUS */}
                     <div
-                        className="inline-flex items-center gap-[8px] border px-[12px] py-[6px] md:px-[14px] md:py-[8px] w-fit text-[10px] md:text-[12px] font-bold tracking-[2px] bg-black/40 backdrop-blur-[8px]"
+                        className="inline-flex items-center gap-[8px] border px-[12px] py-[6px] md:px-[14px] md:py-[8px] w-fit text-[10px] md:text-[12px] font-bold tracking-[2px] backdrop-blur-[8px]"
                         style={{
+                            background: 'var(--nv-surfCont)',
                             color: colors.secondary,
                             borderColor: colors.secondary,
                         }}
@@ -75,8 +77,8 @@ function HeroSection() {
 
                     {/* TITLE */}
                     <h1
-                        className="font-bold text-white text-[34px] min-[480px]:text-[44px] md:text-[clamp(52px,6vw,78px)] leading-[1] tracking-[-1px] md:tracking-[-3px]"
-                        style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                        className="font-bold text-[34px] min-[480px]:text-[44px] md:text-[clamp(52px,6vw,78px)] leading-[1] tracking-[-1px] md:tracking-[-3px]"
+                        style={{ fontFamily: "'Space Grotesk', sans-serif", color: colors.onSurface }}
                     >
                         {(() => {
                             const title = homeSettings.hero?.heading || contents.heroTitle || "ADVANCED SURVEILLANCE FOR PEACE OF MIND";
@@ -102,7 +104,8 @@ function HeroSection() {
 
                     {/* DESCRIPTION */}
                     <p
-                        className="max-w-[600px] opacity-70 text-[14px] md:text-[16px] leading-[1.8] text-[#ccc]"
+                        className="max-w-[600px] opacity-70 text-[14px] md:text-[16px] leading-[1.8]"
+                        style={{ color: colors.onSurfaceVariant }}
                     >
                         {homeSettings.hero?.subheading || contents.heroSubtitle || "Smart AI-powered surveillance systems engineered for continuous monitoring, encrypted live streaming, and real-time security response."}
                     </p>
@@ -153,8 +156,8 @@ function HeroSection() {
 
                         {/* TRUSTED LEADERSHIP CARD */}
                         <div
-                            className="absolute z-[15] text-left flex flex-col items-start py-[12px] px-[16px] bg-[#131313]/75 backdrop-blur-[12px] border border-white/5 border-l-[3px] top-[20px] md:top-[60px] right-[10px] md:right-[20px]"
-                            style={{ borderLeftColor: colors.secondary }}
+                            className="absolute z-[15] text-left flex flex-col items-start py-[12px] px-[16px] backdrop-blur-[12px] border border-l-[3px] top-[20px] md:top-[60px] right-[10px] md:right-[20px]"
+                            style={{ background: 'var(--nv-surfCont)', borderLeftColor: colors.secondary, borderColor: colors.outlineVariant }}
                         >
                         </div>
                     </div>

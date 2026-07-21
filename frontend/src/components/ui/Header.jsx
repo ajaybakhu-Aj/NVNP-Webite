@@ -224,7 +224,7 @@ export default function Header() {
             {accountOpen && (
               <div className="account-dropdown">
                 {user && (
-                  <div className="dropdown-user-info" style={{ padding: "10px 14px", borderBottom: "1px solid rgba(255, 255, 255, 0.08)", fontSize: "11px", color: "#94da32", fontWeight: "600", textTransform: "uppercase" }}>
+                  <div className="dropdown-user-info" style={{ padding: "10px 14px", borderBottom: "1px solid rgba(255, 255, 255, 0.08)", fontSize: "11px", color: "var(--nv-secondary)", fontWeight: "600", textTransform: "uppercase" }}>
                     USER: {user.name}
                   </div>
                 )}
@@ -234,7 +234,7 @@ export default function Header() {
                     <Link
                       to="/login"
                       className="dropdown-link"
-                      style={{ color: "#94da32", fontWeight: "600" }}
+                      style={{ color: "var(--nv-secondary)", fontWeight: "600" }}
                       onClick={() => setAccountOpen(false)}
                     >
                       Login
@@ -242,7 +242,7 @@ export default function Header() {
                     <Link
                       to="/signup"
                       className="dropdown-link"
-                      style={{ color: "#94da32", fontWeight: "600", borderBottom: "1px solid rgba(255, 255, 255, 0.08)" }}
+                      style={{ color: "var(--nv-secondary)", fontWeight: "600", borderBottom: "1px solid rgba(255, 255, 255, 0.08)" }}
                       onClick={() => setAccountOpen(false)}
                     >
                       Sign Up
@@ -313,7 +313,7 @@ export default function Header() {
           <div className="mobile-auth-section" style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.08)", paddingBottom: "16px", marginBottom: "8px" }}>
             {user ? (
               <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                <div className="mobile-user-info" style={{ color: "#94da32", fontSize: "11px", fontWeight: "600", letterSpacing: "1.5px", textTransform: "uppercase", padding: "0 8px 4px", borderBottom: "1px solid rgba(255, 255, 255, 0.05)" }}>
+                <div className="mobile-user-info" style={{ color: "var(--nv-secondary)", fontSize: "11px", fontWeight: "600", letterSpacing: "1.5px", textTransform: "uppercase", padding: "0 8px 4px", borderBottom: "1px solid rgba(255, 255, 255, 0.05)" }}>
                   USER: {user.name}
                 </div>
                 {[
@@ -351,8 +351,8 @@ export default function Header() {
                   style={{
                     flex: 1,
                     textAlign: "center",
-                    background: "#94da32",
-                    color: "#131313",
+                    background: "var(--nv-secondary)",
+                    color: "var(--nv-onPrimaryContainer, #111)",
                     padding: "10px",
                     borderRadius: "4px",
                     fontWeight: "600",
@@ -372,7 +372,7 @@ export default function Header() {
                     textAlign: "center",
                     background: "transparent",
                     border: "1px solid #94da32",
-                    color: "#94da32",
+                    color: "var(--nv-secondary)",
                     padding: "10px",
                     borderRadius: "4px",
                     fontWeight: "600",
@@ -416,7 +416,7 @@ export default function Header() {
                             setMobileBlogOpen(false);
                           }}
                           className="mobile-menu-link"
-                          style={{ borderBottom: "none", paddingBottom: "8px", paddingTop: "8px", fontSize: "13px", color: "#c3c9b3" }}
+                          style={{ borderBottom: "none", paddingBottom: "8px", paddingTop: "8px", fontSize: "13px", color: "var(--nv-onSurfVar)" }}
                         >
                           {sub.label}
                         </Link>
@@ -453,7 +453,7 @@ export default function Header() {
             position: "fixed",
             inset: 0,
             zIndex: 99999,
-            background: "rgba(7,8,5,0.92)",
+            background: "var(--nv-bg)",
             backdropFilter: "blur(12px)",
             display: "flex",
             flexDirection: "column",
@@ -477,9 +477,9 @@ export default function Header() {
               onClick={closeSearch}
               style={{
                 alignSelf: "flex-end",
-                background: "rgba(255,255,255,0.06)",
+                background: "var(--nv-surfHi)",
                 border: "1px solid rgba(148,218,50,0.3)",
-                color: "#e2e4d5",
+                color: "var(--nv-onSurf)",
                 width: 40,
                 height: 40,
                 display: "flex",
@@ -501,7 +501,7 @@ export default function Header() {
                   left: 20,
                   top: "50%",
                   transform: "translateY(-50%)",
-                  color: "#8d937f",
+                  color: "var(--nv-outline)",
                   display: "flex",
                 }}
               >
@@ -515,11 +515,11 @@ export default function Header() {
                 placeholder="Search products by name, category, or type…"
                 style={{
                   width: "100%",
-                  background: "#1e2117",
+                  background: "var(--nv-surfCont)",
                   border: "2px solid #94da32",
                   borderRadius: 12,
                   padding: "18px 20px 18px 54px",
-                  color: "#e2e4d5",
+                  color: "var(--nv-onSurf)",
                   fontSize: 16,
                   fontFamily: "Poppins, sans-serif",
                   outline: "none",
@@ -532,7 +532,7 @@ export default function Header() {
             {searchQuery.trim() && (
               <div
                 style={{
-                  background: "#1e2117",
+                  background: "var(--nv-surfCont)",
                   border: "1px solid #434938",
                   borderRadius: 12,
                   maxHeight: "50vh",
@@ -544,7 +544,7 @@ export default function Header() {
                     style={{
                       padding: "40px 20px",
                       textAlign: "center",
-                      color: "#8d937f",
+                      color: "var(--nv-outline)",
                       fontFamily: "Space Grotesk, sans-serif",
                       fontSize: 13,
                     }}
@@ -576,7 +576,7 @@ export default function Header() {
                           borderRadius: 8,
                           overflow: "hidden",
                           flexShrink: 0,
-                          background: "#282b21",
+                          background: "var(--nv-surfHi)",
                           border: "1px solid #434938",
                         }}
                       >
@@ -594,7 +594,7 @@ export default function Header() {
                             fontFamily: "Poppins, sans-serif",
                             fontSize: 14,
                             fontWeight: 600,
-                            color: "#e2e4d5",
+                            color: "var(--nv-onSurf)",
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
@@ -616,8 +616,8 @@ export default function Header() {
                                 fontSize: 10,
                                 fontWeight: 600,
                                 letterSpacing: "0.5px",
-                                color: "#94da32",
-                                background: "rgba(148,218,50,0.1)",
+                                color: "var(--nv-secondary)",
+                                background: "var(--nv-surfHi)",
                                 padding: "2px 8px",
                                 borderRadius: 4,
                                 fontFamily: "Space Grotesk, sans-serif",
@@ -632,8 +632,8 @@ export default function Header() {
                                 fontSize: 10,
                                 fontWeight: 600,
                                 letterSpacing: "0.5px",
-                                color: "#c3c9b3",
-                                background: "rgba(255,255,255,0.05)",
+                                color: "var(--nv-onSurfVar)",
+                                background: "var(--nv-surfHi)",
                                 padding: "2px 8px",
                                 borderRadius: 4,
                                 fontFamily: "Space Grotesk, sans-serif",
@@ -651,7 +651,7 @@ export default function Header() {
                           fontFamily: "Space Grotesk, sans-serif",
                           fontSize: 14,
                           fontWeight: 700,
-                          color: "#deffa4",
+                          color: "var(--nv-primary)",
                           flexShrink: 0,
                         }}
                       >
@@ -668,13 +668,13 @@ export default function Header() {
               <div
                 style={{
                   textAlign: "center",
-                  color: "#8d937f",
+                  color: "var(--nv-outline)",
                   fontFamily: "Space Grotesk, sans-serif",
                   fontSize: 12,
                   marginTop: 12,
                 }}
               >
-                Search by product name, category, or type. Press <span style={{ color: "#deffa4", fontWeight: 700 }}>ESC</span> to close.
+                Search by product name, category, or type. Press <span style={{ color: "var(--nv-primary)", fontWeight: 700 }}>ESC</span> to close.
               </div>
             )}
           </div>

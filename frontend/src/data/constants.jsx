@@ -1,16 +1,16 @@
 export const colors = {
-  background: "#131313",
-  secondary: "#94da32",
-  primaryContainer: "#b5e75d",
-  onPrimaryContainer: "#466700",
-  onSecondaryContainer: "#284300",
-  surfaceContainer: "#20201f",
-  surfaceContainerHigh: "#2a2a2a",
-  surfaceContainerLow: "#1b1b1b",
-  surfaceContainerLowest: "#0e0e0e",
-  outlineVariant: "#434938",
-  onSurfaceVariant: "#c3c9b3",
-  onSurface: "#e5e2e1",
+  background: "var(--nv-bg, #131313)",
+  secondary: "var(--nv-secondary, #94da32)",
+  primaryContainer: "var(--nv-primary, #b5e75d)",
+  onPrimaryContainer: "var(--nv-onPrimary, #466700)",
+  onSecondaryContainer: "var(--nv-onSurf, #284300)",
+  surfaceContainer: "var(--nv-surface, #20201f)",
+  surfaceContainerHigh: "var(--nv-surfHi, #2a2a2a)",
+  surfaceContainerLow: "var(--nv-surfLow, #1b1b1b)",
+  surfaceContainerLowest: "var(--nv-bg, #0e0e0e)",
+  outlineVariant: "var(--nv-outlineVar, #434938)",
+  onSurfaceVariant: "var(--nv-onSurfVar, #c3c9b3)",
+  onSurface: "var(--nv-onSurf, #e5e2e1)",
 };
 
 export const features = [
