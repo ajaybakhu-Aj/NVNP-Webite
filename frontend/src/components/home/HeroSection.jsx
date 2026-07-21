@@ -10,7 +10,7 @@ function HeroSection() {
 
     return (
         <section
-            className="relative w-full flex flex-col justify-center items-center py-16 md:py-0 min-h-[600px] md:min-h-[75vh]"
+            className="relative w-full flex flex-col md:justify-center md:items-center pt-[80px] pb-[60px] md:py-0 min-h-auto md:min-h-[75vh]"
             style={{
                 borderBottom: `1px solid ${colors.outlineVariant}`,
                 background: colors.background,
@@ -112,7 +112,7 @@ function HeroSection() {
                     />
 
                     {/* BUTTONS */}
-                    <div className="flex flex-col min-[480px]:flex-row w-full min-[480px]:w-auto gap-[20px] mt-[40px] md:mt-[48px] relative z-20">
+                    <div className="flex flex-col min-[480px]:flex-row w-full min-[480px]:w-auto space-y-[16px] min-[480px]:space-y-0 min-[480px]:space-x-[20px] mt-[32px] md:mt-[48px] relative z-20">
                         <Link
                             to={homeSettings.hero?.button_url || "/product"}
                             className="hero-btn-1 flex justify-center items-center border-none font-extrabold tracking-[2px] uppercase no-underline text-center text-[13px] md:text-[15px] w-full min-[480px]:w-auto box-border transition-all duration-300 rounded-full"
@@ -136,7 +136,7 @@ function HeroSection() {
 
                 {/* RIGHT VISUAL */}
                 <div className="flex justify-center items-center relative order-1 lg:order-2 w-full lg:w-1/2">
-                    <div className="relative w-full h-[360px] min-[480px]:h-[440px] md:h-[560px] lg:h-[680px] flex justify-center items-end overflow-hidden">
+                    <div className="relative w-full h-[280px] min-[480px]:h-[440px] md:h-[560px] lg:h-[680px] flex justify-center items-end overflow-hidden">
                         {/* GREEN HALO GLOW */}
                         <div
                             className="absolute left-1/2 -translate-x-1/2 rounded-full bottom-[40px] md:bottom-[80px] w-[280px] md:w-[600px] h-[280px] md:h-[600px] z-[1] blur-[60px]"
@@ -149,7 +149,7 @@ function HeroSection() {
                         <img
                             src={homeSettings.hero?.image_url || contents.heroImage || "/hero_pointing_cctv.png"}
                             alt="Hero"
-                            className="relative z-[2] w-auto max-w-full object-contain object-bottom translate-y-[10px] md:translate-y-[20px] max-h-[320px] min-[480px]:max-h-[420px] md:max-h-[550px] lg:max-h-[760px]"
+                            className="relative z-[2] w-auto max-w-full object-contain object-bottom translate-y-[10px] md:translate-y-[20px] max-h-[260px] min-[480px]:max-h-[420px] md:max-h-[550px] lg:max-h-[760px]"
                             style={{
                                 filter: `drop-shadow(0 15px 40px rgba(0,0,0,0.45)) drop-shadow(0 0 30px rgba(148,218,50,0.30))`,
                             }}
