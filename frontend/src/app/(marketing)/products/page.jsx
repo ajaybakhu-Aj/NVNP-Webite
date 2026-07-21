@@ -214,7 +214,7 @@ export default function NightVision() {
             boxShadow: "0 0 15px rgba(148, 218, 50, 0.15)",
             textAlign: "center"
           }}>
-            <h4 style={{ margin: "0 0 8px 0", fontSize: 14, fontFamily: "'Space Grotesk', sans-serif", color: "#fff", letterSpacing: 1 }}>
+            <h4 style={{ margin: "0 0 8px 0", fontSize: 14, fontFamily: "'Space Grotesk', sans-serif", color: "var(--nv-onSurf)", letterSpacing: 1 }}>
               CUSTOM SETUP
             </h4>
             <p style={{ color: "#8d937f", fontSize: 11, lineHeight: 1.5, marginBottom: 16 }}>
@@ -323,13 +323,13 @@ export default function NightVision() {
               color: "#c3c9b3"
             }}>
               <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                <h3 style={{ fontSize: 16, color: "#fff", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}>
+                <h3 style={{ fontSize: 16, color: "var(--nv-onSurf)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}>
                   1. Wireless CCTV Cameras vs IP CCTV Cameras
                 </h3>
                 <p>
                   Choosing between **Wireless CCTV Cameras** and **IP CCTV Cameras** depends on your installation constraints. Wireless models are optimized for quick setup and flexibility, ideal for residential rooms and small offices where running Ethernet cables is difficult. **IP CCTV Cameras** communicate over network lines, providing ultra-stable Gigabit streaming rates and PoE integration, preferred for robust corporate or long-distance deployments.
                 </p>
-                <h3 style={{ fontSize: 16, color: "#fff", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}>
+                <h3 style={{ fontSize: 16, color: "var(--nv-onSurf)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}>
                   2. Selecting Camera Resolution (Megapixels)
                 </h3>
                 <p>
@@ -338,13 +338,13 @@ export default function NightVision() {
               </div>
 
               <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                <h3 style={{ fontSize: 16, color: "#fff", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}>
+                <h3 style={{ fontSize: 16, color: "var(--nv-onSurf)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}>
                   3. NVR and PoE Switch Networking Infrastructure
                 </h3>
                 <p>
                   For multi-camera networks, a **Network Video Recorder (NVR)** is the brain of your setup, aggregating video streams from all IP cameras. Connect them through a **POE (Power over Ethernet) Switch** to transmit both high-speed data and electricity over a single RJ-45 cable, simplifying cable management and reducing electrical wiring overhead.
                 </p>
-                <h3 style={{ fontSize: 16, color: "#fff", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}>
+                <h3 style={{ fontSize: 16, color: "var(--nv-onSurf)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}>
                   4. Determining Storage Capacity Needs (Hard Disk vs SD Card)
                 </h3>
                 <p>

@@ -186,7 +186,7 @@ export default function NightVisionAboutPage() {
                       </span>
                     </div>
 
-                    <h3 className="value-title" style={{ fontSize: "18px", color: "#ffffff", fontWeight: "700", marginTop: "12px", fontFamily: "'Space Grotesk', sans-serif" }}>
+                    <h3 className="value-title" style={{ fontSize: "18px", color: "var(--nv-onSurf)", fontWeight: "700", marginTop: "12px", fontFamily: "'Space Grotesk', sans-serif" }}>
                       {item.title}
                     </h3>
 

@@ -328,7 +328,7 @@ export default function CctvSetupPage() {
         </div>
 
         <div style={{ borderBottom: "1px solid #434938", paddingBottom: 24, marginBottom: 40 }}>
-          <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(30px, 4vw, 46px)", fontWeight: 800, color: "#fff", textTransform: "uppercase", letterSpacing: 1.5, margin: "0 0 12px 0" }}>
+          <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(30px, 4vw, 46px)", fontWeight: 800, color: "var(--nv-onSurf)", textTransform: "uppercase", letterSpacing: 1.5, margin: "0 0 12px 0" }}>
             CCTV PACKAGE WIZARD
           </h1>
           <p style={{ color: "#8d937f", fontSize: 15, maxWidth: 800, margin: 0, lineHeight: 1.6 }}>
@@ -530,7 +530,7 @@ export default function CctvSetupPage() {
                         } size={22} style={{ color: "#94da32" }} />
                       </div>
                       <div>
-                        <h4 style={{ color: "#fff", margin: 0, fontSize: 14, fontWeight: 600 }}>{item.name}</h4>
+                        <h4 style={{ color: "var(--nv-onSurf)", margin: 0, fontSize: 14, fontWeight: 600 }}>{item.name}</h4>
                         <span style={{ color: "#8d937f", fontSize: 11, textTransform: "uppercase", letterSpacing: 0.5 }}>{item.type}</span>
                       </div>
                     </div>
@@ -563,7 +563,7 @@ export default function CctvSetupPage() {
           gap: 24
         }}>
           <div>
-            <h3 style={{ margin: "0 0 6px 0", fontSize: 16, fontFamily: "'Space Grotesk', sans-serif", color: "#fff", textTransform: "uppercase", letterSpacing: 1 }}>
+            <h3 style={{ margin: "0 0 6px 0", fontSize: 16, fontFamily: "'Space Grotesk', sans-serif", color: "var(--nv-onSurf)", textTransform: "uppercase", letterSpacing: 1 }}>
               Surveillance Estimate
             </h3>
             <span style={{ color: "#8d937f", fontSize: 11, fontFamily: "monospace" }}>[SYSTEM_CODE: WIZARD_PRO_V3]</span>
@@ -659,7 +659,7 @@ export default function CctvSetupPage() {
             {quoteSuccessMsg ? (
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "80%", textAlign: "center", padding: 24 }}>
                 <Icon name="check_circle" size={64} style={{ color: "#94da32", marginBottom: 16 }} />
-                <h4 style={{ color: "#fff", fontSize: 18, marginBottom: 12 }}>PROVISION SUCCESSFUL</h4>
+                <h4 style={{ color: "var(--nv-onSurf)", fontSize: 18, marginBottom: 12 }}>PROVISION SUCCESSFUL</h4>
                 <p style={{ color: "#c3c9b3", fontSize: 14, lineHeight: 1.6 }}>{quoteSuccessMsg}</p>
                 <button onClick={() => setIsDrawerOpen(false)} style={drawerSubmitBtnStyle}>DISMISS PROTOCOL</button>
               </div>

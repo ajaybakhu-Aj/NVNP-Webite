@@ -3720,7 +3720,7 @@ export default function AdminDashboard() {
                           { key: "cctv_setup", label: "CCTV Setup Calculator Page" }
                         ].map((page) => (
                           <div key={page.key} style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${C.outlineVar}`, padding: 16, borderRadius: 6 }}>
-                            <h4 style={{ fontFamily: C.sg, fontSize: 12, fontWeight: 700, margin: "0 0 12px 0", color: "#fff" }}>{page.label}</h4>
+                            <h4 style={{ fontFamily: C.sg, fontSize: 12, fontWeight: 700, margin: "0 0 12px 0", color: "var(--nv-onSurf)" }}>{page.label}</h4>
                             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                               <div>
                                 <label style={{ display: "block", fontSize: 10, fontWeight: 700, marginBottom: 6, color: C.onSurfVar }}>META TITLE</label>
