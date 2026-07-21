@@ -26,8 +26,8 @@ html.light {
   --nv-surfHi: #e5e7eb;
   --nv-surfHighest: #d1d5db;
   --nv-surfLow: #f9fafb;
-  --nv-onSurf: #111827;
-  --nv-onSurfVar: #4b5563;
+  --nv-onSurf: #000000;
+  --nv-onSurfVar: #000000;
   --nv-primary: #4a6b00;
   --nv-onPrimary: #ffffff;
   --nv-secondary: #65a30d;
