@@ -13470,3 +13470,9 @@ div[style*="overflowX: auto"] {
   background: rgba(148, 218, 50, 0.05);
   font-style: italic;
 }
+
+
+/* LOGO INVERSION FOR LIGHT MODE */
+html.light img[src*="logo.png"] {
+  filter: brightness(0);
+}

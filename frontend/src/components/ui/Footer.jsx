@@ -124,7 +124,7 @@ export default function Footer() {
         {/* REACH US */}
         <div style={{ flex: "0 0 auto", minWidth: 0 }}>
           <h5 className="footer-section-title">Reach Us</h5>
-          <ul className="footer-links-list" style={{ color: "#fff", fontSize: "14px", lineHeight: "1.6", gap: "16px" }}>
+          <ul className="footer-links-list" style={{ color: "var(--nv-onSurf)", fontSize: "14px", lineHeight: "1.6", gap: "16px" }}>
             <li style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
               <a 
                 href={`https://maps.google.com/?q=${encodeURIComponent(contents.footerAddress || "Radhe Radhe, Bhaktapur, Nepal")}`}
@@ -192,7 +192,7 @@ export default function Footer() {
             margin: "0 0 12px 0",
           }}>Security · Surveillance · Nepal</p>
 
-          <p className="footer-brand-desc" style={{ fontSize: "13px", lineHeight: "1.6", color: "#8d937f", margin: "0 0 16px 0", maxWidth: "420px" }}>
+          <p className="footer-brand-desc" style={{ fontSize: "13px", lineHeight: "1.6", color: "var(--nv-onSurfVar)", margin: "0 0 16px 0", maxWidth: "420px" }}>
             {contents.footerBrandDesc || "Dedicated to the highest standard of surveillance technology and national security for Nepal. Security is our duty."}
           </p>
 
@@ -204,7 +204,7 @@ export default function Footer() {
             margin: "0 0 20px 0", 
             fontFamily: "'Poppins', sans-serif",
             fontSize: "12px", 
-            color: "#8d937f" 
+            color: "var(--nv-onSurfVar)" 
           }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <span style={{ color: "#94da32", fontWeight: "bold" }}>[✓]</span>
@@ -258,7 +258,7 @@ export default function Footer() {
         {/* Right Side: Subscribe Form */}
         <div className="footer-sub-brand-right">
           <h6 style={{
-            color: "#fff",
+            color: "var(--nv-onSurf)",
             fontSize: "11px",
             fontWeight: 700,
             letterSpacing: "2px",
@@ -269,7 +269,7 @@ export default function Footer() {
             {contents.footerSubscribeTitle || "SUBSCRIBE FOR UPDATES"}
           </h6>
           <p style={{
-            color: "#8d937f",
+            color: "var(--nv-onSurfVar)",
             fontSize: "13px",
             lineHeight: "1.6",
             margin: 0,
@@ -287,10 +287,10 @@ export default function Footer() {
               required
               style={{
                 flex: 1,
-                background: "#1e2117",
-                border: "1px solid #434938",
+                background: "var(--nv-surfHi)",
+                border: "1px solid var(--nv-outlineVar)",
                 padding: "10px 14px",
-                color: "#fff",
+                color: "var(--nv-onSurf)",
                 fontSize: "13px",
                 fontFamily: "'Poppins', sans-serif",
                 outline: "none"
