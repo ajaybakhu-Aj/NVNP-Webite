@@ -5,19 +5,23 @@ import Icon from "../../../utils/Icon";
 
 // Brand Color Tokens (NIGHTVISION™ Cohesive Palette)
 const C = {
-  primary: "#B5E75D",      // Lime Green Accent
-  primaryDk: "#76B900",
-  white: "#FFFFFF",
-  dark: "#131313",
-  surface: "#1a1d14",      // Dark Forest Surface
-  surfaceMid: "#1e2117",
-  surfaceHi: "#282b21",
-  outline: "#434938",
-  outlineHi: "#8D937F",
-  onSurface: "#e2e4d5",
-  onMuted: "#c3c9b3",
-  error: "#ff6b6b",
+  bg: "var(--nv-bg, #11140c)",
+  surface: "var(--nv-surface, #11140c)",
+  surfCont: "var(--nv-surfCont, #1e2117)",
+  surfHi: "var(--nv-surfHi, #282b21)",
+  surfHighest: "var(--nv-surfHighest, #33362c)",
+  surfLow: "var(--nv-surfLow, #0c0f07)",
+  onSurf: "var(--nv-onSurf, #e2e4d5)",
+  onSurfVar: "var(--nv-onSurfVar, #c3c9b3)",
+  primary: "var(--nv-primary, #deffa4)",
+  onPrimary: "var(--nv-onPrimary, #233600)",
+  secondary: "var(--nv-secondary, #94da32)",
+  outline: "var(--nv-outline, #8d937f)",
+  outlineVar: "var(--nv-outlineVar, #434938)",
+  sg: "'Space Grotesk', sans-serif",
+  pp: "'Poppins', sans-serif",
 };
+
 
 // Reusable Corner Marks
 const CornerMarks = () => (

@@ -3,6 +3,38 @@
 
 
 
+:root, html.dark {
+  --nv-bg: #11140c;
+  --nv-surface: #11140c;
+  --nv-surfCont: #1e2117;
+  --nv-surfHi: #282b21;
+  --nv-surfHighest: #33362c;
+  --nv-surfLow: #0c0f07;
+  --nv-onSurf: #e2e4d5;
+  --nv-onSurfVar: #c3c9b3;
+  --nv-primary: #deffa4;
+  --nv-onPrimary: #233600;
+  --nv-secondary: #94da32;
+  --nv-outline: #8d937f;
+  --nv-outlineVar: #434938;
+}
+
+html.light {
+  --nv-bg: #f9fafb;
+  --nv-surface: #ffffff;
+  --nv-surfCont: #f3f4f6;
+  --nv-surfHi: #e5e7eb;
+  --nv-surfHighest: #d1d5db;
+  --nv-surfLow: #f9fafb;
+  --nv-onSurf: #111827;
+  --nv-onSurfVar: #4b5563;
+  --nv-primary: #4a6b00;
+  --nv-onPrimary: #ffffff;
+  --nv-secondary: #65a30d;
+  --nv-outline: #9ca3af;
+  --nv-outlineVar: #e5e7eb;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -10,11 +42,12 @@
 }
 
 body {
-  background: #131313;
-  color: #e5e2e1;
+  background: var(--nv-bg, #131313);
+  color: var(--nv-onSurf, #e5e2e1);
   font-family: 'Inter', sans-serif;
   font-size: 16px;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ::selection {

@@ -4,22 +4,23 @@ import { authors } from "../../../../data/blogData";
 import { getAllBlogs } from "../../../../utils/cmsDb";
 
 const C = {
-  bg: "#11140c",
-  surface: "#11140c",
-  surfCont: "#1e2117",
-  surfHi: "#282b21",
-  surfHighest: "#33362c",
-  surfLow: "#0c0f07",
-  onSurf: "#e2e4d5",
-  onSurfVar: "#c3c9b3",
-  primary: "#deffa4",
-  onPrimary: "#233600",
-  secondary: "#94da32",
-  outline: "#8d937f",
-  outlineVar: "#434938",
+  bg: "var(--nv-bg, #11140c)",
+  surface: "var(--nv-surface, #11140c)",
+  surfCont: "var(--nv-surfCont, #1e2117)",
+  surfHi: "var(--nv-surfHi, #282b21)",
+  surfHighest: "var(--nv-surfHighest, #33362c)",
+  surfLow: "var(--nv-surfLow, #0c0f07)",
+  onSurf: "var(--nv-onSurf, #e2e4d5)",
+  onSurfVar: "var(--nv-onSurfVar, #c3c9b3)",
+  primary: "var(--nv-primary, #deffa4)",
+  onPrimary: "var(--nv-onPrimary, #233600)",
+  secondary: "var(--nv-secondary, #94da32)",
+  outline: "var(--nv-outline, #8d937f)",
+  outlineVar: "var(--nv-outlineVar, #434938)",
   sg: "'Space Grotesk', sans-serif",
   pp: "'Poppins', sans-serif",
 };
+
 
 const IconArrowLeft = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

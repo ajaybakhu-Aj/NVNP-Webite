@@ -3,20 +3,23 @@ import { useSiteContents } from "../../../utils/cmsDb";
 import PageHeroBanner from "../../../components/ui/PageHeroBanner";
 
 const C = {
-  bg: "#000000",
-  surface: "#131313",
-  surfaceLow: "#1b1b1b",
-  surfaceLowest: "#0e0e0e",
-  surfaceHigh: "#2a2a2a",
-  surfaceContainer: "#20201f",
-  secondary: "#94da32",
-  secondaryLight: "#b5e75d",
-  onBg: "#e5e2e1",
-  onSurfaceVariant: "#c3c9b3",
-  outline: "#8d937f",
-  outlineVariant: "#434938",
-  error: "#ffb4ab",
+  bg: "var(--nv-bg, #11140c)",
+  surface: "var(--nv-surface, #11140c)",
+  surfCont: "var(--nv-surfCont, #1e2117)",
+  surfHi: "var(--nv-surfHi, #282b21)",
+  surfHighest: "var(--nv-surfHighest, #33362c)",
+  surfLow: "var(--nv-surfLow, #0c0f07)",
+  onSurf: "var(--nv-onSurf, #e2e4d5)",
+  onSurfVar: "var(--nv-onSurfVar, #c3c9b3)",
+  primary: "var(--nv-primary, #deffa4)",
+  onPrimary: "var(--nv-onPrimary, #233600)",
+  secondary: "var(--nv-secondary, #94da32)",
+  outline: "var(--nv-outline, #8d937f)",
+  outlineVar: "var(--nv-outlineVar, #434938)",
+  sg: "'Space Grotesk', sans-serif",
+  pp: "'Poppins', sans-serif",
 };
+
 
 const scanlineStyle = {
   position: "fixed", inset: 0, zIndex: 10, pointerEvents: "none",

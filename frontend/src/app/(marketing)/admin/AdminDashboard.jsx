@@ -41,20 +41,23 @@ import Icon from "../../../utils/Icon";
 import MediaPicker from "../../../components/ui/MediaPicker";
 
 const C = {
-  bg: "#f8fafc", // Slate 50
-  surface: "#ffffff", // Pure White
-  surfCont: "#f1f5f9", // Slate 100
-  surfHi: "#e2e8f0", // Slate 200
-  onSurf: "#0f172a", // Slate 900
-  onSurfVar: "#475569", // Slate 600
-  primary: "#4f46e5", // Indigo 600
-  onPrimary: "#ffffff",
-  secondary: "#0284c7", // Sky 600
-  outline: "#cbd5e1", // Slate 300
-  outlineVar: "#e2e8f0", // Slate 200
+  bg: "var(--nv-bg, #11140c)",
+  surface: "var(--nv-surface, #11140c)",
+  surfCont: "var(--nv-surfCont, #1e2117)",
+  surfHi: "var(--nv-surfHi, #282b21)",
+  surfHighest: "var(--nv-surfHighest, #33362c)",
+  surfLow: "var(--nv-surfLow, #0c0f07)",
+  onSurf: "var(--nv-onSurf, #e2e4d5)",
+  onSurfVar: "var(--nv-onSurfVar, #c3c9b3)",
+  primary: "var(--nv-primary, #deffa4)",
+  onPrimary: "var(--nv-onPrimary, #233600)",
+  secondary: "var(--nv-secondary, #94da32)",
+  outline: "var(--nv-outline, #8d937f)",
+  outlineVar: "var(--nv-outlineVar, #434938)",
   sg: "'Space Grotesk', sans-serif",
   pp: "'Poppins', sans-serif",
 };
+
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("overview");
