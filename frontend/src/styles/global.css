@@ -5960,7 +5960,7 @@ a {
 }
 
 .footer-copyright-text {
-  color: var(--nv-onSurfVar, #c3c9b3);
+  color: var(--nv-onSurf);
   font-size: clamp(11px, 2vw, 16px);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -9690,7 +9690,7 @@ a {
 }
 
 .app-footer .footer-copyright-text {
-  color: #ffffff;
+  color: var(--nv-onSurf);
   font-size: 13px;
   letter-spacing: 1px;
   line-height: 1.8;
