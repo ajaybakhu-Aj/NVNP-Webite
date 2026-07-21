@@ -192,6 +192,9 @@ function GlobalSocialSidebar() {
       >
         <Icon name="linkedin" size={18} />
       </a>
+      {/* Theme Toggle in middle of sidebar */}
+      <ThemeToggle />
+
       <a
         href={tiktok}
         target="_blank"
@@ -397,7 +400,7 @@ function App() {
       {!hideHeaderFooter && <Header />}
       {!hideHeaderFooter && <GlobalSocialSidebar />}
       {!hideHeaderFooter && <FloatingChatbot />}
-      <ThemeToggle />
+
 
       <React.Suspense fallback={routeLoadingFallback}>
       <Routes>

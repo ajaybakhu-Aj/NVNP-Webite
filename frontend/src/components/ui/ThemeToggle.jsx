@@ -9,24 +9,40 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="fixed bottom-6 left-6 z-50 p-3 rounded-full shadow-lg transition-transform hover:scale-110 active:scale-95"
+      className="theme-sidebar-toggle group relative flex items-center justify-center gap-2 p-2 rounded-full transition-all duration-300 hover:scale-105 active:scale-95"
       style={{
-        backgroundColor: C.surface,
-        border: `1px solid ${C.outlineVar}`,
-        color: C.onSurf,
-        boxShadow: `0 10px 25px -5px ${isDarkMode ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.1)'}`
+        backgroundColor: isDarkMode ? '#1e2117' : '#ffffff',
+        border: `1px solid ${isDarkMode ? '#434938' : '#e5e7eb'}`,
+        color: isDarkMode ? '#94da32' : '#000000',
+        boxShadow: `0 8px 20px rgba(0,0,0,0.15)`,
+        width: '44px',
+        height: '44px',
+        margin: '8px 0',
+        overflow: 'visible'
       }}
       aria-label="Toggle theme"
     >
+      {/* Tooltip for layman understanding */}
+      <span 
+        className="absolute right-full mr-4 px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        style={{
+          backgroundColor: isDarkMode ? '#94da32' : '#000000',
+          color: isDarkMode ? '#000000' : '#ffffff',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+        }}
+      >
+        {isDarkMode ? "SWITCH TO LIGHT THEME" : "SWITCH TO DARK THEME"}
+      </span>
+
       <AnimatePresence mode="wait">
         <motion.div
           key={isDarkMode ? 'dark' : 'light'}
-          initial={{ y: -20, opacity: 0, rotate: -90 }}
+          initial={{ y: -10, opacity: 0, rotate: -90 }}
           animate={{ y: 0, opacity: 1, rotate: 0 }}
-          exit={{ y: 20, opacity: 0, rotate: 90 }}
+          exit={{ y: 10, opacity: 0, rotate: 90 }}
           transition={{ duration: 0.2 }}
         >
-          {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
+          {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
         </motion.div>
       </AnimatePresence>
     </button>
