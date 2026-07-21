@@ -103,12 +103,13 @@ function HeroSection() {
                     </h1>
 
                     {/* DESCRIPTION */}
-                    <p
-                        className="max-w-[600px] opacity-70 text-[14px] md:text-[16px] leading-[1.8]"
+                    <div
+                        className="max-w-[600px] opacity-70 text-[14px] md:text-[16px] leading-[1.8] hero-description-content"
                         style={{ color: colors.onSurfaceVariant }}
-                    >
-                        {homeSettings.hero?.subheading || contents.heroSubtitle || "Smart AI-powered surveillance systems engineered for continuous monitoring, encrypted live streaming, and real-time security response."}
-                    </p>
+                        dangerouslySetInnerHTML={{
+                            __html: homeSettings.hero?.subheading || contents.heroSubtitle || "Smart AI-powered surveillance systems engineered for continuous monitoring, encrypted live streaming, and real-time security response."
+                        }}
+                    />
 
                     {/* BUTTONS */}
                     <div className="flex flex-col min-[480px]:flex-row w-full min-[480px]:w-auto gap-[20px] mt-[40px] md:mt-[48px] relative z-20">
