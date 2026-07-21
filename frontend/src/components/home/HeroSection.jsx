@@ -10,7 +10,7 @@ function HeroSection() {
 
     return (
         <section
-            className="relative w-full flex flex-col md:justify-center md:items-center pt-[80px] pb-[140px] md:py-0 min-h-[100vh] md:min-h-[85vh]"
+            className="relative w-full flex flex-col md:justify-center md:items-center pt-[60px] pb-[40px] md:py-0 min-h-auto md:min-h-[85vh]"
             style={{
                 borderBottom: `1px solid ${colors.outlineVariant}`,
                 background: colors.background,
@@ -112,7 +112,7 @@ function HeroSection() {
                     />
 
                     {/* BUTTONS */}
-                    <div className="flex flex-col min-[480px]:flex-row w-full min-[480px]:w-auto space-y-[16px] min-[480px]:space-y-0 min-[480px]:space-x-[20px] mt-[48px] md:mt-[64px] relative z-20">
+                    <div className="flex flex-col min-[480px]:flex-row w-full min-[480px]:w-auto gap-[20px] mt-[40px] md:mt-[48px] relative z-20">
                         <Link
                             to={homeSettings.hero?.button_url || "/product"}
                             className="hero-btn-1 flex justify-center items-center border-none font-extrabold tracking-[2px] uppercase no-underline text-center text-[13px] md:text-[15px] w-full min-[480px]:w-auto box-border transition-all duration-300 rounded-full"
