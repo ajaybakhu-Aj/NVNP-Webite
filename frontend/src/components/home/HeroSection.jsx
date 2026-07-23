@@ -9,7 +9,7 @@ function HeroSection() {
 
     return (
         <section
-            className="relative w-full flex flex-col justify-center items-center pt-10 pb-16 sm:pt-14 sm:pb-20 md:py-16 lg:py-0 lg:min-h-[85vh] overflow-hidden"
+            className="relative w-full flex flex-col justify-center items-center min-h-[calc(100vh-70px)] lg:min-h-[85vh] pt-8 pb-14 sm:pt-12 sm:pb-16 md:py-16 lg:py-12 overflow-hidden"
             style={{
                 borderBottom: `1px solid ${colors.outlineVariant}`,
                 background: colors.background,
@@ -55,13 +55,14 @@ function HeroSection() {
             </div>
 
             {/* MAIN CONTENT */}
-            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 w-full flex flex-col lg:flex-row-reverse gap-6 sm:gap-8 md:gap-[80px] items-center relative z-10">
-                {/* RIGHT VISUAL (IMAGE FIRST IN DOM FOR MOBILE TOP) */}
+            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 w-full flex flex-col lg:flex-row-reverse gap-5 sm:gap-8 md:gap-[80px] items-center justify-center relative z-10 py-2">
+                
+                {/* RIGHT VISUAL (BRAND AMBASSADOR) */}
                 <div className="flex justify-center items-center relative w-full lg:w-1/2">
-                    <div className="relative w-full h-[220px] sm:h-[320px] md:h-[480px] lg:h-[680px] flex justify-center items-end overflow-hidden">
+                    <div className="relative w-full max-w-[340px] sm:max-w-[440px] md:max-w-none h-[280px] sm:h-[360px] md:h-[520px] lg:h-[640px] flex justify-center items-end">
                         {/* GREEN HALO GLOW */}
                         <div
-                            className="absolute left-1/2 -translate-x-1/2 rounded-full bottom-[20px] sm:bottom-[40px] md:bottom-[80px] w-[220px] sm:w-[360px] md:w-[600px] h-[220px] sm:h-[360px] md:h-[600px] z-[1] blur-[50px] sm:blur-[60px]"
+                            className="absolute left-1/2 -translate-x-1/2 rounded-full bottom-[20px] sm:bottom-[40px] md:bottom-[80px] w-[240px] sm:w-[360px] md:w-[600px] h-[240px] sm:h-[360px] md:h-[600px] z-[1] blur-[50px] sm:blur-[60px]"
                             style={{
                                 background: "radial-gradient(circle, rgba(148,218,50,0.50) 0%, rgba(148,218,50,0.16) 35%, rgba(148,218,50,0) 75%)",
                             }}
@@ -71,7 +72,7 @@ function HeroSection() {
                         <img
                             src={homeSettings.hero?.image_url || contents.heroImage || "/hero_pointing_cctv.png"}
                             alt="Hero"
-                            className="relative z-[2] w-auto max-w-full object-contain object-bottom max-h-[210px] sm:max-h-[310px] md:max-h-[460px] lg:max-h-[760px]"
+                            className="relative z-[2] w-auto max-w-full h-full object-contain object-bottom"
                             style={{
                                 filter: `drop-shadow(0 15px 40px rgba(0,0,0,0.45)) drop-shadow(0 0 30px rgba(148,218,50,0.30))`,
                             }}
@@ -79,9 +80,9 @@ function HeroSection() {
                     </div>
                 </div>
 
-                {/* LEFT SIDE (TEXT SECOND IN DOM FOR MOBILE BOTTOM) */}
-                <div className="flex flex-col gap-4 sm:gap-6 md:gap-[28px] text-center lg:text-left items-center lg:items-start w-full lg:w-1/2">
-                    {/* STATUS */}
+                {/* LEFT SIDE (TEXT CONTENT) */}
+                <div className="flex flex-col gap-3 sm:gap-5 md:gap-[28px] text-center lg:text-left items-center lg:items-start w-full lg:w-1/2">
+                    {/* STATUS BADGE */}
                     <div
                         className="inline-flex items-center gap-[8px] border px-[12px] py-[6px] md:px-[14px] md:py-[8px] w-fit text-[10px] md:text-[12px] font-bold tracking-[2px] backdrop-blur-[8px]"
                         style={{
@@ -99,7 +100,7 @@ function HeroSection() {
 
                     {/* TITLE */}
                     <h1
-                        className="font-bold text-[28px] sm:text-[36px] md:text-[clamp(52px,6vw,78px)] leading-[1.15] tracking-[-1px] md:tracking-[-3px]"
+                        className="font-bold text-[26px] sm:text-[34px] md:text-[clamp(52px,6vw,78px)] leading-[1.15] tracking-[-1px] md:tracking-[-3px]"
                         style={{ fontFamily: "'Space Grotesk', sans-serif", color: colors.onSurface }}
                     >
                         {(() => {
@@ -134,7 +135,7 @@ function HeroSection() {
                     />
 
                     {/* BUTTONS */}
-                    <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-4 mt-6 sm:mt-8 md:mt-[48px] relative z-20">
+                    <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-3 sm:gap-4 mt-3 sm:mt-5 md:mt-[48px] relative z-20">
                         <Link
                             to={homeSettings.hero?.button_url || "/product"}
                             className="hero-btn-1 flex justify-center items-center border-none font-extrabold tracking-[2px] uppercase no-underline text-center text-[13px] md:text-[15px] w-full sm:w-auto box-border transition-all duration-300 rounded-full"
