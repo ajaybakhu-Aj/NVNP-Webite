@@ -19,11 +19,11 @@ function HeroSection() {
             <div className="absolute inset-[10px] md:inset-[20px] pointer-events-none z-[5] overflow-hidden">
                 {/* SCANLINE */}
                 <div
-                    className="absolute top-0 left-0 w-full h-[4px] z-[2]"
+                    className="absolute left-0 w-full h-[4px] z-[2]"
                     style={{
                         background: `linear-gradient(to right, transparent, ${colors.secondary}, transparent)`,
                         boxShadow: `0 0 12px ${colors.secondary}, 0 0 24px ${colors.secondary}`,
-                        animation: "scanlineMove 2.8s linear infinite",
+                        animation: "scanlineMove 3s linear infinite",
                     }}
                 />
 
@@ -162,10 +162,10 @@ function HeroSection() {
             <style>
                 {`
           @keyframes scanlineMove {
-            0% { transform: translateY(0); opacity: 0; }
+            0% { top: 0%; opacity: 0; }
             5% { opacity: 1; }
             95% { opacity: 1; }
-            100% { transform: translateY(calc(100% - 4px)); opacity: 0; }
+            100% { top: calc(100% - 4px); opacity: 0; }
           }
           @keyframes recordingPulse {
             0%, 100% { opacity: 1; transform: scale(1); }

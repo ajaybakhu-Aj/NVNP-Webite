@@ -10539,20 +10539,18 @@ a {
 .global-social-sidebar {
   position: fixed;
   right: 0;
-  top: 50%;
+  top: calc(50% + 40px);
   transform: translateY(-50%) translateX(30px);
-  /* keeping 10px of the 40px buttons + padding visible */
   display: flex;
   flex-direction: column;
   gap: 12px;
-  z-index: 9999;
+  z-index: 800;
   background: var(--nv-surfCont);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--nv-outlineVar);
   border-right: none;
   padding: 16px 36px 16px 12px;
-  /* offset right padding to expand hover capture zone */
   border-radius: 16px 0 0 16px;
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s, box-shadow 0.3s;
   box-shadow: -4px 0 24px rgba(0, 0, 0, 0.5);
