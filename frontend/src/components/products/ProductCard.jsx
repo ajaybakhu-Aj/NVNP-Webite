@@ -19,9 +19,8 @@ export default function ProductCard({
   const navigate = useNavigate();
 
   const finalDesc = description || desc || "";
-
   const productPrice = price || 4500;
-  const productId = id || name.toLowerCase().replace(/\s+/g, "-");
+  const productId = id || (name ? name.toLowerCase().replace(/\s+/g, "-") : "product");
 
   const getSubheading = () => {
     if (cameraMp) {
@@ -67,28 +66,29 @@ export default function ProductCard({
   return (
     <Link
       to={`/product/${productId}`}
-      style={{ textDecoration: "none", color: "inherit", display: "block" }}
+      style={{ textDecoration: "none", color: "inherit", display: "block", width: "100%", boxSizing: "border-box" }}
     >
       <div
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{
           position: "relative",
-          background: colors.surfaceContainer,
+          background: colors.surfaceContainer || "#1e2117",
           padding: 16,
-          border: `1px solid ${colors.outlineVariant}`,
+          border: `1px solid ${hovered ? colors.secondary : colors.outlineVariant || "#434938"}`,
           overflow: "hidden",
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-start",
+          justifyContent: "space-between",
           gap: 16,
+          boxSizing: "border-box",
+          width: "100%",
           transition: "border-color 0.3s ease",
-          borderColor: hovered ? colors.secondary : colors.outlineVariant,
         }}
       >
-        <div>
-          {/* SCANLINE */}
+        <div style={{ width: "100%", boxSizing: "border-box" }}>
+          {/* SCANLINE OVERLAY */}
           <div
             style={{
               position: "absolute",
@@ -100,9 +100,21 @@ export default function ProductCard({
             }}
           />
 
-
           {/* IMAGE CONTAINER */}
-          <div style={{ position: "relative", marginBottom: 24, overflow: "hidden", aspectRatio: "1/1", background: "#181a15", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div
+            style={{
+              position: "relative",
+              marginBottom: 16,
+              overflow: "hidden",
+              aspectRatio: "1/1",
+              background: "#181a15",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              boxSizing: "border-box",
+            }}
+          >
             <img
               src={img}
               alt={name}
@@ -112,8 +124,9 @@ export default function ProductCard({
                 objectFit: "cover",
                 filter: hovered ? "grayscale(0%)" : "grayscale(100%)",
                 transition: "filter 0.5s, transform 0.5s ease",
-                transform: hovered ? "scale(1.02)" : "scale(1)",
+                transform: hovered ? "scale(1.04)" : "scale(1)",
               }}
+              loading="lazy"
             />
             {badge && (
               <span
@@ -137,27 +150,29 @@ export default function ProductCard({
             )}
           </div>
 
-          {/* HEADER */}
+          {/* PRODUCT INFO */}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              marginBottom: 12,
               position: "relative",
               zIndex: 2,
+              width: "100%",
+              boxSizing: "border-box",
             }}
           >
             <h4
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: 600,
-                letterSpacing: 1,
+                letterSpacing: 0.5,
                 color: "#fff",
                 margin: 0,
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
+                width: "100%",
               }}
               title={name}
             >
@@ -177,7 +192,7 @@ export default function ProductCard({
             >
               {subheadingText}
             </div>
-            
+
             {/* PRICE */}
             <div
               style={{
@@ -186,13 +201,12 @@ export default function ProductCard({
                 fontSize: 18,
                 fontWeight: 700,
                 marginTop: 4,
-                marginBottom: 12,
+                marginBottom: 8,
               }}
             >
-              रू {productPrice.toLocaleString("en-IN")}
+              रू {productPrice ? productPrice.toLocaleString("en-IN") : "4,500"}
             </div>
           </div>
-
         </div>
 
         {/* BUTTON */}
@@ -200,15 +214,19 @@ export default function ProductCard({
           onClick={handleAddToCart}
           style={{
             width: "100%",
-            padding: 12,
+            boxSizing: "border-box",
+            padding: "12px 16px",
             background: hovered ? colors.secondary : "transparent",
             border: `1px solid ${colors.secondary}`,
             color: hovered ? "#111" : colors.secondary,
             fontWeight: 700,
+            fontSize: 13,
             cursor: "pointer",
             transition: "all 0.2s",
             fontFamily: "'Inter', sans-serif",
             letterSpacing: 1,
+            textTransform: "uppercase",
+            whiteSpace: "nowrap",
           }}
         >
           ADD TO CART

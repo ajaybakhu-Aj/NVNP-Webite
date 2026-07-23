@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ProductCard from "../products/ProductCard";
-import { colors } from "../../data/constants";
 import { getAllProducts } from "../../utils/productDb";
 import { useSiteContents } from "../../utils/cmsDb";
 
@@ -13,72 +12,25 @@ export default function ProductsSection() {
   useEffect(() => {
     getAllProducts().then((data) => {
       // Show first 6 products in the featured section
-      setProductsList(data.slice(0, 6));
+      setProductsList(data ? data.slice(0, 6) : []);
       setLoading(false);
     });
   }, []);
 
   return (
-    <section
-      style={{
-        padding: "80px 0",
-        background: colors.surfaceContainerLow,
-      }}
-    >
-      <div
-        style={{
-          maxWidth: 1280,
-          margin: "0 auto",
-          padding: "0 24px",
-          width: "100%",
-          boxSizing: "border-box",
-        }}
-      >
+    <section className="py-12 md:py-20 bg-[var(--nv-surfLow,#0c0f07)] border-t border-b border-[#434938] w-full overflow-hidden">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 w-full box-border">
         {/* HEADER */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
-            gap: "24px",
-            marginBottom: 48,
-            flexWrap: "wrap",
-          }}
-        >
-          <div
-            style={{
-              flex: 1,
-              minWidth: "240px",
-            }}
-          >
-            <h2
-              style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "clamp(28px, 5vw, 40px)",
-                fontWeight: 700,
-                letterSpacing: 2,
-                lineHeight: 1.2,
-                wordBreak: "break-word",
-                color: "var(--nv-onSurf)",
-              }}
-            >
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8 sm:mb-12">
+          <div className="flex-1 min-w-0">
+            <h2 className="font-['Space_Grotesk'] text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider text-[var(--nv-onSurf,#e2e4d5)] uppercase break-words">
               {contents.homeProductsTitle || "ELITE SERIES CAMERAS"}
             </h2>
           </div>
 
           <Link
             to="/products"
-            style={{
-              color: colors.secondary,
-              fontFamily: "'Inter', sans-serif",
-              fontWeight: 600,
-              fontSize: 12,
-              letterSpacing: 1,
-              textDecoration: "underline",
-              textUnderlineOffset: 8,
-              whiteSpace: "nowrap",
-              flexShrink: 0,
-            }}
+            className="text-[#94da32] font-semibold text-xs sm:text-sm tracking-wider underline underline-offset-8 hover:text-[#deffa4] transition-colors whitespace-nowrap shrink-0"
           >
             {contents.homeProductsLinkText || "EXPLORE FULL CATALOG →"}
           </Link>
@@ -86,21 +38,13 @@ export default function ProductsSection() {
 
         {/* PRODUCTS GRID */}
         {loading ? (
-          <div style={{ display: "flex", justifyContent: "center", padding: "40px 0", color: colors.secondary }}>
+          <div className="flex justify-center py-12 text-[#94da32] font-mono">
             LOADING SECURE CHANNELS...
           </div>
         ) : (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns:
-                "repeat(auto-fit, minmax(260px, 1fr))",
-              gap: 24,
-              width: "100%",
-            }}
-          >
-            {productsList.map((p) => (
-              <ProductCard key={p.id} {...p} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full box-border">
+            {productsList.map((product) => (
+              <ProductCard key={product.id || product.name} {...product} />
             ))}
           </div>
         )}
