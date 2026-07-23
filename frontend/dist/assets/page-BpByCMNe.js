@@ -1,1 +1,0 @@
-import{a as r}from"./rolldown-runtime-W-g5d7YK.js";import{Q as s,j as a}from"./vendor-Bo24z-lO.js";var c=r(s(),1),e=a();function o(){return(0,e.jsxs)("div",{style:{padding:"40px"},children:[(0,e.jsx)("h1",{children:"DealersSuccessStories Page"}),(0,e.jsx)("p",{children:"Path: src/app/(marketing)/dealers/success-stories/page.jsx"})]})}export{o as default};

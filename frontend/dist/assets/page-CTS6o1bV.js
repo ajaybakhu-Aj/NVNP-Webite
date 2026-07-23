@@ -1,0 +1,1 @@
+import{a as i}from"./rolldown-runtime-W-g5d7YK.js";import{N as a,et as e}from"./vendor-wBY6MeWi.js";var n=i(e(),1),r=a();function o(){return(0,r.jsxs)("div",{style:{padding:"40px"},children:[(0,r.jsx)("h1",{children:"CompanyMission Page"}),(0,r.jsx)("p",{children:"Path: src/app/(marketing)/company/mission/page.jsx"})]})}export{o as default};

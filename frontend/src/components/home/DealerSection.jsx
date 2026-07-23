@@ -9,181 +9,51 @@ export default function DealerSection() {
 
   return (
     <section
+      className="relative w-full py-16 md:py-24 overflow-hidden border-t border-b border-[#434938]"
       style={{
-        position: "relative",
-
-        background: colors.secondary,
-
-        padding: "80px 0",
-
-        overflow: "hidden",
-
-        width: "100%",
+        background: colors.secondary || "#94da32",
       }}
     >
-      {/* BACKGROUND TEXT */}
+      {/* HIGH VISIBILITY BACKGROUND WATERMARK TEXT */}
       <div
-        style={{
-          position: "absolute",
-
-          inset: 0,
-
-          display: "flex",
-
-          alignItems: "center",
-
-          justifyContent: "center",
-
-          opacity: 0.1,
-
-          pointerEvents: "none",
-
-          overflow: "hidden",
-        }}
+        className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden select-none"
+        style={{ opacity: 0.28 }}
       >
         <span
+          className="font-['Space_Grotesk'] font-extrabold text-[clamp(90px,25vw,340px)] tracking-tighter uppercase whitespace-nowrap leading-none"
           style={{
-            fontFamily: "'Space Grotesk', sans-serif",
-
-            fontSize: "clamp(80px, 25vw, 320px)",
-
-            fontWeight: 700,
-
-            color: "white",
-
-            lineHeight: 1,
-
-            whiteSpace: "nowrap",
-
-            userSelect: "none",
+            color: "#000000",
+            WebkitTextStroke: "2px rgba(0,0,0,0.5)",
           }}
         >
           {contents.expandNetworkBgText || "DEALER"}
         </span>
       </div>
 
-      {/* CONTENT */}
-      <div
-        style={{
-          maxWidth: 1280,
-
-          margin: "0 auto",
-
-          padding: "0 24px",
-
-          position: "relative",
-
-          zIndex: 10,
-
-          textAlign: "center",
-
-          width: "100%",
-
-          boxSizing: "border-box",
-        }}
-      >
-        <h2
-          style={{
-            fontFamily: "'Space Grotesk', sans-serif",
-
-            fontSize: "clamp(32px, 7vw, 64px)",
-
-            fontWeight: 700,
-
-            letterSpacing: "-2px",
-
-            color: "black",
-
-            marginBottom: 24,
-
-            lineHeight: 1.1,
-
-            wordBreak: "break-word",
-          }}
-        >
-          {homeSettings.cta?.heading || contents.expandNetworkTitle || "EXPAND THE NETWORK"}
+      {/* MAIN CONTENT */}
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 relative z-10 text-center w-full box-border">
+        <h2 className="font-['Space_Grotesk'] text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#111111] mb-4 leading-tight uppercase">
+          {contents.expandNetworkTitle || "EXPAND THE NETWORK"}
         </h2>
 
-        <p
-          style={{
-            color: colors.onSecondaryContainer,
-
-            fontSize: "clamp(15px, 2vw, 18px)",
-
-            lineHeight: 1.6,
-
-            maxWidth: 672,
-
-            margin: "0 auto 48px",
-
-            fontWeight: 700,
-
-            wordBreak: "break-word",
-          }}
-        >
-          {homeSettings.cta?.subheading || contents.expandNetworkDesc ||
-            "Join the elite force of NightVision security providers across Nepal. We provide the gear, the training, and the authority."}
+        <p className="max-w-[640px] mx-auto text-sm sm:text-base md:text-lg font-medium text-[#1a2300] mb-8 leading-relaxed">
+          {contents.expandNetworkSubtitle || "Join Nepal's premier surveillance ecosystem. Partner with NightVision to distribute high-tier AI cameras, thermal systems, and perimeter hardware across all 7 provinces."}
         </p>
 
-        {homeSettings.cta?.body_text && (
-          <p
-            style={{
-              color: colors.onSecondaryContainer,
-              fontSize: "14px",
-              lineHeight: 1.6,
-              opacity: 0.8,
-              maxWidth: 672,
-              margin: "-32px auto 48px",
-              wordBreak: "break-word",
-            }}
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+          <Link
+            to="/dealership"
+            className="w-full sm:w-auto px-8 py-4 bg-[#111111] text-[#94da32] font-bold text-xs sm:text-sm tracking-widest uppercase rounded-full no-underline hover:bg-[#233600] hover:text-[#ffffff] transition-all shadow-lg shadow-[rgba(0,0,0,0.3)] text-center"
           >
-            {homeSettings.cta.body_text}
-          </p>
-        )}
-
-        <Link
-          to={homeSettings.cta?.button_url || "/apply-dealers"}
-          style={{
-            background: "black",
-
-            color: colors.secondary,
-
-            padding: "clamp(16px, 3vw, 24px) clamp(28px, 8vw, 80px)",
-
-            fontFamily: "'Space Grotesk', sans-serif",
-
-            fontWeight: 700,
-
-            fontSize: "clamp(16px, 3vw, 24px)",
-
-            border: "none",
-
-            cursor: "pointer",
-
-            transition: "transform 0.2s",
-
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-
-            width: "100%",
-
-            maxWidth: "420px",
-
-            boxSizing: "border-box",
-
-            lineHeight: 1.2,
-            textDecoration: "none",
-          }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.transform = "scale(1.05)")
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.transform = "scale(1)")
-          }
-        >
-          {homeSettings.cta?.button_text || contents.expandNetworkBtn || "BECOME A PARTNER"}
-        </Link>
+            BECOME A CERTIFIED DEALER
+          </Link>
+          <Link
+            to="/contact"
+            className="w-full sm:w-auto px-8 py-4 bg-transparent border-2 border-[#111111] text-[#111111] font-bold text-xs sm:text-sm tracking-widest uppercase rounded-full no-underline hover:bg-[#111111] hover:text-[#94da32] transition-all text-center"
+          >
+            CONTACT PARTNER TEAM
+          </Link>
+        </div>
       </div>
     </section>
   );

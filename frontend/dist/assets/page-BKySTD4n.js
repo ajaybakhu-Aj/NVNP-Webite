@@ -1,0 +1,1 @@
+import{a}from"./rolldown-runtime-W-g5d7YK.js";import{N as r,et as i}from"./vendor-wBY6MeWi.js";var s=a(i(),1),t=r();function c(){return(0,t.jsxs)("div",{style:{padding:"40px"},children:[(0,t.jsx)("h1",{children:"CctvInstallationChitwan Page"}),(0,t.jsx)("p",{children:"Path: src/app/(marketing)/cctv-installation/chitwan/page.jsx"})]})}export{c as default};

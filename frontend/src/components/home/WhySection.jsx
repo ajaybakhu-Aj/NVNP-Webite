@@ -141,18 +141,7 @@ export default function WhySection() {
             width: "100%",
           }}
         >
-          <span
-            style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: 12,
-              fontWeight: 700,
-              letterSpacing: 3,
-              textTransform: "uppercase",
-              color: "var(--nv-text-accent)",
-            }}
-          >
-            {contents.whyTag || "The NightVision Edge"}
-          </span>
+
 
           <h2
             style={{

@@ -185,37 +185,9 @@ export default function FounderSection() {
             {contents.homeFounderDesc || "Founder Rozil Thapa started NightVision with a singular mission: to provide the people of Nepal with security technology that rivals the global elite, without compromise."}
           </p>
 
-          <Link to="/founder">
-            <button
-              style={{
-                background: colors.primaryContainer,
-
-                color: colors.onPrimaryContainer,
-
-                padding: "18px 32px",
-
-                fontFamily: "'Inter', sans-serif",
-
-                fontWeight: 600,
-
-                fontSize: 12,
-
-                letterSpacing: 1,
-
-                border: "none",
-
-                cursor: "pointer",
-
-                width: "100%",
-
-                maxWidth: "320px",
-
-                transition: "0.3s",
-
-                boxSizing: "border-box",
-              }}
-            >
-              READ THE FULL STORY
+          <Link to="/founder" className="no-underline inline-block w-full sm:w-auto">
+            <button className="hero-btn-1 flex items-center justify-center gap-2 border-none font-extrabold tracking-[2px] uppercase cursor-pointer text-[13px] md:text-[14px] w-full sm:w-auto transition-all duration-300 rounded-full">
+              READ THE FULL STORY →
             </button>
           </Link>
         </div>

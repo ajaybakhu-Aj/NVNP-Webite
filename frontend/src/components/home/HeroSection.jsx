@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { colors } from "../../data/constants";
 import { useSiteContents, useHomepageSettings } from "../../utils/cmsDb";
@@ -6,6 +6,28 @@ import { useSiteContents, useHomepageSettings } from "../../utils/cmsDb";
 function HeroSection() {
     const contents = useSiteContents();
     const homeSettings = useHomepageSettings();
+
+    // Available feeds for REC tag randomizer
+    const feeds = homeSettings.hero?.recordings || [
+        "CAM-01: KATHMANDU HQ",
+        "CAM-02: BIRATNAGAR GRID",
+        "CAM-03: POKHARA LOGISTICS",
+        "CAM-04: LUMBINI HUB",
+        "CAM-05: JANAKPUR PERIMETER",
+    ];
+
+    const [feedIndex, setFeedIndex] = useState(0);
+
+    // Randomize recording feed tag every 3 minutes (180,000 ms)
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setFeedIndex((prev) => (prev + 1) % feeds.length);
+        }, 180000);
+        return () => clearInterval(interval);
+    }, [feeds.length]);
+
+    // Stable fixed heading text
+    const stableHeading = homeSettings.hero?.heading || contents.heroTitle || "ADVANCED SURVEILLANCE & SECURITY SYSTEMS";
 
     return (
         <section
@@ -41,16 +63,16 @@ function HeroSection() {
                     />
                 ))}
 
-                {/* REC */}
+                {/* DYNAMIC RANDOMIZED REC TAG */}
                 <div
-                    className="absolute top-[10px] right-[10px] md:top-[16px] md:right-[16px] flex items-center gap-[8px] text-[10px] md:text-[12px] font-bold tracking-[2px] px-[10px] py-[6px] md:px-[14px] md:py-[8px] border backdrop-blur-[8px]"
+                    className="absolute top-[10px] right-[10px] md:top-[16px] md:right-[16px] flex items-center gap-[8px] text-[10px] md:text-[12px] font-bold tracking-[2px] px-[10px] py-[6px] md:px-[14px] md:py-[8px] border backdrop-blur-[8px] transition-all duration-500"
                     style={{ background: 'var(--nv-surfCont)', borderColor: colors.outlineVariant, color: colors.onSurface }}
                 >
                     <span
                         className="w-[8px] h-[8px] rounded-full bg-[#ff2d2d]"
                         style={{ animation: "recordingPulse 1s infinite" }}
                     />
-                    REC
+                    REC — {feeds[feedIndex]}
                 </div>
             </div>
 
@@ -98,14 +120,13 @@ function HeroSection() {
                         LIVE SURVEILLANCE ACTIVE
                     </div>
 
-                    {/* TITLE */}
+                    {/* STABLE H1 HEADING */}
                     <h1
                         className="font-bold text-[26px] sm:text-[34px] md:text-[clamp(52px,6vw,78px)] leading-[1.15] tracking-[-1px] md:tracking-[-3px]"
                         style={{ fontFamily: "'Space Grotesk', sans-serif", color: colors.onSurface }}
                     >
                         {(() => {
-                            const title = homeSettings.hero?.heading || contents.heroTitle || "ADVANCED SURVEILLANCE FOR PEACE OF MIND";
-                            const parts = title.split(/(SURVEILLANCE)/i);
+                            const parts = stableHeading.split(/(SURVEILLANCE)/i);
                             return parts.map((part, i) => {
                                 if (part.toLowerCase() === "surveillance") {
                                     return (
@@ -140,7 +161,7 @@ function HeroSection() {
                             to={homeSettings.hero?.button_url || "/product"}
                             className="hero-btn-1 flex justify-center items-center border-none font-extrabold tracking-[2px] uppercase no-underline text-center text-[13px] md:text-[15px] w-full sm:w-auto box-border transition-all duration-300 rounded-full"
                         >
-                            {homeSettings.hero?.button_text || ((!contents.heroBtnText || contents.heroBtnText.toLowerCase().includes("cctv")) ? "VIEW OUR PRODUCTS" : contents.heroBtnText)}
+                            {homeSettings.hero?.button_text || "VIEW OUR PRODUCTS"}
                         </Link>
 
                         <button
@@ -174,7 +195,7 @@ function HeroSection() {
           .hero-btn-1 {
             background: ${colors.secondary};
             color: #111;
-            box-shadow: 0 4px 16px rgba(148,218,50,0.2);
+            box-shadow: 0 4px 16px rgba(148,218,50,0.25);
             padding: 14px 28px;
           }
           @media (min-width: 768px) {

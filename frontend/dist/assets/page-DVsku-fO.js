@@ -1,1 +1,0 @@
-import{a as t}from"./rolldown-runtime-W-g5d7YK.js";import{Q as i,j as e}from"./vendor-Bo24z-lO.js";var o=t(i(),1),r=e();function p(){return(0,r.jsxs)("div",{style:{padding:"40px"},children:[(0,r.jsx)("h1",{children:"SolutionsHospitalSecurity Page"}),(0,r.jsx)("p",{children:"Path: src/app/(marketing)/solutions/hospital-security/page.jsx"})]})}export{p as default};

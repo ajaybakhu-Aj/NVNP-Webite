@@ -1,0 +1,1 @@
+import{a as e}from"./rolldown-runtime-W-g5d7YK.js";import{N as t,et as i}from"./vendor-wBY6MeWi.js";var a=e(i(),1),r=t();function n(){return(0,r.jsxs)("div",{style:{padding:"40px"},children:[(0,r.jsx)("h1",{children:"SolutionsHomeSecurity Page"}),(0,r.jsx)("p",{children:"Path: src/app/(marketing)/solutions/home-security/page.jsx"})]})}export{n as default};
