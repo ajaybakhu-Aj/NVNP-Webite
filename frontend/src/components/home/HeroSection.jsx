@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Icon from "../../utils/Icon";
 import { colors } from "../../data/constants";
 import { useSiteContents, useHomepageSettings } from "../../utils/cmsDb";
 
@@ -10,7 +9,7 @@ function HeroSection() {
 
     return (
         <section
-            className="relative w-full flex flex-col md:justify-center md:items-center pt-[80px] pb-[60px] md:py-0 md:min-h-[85vh]"
+            className="relative w-full flex flex-col justify-center items-center py-10 sm:py-14 md:py-16 lg:py-20 lg:min-h-[85vh] overflow-hidden"
             style={{
                 borderBottom: `1px solid ${colors.outlineVariant}`,
                 background: colors.background,
@@ -37,18 +36,18 @@ function HeroSection() {
                 ].map((corner, index) => (
                     <div
                         key={index}
-                        className={`absolute w-[40px] h-[40px] md:w-[70px] md:h-[70px] ${corner.className}`}
+                        className={`absolute w-[30px] h-[30px] sm:w-[40px] sm:h-[40px] md:w-[60px] md:h-[60px] ${corner.className}`}
                         style={{ borderColor: colors.secondary }}
                     />
                 ))}
 
                 {/* REC */}
                 <div
-                    className="absolute top-[10px] right-[10px] md:top-[16px] md:right-[16px] flex items-center gap-[8px] text-[10px] md:text-[12px] font-bold tracking-[2px] px-[10px] py-[6px] md:px-[14px] md:py-[8px] border backdrop-blur-[8px]"
+                    className="absolute top-[10px] right-[10px] sm:top-[14px] sm:right-[14px] md:top-[16px] md:right-[16px] flex items-center gap-[6px] sm:gap-[8px] text-[10px] sm:text-[11px] md:text-[12px] font-bold tracking-[2px] px-[8px] py-[4px] sm:px-[12px] sm:py-[6px] md:px-[14px] md:py-[8px] border backdrop-blur-[8px] rounded-sm"
                     style={{ background: 'var(--nv-surfCont)', borderColor: colors.outlineVariant, color: colors.onSurface }}
                 >
                     <span
-                        className="w-[8px] h-[8px] rounded-full bg-[#ff2d2d]"
+                        className="w-[7px] h-[7px] sm:w-[8px] sm:h-[8px] rounded-full bg-[#ff2d2d]"
                         style={{ animation: "recordingPulse 1s infinite" }}
                     />
                     REC
@@ -56,13 +55,14 @@ function HeroSection() {
             </div>
 
             {/* MAIN CONTENT */}
-            <div className="max-w-[1280px] mx-auto px-[20px] md:px-[24px] w-full flex flex-col lg:flex-row-reverse gap-[50px] md:gap-[80px] items-center relative z-10">
-                {/* RIGHT VISUAL (IMAGE FIRST IN DOM FOR MOBILE TOP) */}
+            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 w-full flex flex-col lg:flex-row-reverse gap-8 sm:gap-10 md:gap-14 lg:gap-16 items-center relative z-10">
+                
+                {/* VISUAL IMAGE (FIRST IN DOM FOR MOBILE TOP) */}
                 <div className="flex justify-center items-center relative w-full lg:w-1/2">
-                    <div className="relative w-full h-[280px] min-[480px]:h-[440px] md:h-[560px] lg:h-[680px] flex justify-center items-end overflow-hidden">
+                    <div className="relative w-full h-[240px] sm:h-[340px] md:h-[460px] lg:h-[600px] flex justify-center items-end overflow-hidden">
                         {/* GREEN HALO GLOW */}
                         <div
-                            className="absolute left-1/2 -translate-x-1/2 rounded-full bottom-[40px] md:bottom-[80px] w-[280px] md:w-[600px] h-[280px] md:h-[600px] z-[1] blur-[60px]"
+                            className="absolute left-1/2 -translate-x-1/2 rounded-full bottom-[20px] sm:bottom-[40px] md:bottom-[60px] w-[220px] sm:w-[380px] md:w-[500px] h-[220px] sm:h-[380px] md:h-[500px] z-[1] blur-[50px] sm:blur-[60px]"
                             style={{
                                 background: "radial-gradient(circle, rgba(148,218,50,0.50) 0%, rgba(148,218,50,0.16) 35%, rgba(148,218,50,0) 75%)",
                             }}
@@ -72,26 +72,20 @@ function HeroSection() {
                         <img
                             src={homeSettings.hero?.image_url || contents.heroImage || "/hero_pointing_cctv.png"}
                             alt="Hero"
-                            className="relative z-[2] w-auto max-w-full object-contain object-bottom translate-y-[10px] md:translate-y-[20px] max-h-[260px] min-[480px]:max-h-[420px] md:max-h-[550px] lg:max-h-[760px]"
+                            className="relative z-[2] w-auto max-w-full object-contain object-bottom max-h-[230px] sm:max-h-[330px] md:max-h-[450px] lg:max-h-[660px]"
                             style={{
                                 filter: `drop-shadow(0 15px 40px rgba(0,0,0,0.45)) drop-shadow(0 0 30px rgba(148,218,50,0.30))`,
                             }}
                         />
-
-                        {/* TRUSTED LEADERSHIP CARD */}
-                        <div
-                            className="absolute z-[15] text-left flex flex-col items-start py-[12px] px-[16px] backdrop-blur-[12px] border border-l-[3px] top-[20px] md:top-[60px] right-[10px] md:right-[20px]"
-                            style={{ background: 'var(--nv-surfCont)', borderLeftColor: colors.secondary, borderColor: colors.outlineVariant }}
-                        >
-                        </div>
                     </div>
                 </div>
 
-                {/* LEFT SIDE (TEXT SECOND IN DOM FOR MOBILE BOTTOM) */}
-                <div className="flex flex-col gap-[20px] md:gap-[28px] text-center lg:text-left items-center lg:items-start w-full lg:w-1/2">
-                    {/* STATUS */}
+                {/* TEXT CONTENT (SECOND IN DOM FOR MOBILE BOTTOM) */}
+                <div className="flex flex-col gap-4 sm:gap-5 md:gap-6 text-center lg:text-left items-center lg:items-start w-full lg:w-1/2">
+                    
+                    {/* STATUS BADGE */}
                     <div
-                        className="inline-flex items-center gap-[8px] border px-[12px] py-[6px] md:px-[14px] md:py-[8px] w-fit text-[10px] md:text-[12px] font-bold tracking-[2px] backdrop-blur-[8px]"
+                        className="inline-flex items-center gap-[8px] border px-[10px] py-[5px] sm:px-[12px] sm:py-[6px] md:px-[14px] md:py-[8px] w-fit text-[10px] sm:text-[11px] md:text-[12px] font-bold tracking-[2px] backdrop-blur-[8px] rounded-sm"
                         style={{
                             background: 'var(--nv-surfCont)',
                             color: colors.secondary,
@@ -99,7 +93,7 @@ function HeroSection() {
                         }}
                     >
                         <span
-                            className="w-[8px] h-[8px] rounded-full bg-[#ff2d2d]"
+                            className="w-[7px] h-[7px] sm:w-[8px] sm:h-[8px] rounded-full bg-[#ff2d2d]"
                             style={{ animation: "recordingPulse 1s infinite" }}
                         />
                         LIVE SURVEILLANCE ACTIVE
@@ -107,7 +101,7 @@ function HeroSection() {
 
                     {/* TITLE */}
                     <h1
-                        className="font-bold text-[34px] min-[480px]:text-[44px] md:text-[clamp(52px,6vw,78px)] leading-[1] tracking-[-1px] md:tracking-[-3px]"
+                        className="font-bold text-[clamp(26px,6.5vw,40px)] sm:text-[38px] md:text-[clamp(48px,5.5vw,72px)] leading-[1.1] tracking-[-1px] md:tracking-[-2px]"
                         style={{ fontFamily: "'Space Grotesk', sans-serif", color: colors.onSurface }}
                     >
                         {(() => {
@@ -134,7 +128,7 @@ function HeroSection() {
 
                     {/* DESCRIPTION */}
                     <div
-                        className="max-w-[600px] opacity-70 text-[14px] md:text-[16px] leading-[1.8] hero-description-content"
+                        className="max-w-[600px] opacity-80 text-[13px] sm:text-[15px] md:text-[16px] leading-[1.7] hero-description-content"
                         style={{ color: colors.onSurfaceVariant }}
                         dangerouslySetInnerHTML={{
                             __html: homeSettings.hero?.subheading || contents.heroSubtitle || "Smart AI-powered surveillance systems engineered for continuous monitoring, encrypted live streaming, and real-time security response."
@@ -142,10 +136,10 @@ function HeroSection() {
                     />
 
                     {/* BUTTONS */}
-                    <div className="flex flex-col min-[480px]:flex-row w-full min-[480px]:w-auto gap-[20px] mt-[40px] md:mt-[48px] relative z-20">
+                    <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-3 sm:gap-4 mt-4 sm:mt-6 md:mt-8 relative z-20">
                         <Link
                             to={homeSettings.hero?.button_url || "/product"}
-                            className="hero-btn-1 flex justify-center items-center border-none font-extrabold tracking-[2px] uppercase no-underline text-center text-[13px] md:text-[15px] w-full min-[480px]:w-auto box-border transition-all duration-300 rounded-full"
+                            className="hero-btn-1 flex justify-center items-center border-none font-extrabold tracking-[2px] uppercase no-underline text-center text-[12px] sm:text-[13px] md:text-[15px] w-full sm:w-auto box-border transition-all duration-300 rounded-full py-3.5 px-7 md:py-4 md:px-8"
                         >
                             {homeSettings.hero?.button_text || ((!contents.heroBtnText || contents.heroBtnText.toLowerCase().includes("cctv")) ? "VIEW OUR PRODUCTS" : contents.heroBtnText)}
                         </Link>
@@ -157,7 +151,7 @@ function HeroSection() {
                                     el.scrollIntoView({ behavior: "smooth" });
                                 }
                             }}
-                            className="hero-btn-2 flex justify-center items-center font-extrabold tracking-[2px] uppercase cursor-pointer text-[13px] md:text-[15px] w-full min-[480px]:w-auto box-border transition-all duration-300 rounded-full"
+                            className="hero-btn-2 flex justify-center items-center font-extrabold tracking-[2px] uppercase cursor-pointer text-[12px] sm:text-[13px] md:text-[15px] w-full sm:w-auto box-border transition-all duration-300 rounded-full py-3.5 px-7 md:py-4 md:px-8"
                         >
                             {contents.heroBtn2Text || "Features"}
                         </button>
@@ -172,7 +166,7 @@ function HeroSection() {
             0% { transform: translateY(0); opacity: 0; }
             5% { opacity: 1; }
             95% { opacity: 1; }
-            100% { transform: translateY(calc(100vh - 40px)); opacity: 0; }
+            100% { transform: translateY(calc(100% - 4px)); opacity: 0; }
           }
           @keyframes recordingPulse {
             0%, 100% { opacity: 1; transform: scale(1); }
@@ -182,12 +176,6 @@ function HeroSection() {
             background: ${colors.secondary};
             color: #111;
             box-shadow: 0 4px 16px rgba(148,218,50,0.2);
-            padding: 14px 28px;
-          }
-          @media (min-width: 768px) {
-            .hero-btn-1, .hero-btn-2 {
-              padding: 16px 32px !important;
-            }
           }
           .hero-btn-1:hover {
             transform: translateY(-4px) scale(1.02);
@@ -199,7 +187,6 @@ function HeroSection() {
             color: ${colors.secondary};
             border: 2px solid ${colors.secondary};
             backdrop-filter: blur(4px);
-            padding: 14px 28px;
           }
           .hero-btn-2:hover {
             background: ${colors.secondary};

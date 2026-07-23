@@ -1,1 +1,0 @@
-import{a as e}from"./rolldown-runtime-W-g5d7YK.js";import{F as a,nt as t}from"./vendor-DVxM7Xps.js";var n=e(t(),1),r=a();function p(){return(0,r.jsxs)("div",{style:{padding:"40px"},children:[(0,r.jsx)("h1",{children:"CompanyCareers Page"}),(0,r.jsx)("p",{children:"Path: src/app/(marketing)/company/careers/page.jsx"})]})}export{p as default};

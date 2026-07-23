@@ -1,0 +1,1 @@
+import{a as e}from"./rolldown-runtime-W-g5d7YK.js";import{$ as t,M as i}from"./vendor-DkTdAExx.js";var a=e(t(),1),r=i();function c(){return(0,r.jsxs)("div",{style:{padding:"40px"},children:[(0,r.jsx)("h1",{children:"SolutionsSchoolSecurity Page"}),(0,r.jsx)("p",{children:"Path: src/app/(marketing)/solutions/school-security/page.jsx"})]})}export{c as default};

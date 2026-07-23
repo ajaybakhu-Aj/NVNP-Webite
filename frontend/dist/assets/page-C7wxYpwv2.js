@@ -1,0 +1,1 @@
+import{a}from"./rolldown-runtime-W-g5d7YK.js";import{$ as e,M as t}from"./vendor-DkTdAExx.js";var i=a(e(),1),r=t();function n(){return(0,r.jsxs)("div",{style:{padding:"40px"},children:[(0,r.jsx)("h1",{children:"SupportManuals Page"}),(0,r.jsx)("p",{children:"Path: src/app/(marketing)/support/manuals/page.jsx"})]})}export{n as default};

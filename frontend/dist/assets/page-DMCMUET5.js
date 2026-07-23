@@ -1,0 +1,1 @@
+import{a as e}from"./rolldown-runtime-W-g5d7YK.js";import{$ as t,M as i}from"./vendor-DkTdAExx.js";var o=e(t(),1),r=i();function u(){return(0,r.jsxs)("div",{style:{padding:"40px"},children:[(0,r.jsx)("h1",{children:"SolutionsWarehouseSecurity Page"}),(0,r.jsx)("p",{children:"Path: src/app/(marketing)/solutions/warehouse-security/page.jsx"})]})}export{u as default};
