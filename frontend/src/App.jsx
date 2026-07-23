@@ -172,7 +172,7 @@ function GlobalSocialSidebar() {
         className="global-social-btn btn-facebook"
         title="Facebook"
       >
-        <Icon name="facebook" size={18} />
+        <Icon name="facebook" size={13} />
       </a>
       <a
         href={instagram}
@@ -181,7 +181,7 @@ function GlobalSocialSidebar() {
         className="global-social-btn btn-instagram"
         title="Instagram"
       >
-        <Icon name="instagram" size={18} />
+        <Icon name="instagram" size={13} />
       </a>
       <a
         href={linkedin}
@@ -190,7 +190,7 @@ function GlobalSocialSidebar() {
         className="global-social-btn btn-linkedin"
         title="LinkedIn"
       >
-        <Icon name="linkedin" size={18} />
+        <Icon name="linkedin" size={13} />
       </a>
       {/* Theme Toggle in middle of sidebar */}
       <ThemeToggle />
@@ -202,7 +202,7 @@ function GlobalSocialSidebar() {
         className="global-social-btn btn-tiktok"
         title="TikTok"
       >
-        <Icon name="tiktok" size={18} />
+        <Icon name="tiktok" size={13} />
       </a>
       <a
         href={x}
@@ -211,7 +211,7 @@ function GlobalSocialSidebar() {
         className="global-social-btn btn-x"
         title="X"
       >
-        <Icon name="x" size={18} />
+        <Icon name="x" size={13} />
       </a>
       <a
         href={youtube}
@@ -220,7 +220,7 @@ function GlobalSocialSidebar() {
         className="global-social-btn btn-youtube"
         title="YouTube"
       >
-        <Icon name="youtube" size={18} />
+        <Icon name="youtube" size={13} />
       </a>
     </div>
   );

@@ -10540,18 +10540,18 @@ a {
   position: fixed;
   right: 0;
   top: calc(50% + 40px);
-  transform: translateY(-50%) translateX(30px);
+  transform: translateY(-50%) translateX(18px);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 7px;
   z-index: 800;
   background: var(--nv-surfCont);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--nv-outlineVar);
   border-right: none;
-  padding: 16px 36px 16px 12px;
-  border-radius: 16px 0 0 16px;
+  padding: 10px 20px 10px 8px;
+  border-radius: 12px 0 0 12px;
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s, box-shadow 0.3s;
   box-shadow: -4px 0 24px rgba(0, 0, 0, 0.5);
 }
@@ -10563,8 +10563,8 @@ a {
 }
 
 .global-social-btn {
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -10573,7 +10573,7 @@ a {
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .global-social-btn:hover {
@@ -10634,10 +10634,21 @@ a {
   box-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
 }
 
-/* Hide on mobile viewports for clean layout */
+/* Compact perfect sizing on mobile viewports */
 @media (max-width: 768px) {
   .global-social-sidebar {
-    display: none;
+    top: 60%;
+    transform: translateY(-50%) translateX(14px);
+    padding: 6px 14px 6px 5px;
+    gap: 5px;
+    border-radius: 10px 0 0 10px;
+  }
+  .global-social-sidebar:hover {
+    transform: translateY(-50%) translateX(0);
+  }
+  .global-social-btn {
+    width: 22px;
+    height: 22px;
   }
 }
 
