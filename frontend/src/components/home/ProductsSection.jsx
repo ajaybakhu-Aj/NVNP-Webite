@@ -44,12 +44,12 @@ export default function ProductsSection() {
   const displayProducts = filteredProducts.length > 0 ? filteredProducts : allProducts.slice(0, 6);
 
   return (
-    <section className="py-12 md:py-20 bg-[var(--nv-surfLow,#0c0f07)] border-t border-b border-[#434938] w-full overflow-hidden">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 w-full box-border">
+    <section className="py-12 md:py-20 bg-[var(--nv-surfLow,#0c0f07)] border-t border-b border-[#434938] w-full overflow-hidden flex flex-col justify-center items-center">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-10 lg:px-12 w-full box-border">
         
         {/* SEGMENTED TAB SWITCHER */}
-        <div className="mb-8 w-full overflow-x-auto scrollbar-none pb-1">
-          <div className="inline-flex gap-2 p-1.5 bg-[#181a15] border border-[#434938] rounded-full max-w-full">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-[#434938] w-full">
+          <div className="inline-flex flex-wrap gap-2 p-1.5 bg-[#181a15] border border-[#434938] rounded-full max-w-full">
             {categories.map((cat) => (
               <button
                 key={cat.id}
@@ -64,22 +64,29 @@ export default function ProductsSection() {
               </button>
             ))}
           </div>
+
+          <Link
+            to="/products"
+            className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 border border-[#94da32] text-[#94da32] hover:bg-[#94da32] hover:text-[#111111] rounded-full font-bold text-xs tracking-wider uppercase transition-all duration-300 shadow-sm shrink-0"
+          >
+            {contents.homeProductsLinkText || "EXPLORE FULL CATALOG →"}
+          </Link>
         </div>
 
         {/* HEADER & SUBTEXT */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8 sm:mb-10">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-8 sm:mb-10 w-full">
           <div className="flex-1 min-w-0">
-            <h2 className="font-['Space_Grotesk'] text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[var(--nv-onSurf,#e2e4d5)] uppercase break-words mb-2">
+            <h2 className="font-['Space_Grotesk'] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-[var(--nv-onSurf,#e2e4d5)] uppercase break-words mb-2 leading-tight">
               {currentCat.name}
             </h2>
-            <p className="text-xs sm:text-sm text-[#c3c9b3] max-w-[650px] leading-relaxed">
+            <p className="text-xs sm:text-sm md:text-base text-[#c3c9b3] max-w-[750px] leading-relaxed">
               {currentCat.subtext}
             </p>
           </div>
 
           <Link
             to="/products"
-            className="text-[#94da32] font-bold text-xs sm:text-sm tracking-wider underline underline-offset-8 hover:text-[#deffa4] transition-all whitespace-nowrap shrink-0 hover:translate-x-1"
+            className="md:hidden inline-flex items-center gap-2 px-5 py-2.5 border border-[#94da32] text-[#94da32] hover:bg-[#94da32] hover:text-[#111111] rounded-full font-bold text-xs tracking-wider uppercase transition-all duration-300 shrink-0"
           >
             {contents.homeProductsLinkText || "EXPLORE FULL CATALOG →"}
           </Link>
@@ -87,11 +94,11 @@ export default function ProductsSection() {
 
         {/* PRODUCTS GRID */}
         {loading ? (
-          <div className="flex justify-center py-12 text-[#94da32] font-mono">
+          <div className="flex justify-center py-16 text-[#94da32] font-mono text-sm tracking-widest uppercase">
             LOADING SECURE CHANNELS...
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full box-border">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full box-border">
             {displayProducts.map((product) => (
               <ProductCard key={product.id || product.name} {...product} />
             ))}
