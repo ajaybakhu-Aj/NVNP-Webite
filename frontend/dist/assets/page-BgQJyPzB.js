@@ -1,0 +1,1 @@
+import{a as r}from"./rolldown-runtime-W-g5d7YK.js";import{Q as a,j as e}from"./vendor-Bo24z-lO.js";var s=r(a(),1),t=e();function o(){return(0,t.jsxs)("div",{style:{padding:"40px"},children:[(0,t.jsx)("h1",{children:"CctvInstallation Page"}),(0,t.jsx)("p",{children:"Path: src/app/(marketing)/cctv-installation/page.jsx"})]})}export{o as default};

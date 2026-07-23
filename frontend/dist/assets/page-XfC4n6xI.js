@@ -1,1 +1,0 @@
-import{a as r}from"./rolldown-runtime-W-g5d7YK.js";import{$ as t,M as i}from"./vendor-DkTdAExx.js";var s=r(t(),1),a=i();function o(){return(0,a.jsxs)("div",{style:{padding:"40px"},children:[(0,a.jsx)("h1",{children:"CctvInstallationBiratnagar Page"}),(0,a.jsx)("p",{children:"Path: src/app/(marketing)/cctv-installation/biratnagar/page.jsx"})]})}export{o as default};

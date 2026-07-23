@@ -1,0 +1,1 @@
+import{a as e}from"./rolldown-runtime-W-g5d7YK.js";import{Q as a,j as i}from"./vendor-Bo24z-lO.js";var s=e(a(),1),r=i();function p(){return(0,r.jsxs)("div",{style:{padding:"40px"},children:[(0,r.jsx)("h1",{children:"DealersTraining Page"}),(0,r.jsx)("p",{children:"Path: src/app/(marketing)/dealers/training/page.jsx"})]})}export{p as default};

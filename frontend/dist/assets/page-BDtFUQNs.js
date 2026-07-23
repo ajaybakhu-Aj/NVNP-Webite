@@ -1,1 +1,0 @@
-import{a}from"./rolldown-runtime-W-g5d7YK.js";import{$ as r,M as e}from"./vendor-DkTdAExx.js";var s=a(r(),1),t=e();function l(){return(0,t.jsxs)("div",{style:{padding:"40px"},children:[(0,t.jsx)("h1",{children:"CctvInstallationButwal Page"}),(0,t.jsx)("p",{children:"Path: src/app/(marketing)/cctv-installation/butwal/page.jsx"})]})}export{l as default};

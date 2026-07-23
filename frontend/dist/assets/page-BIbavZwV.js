@@ -1,0 +1,1 @@
+import{a as r}from"./rolldown-runtime-W-g5d7YK.js";import{Q as a,j as s}from"./vendor-Bo24z-lO.js";var n=r(a(),1),e=s();function m(){return(0,e.jsxs)("div",{style:{padding:"40px"},children:[(0,e.jsx)("h1",{children:"CaseStudiesDynamic Page"}),(0,e.jsx)("p",{children:"Path: src/app/(marketing)/case-studies/[slug]/page.jsx"})]})}export{m as default};

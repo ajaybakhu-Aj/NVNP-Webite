@@ -10,64 +10,70 @@ export default function BlogCard({ article }) {
     : "editorial-team";
 
   return (
-    <article
+    <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`flex flex-col bg-[var(--nv-surfCont,#1e2117)] border transition-all duration-300 relative cursor-pointer ${
-        hovered ? "border-[#deffa4] -translate-y-1" : "border-transparent"
+      className={`flex flex-col h-full bg-[#1e2117] border transition-all duration-300 rounded overflow-hidden w-full box-border ${
+        hovered ? "border-[#94da32] -translate-y-1 shadow-lg shadow-[rgba(148,218,50,0.15)]" : "border-[#434938]"
       }`}
     >
-      <div className="relative aspect-video overflow-hidden">
+      <Link to={`/blog/${article.slug || article.id}`} className="no-underline block relative aspect-video overflow-hidden">
         <img
           src={article.img}
           alt={article.title}
           className={`w-full h-full object-cover transition-all duration-500 ${
-            hovered ? "scale-105 grayscale-0" : "scale-100 grayscale"
+            hovered ? "scale-105 filter-none" : "scale-100 grayscale-[40%]"
           }`}
           loading="lazy"
         />
-      </div>
-
-      <div className="p-6 md:p-7 flex flex-col flex-grow">
-        <div className="mb-3 flex gap-2 flex-wrap">
-          <span className="bg-[#deffa4] text-[#233600] px-2.5 py-1 text-[10px] font-bold tracking-widest uppercase rounded">
-            {article.category || "Thermal Tech"}
+        {article.category && (
+          <span className="absolute top-3 left-3 bg-[#deffa4] text-[#233600] px-2.5 py-1 text-[10px] font-bold tracking-widest uppercase rounded z-10 shadow-sm">
+            {article.category}
           </span>
-          {article.tag && (
-            <span className="bg-[#282b21] text-[#c3c9b3] border border-[#434938] px-2 py-0.5 text-[10px] font-semibold tracking-wider uppercase rounded">
+        )}
+      </Link>
+
+      <div className="p-5 sm:p-6 flex flex-col flex-grow w-full box-border">
+        {article.tag && (
+          <div className="mb-2">
+            <span className="bg-[#282b21] text-[#c3c9b3] border border-[#434938] px-2 py-0.5 text-[10px] font-semibold tracking-wider uppercase rounded inline-block">
               {article.tag}
             </span>
-          )}
-        </div>
+          </div>
+        )}
 
-        <div className="text-[11px] font-semibold tracking-wider uppercase text-[#c3c9b3]/70 mb-3">
-          {article.date} — By{" "}
+        <div className="text-[11px] font-mono tracking-wider uppercase text-[#94da32]/90 mb-2">
+          {article.date} — BY{" "}
           <Link
             to={`/author/${authorSlug}`}
-            onClick={(e) => e.stopPropagation()}
-            className="text-[#94da32] hover:text-[#deffa4] font-bold no-underline transition-colors"
+            className="text-[#94da32] hover:text-[#deffa4] font-bold underline transition-colors"
           >
             {article.author}
           </Link>
         </div>
 
-        <h3
-          className={`text-base md:text-lg font-semibold leading-snug mb-3 transition-colors ${
-            hovered ? "text-[#deffa4]" : "text-[var(--nv-onSurf,#e2e4d5)]"
-          }`}
-        >
-          {article.title}
-        </h3>
+        <Link to={`/blog/${article.slug || article.id}`} className="no-underline">
+          <h3
+            className={`text-base sm:text-lg font-bold font-['Space_Grotesk'] leading-snug mb-3 transition-colors line-clamp-2 ${
+              hovered ? "text-[#deffa4]" : "text-[#e2e4d5]"
+            }`}
+          >
+            {article.title}
+          </h3>
+        </Link>
 
-        <p className="text-sm leading-relaxed text-[#c3c9b3] mb-6 line-clamp-3">
+        <p className="text-xs sm:text-sm leading-relaxed text-[#c3c9b3] mb-5 line-clamp-3">
           {article.excerpt}
         </p>
 
-        <div className="mt-auto flex items-center gap-2 text-[#94da32] font-semibold text-[11px] tracking-widest uppercase">
-          <span>Read Full Article</span>
+        <Link
+          to={`/blog/${article.slug || article.id}`}
+          className="mt-auto flex items-center gap-2 text-[#94da32] font-bold text-[11px] tracking-widest uppercase no-underline hover:text-[#deffa4]"
+        >
+          <span>READ FULL INTEL</span>
           <ArrowRight size={14} className={`transition-transform ${hovered ? "translate-x-1" : ""}`} />
-        </div>
+        </Link>
       </div>
-    </article>
+    </div>
   );
 }
