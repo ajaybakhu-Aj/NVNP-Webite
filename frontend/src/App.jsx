@@ -228,6 +228,7 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/product/:slug" element={<ProductSlug />} />
+        <Route path="/products/:slug" element={<ProductSlug />} />
         <Route path="/cctv-setup" element={<CctvSetupPage />} />
         <Route path="/dealer/nanotek" element={<NanoTek />} />
         <Route path="/dealer/whitepearl" element={<WhitePearl />} />

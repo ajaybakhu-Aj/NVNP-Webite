@@ -73,12 +73,7 @@ class LegacyRedirectMiddleware:
         if normalized_path in hardcoded_redirects:
             return HttpResponsePermanentRedirect(hardcoded_redirects[normalized_path])
 
-        # 2. Regex pattern router (/product/[slug]/ -> /products/[slug]/)
-        product_regex = re.compile(r'^/product/([a-zA-Z0-9_-]+)/?$')
-        match = product_regex.match(path)
-        if match:
-            slug = match.group(1)
-            return HttpResponsePermanentRedirect(f"/products/{slug}/")
+        # 2. Hardcoded legacy redirect handlers (product route normalization handled in SPA)
 
         # 3. Structural routing of raw blog posts (e.g. /push-notification-features-in-cctv/ -> /blog/push-notification-features-in-cctv/)
         blog_regex = re.compile(r'^/([a-zA-Z0-9_-]+)/?$')
