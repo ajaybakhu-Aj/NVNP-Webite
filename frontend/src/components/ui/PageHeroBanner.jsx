@@ -34,12 +34,12 @@ export default function PageHeroBanner({ title, subtitle, centered = false, chil
       <div
         className="page-hero-banner-container hero-banner-inner"
         style={{
-          maxWidth: 1400,
+          maxWidth: 1200,
           marginLeft: "auto",
           marginRight: "auto",
           width: "100%",
-          paddingLeft: "5%",
-          paddingRight: "5%",
+          paddingLeft: 24,
+          paddingRight: 24,
           boxSizing: "border-box",
           textAlign: centered ? "center" : "left",
           display: "flex",

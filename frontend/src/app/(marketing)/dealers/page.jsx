@@ -343,17 +343,19 @@ export default function NightVisionDealerships() {
           box-sizing: border-box !important;
         }
 
-        /* Standardized Header Guide-Line Alignment */
-        .hero-banner-inner,
+        /* Unified Grid Container (Site-Wide Guide Line) */
+        .dealership-page-container,
+        .dealership-section-inner,
         .dealers-section-inner,
+        .hero-banner-inner,
         .directory-header-wrapper {
-          max-width: 1400px !important;
+          max-width: 1200px !important;
+          width: 100% !important;
           margin-left: auto !important;
           margin-right: auto !important;
-          padding-left: 5% !important;
-          padding-right: 5% !important;
+          padding-left: 24px !important;
+          padding-right: 24px !important;
           box-sizing: border-box !important;
-          width: 100% !important;
         }
 
         /* Hero Banner Buttons */
