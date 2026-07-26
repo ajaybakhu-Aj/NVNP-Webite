@@ -14,7 +14,10 @@ export default function ProductsSection() {
   const [allProducts, setAllProducts] = useState([]);
   const [activeTab, setActiveTab] = useState("elite");
   const [loading, setLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const carouselRef = useRef(null);
+  const autoSlideTimerRef = useRef(null);
 
   useEffect(() => {
     getAllProducts().then((data) => {
@@ -25,122 +28,188 @@ export default function ProductsSection() {
 
   const selectedCategory = CATEGORY_TABS.find((t) => t.id === activeTab) || CATEGORY_TABS[0];
   const filteredProducts = allProducts.filter(selectedCategory.filter);
-  // Guarantee products list has items, fallback to all if filtered is empty
   const displayProducts = filteredProducts.length > 0 ? filteredProducts : allProducts;
 
-  const scrollLeft = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -320, behavior: "smooth" });
-    }
+  // Calculate items per view based on window width
+  const getItemsPerPage = () => {
+    if (typeof window === "undefined") return 4;
+    if (window.innerWidth < 768) return 1;
+    if (window.innerWidth < 1024) return 2;
+    return 4;
   };
 
-  const scrollRight = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: 320, behavior: "smooth" });
-    }
+  const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage());
+
+  useEffect(() => {
+    const handleResize = () => setItemsPerPage(getItemsPerPage());
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const maxIndex = Math.max(0, displayProducts.length - itemsPerPage);
+
+  // Auto-Slide Logic
+  useEffect(() => {
+    if (isPaused || displayProducts.length <= itemsPerPage) return;
+
+    autoSlideTimerRef.current = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex >= maxIndex ? 0 : prevIndex + 1));
+    }, 3500);
+
+    return () => clearInterval(autoSlideTimerRef.current);
+  }, [isPaused, maxIndex, displayProducts.length, itemsPerPage]);
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+  };
+
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+    setCurrentIndex(0);
   };
 
   return (
     <section
       style={{
-        padding: "60px 0 80px",
-        background: "#0d0e0b",
-        borderTop: `1px solid rgba(148, 218, 50, 0.15)`,
-        borderBottom: `1px solid rgba(148, 218, 50, 0.15)`,
+        padding: "70px 0 90px",
+        background: "#0a0c08",
+        borderTop: "1px solid rgba(148, 218, 50, 0.15)",
+        borderBottom: "1px solid rgba(148, 218, 50, 0.15)",
+        position: "relative",
         overflow: "hidden",
       }}
     >
       <style>
         {`
-          .carousel-container {
-            display: flex;
-            overflow-x: auto;
-            gap: 20px;
-            padding: 8px 4px 24px 4px;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            -webkit-overflow-scrolling: touch;
-            scroll-behavior: smooth;
-          }
-          .carousel-container::-webkit-scrollbar {
-            display: none;
-          }
-          .carousel-card-wrapper {
-            flex: 0 0 calc((100% - 4 * 20px) / 5);
-            min-width: 250px;
-            scroll-snap-align: start;
-            transition: transform 0.3s ease;
-          }
-          @media (max-width: 1280px) {
-            .carousel-card-wrapper {
-              flex: 0 0 calc((100% - 3 * 20px) / 4);
-              min-width: 250px;
-            }
-          }
-          @media (max-width: 1024px) {
-            .carousel-card-wrapper {
-              flex: 0 0 calc((100% - 2 * 20px) / 3);
-              min-width: 240px;
-            }
-          }
-          @media (max-width: 768px) {
-            .carousel-card-wrapper {
-              flex: 0 0 calc((100% - 1 * 16px) / 2);
-              min-width: 220px;
-            }
-          }
-          @media (max-width: 480px) {
-            .carousel-card-wrapper {
-              flex: 0 0 85%;
-              min-width: 210px;
-            }
-          }
-          .category-pill-btn {
-            background: transparent;
-            border: 1px solid #94da32;
-            color: #94da32;
-            padding: 6px 14px;
-            border-radius: 20px;
+          .category-tab-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(148, 218, 50, 0.25);
+            color: #a1a896;
+            padding: 8px 18px;
+            border-radius: 30px;
             font-family: 'Space Grotesk', sans-serif;
             font-size: 11px;
             font-weight: 700;
             letter-spacing: 1px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             white-space: nowrap;
           }
-          .category-pill-btn.active {
+          .category-tab-btn.active {
             background: #94da32;
-            color: #111;
-            box-shadow: 0 0 12px rgba(148, 218, 50, 0.35);
+            color: #0a0c08;
+            border-color: #94da32;
+            box-shadow: 0 0 16px rgba(148, 218, 50, 0.4);
           }
-          .category-pill-btn:hover:not(.active) {
-            background: rgba(148, 218, 50, 0.15);
-          }
-          .carousel-nav-btn {
-            background: #181a15;
-            border: 1px solid #94da32;
+          .category-tab-btn:hover:not(.active) {
+            background: rgba(148, 218, 50, 0.12);
             color: #94da32;
-            width: 36px;
-            height: 36px;
+            border-color: rgba(148, 218, 50, 0.5);
+          }
+          .catalog-link-btn {
+            background: rgba(148, 218, 50, 0.05);
+            border: 1px solid rgba(148, 218, 50, 0.4);
+            color: #94da32;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+          }
+          .catalog-link-btn:hover {
+            background: #94da32;
+            color: #0a0c08;
+            box-shadow: 0 0 20px rgba(148, 218, 50, 0.45);
+          }
+          .nav-chevron-btn {
+            background: rgba(20, 22, 18, 0.8);
+            border: 1px solid rgba(148, 218, 50, 0.4);
+            color: #94da32;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
             user-select: none;
+            font-size: 16px;
           }
-          .carousel-nav-btn:hover {
+          .nav-chevron-btn:hover {
             background: #94da32;
-            color: #111;
-            box-shadow: 0 0 10px rgba(148, 218, 50, 0.4);
+            color: #0a0c08;
+            border-color: #94da32;
+            box-shadow: 0 0 14px rgba(148, 218, 50, 0.45);
+          }
+          .pagination-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0;
+          }
+          .pagination-dot.active {
+            background: #94da32;
+            width: 24px;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(148, 218, 50, 0.5);
+          }
+
+          /* CAROUSEL SLIDER WRAPPER */
+          .carousel-track-viewport {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+            padding: 10px 0 20px 0;
+          }
+          .carousel-track {
+            display: flex;
+            gap: 24px;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            width: 100%;
+          }
+          .carousel-slide-item {
+            flex: 0 0 calc((100% - 3 * 24px) / 4);
+            box-sizing: border-box;
+          }
+
+          @media (max-width: 1200px) {
+            .carousel-slide-item {
+              flex: 0 0 calc((100% - 2 * 20px) / 3);
+            }
+          }
+          @media (max-width: 1024px) {
+            .carousel-slide-item {
+              flex: 0 0 calc((100% - 1 * 20px) / 2);
+            }
+          }
+          @media (max-width: 768px) {
+            .carousel-slide-item {
+              flex: 0 0 82%;
+            }
+            .carousel-track {
+              gap: 16px;
+            }
           }
         `}
       </style>
 
-      {/* INNER ALIGNED CONTAINER */}
+      {/* CONTAINER ALIGNED TO MAIN SITE WIDTH */}
       <div
         style={{
           maxWidth: 1320,
@@ -150,14 +219,14 @@ export default function ProductsSection() {
           boxSizing: "border-box",
         }}
       >
-        {/* TOP CATEGORY PILLS BAR */}
+        {/* TOP ROW: CATEGORY PILL TABS + EXPLORE CATALOG LINK */}
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             gap: 16,
-            marginBottom: 24,
+            marginBottom: 28,
             flexWrap: "wrap",
           }}
         >
@@ -165,29 +234,20 @@ export default function ProductsSection() {
             {CATEGORY_TABS.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`category-pill-btn ${activeTab === tab.id ? "active" : ""}`}
+                onClick={() => handleTabChange(tab.id)}
+                className={`category-tab-btn ${activeTab === tab.id ? "active" : ""}`}
               >
                 {tab.label}
               </button>
             ))}
           </div>
 
-          <Link
-            to="/products"
-            className="category-pill-btn"
-            style={{
-              textDecoration: "none",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-            }}
-          >
-            EXPLORE FULL CATALOG →
+          <Link to="/products" className="catalog-link-btn">
+            EXPLORE FULL CATALOG <span>→</span>
           </Link>
         </div>
 
-        {/* SECTION TITLE & SUBTITLE */}
+        {/* SECTION HEADER TITLE & NAVIGATION ARROWS */}
         <div
           style={{
             display: "flex",
@@ -202,10 +262,10 @@ export default function ProductsSection() {
             <h2
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "clamp(26px, 4vw, 38px)",
-                fontWeight: 700,
+                fontSize: "clamp(26px, 4vw, 40px)",
+                fontWeight: 800,
                 color: "#ffffff",
-                letterSpacing: 1.5,
+                letterSpacing: "1.5px",
                 lineHeight: 1.1,
                 margin: 0,
                 textTransform: "uppercase",
@@ -215,32 +275,32 @@ export default function ProductsSection() {
             </h2>
             <p
               style={{
-                margin: "10px 0 0 0",
-                color: "#8d937f",
-                fontSize: "14px",
+                margin: "12px 0 0 0",
+                color: "#a1a896",
+                fontSize: "15px",
                 fontFamily: "'Inter', sans-serif",
-                maxWidth: "680px",
-                lineHeight: 1.5,
+                maxWidth: "650px",
+                lineHeight: 1.6,
               }}
             >
-              Engineered for high-definition monitoring, extreme low-light clarity, and AI-driven threat detection.
+              Engineered for high-definition monitoring, extreme low-light clarity, and AI-driven thermal threat detection.
             </p>
           </div>
 
-          {/* CAROUSEL CONTROLS */}
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          {/* SLEEK NAVIGATION ARROWS */}
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <button
-              onClick={scrollLeft}
-              className="carousel-nav-btn"
-              title="Scroll Left"
+              onClick={handlePrev}
+              className="nav-chevron-btn"
+              title="Previous Slide"
               aria-label="Previous Products"
             >
               ◀
             </button>
             <button
-              onClick={scrollRight}
-              className="carousel-nav-btn"
-              title="Scroll Right"
+              onClick={handleNext}
+              className="nav-chevron-btn"
+              title="Next Slide"
               aria-label="Next Products"
             >
               ▶
@@ -248,26 +308,62 @@ export default function ProductsSection() {
           </div>
         </div>
 
-        {/* SINGLE LINE PRODUCT CAROUSEL */}
+        {/* CAROUSEL CONTAINER WITH MOUSE PAUSE */}
         {loading ? (
           <div
             style={{
               display: "flex",
               justifyContent: "center",
-              padding: "60px 0",
+              alignItems: "center",
+              height: "280px",
               color: "#94da32",
               fontFamily: "'Space Grotesk', sans-serif",
-              letterSpacing: 1,
+              letterSpacing: "2px",
+              fontSize: "14px",
             }}
           >
-            LOADING SECURE CHANNELS...
+            INITIALIZING SECURE VIDEO FEED...
           </div>
         ) : (
-          <div className="carousel-container" ref={carouselRef}>
-            {displayProducts.map((p) => (
-              <div key={p.id} className="carousel-card-wrapper">
-                <ProductCard {...p} />
-              </div>
+          <div
+            className="carousel-track-viewport"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            ref={carouselRef}
+          >
+            <div
+              className="carousel-track"
+              style={{
+                transform: `translateX(-${currentIndex * (100 / itemsPerPage)}%)`,
+              }}
+            >
+              {displayProducts.map((product) => (
+                <div key={product.id} className="carousel-slide-item">
+                  <ProductCard {...product} />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* PAGINATION DOTS */}
+        {!loading && displayProducts.length > itemsPerPage && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 8,
+              marginTop: 20,
+            }}
+          >
+            {Array.from({ length: maxIndex + 1 }).map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentIndex(idx)}
+                className={`pagination-dot ${currentIndex === idx ? "active" : ""}`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
             ))}
           </div>
         )}

@@ -11,6 +11,7 @@ export default function ProductCard({
   desc,
   badge,
   price,
+  originalPrice,
   cameraMp,
   category,
 }) {
@@ -19,6 +20,7 @@ export default function ProductCard({
   const navigate = useNavigate();
 
   const productPrice = price || 4500;
+  const listPrice = originalPrice || Math.round(productPrice * 1.25);
   const productId = id || (name ? name.toLowerCase().replace(/\s+/g, "-") : "product");
 
   const getSubheading = () => {
@@ -37,7 +39,7 @@ export default function ProductCard({
     if (category === "SD Card") {
       return "Memory Specs: 128GB SD";
     }
-    return "Hardware Accessory";
+    return "Hardware Spec";
   };
   const subheadingText = getSubheading();
 
@@ -72,8 +74,9 @@ export default function ProductCard({
         onMouseLeave={() => setHovered(false)}
         style={{
           position: "relative",
-          background: "#1e2117",
-          border: `1px solid ${hovered ? "#94da32" : "#434938"}`,
+          background: "#141612",
+          borderRadius: "16px",
+          border: `1px solid ${hovered ? "rgba(148, 218, 50, 0.6)" : "rgba(255, 255, 255, 0.08)"}`,
           overflow: "hidden",
           height: "100%",
           display: "flex",
@@ -81,9 +84,9 @@ export default function ProductCard({
           justifyContent: "space-between",
           boxSizing: "border-box",
           width: "100%",
-          transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-          boxShadow: hovered ? "0 8px 24px rgba(148, 218, 50, 0.15)" : "none",
-          transform: hovered ? "translateY(-3px)" : "none",
+          transition: "all 0.35s ease",
+          boxShadow: hovered ? "0 12px 30px rgba(148, 218, 50, 0.18)" : "0 4px 15px rgba(0, 0, 0, 0.3)",
+          transform: hovered ? "translateY(-6px)" : "none",
         }}
       >
         <div style={{ width: "100%", boxSizing: "border-box" }}>
@@ -93,40 +96,40 @@ export default function ProductCard({
               position: "absolute",
               inset: 0,
               background:
-                "repeating-linear-gradient(transparent, transparent 3px, rgba(181,231,93,0.05) 4px)",
+                "repeating-linear-gradient(transparent, transparent 3px, rgba(181,231,93,0.03) 4px)",
               opacity: 0.08,
               pointerEvents: "none",
             }}
           />
 
-          {/* IMAGE CONTAINER WITH UNIFIED FRAMING */}
+          {/* IMAGE CONTAINER WITH UNIFIED 1:1 ASPECT RATIO */}
           <div
             style={{
               position: "relative",
               overflow: "hidden",
-              aspectRatio: "1/1",
-              background: "#0c0f07",
-              borderBottom: "1px solid #434938",
+              aspectRatio: "1 / 1",
+              background: "#1a1d17",
+              borderBottom: "1px solid rgba(255, 255, 255, 0.06)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               width: "100%",
               boxSizing: "border-box",
-              padding: "16px",
+              padding: "20px",
             }}
           >
             <img
               src={img}
               alt={name}
               style={{
-                maxWidth: "100%",
-                maxHeight: "100%",
+                maxWidth: "90%",
+                maxHeight: "90%",
                 width: "auto",
                 height: "auto",
                 objectFit: "contain",
-                filter: hovered ? "grayscale(0%)" : "grayscale(30%)",
-                transition: "all 0.5s ease",
-                transform: hovered ? "scale(1.06)" : "scale(1)",
+                filter: hovered ? "drop-shadow(0 8px 16px rgba(0,0,0,0.4))" : "grayscale(15%)",
+                transition: "all 0.4s ease",
+                transform: hovered ? "scale(1.08)" : "scale(1)",
               }}
               loading="lazy"
             />
@@ -141,12 +144,12 @@ export default function ProductCard({
                   color: "#111111",
                   fontSize: 10,
                   fontWeight: 800,
-                  padding: "4px 8px",
+                  padding: "4px 10px",
                   whiteSpace: "nowrap",
                   textTransform: "uppercase",
                   letterSpacing: "1px",
-                  borderRadius: "2px",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
+                  borderRadius: "20px",
+                  boxShadow: "0 2px 10px rgba(148, 218, 50, 0.4)",
                 }}
               >
                 {badge}
@@ -159,24 +162,47 @@ export default function ProductCard({
             style={{
               display: "flex",
               flexDirection: "column",
-              padding: "16px 16px 12px 16px",
+              padding: "18px 18px 12px 18px",
               position: "relative",
               zIndex: 2,
               width: "100%",
               boxSizing: "border-box",
             }}
           >
+            {/* META TAG BADGE */}
+            <span
+              style={{
+                display: "inline-block",
+                alignSelf: "flex-start",
+                fontSize: 10,
+                color: "#94da32",
+                background: "rgba(148, 218, 50, 0.1)",
+                border: "1px solid rgba(148, 218, 50, 0.25)",
+                padding: "3px 8px",
+                borderRadius: "12px",
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontWeight: 600,
+                marginBottom: 8,
+                letterSpacing: "0.5px",
+              }}
+            >
+              {subheadingText}
+            </span>
+
             <h4
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
                 fontSize: 17,
                 fontWeight: 700,
-                letterSpacing: 0.5,
-                color: hovered ? "#deffa4" : "#ffffff",
+                letterSpacing: 0.3,
+                color: hovered ? "#94da32" : "#ffffff",
                 margin: 0,
-                whiteSpace: "nowrap",
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
                 overflow: "hidden",
-                textOverflow: "ellipsis",
+                height: "44px",
+                lineHeight: "22px",
                 width: "100%",
                 transition: "color 0.2s ease",
               }}
@@ -185,56 +211,64 @@ export default function ProductCard({
               {name}
             </h4>
 
+            {/* PRICING WITH STRUCK THROUGH ORIGINAL PRICE */}
             <div
               style={{
-                fontSize: 12,
-                color: "#94da32",
-                fontFamily: "'Space Grotesk', sans-serif",
-                marginTop: 4,
-                fontWeight: 600,
-                letterSpacing: 0.5,
                 display: "flex",
-                alignItems: "center",
+                alignItems: "baseline",
+                gap: 10,
+                marginTop: 10,
               }}
             >
-              {subheadingText}
-            </div>
+              <div
+                style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  color: "#94da32",
+                  fontSize: 20,
+                  fontWeight: 800,
+                  letterSpacing: 0.5,
+                }}
+              >
+                रू {productPrice ? productPrice.toLocaleString("en-IN") : "4,500"}
+              </div>
 
-            {/* PRICE */}
-            <div
-              style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                color: "#94da32",
-                fontSize: 19,
-                fontWeight: 800,
-                marginTop: 6,
-                letterSpacing: 0.5,
-              }}
-            >
-              रू {productPrice ? productPrice.toLocaleString("en-IN") : "4,500"}
+              {listPrice && (
+                <div
+                  style={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    color: "#757c6b",
+                    fontSize: 13,
+                    textDecoration: "line-through",
+                    fontWeight: 500,
+                  }}
+                >
+                  रू {listPrice.toLocaleString("en-IN")}
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* BUTTON AT BOTTOM */}
-        <div style={{ padding: "0 16px 16px 16px", width: "100%", boxSizing: "border-box" }}>
+        {/* GLASSMORPHIC BUTTON AT BOTTOM */}
+        <div style={{ padding: "0 18px 18px 18px", width: "100%", boxSizing: "border-box" }}>
           <button
             onClick={handleAddToCart}
             style={{
               width: "100%",
               boxSizing: "border-box",
-              padding: "12px",
-              background: hovered ? "#94da32" : "transparent",
-              border: `2px solid #94da32`,
+              padding: "11px",
+              background: hovered ? "#94da32" : "rgba(148, 218, 50, 0.06)",
+              border: `1px solid ${hovered ? "#94da32" : "rgba(148, 218, 50, 0.4)"}`,
               color: hovered ? "#111111" : "#94da32",
               fontWeight: 800,
-              fontSize: 12,
+              fontSize: 11,
               cursor: "pointer",
-              transition: "all 0.25s ease",
-              fontFamily: "'Poppins', sans-serif",
+              transition: "all 0.3s ease",
+              fontFamily: "'Inter', sans-serif",
               letterSpacing: 1.5,
               textTransform: "uppercase",
-              borderRadius: "9999px",
+              borderRadius: "10px",
+              backdropFilter: "blur(4px)",
             }}
           >
             ADD TO CART
