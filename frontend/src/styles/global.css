@@ -14243,10 +14243,7 @@ html.light .footer-sub-brand-left a[href="/"]:hover {
 .dealership-section-inner,
 .dealers-section-inner,
 .hero-banner-inner,
-.directory-header-wrapper,
-.blog-page-container,
-.blog-hero-inner,
-.articles-grid-container {
+.directory-header-wrapper {
   max-width: 1200px !important;
   width: 100% !important;
   margin-left: auto !important;
@@ -14255,4 +14252,17 @@ html.light .footer-sub-brand-left a[href="/"]:hover {
   padding-right: 24px !important;
   box-sizing: border-box !important;
 }
+
+/* Blog Alignment to 5% Navbar Logo Guide Line */
+.blog-hero-inner,
+.articles-grid-container {
+  max-width: 1400px !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+  box-sizing: border-box !important;
+}
+
 

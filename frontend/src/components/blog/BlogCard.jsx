@@ -13,65 +13,190 @@ export default function BlogCard({ article }) {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`flex flex-col h-full bg-[#1e2117] border transition-all duration-300 rounded overflow-hidden w-full box-border ${
-        hovered ? "border-[#94da32] -translate-y-1 shadow-lg shadow-[rgba(148,218,50,0.15)]" : "border-[#434938]"
-      }`}
+      style={{
+        background: "#121212",
+        border: hovered
+          ? "1px solid #7CFC00"
+          : "1px solid rgba(124, 252, 0, 0.15)",
+        borderRadius: "10px",
+        overflow: "hidden",
+        transition: "all 0.3s ease",
+        transform: hovered ? "translateY(-4px)" : "none",
+        boxShadow: hovered ? "0 10px 24px rgba(124, 252, 0, 0.12)" : "none",
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        width: "100%",
+        boxSizing: "border-box",
+      }}
+      className="blog-card-item"
     >
-      <Link to={`/blog/${article.slug || article.id}`} className="no-underline block relative aspect-video overflow-hidden">
+      <Link
+        to={`/blog/${article.slug || article.id}`}
+        style={{
+          textDecoration: "none",
+          display: "block",
+          position: "relative",
+          width: "100%",
+          height: "200px",
+          overflow: "hidden",
+        }}
+      >
         <img
           src={article.img}
           alt={article.title}
-          className={`w-full h-full object-cover transition-all duration-500 ${
-            hovered ? "scale-105 filter-none" : "scale-100 grayscale-[40%]"
-          }`}
+          style={{
+            width: "100%",
+            height: "200px",
+            objectFit: "cover",
+            display: "block",
+            transition: "transform 0.5s ease, filter 0.3s ease",
+            transform: hovered ? "scale(1.05)" : "scale(1)",
+            filter: hovered ? "none" : "grayscale(30%)",
+          }}
           loading="lazy"
         />
         {article.category && (
-          <span className="absolute top-3 left-3 bg-[#deffa4] text-[#233600] px-2.5 py-1 text-[10px] font-bold tracking-widest uppercase rounded z-10 shadow-sm">
+          <span
+            style={{
+              position: "absolute",
+              top: "12px",
+              left: "12px",
+              background: "#7CFC00",
+              color: "#000000",
+              padding: "4px 10px",
+              fontSize: "0.65rem",
+              fontWeight: 800,
+              fontFamily: "'Space Grotesk', sans-serif",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              borderRadius: "4px",
+              zIndex: 10,
+              boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
+            }}
+          >
             {article.category}
           </span>
         )}
       </Link>
 
-      <div className="p-5 sm:p-6 flex flex-col flex-grow w-full box-border">
-        {article.tag && (
-          <div className="mb-2">
-            <span className="bg-[#282b21] text-[#c3c9b3] border border-[#434938] px-2 py-0.5 text-[10px] font-semibold tracking-wider uppercase rounded inline-block">
-              {article.tag}
-            </span>
+      <div
+        style={{
+          padding: "20px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          flexGrow: 1,
+          boxSizing: "border-box",
+        }}
+      >
+        <div>
+          {article.tag && (
+            <div style={{ marginBottom: "8px" }}>
+              <span
+                style={{
+                  background: "#1a1a1a",
+                  color: "#c3c9b3",
+                  border: "1px solid rgba(124, 252, 0, 0.2)",
+                  padding: "2px 8px",
+                  fontSize: "0.65rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.05em",
+                  textTransform: "uppercase",
+                  borderRadius: "4px",
+                  display: "inline-block",
+                  fontFamily: "'Space Grotesk', sans-serif",
+                }}
+              >
+                {article.tag}
+              </span>
+            </div>
+          )}
+
+          <div
+            style={{
+              fontSize: "0.72rem",
+              fontFamily: "monospace",
+              letterSpacing: "0.05em",
+              textTransform: "uppercase",
+              color: "#7CFC00",
+              marginBottom: "8px",
+            }}
+          >
+            {article.date} — BY{" "}
+            <Link
+              to={`/author/${authorSlug}`}
+              style={{
+                color: "#7CFC00",
+                fontWeight: 700,
+                textDecoration: "underline",
+              }}
+            >
+              {article.author}
+            </Link>
           </div>
-        )}
 
-        <div className="text-[11px] font-mono tracking-wider uppercase text-[#94da32]/90 mb-2">
-          {article.date} — BY{" "}
-          <Link
-            to={`/author/${authorSlug}`}
-            className="text-[#94da32] hover:text-[#deffa4] font-bold underline transition-colors"
-          >
-            {article.author}
+          <Link to={`/blog/${article.slug || article.id}`} style={{ textDecoration: "none" }}>
+            <h3
+              style={{
+                fontSize: "1.05rem",
+                fontWeight: 800,
+                fontFamily: "'Space Grotesk', sans-serif",
+                lineHeight: 1.35,
+                marginBottom: "10px",
+                color: hovered ? "#7CFC00" : "#ffffff",
+                transition: "color 0.2s ease",
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
+            >
+              {article.title}
+            </h3>
           </Link>
-        </div>
 
-        <Link to={`/blog/${article.slug || article.id}`} className="no-underline">
-          <h3
-            className={`text-base sm:text-lg font-bold font-['Space_Grotesk'] leading-snug mb-3 transition-colors line-clamp-2 ${
-              hovered ? "text-[#deffa4]" : "text-[#e2e4d5]"
-            }`}
+          <p
+            style={{
+              fontSize: "0.82rem",
+              lineHeight: 1.55,
+              color: "#aaaaaa",
+              marginBottom: "16px",
+              fontFamily: "'Poppins', sans-serif",
+              display: "-webkit-box",
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+            }}
           >
-            {article.title}
-          </h3>
-        </Link>
-
-        <p className="text-xs sm:text-sm leading-relaxed text-[#c3c9b3] mb-5 line-clamp-3">
-          {article.excerpt}
-        </p>
+            {article.excerpt}
+          </p>
+        </div>
 
         <Link
           to={`/blog/${article.slug || article.id}`}
-          className="mt-auto flex items-center gap-2 text-[#94da32] font-bold text-[11px] tracking-widest uppercase no-underline hover:text-[#deffa4]"
+          style={{
+            marginTop: "auto",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "6px",
+            color: "#7CFC00",
+            fontWeight: 800,
+            fontSize: "0.75rem",
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            textDecoration: "none",
+            fontFamily: "'Space Grotesk', sans-serif",
+          }}
         >
           <span>READ FULL INTEL</span>
-          <ArrowRight size={14} className={`transition-transform ${hovered ? "translate-x-1" : ""}`} />
+          <ArrowRight
+            size={14}
+            style={{
+              transform: hovered ? "translateX(4px)" : "none",
+              transition: "transform 0.2s ease",
+            }}
+          />
         </Link>
       </div>
     </div>

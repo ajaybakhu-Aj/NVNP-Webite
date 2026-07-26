@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { Search, ArrowRight } from "lucide-react";
+import { Search, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { getAllBlogs } from "../../../utils/cmsDb";
 import { useBlogTaxonomy } from "../../../utils/blogTaxonomy";
 import BlogCard from "../../../components/blog/BlogCard";
 import PageHeroBanner from "../../../components/ui/PageHeroBanner";
 
+const POSTS_PER_PAGE = 12;
+
 export default function BlogPage() {
   const [searchParams] = useSearchParams();
   const [search, setSearch] = useState(searchParams.get("q") || "");
   const [category, setCategory] = useState(searchParams.get("cat") || "All");
+  const [currentPage, setCurrentPage] = useState(1);
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -21,6 +24,11 @@ export default function BlogPage() {
       setLoading(false);
     });
   }, []);
+
+  // Reset pagination when filter or search changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [category, search]);
 
   const categories = ["All", ...taxonomy.categories.map((c) => c.name)];
 
@@ -39,6 +47,18 @@ export default function BlogPage() {
     ? filteredArticles.filter((a) => a.id !== featured.id)
     : filteredArticles;
 
+  // Pagination Logic
+  const totalPages = Math.max(1, Math.ceil(gridArticles.length / POSTS_PER_PAGE));
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const paginatedArticles = gridArticles.slice(startIndex, startIndex + POSTS_PER_PAGE);
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+      window.scrollTo({ top: 300, behavior: "smooth" });
+    }
+  };
+
   return (
     <div
       className="blog-directory-page blog-page blog-page-container page-wrapper"
@@ -52,7 +72,7 @@ export default function BlogPage() {
         boxSizing: "border-box",
       }}
     >
-      {/* 1. HIGH IMPACT HERO BANNER */}
+      {/* 1. FULL-BLEED GREEN HERO BANNER */}
       <PageHeroBanner
         title="SURVEILLANCE INTEL & BLOGS"
         subtitle="Insights, engineering breakdowns, AI surveillance trends, and security deployment guides from NightVision experts."
@@ -79,7 +99,7 @@ export default function BlogPage() {
       </PageHeroBanner>
 
       {/* MAIN CONTENT AREA */}
-      <main className="blog-hero-inner articles-grid-container" style={{ padding: "40px 24px 80px 24px" }}>
+      <main className="blog-hero-inner articles-grid-container" style={{ padding: "40px 0 80px 0" }}>
         {/* 2. FILTER & SEARCH BAR */}
         <section
           className="filter-search-row"
@@ -199,7 +219,7 @@ export default function BlogPage() {
         ) : (
           <>
             {/* 3. FEATURED ARTICLE */}
-            {featured && (
+            {featured && currentPage === 1 && (
               <section className="featured-article-section" style={{ marginBottom: "48px", width: "100%" }}>
                 <Link
                   to={`/blog/${featured.slug || featured.id}`}
@@ -350,36 +370,132 @@ export default function BlogPage() {
               </section>
             )}
 
-            {/* 4. ARTICLES GRID */}
+            {/* 4. ARTICLES GRID (12 ARTICLES PER PAGE) */}
             <section
               className="blog-articles-grid"
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(3, 1fr)",
                 gap: "28px",
+                marginTop: "40px",
                 width: "100%",
                 boxSizing: "border-box",
               }}
             >
-              {gridArticles.map((art) => (
+              {paginatedArticles.map((art) => (
                 <BlogCard key={art.id} article={art} />
               ))}
             </section>
+
+            {/* 5. NUMBERED PAGINATION BAR (1, 2, 3, 4 ... NEXT) */}
+            {totalPages > 1 && (
+              <div
+                className="pagination-container"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "8px",
+                  marginTop: "56px",
+                  marginBottom: "40px",
+                  width: "100%",
+                }}
+              >
+                {/* PREV BUTTON */}
+                <button
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  style={{
+                    padding: "0 16px",
+                    height: "42px",
+                    background: "rgba(255, 255, 255, 0.05)",
+                    border: "1px solid rgba(124, 252, 0, 0.3)",
+                    color: currentPage === 1 ? "rgba(255, 255, 255, 0.3)" : "#7CFC00",
+                    fontWeight: 700,
+                    borderRadius: "6px",
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontSize: "0.85rem",
+                    cursor: currentPage === 1 ? "not-allowed" : "pointer",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "4px",
+                    transition: "all 0.2s ease",
+                    opacity: currentPage === 1 ? 0.5 : 1,
+                  }}
+                >
+                  <ChevronLeft size={16} />
+                  <span>PREV</span>
+                </button>
+
+                {/* NUMBERED BUTTONS */}
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
+                  const isCurrent = pageNum === currentPage;
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => handlePageChange(pageNum)}
+                      style={{
+                        width: "42px",
+                        height: "42px",
+                        background: isCurrent ? "#7CFC00" : "#141414",
+                        color: isCurrent ? "#000000" : "#ffffff",
+                        border: isCurrent
+                          ? "1px solid #7CFC00"
+                          : "1px solid rgba(255, 255, 255, 0.15)",
+                        borderRadius: "6px",
+                        fontWeight: isCurrent ? 800 : 700,
+                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontSize: "0.9rem",
+                        cursor: "pointer",
+                        transition: "all 0.2s ease",
+                      }}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                })}
+
+                {/* NEXT BUTTON */}
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  style={{
+                    padding: "0 16px",
+                    height: "42px",
+                    background: "rgba(255, 255, 255, 0.05)",
+                    border: "1px solid rgba(124, 252, 0, 0.3)",
+                    color: currentPage === totalPages ? "rgba(255, 255, 255, 0.3)" : "#7CFC00",
+                    fontWeight: 700,
+                    borderRadius: "6px",
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontSize: "0.85rem",
+                    cursor: currentPage === totalPages ? "not-allowed" : "pointer",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "4px",
+                    transition: "all 0.2s ease",
+                    opacity: currentPage === totalPages ? 0.5 : 1,
+                  }}
+                >
+                  <span>NEXT</span>
+                  <ChevronRight size={16} />
+                </button>
+              </div>
+            )}
           </>
         )}
       </main>
 
       <style>{`
-        /* Global Blog Container Alignment */
-        .blog-page-container,
+        /* Remove artificial container width restrictions & align to 5% logo guide line */
         .blog-hero-inner,
         .articles-grid-container {
-          max-width: 1200px !important;
+          max-width: 1400px !important;
           width: 100% !important;
           margin-left: auto !important;
           margin-right: auto !important;
-          padding-left: 24px !important;
-          padding-right: 24px !important;
+          padding-left: 5% !important;
+          padding-right: 5% !important;
           box-sizing: border-box !important;
         }
 
