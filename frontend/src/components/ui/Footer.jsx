@@ -242,42 +242,61 @@ export default function Footer() {
       <footer className="app-footer site-footer" style={{ position: "relative", top: "auto", clear: "both", width: "100%", zIndex: 1 }}>
         <style>{`
           @media (max-width: 1023px) {
+            /* Allow Feature Section Container to Expand */
             .pre-footer-trust-badges,
             .features-section,
             .trust-badges-wrapper,
-            .value-proposition-section {
-              position: relative !important;
-              top: auto !important;
+            .value-proposition-section,
+            .value-props-container,
+            .trust-badges-container {
               height: auto !important;
-              min-height: 0 !important;
+              min-height: fit-content !important;
+              max-height: none !important;
+              overflow: visible !important;
+              padding-bottom: 40px !important;
               display: flex !important;
               flex-direction: column !important;
               gap: 32px !important;
-              padding-bottom: 40px !important;
-              margin-bottom: 0 !important;
+              position: relative !important;
+              top: auto !important;
               clear: both !important;
               width: 100% !important;
+              box-sizing: border-box !important;
             }
             .pre-footer-trust-badges .trust-badges-container {
               flex-direction: column !important;
               text-align: center !important;
               gap: 32px !important;
               width: 100% !important;
+              height: auto !important;
+              min-height: fit-content !important;
+              max-height: none !important;
+              overflow: visible !important;
             }
             .pre-footer-trust-badges .trust-divider {
               display: none !important;
             }
+            /* Ensure all 3 feature items are visible */
+            .features-section > div,
+            .trust-badges-container > div,
+            .feature-card,
+            .trust-badge-item,
             .pre-footer-trust-badges .trust-badge-item {
+              display: flex !important;
               flex-direction: column !important;
               align-items: center !important;
               text-align: center !important;
+              visibility: visible !important;
+              opacity: 1 !important;
               width: 100% !important;
               padding: 0 !important;
+              box-sizing: border-box !important;
             }
+            /* Push Footer Down Smoothly */
             footer, .site-footer, .app-footer {
               position: relative !important;
               top: auto !important;
-              margin-top: 24px !important;
+              margin-top: 20px !important;
               padding-top: 40px !important;
               clear: both !important;
               z-index: 1 !important;

@@ -14117,35 +14117,27 @@ html.light .footer-sub-brand-left a[href="/"]:hover {
   width: 100% !important;
 }
 
-/* UNIVERSAL MOBILE MEDIA QUERY FIX: Prevent feature card & footer overlap */
+/* UNIVERSAL MOBILE MEDIA QUERY FIX: Allow feature section container to expand & ensure all 3 cards are visible */
 @media screen and (max-width: 1023px) {
+  /* Allow Feature Section Container to Expand */
   .features-section,
   .trust-badges-wrapper,
   .value-proposition-section,
   .pre-footer-trust-badges,
   .value-props-container,
   .trust-badges,
-  footer,
-  .site-footer,
-  .app-footer {
+  .trust-badges-container {
     position: relative !important;
     top: auto !important;
     transform: none !important;
     float: none !important;
     clear: both !important;
     height: auto !important;
-    min-height: 0 !important;
+    min-height: fit-content !important;
+    max-height: none !important;
+    overflow: visible !important;
     width: 100% !important;
     box-sizing: border-box !important;
-  }
-
-  /* Force vertical block stacking with distinct margins */
-  .features-section,
-  .trust-badges-wrapper,
-  .value-proposition-section,
-  .pre-footer-trust-badges,
-  .value-props-container,
-  .trust-badges {
     display: flex !important;
     flex-direction: column !important;
     gap: 32px !important;
@@ -14153,12 +14145,34 @@ html.light .footer-sub-brand-left a[href="/"]:hover {
     padding-bottom: 40px !important;
   }
 
+  /* Force all 3 cards to be visible */
+  .features-section > div,
+  .trust-badges-container > div,
+  .value-props-container > div,
+  .feature-card,
+  .trust-badge-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Push Footer Down Smoothly */
   footer,
   .site-footer,
   .app-footer {
-    margin-top: 24px !important;
+    position: relative !important;
+    top: auto !important;
+    margin-top: 20px !important;
     padding-top: 40px !important;
+    clear: both !important;
     z-index: 1 !important;
+    width: 100% !important;
   }
 }
+
 
