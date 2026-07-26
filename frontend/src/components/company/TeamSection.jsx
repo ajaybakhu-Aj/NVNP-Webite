@@ -53,7 +53,23 @@ export default function TeamSection() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-64 bg-[#7CFC00] opacity-[0.04] blur-[120px] pointer-events-none" />
 
       {/* Header Container */}
-      <div className="max-w-[1200px] mx-auto px-6 mb-12 relative z-10 text-center flex flex-col items-center">
+      <div
+        className="hero-banner-inner about-content-inner"
+        style={{
+          maxWidth: 1200,
+          marginLeft: "auto",
+          marginRight: "auto",
+          paddingLeft: 24,
+          paddingRight: 24,
+          boxSizing: "border-box",
+          width: "100%",
+          marginBottom: 48,
+          textAlign: "center",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <motion.span
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -84,9 +100,22 @@ export default function TeamSection() {
         </motion.p>
       </div>
 
-      {/* Team Slider */}
-      <div className="max-w-[1200px] mx-auto px-6 relative z-10">
-        <Splide options={splideOptions} className="team-splide pb-14">
+      {/* Team Slider Centered Container */}
+      <div
+        className="team-slider-wrapper hero-banner-inner about-content-inner"
+        style={{
+          maxWidth: 1200,
+          marginLeft: "auto",
+          marginRight: "auto",
+          paddingLeft: 24,
+          paddingRight: 24,
+          boxSizing: "border-box",
+          width: "100%",
+          position: "relative",
+          zIndex: 10,
+        }}
+      >
+        <Splide options={splideOptions} className="team-splide pb-4">
           {teamMembers.map((member) => (
             <SplideSlide key={member.id}>
               <TeamCard member={member} />
@@ -97,6 +126,10 @@ export default function TeamSection() {
 
       {/* Custom Styles */}
       <style>{`
+        .team-slider-wrapper .splide__track {
+          overflow: hidden !important;
+          border-radius: 12px;
+        }
         .team-card-container {
           transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -106,7 +139,7 @@ export default function TeamSection() {
           transform: translateY(-4px) !important;
         }
         .team-splide .splide__arrow {
-          background: rgba(0, 0, 0, 0.7) !important;
+          background: rgba(0, 0, 0, 0.75) !important;
           border: 1px solid rgba(124, 252, 0, 0.4) !important;
           backdrop-filter: blur(8px) !important;
           -webkit-backdrop-filter: blur(8px) !important;
@@ -114,12 +147,29 @@ export default function TeamSection() {
           height: 42px !important;
           border-radius: 50% !important;
           opacity: 0.9 !important;
+          top: 50% !important;
+          transform: translateY(-50%) !important;
           transition: all 0.3s ease !important;
+          z-index: 20 !important;
+        }
+        .team-splide .splide__arrow--prev {
+          left: -12px !important;
+        }
+        .team-splide .splide__arrow--next {
+          right: -12px !important;
+        }
+        @media (min-width: 1280px) {
+          .team-splide .splide__arrow--prev {
+            left: -18px !important;
+          }
+          .team-splide .splide__arrow--next {
+            right: -18px !important;
+          }
         }
         .team-splide .splide__arrow:hover {
-          background: rgba(124, 252, 0, 0.15) !important;
+          background: rgba(124, 252, 0, 0.2) !important;
           border-color: #7CFC00 !important;
-          box-shadow: 0 0 15px rgba(124, 252, 0, 0.4) !important;
+          box-shadow: 0 0 15px rgba(124, 252, 0, 0.5) !important;
           opacity: 1 !important;
           transform: translateY(-50%) scale(1.1) !important;
         }
@@ -129,11 +179,20 @@ export default function TeamSection() {
           height: 1.1rem !important;
         }
         .team-splide .splide__pagination {
+          margin-top: 24px !important;
+          position: relative !important;
           bottom: 0 !important;
+          display: flex !important;
+          justify-content: center !important;
+          gap: 8px !important;
         }
         .team-splide .splide__pagination__page {
           background: rgba(255, 255, 255, 0.2) !important;
+          width: 8px !important;
+          height: 8px !important;
+          border-radius: 50% !important;
           transition: all 0.3s ease !important;
+          margin: 0 !important;
         }
         .team-splide .splide__pagination__page.is-active {
           background: #7CFC00 !important;
@@ -156,8 +215,33 @@ function TeamCard({ member }) {
         border: '1px solid rgba(124, 252, 0, 0.15)',
         borderRadius: '12px',
         boxSizing: 'border-box',
+        position: 'relative',
       }}
     >
+      {/* TOP CORNER BADGE POSITIONING */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 12,
+          right: 12,
+          zIndex: 2,
+          background: 'rgba(0, 0, 0, 0.75)',
+          backdropFilter: 'blur(4px)',
+          WebkitBackdropFilter: 'blur(4px)',
+          border: '1px solid rgba(124, 252, 0, 0.4)',
+          color: '#7CFC00',
+          fontSize: '0.68rem',
+          fontWeight: 700,
+          padding: '4px 10px',
+          borderRadius: '12px',
+          textTransform: 'uppercase',
+          letterSpacing: '0.05em',
+          fontFamily: "'Space Grotesk', sans-serif",
+        }}
+      >
+        SECURITY ELITE
+      </div>
+
       {/* IMAGE CONTAINER (4:5 Aspect Ratio) */}
       <div className="relative w-full aspect-[4/5] overflow-hidden bg-black/40">
         <img
@@ -167,33 +251,69 @@ function TeamCard({ member }) {
           loading="lazy"
         />
 
-        {/* OVERLAY GRADIENT */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-95" />
-
-        {/* TOP ACCENT BADGE */}
-        <div className="absolute top-3 right-3 px-2.5 py-1 rounded bg-black/60 border border-[#7CFC00]/30 backdrop-blur-md text-[10px] font-mono font-bold tracking-widest text-[#7CFC00] uppercase">
-          SECURITY ELITE
-        </div>
+        {/* OVERLAY GRADIENT SCRIM */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(10, 10, 10, 0.95) 70%, #0d0d0d 100%)',
+          }}
+        />
       </div>
 
       {/* CONTENT PANEL OVERLAY */}
-      <div className="absolute bottom-0 inset-x-0 p-5 flex flex-col justify-end z-10">
-        {/* ROLE */}
-        <span className="text-[0.82rem] font-bold uppercase tracking-wider text-[#7CFC00] mb-1 font-['Space_Grotesk']">
+      <div
+        className="absolute bottom-0 inset-x-0 flex flex-col justify-end z-10"
+        style={{
+          padding: '20px 16px',
+          boxSizing: 'border-box',
+        }}
+      >
+        {/* ROLE BADGE */}
+        <span
+          style={{
+            color: '#7CFC00',
+            fontSize: '0.75rem',
+            fontWeight: 700,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            marginBottom: '4px',
+            fontFamily: "'Space Grotesk', sans-serif",
+            display: 'block',
+          }}
+        >
           {member.role}
         </span>
 
-        {/* NAME */}
-        <h3 className="text-[1.1rem] font-bold text-white mb-1.5 font-['Space_Grotesk'] leading-snug">
+        {/* MEMBER NAME */}
+        <h3
+          style={{
+            color: '#ffffff',
+            fontSize: '1.2rem',
+            fontWeight: 800,
+            marginBottom: '6px',
+            fontFamily: "'Space Grotesk', sans-serif",
+            lineHeight: 1.2,
+          }}
+        >
           {member.name}
         </h3>
 
-        {/* BIO */}
-        <p className="text-[0.8rem] text-white/75 line-clamp-2 leading-relaxed mb-3 font-sans">
+        {/* DESCRIPTION / BIO */}
+        <p
+          className="line-clamp-2"
+          style={{
+            color: '#cccccc',
+            fontSize: '0.82rem',
+            lineHeight: 1.4,
+            maxWidth: '100%',
+            marginBottom: '12px',
+            fontFamily: "'Poppins', sans-serif",
+          }}
+        >
           {member.bio}
         </p>
 
-        {/* SOCIAL QUICK-LINKS OVERLAY */}
+        {/* SOCIAL QUICK-LINKS */}
         <div className="flex items-center gap-2.5 pt-2.5 border-t border-white/10 opacity-0 translate-y-2.5 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-y-0">
           {member.socials?.linkedin && (
             <a
