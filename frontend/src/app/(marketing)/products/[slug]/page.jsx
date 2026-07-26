@@ -475,14 +475,43 @@ export default function ProductDetail() {
           <div className="tab-content">
             {activeTab === "specs" && product.specs && (
               <div className="specs-tab-grid">
-                <div className="specs-icons-grid">
-                  {product.specs.map((s, i) => (
-                    <div key={i} className="spec-icon-box">
-                      <Icon name={s.icon} size={28} style={{ color: "#deffa4" }} />
-                      <span className="spec-icon-label">{s.label}</span>
+                <div className="specs-left-column">
+                  <div className="specs-icons-grid">
+                    {product.specs.map((s, i) => (
+                      <div key={i} className="spec-icon-box">
+                        <Icon name={s.icon} size={28} style={{ color: "#deffa4" }} />
+                        <span className="spec-icon-label">{s.label}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="specs-overview-box">
+                    <div className="specs-overview-title">OVERVIEW & HIGHLIGHTS</div>
+                    <ul className="specs-overview-list">
+                      <li>
+                        <Icon name="check" size={14} style={{ color: "#7CFC00", flexShrink: 0 }} />
+                        <span>Smart AI Human & Vehicle Motion Detection</span>
+                      </li>
+                      <li>
+                        <Icon name="check" size={14} style={{ color: "#7CFC00", flexShrink: 0 }} />
+                        <span>Ultra Low-Light Starlight Color Night Vision</span>
+                      </li>
+                      <li>
+                        <Icon name="check" size={14} style={{ color: "#7CFC00", flexShrink: 0 }} />
+                        <span>Two-Way Real-time Audio & Built-in Noise Cancellation</span>
+                      </li>
+                      <li>
+                        <Icon name="check" size={14} style={{ color: "#7CFC00", flexShrink: 0 }} />
+                        <span>Encrypted Cloud & MicroSD Local Storage Support</span>
+                      </li>
+                    </ul>
+                    
+                    <div style={{ marginTop: 20, paddingTop: 16, borderTop: "1px solid rgba(255, 255, 255, 0.08)" }}>
+                      <CatalogDownloadButton variant="button" product={product} />
                     </div>
-                  ))}
+                  </div>
                 </div>
+
                 <div className="specs-table">
                   {product.specTable && product.specTable.map(([k, v]) => (
                     <div key={k} className="specs-table-row">
@@ -490,9 +519,6 @@ export default function ProductDetail() {
                       <span className="specs-table-val">{v}</span>
                     </div>
                   ))}
-                </div>
-                <div style={{ marginTop: 20, paddingTop: 16, borderTop: "1px solid rgba(255,255,255,0.08)", gridColumn: "1 / -1" }}>
-                  <CatalogDownloadButton variant="button" product={product} />
                 </div>
               </div>
             )}
