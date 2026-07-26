@@ -1,12 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { colors } from "../../data/constants";
-import { useSiteContents, useHomepageSettings } from "../../utils/cmsDb";
+import { useSiteContents } from "../../utils/cmsDb";
 
 export default function DealerSection() {
   const contents = useSiteContents();
-  const homeSettings = useHomepageSettings();
-
   const primaryBgColor = colors.secondary || "#94da32";
 
   return (
@@ -14,7 +12,7 @@ export default function DealerSection() {
       style={{
         position: "relative",
         width: "100%",
-        padding: "70px 0",
+        padding: "60px 0",
         overflow: "hidden",
         backgroundColor: primaryBgColor,
         borderTop: "1px solid rgba(0, 0, 0, 0.15)",
@@ -28,10 +26,10 @@ export default function DealerSection() {
             background-color: #0c0e08;
             color: #94da32;
             border: 2px solid #0c0e08;
-            padding: 16px 32px;
+            padding: 14px 28px;
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 12px;
             letter-spacing: 1.5px;
             text-transform: uppercase;
             border-radius: 50px;
@@ -41,6 +39,8 @@ export default function DealerSection() {
             justify-content: center;
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            text-align: center;
+            box-sizing: border-box;
           }
           .dealer-btn-primary:hover {
             background-color: #171c10;
@@ -53,10 +53,10 @@ export default function DealerSection() {
             background-color: transparent;
             color: #0c0e08;
             border: 2px solid #0c0e08;
-            padding: 16px 32px;
+            padding: 14px 28px;
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 12px;
             letter-spacing: 1.5px;
             text-transform: uppercase;
             border-radius: 50px;
@@ -65,12 +65,24 @@ export default function DealerSection() {
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            text-align: center;
+            box-sizing: border-box;
           }
           .dealer-btn-secondary:hover {
             background-color: #0c0e08;
             color: #94da32;
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+          }
+
+          @media (max-width: 767px) {
+            .dealer-cta-container {
+              flex-direction: column !important;
+              width: 100% !important;
+            }
+            .dealer-btn-primary, .dealer-btn-secondary {
+              width: 100% !important;
+            }
           }
         `}
       </style>
@@ -86,7 +98,7 @@ export default function DealerSection() {
           pointerEvents: "none",
           overflow: "hidden",
           userSelect: "none",
-          opacity: 0.09,
+          opacity: 0.08,
           zIndex: 1,
         }}
       >
@@ -94,8 +106,8 @@ export default function DealerSection() {
           style={{
             fontFamily: "'Space Grotesk', sans-serif",
             fontWeight: 900,
-            fontSize: "clamp(100px, 26vw, 360px)",
-            letterSpacing: "-4px",
+            fontSize: "clamp(50px, 16vw, 360px)",
+            letterSpacing: "-2px",
             textTransform: "uppercase",
             whiteSpace: "nowrap",
             lineHeight: 1,
@@ -111,7 +123,7 @@ export default function DealerSection() {
         style={{
           maxWidth: 1280,
           margin: "0 auto",
-          padding: "0 24px",
+          padding: "0 20px",
           position: "relative",
           zIndex: 10,
           textAlign: "center",
@@ -127,11 +139,11 @@ export default function DealerSection() {
         <h2
           style={{
             fontFamily: "'Space Grotesk', sans-serif",
-            fontSize: "clamp(28px, 4.5vw, 54px)",
+            fontSize: "clamp(24px, 4.5vw, 50px)",
             fontWeight: 800,
             letterSpacing: "-0.5px",
             color: "#0c0e08",
-            margin: "0 0 16px 0",
+            margin: "0 0 14px 0",
             lineHeight: 1.15,
             textTransform: "uppercase",
           }}
@@ -143,8 +155,8 @@ export default function DealerSection() {
         <p
           style={{
             maxWidth: 680,
-            margin: "0 auto 36px auto",
-            fontSize: "clamp(14px, 2vw, 17px)",
+            margin: "0 auto 30px auto",
+            fontSize: "clamp(13px, 1.8vw, 16px)",
             fontWeight: 600,
             lineHeight: 1.6,
             color: "#182405",
@@ -157,13 +169,14 @@ export default function DealerSection() {
 
         {/* CTA BUTTONS CONTAINER */}
         <div
+          className="dealer-cta-container"
           style={{
             display: "flex",
-            flexWrap: "wrap",
             justifyContent: "center",
             alignItems: "center",
-            gap: 18,
-            width: "100%",
+            gap: 14,
+            width: "auto",
+            maxWidth: "100%",
           }}
         >
           <Link to="/dealership" className="dealer-btn-primary">

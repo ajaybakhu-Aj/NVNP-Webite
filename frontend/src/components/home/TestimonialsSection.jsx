@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Icon from "../../utils/Icon";
-import { colors } from "../../data/constants";
 import { useSiteContents } from "../../utils/cmsDb";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -33,11 +32,9 @@ export default function TestimonialsSection() {
 
   const items = contents.testimonials && contents.testimonials.length > 0 ? contents.testimonials : defaultItems;
 
-  // Clean quote text to avoid duplicate quotes
   const currentQuote = (items[currentIndex]?.text || "")
     .replace(/^["'\s]+|["'\s]+$/g, "");
 
-  // Auto-slide carousel every 5.5 seconds
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % items.length);
@@ -56,12 +53,13 @@ export default function TestimonialsSection() {
   return (
     <section
       style={{
-        padding: "80px 0",
+        padding: "60px 0",
         background: "#0a0c08",
         borderTop: "1px solid rgba(148, 218, 50, 0.15)",
         borderBottom: "1px solid rgba(148, 218, 50, 0.15)",
         width: "100%",
         overflow: "hidden",
+        boxSizing: "border-box",
       }}
     >
       <style>
@@ -82,14 +80,15 @@ export default function TestimonialsSection() {
             background: rgba(26, 29, 22, 0.9);
             border: 1px solid rgba(148, 218, 50, 0.35);
             color: #94da32;
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.25s ease;
+            flex-shrink: 0;
           }
           .t-nav-btn:hover {
             background: #94da32;
@@ -98,8 +97,8 @@ export default function TestimonialsSection() {
             box-shadow: 0 0 12px rgba(148, 218, 50, 0.45);
           }
           .t-dot {
-            width: 10px;
-            height: 10px;
+            width: 9px;
+            height: 9px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.2);
             border: none;
@@ -109,9 +108,16 @@ export default function TestimonialsSection() {
           }
           .t-dot.active {
             background: #94da32;
-            width: 24px;
+            width: 22px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(148, 218, 50, 0.5);
+          }
+
+          @media (max-width: 767px) {
+            .testimonial-card-glass {
+              padding: 24px 20px 20px 20px !important;
+              width: 92% !important;
+            }
           }
         `}
       </style>
@@ -121,7 +127,7 @@ export default function TestimonialsSection() {
         style={{
           maxWidth: 1280,
           margin: "0 auto",
-          padding: "0 24px",
+          padding: "0 16px",
           width: "100%",
           boxSizing: "border-box",
           display: "flex",
@@ -134,13 +140,13 @@ export default function TestimonialsSection() {
         <h2
           style={{
             fontFamily: "'Space Grotesk', sans-serif",
-            fontSize: "clamp(26px, 4vw, 38px)",
+            fontSize: "clamp(24px, 4vw, 38px)",
             fontWeight: 800,
             letterSpacing: "2px",
             color: "#ffffff",
             textTransform: "uppercase",
             textAlign: "center",
-            margin: "0 0 40px 0",
+            margin: "0 0 32px 0",
           }}
         >
           {contents.testimonialsTitle || "TRUSTED BY LEADERS"}
@@ -152,7 +158,7 @@ export default function TestimonialsSection() {
           style={{
             maxWidth: 820,
             width: "100%",
-            padding: "40px 32px 32px 32px",
+            padding: "36px 32px 28px 32px",
             boxSizing: "border-box",
             margin: "0 auto",
             position: "relative",
@@ -164,18 +170,18 @@ export default function TestimonialsSection() {
               display: "flex",
               justifyContent: "center",
               gap: 6,
-              marginBottom: 24,
+              marginBottom: 20,
             }}
           >
             {[...Array(5)].map((_, i) => (
-              <Icon key={i} name="star" size={22} fill style={{ color: "#94da32" }} />
+              <Icon key={i} name="star" size={20} fill style={{ color: "#94da32" }} />
             ))}
           </div>
 
           {/* QUOTE TEXT */}
           <div
             style={{
-              minHeight: 110,
+              minHeight: 100,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -185,12 +191,12 @@ export default function TestimonialsSection() {
           >
             <p
               style={{
-                fontSize: "clamp(16px, 2.5vw, 20px)",
+                fontSize: "clamp(14px, 2.5vw, 19px)",
                 fontStyle: "italic",
-                lineHeight: 1.65,
+                lineHeight: 1.6,
                 color: "#ffffff",
                 fontFamily: "'Inter', sans-serif",
-                margin: "0 0 24px 0",
+                margin: "0 0 20px 0",
                 maxWidth: 720,
               }}
             >
@@ -202,7 +208,7 @@ export default function TestimonialsSection() {
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
                 fontWeight: 700,
-                fontSize: 14,
+                fontSize: "clamp(12px, 2vw, 14px)",
                 letterSpacing: 1.5,
                 textTransform: "uppercase",
                 color: "#94da32",
@@ -233,13 +239,13 @@ export default function TestimonialsSection() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              marginTop: 32,
-              paddingTop: 20,
+              marginTop: 24,
+              paddingTop: 16,
               borderTop: "1px solid rgba(255, 255, 255, 0.08)",
             }}
           >
             <button onClick={handlePrev} className="t-nav-btn" aria-label="Previous Testimonial">
-              <ChevronLeft size={20} />
+              <ChevronLeft size={18} />
             </button>
 
             {/* DOT INDICATORS */}
@@ -255,7 +261,7 @@ export default function TestimonialsSection() {
             </div>
 
             <button onClick={handleNext} className="t-nav-btn" aria-label="Next Testimonial">
-              <ChevronRight size={20} />
+              <ChevronRight size={18} />
             </button>
           </div>
         </div>
