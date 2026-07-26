@@ -37,10 +37,10 @@ export default function NightVisionAboutPage() {
           subtitle={contents.aboutHeroDesc || "Nepal's next-generation surveillance and security monitoring brand built for industrial security, intelligent detection, and uncompromising operational reliability."}
         >
           <div className="flex gap-3 flex-wrap mt-1">
-            <Link to="/products" className="hero-btn-primary flex items-center justify-center bg-black/15 text-black border-2 border-black px-6 py-2.5 font-bold text-xs tracking-wider no-underline font-sans">
+            <Link to="/products" className="btn-primary">
               Explore Systems
             </Link>
-            <Link to="/dealership" className="hero-btn-secondary flex items-center justify-center bg-black text-[#94da32] px-6 py-2.5 font-bold text-xs tracking-wider no-underline font-sans">
+            <Link to="/dealership" className="btn-secondary">
               Contact Sales
             </Link>
           </div>
@@ -63,7 +63,7 @@ export default function NightVisionAboutPage() {
               <p>
                 {contents.aboutStoryDesc2 || "From AI-powered motion analysis to advanced thermal imaging, we develop surveillance ecosystems that protect thousands of perimeters, commercial facilities, and residential hubs across Nepal."}
               </p>
-              <Link to="/products" className="explore-btn inline-block text-center no-underline">
+              <Link to="/products" className="btn-primary mt-4">
                 Explore Our Technology
               </Link>
             </div>
@@ -198,10 +198,10 @@ export default function NightVisionAboutPage() {
             {contents.aboutCtaDesc || "Join the growing network of organizations and professionals who trust NIGHTVISION™ for critical surveillance and security operations worldwide."}
           </p>
           <div className="cta-buttons">
-            <Link to="/apply-dealers" className="cta-btn-primary no-underline inline-flex justify-center items-center">
+            <Link to="/apply-dealers" className="btn-primary">
               Become A Dealer
             </Link>
-            <Link to="/dealership" className="cta-btn-secondary no-underline inline-flex justify-center items-center">
+            <Link to="/dealership" className="btn-secondary">
               Contact Sales
             </Link>
           </div>
