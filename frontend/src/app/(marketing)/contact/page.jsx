@@ -14,11 +14,12 @@ export default function NightVisionContactPage() {
 
   return (
     <div className="nv-contact-container" style={{ background: '#0a0a0a', minHeight: '100vh', width: '100%' }}>
-      {/* 1. TOP GREEN HERO BANNER (Compact & Centered) */}
+      {/* 1. TOP GREEN HERO BANNER (Left-aligned & Standard 1400px / 5% padding) */}
       <PageHeroBanner
+        className="contact-hero-banner contact-page-header"
         title={siteContents.contactHeroTitle || "CONTACT US"}
         subtitle={siteContents.contactHeroSubtitle || "Our surveillance specialists are standing by. Connect with our team for uncompromising security solutions."}
-        centered
+        centered={false}
       />
 
       {/* 2. TOP 3 CONTACT CARDS ROW ("CALL US", "VISIT US", "E-MAIL US") */}
@@ -444,6 +445,46 @@ export default function NightVisionContactPage() {
 
       {/* 4. RESPONSIVE & FORM STYLING FALLBACK */}
       <style>{`
+        .contact-hero-banner,
+        .contact-page-header {
+          text-align: left !important;
+          background-color: #b5e75d !important;
+        }
+
+        .contact-hero-inner,
+        .contact-hero-banner > div,
+        .contact-page-header > div {
+          max-width: 1400px !important;
+          margin: 0 auto !important;
+          padding-left: 5% !important;
+          padding-right: 5% !important;
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: flex-start !important;
+          text-align: left !important;
+        }
+
+        .contact-hero-banner h1,
+        .contact-hero-banner .page-hero-banner-title,
+        .contact-page-header h1 {
+          color: #000000 !important;
+          font-size: 2rem !important;
+          font-weight: 800 !important;
+          margin-bottom: 6px !important;
+          text-transform: uppercase !important;
+        }
+
+        .contact-hero-banner p,
+        .contact-hero-banner .page-hero-banner-subtitle,
+        .contact-page-header p {
+          color: #111111 !important;
+          font-size: 0.88rem !important;
+          font-weight: 600 !important;
+          max-width: 800px !important;
+          margin: 0 !important;
+          text-align: left !important;
+        }
+
         .contact-cards-grid-inner {
           display: grid;
           grid-template-columns: repeat(3, 1fr);

@@ -2,18 +2,19 @@ import React from "react";
 
 /**
  * PageHeroBanner — Universal page header banner matching the Products page style.
- * Green (#b5e75d) background strip with dark text, compact dimensions, and tight content wrapping.
+ * Brand Green (#b5e75d) background strip with dark text, compact dimensions, and tight content wrapping.
  *
  * Props:
- *  - title    {string}   Page title (uppercase bold)
- *  - subtitle {string}   Optional subtitle / description
- *  - centered {boolean}  Optional boolean to center title & subtitle text
- *  - children           Optional extra content (e.g. filter button)
+ *  - title       {string}   Page title (uppercase bold)
+ *  - subtitle    {string}   Optional subtitle / description
+ *  - centered    {boolean}  Optional boolean to center title & subtitle text
+ *  - children               Optional extra content (e.g. filter button)
+ *  - className   {string}   Optional additional CSS class names
  */
-export default function PageHeroBanner({ title, subtitle, centered = false, children }) {
+export default function PageHeroBanner({ title, subtitle, centered = false, children, className = "" }) {
   return (
     <section
-      className="products-banner-redesign page-hero-banner products-banner products-hero-banner page-title-section hero-banner shop-header"
+      className={`products-banner-redesign page-hero-banner products-banner products-hero-banner page-title-section hero-banner shop-header ${className}`}
       style={{
         backgroundColor: "var(--primary-color, #b5e75d)",
         paddingTop: "20px",
@@ -32,14 +33,14 @@ export default function PageHeroBanner({ title, subtitle, centered = false, chil
       }}
     >
       <div
-        className="page-hero-banner-container hero-banner-inner"
+        className="page-hero-banner-container hero-banner-inner contact-hero-inner"
         style={{
-          maxWidth: 1200,
+          maxWidth: 1400,
           marginLeft: "auto",
           marginRight: "auto",
           width: "100%",
-          paddingLeft: 24,
-          paddingRight: 24,
+          paddingLeft: "5%",
+          paddingRight: "5%",
           boxSizing: "border-box",
           textAlign: centered ? "center" : "left",
           display: "flex",
@@ -51,7 +52,7 @@ export default function PageHeroBanner({ title, subtitle, centered = false, chil
           className="page-hero-banner-title"
           style={{
             color: "#000000",
-            fontSize: "1.6rem",
+            fontSize: "2rem",
             fontWeight: 800,
             marginTop: 0,
             marginBottom: "6px",
@@ -69,12 +70,14 @@ export default function PageHeroBanner({ title, subtitle, centered = false, chil
             className="page-hero-banner-subtitle"
             style={{
               color: "#111111",
-              fontSize: "0.85rem",
+              fontSize: "0.88rem",
+              fontWeight: 600,
               lineHeight: 1.4,
               marginTop: 0,
               marginBottom: children ? "16px" : "0px",
-              maxWidth: centered ? "800px" : "90%",
+              maxWidth: "800px",
               fontFamily: "'Poppins', sans-serif",
+              textAlign: centered ? "center" : "left",
             }}
           >
             {subtitle}
