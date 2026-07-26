@@ -115,16 +115,19 @@ export default function EventsPage() {
           text-align: left !important;
         }
 
-        /* Inner Hero Container Alignment */
+        /* Inner Hero Container Alignment (Flush Far-Left Edge) */
         .news-hero-inner,
         .news-hero-banner > div,
         .events-hero-header > div,
-        .news-hero > div {
-          max-width: 1400px !important;
+        .news-hero > div,
+        .hero-banner-content,
+        .contact-hero-banner > div,
+        .hero-banner > div,
+        .page-hero-banner-container {
+          max-width: 100% !important;
           width: 100% !important;
-          margin-left: auto !important;
-          margin-right: auto !important;
-          padding-left: 5% !important;
+          margin-left: 0 !important;
+          padding-left: 0 !important;
           padding-right: 5% !important;
           box-sizing: border-box !important;
           text-align: left !important;
