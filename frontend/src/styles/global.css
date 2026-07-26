@@ -14196,3 +14196,45 @@ html.light .footer-sub-brand-left a[href="/"]:hover {
   opacity: 0 !important;
   pointer-events: none !important;
 }
+
+/* Center Join Force Card & Parent Section */
+.dealership-join-section,
+.join-force-wrapper,
+.apply-section {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  padding: 60px 20px !important;
+  box-sizing: border-box !important;
+}
+
+.join-force-card,
+.dealership-cta-box,
+.apply-content-inner {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 1000px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
+}
+
+.apply-title {
+  text-align: center !important;
+  margin-bottom: 12px !important;
+}
+
+.apply-desc {
+  text-align: center !important;
+  max-width: 600px !important;
+  margin: 0 auto 32px auto !important;
+}
+
+.btn-apply {
+  margin: 32px auto 0 auto !important;
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+

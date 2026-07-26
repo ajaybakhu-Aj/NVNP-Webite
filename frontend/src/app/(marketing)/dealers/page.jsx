@@ -261,17 +261,31 @@ export default function NightVisionDealerships() {
       </section>
 
       {/* 4. APPLY SECTION */}
-      <section id="apply" className="apply-section" style={{ padding: '60px 0 80px 0', width: '100%' }}>
-        <div className="dealers-section-inner">
-          <div className="apply-content-inner" style={{ background: 'rgba(20, 20, 20, 0.6)', border: '1px solid rgba(124, 252, 0, 0.2)', borderRadius: '12px', padding: '40px 32px', textAlign: 'center' }}>
-            <h2 className="apply-title" style={{ color: '#ffffff', fontSize: '1.8rem', fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif", textTransform: 'uppercase', marginBottom: '12px' }}>JOIN THE NIGHTVISION FORCE</h2>
-            <p className="apply-desc" style={{ color: '#cccccc', fontSize: '0.9rem', maxWidth: '700px', margin: '0 auto 32px auto', fontFamily: "'Poppins', sans-serif", lineHeight: 1.6 }}>
+      <section id="apply" className="apply-section dealership-join-section join-force-wrapper" style={{ padding: '60px 20px', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div className="dealers-section-inner" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <div
+            className="apply-content-inner join-force-card dealership-cta-box"
+            style={{
+              background: 'rgba(20, 20, 20, 0.6)',
+              border: '1px solid rgba(124, 252, 0, 0.2)',
+              borderRadius: '12px',
+              padding: '40px 32px',
+              textAlign: 'center',
+              maxWidth: '1000px',
+              width: '100%',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              boxSizing: 'border-box',
+            }}
+          >
+            <h2 className="apply-title" style={{ color: '#ffffff', fontSize: '1.8rem', fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif", textTransform: 'uppercase', marginBottom: '12px', textAlign: 'center' }}>JOIN THE NIGHTVISION FORCE</h2>
+            <p className="apply-desc" style={{ color: '#cccccc', fontSize: '0.9rem', maxWidth: '600px', margin: '0 auto 32px auto', fontFamily: "'Poppins', sans-serif", lineHeight: 1.6, textAlign: 'center' }}>
               Providing hardware, training, and authority for Nepal's premier security providers. We build infrastructure for SURVEILLANCE.
             </p>
 
-            <div className="steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '36px' }}>
+            <div className="steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '36px', justifyContent: 'center' }}>
               {STEPS.map((step, i) => (
-                <div key={i} className="step-card" style={{ background: '#0d0d0d', border: '1px solid rgba(124, 252, 0, 0.15)', borderRadius: '8px', padding: '16px 12px' }}>
+                <div key={i} className="step-card" style={{ background: '#0d0d0d', border: '1px solid rgba(124, 252, 0, 0.15)', borderRadius: '8px', padding: '16px 12px', textAlign: 'center' }}>
                   <div className="step-num" style={{ color: '#7CFC00', fontSize: '1.2rem', fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif" }}>{step.num}</div>
                   <div className="step-label" style={{ color: '#ffffff', fontSize: '0.8rem', fontWeight: 600, fontFamily: "'Space Grotesk', sans-serif", marginTop: '4px' }}>{step.label}</div>
                 </div>
@@ -294,6 +308,7 @@ export default function NightVisionDealerships() {
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                margin: '32px auto 0 auto',
                 transition: 'all 0.2s ease',
               }}
             >
@@ -420,6 +435,47 @@ export default function NightVisionDealerships() {
         /* Search input placeholder */
         .search-input::placeholder {
           color: rgba(255, 255, 255, 0.45) !important;
+        }
+
+        /* Center Join Force Card & Parent Section */
+        .dealership-join-section,
+        .join-force-wrapper,
+        .apply-section {
+          display: flex !important;
+          justify-content: center !important;
+          align-items: center !important;
+          width: 100% !important;
+          padding: 60px 20px !important;
+          box-sizing: border-box !important;
+        }
+
+        .join-force-card,
+        .dealership-cta-box,
+        .apply-content-inner {
+          margin-left: auto !important;
+          margin-right: auto !important;
+          max-width: 1000px !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+          text-align: center !important;
+        }
+
+        .apply-title {
+          text-align: center !important;
+          margin-bottom: 12px !important;
+        }
+
+        .apply-desc {
+          text-align: center !important;
+          max-width: 600px !important;
+          margin: 0 auto 32px auto !important;
+        }
+
+        .btn-apply {
+          margin: 32px auto 0 auto !important;
+          display: inline-flex !important;
+          justify-content: center !important;
+          align-items: center !important;
         }
 
         /* Responsive Layout Breaks */
