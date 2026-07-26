@@ -46,8 +46,19 @@ export default function NightVisionDealerships() {
   });
 
   return (
-    <div className="dealers-directory-page dealers-page-container" style={{ background: '#0a0a0a', minHeight: '100vh', width: '100%' }}>
-      {/* 1. GREEN HERO BANNER (Height & Button Visibility) */}
+    <div
+      className="dealers-directory-page dealers-page dealers-container page-wrapper"
+      style={{
+        width: '100%',
+        maxWidth: '100%',
+        margin: 0,
+        padding: 0,
+        background: '#0a0a0a',
+        minHeight: '100vh',
+        boxSizing: 'border-box',
+      }}
+    >
+      {/* 1. FULL-BLEED GREEN HERO BANNER */}
       <PageHeroBanner
         title="OUR DEALER NETWORK"
         subtitle="Expanding across Nepal. Locate an authorized surveillance specialist near you or join our elite distribution network."
@@ -297,15 +308,38 @@ export default function NightVisionDealerships() {
 
       {/* 5. PAGE STYLING & RESPONSIVE CSS */}
       <style>{`
-        /* Standardized Left Container Alignment */
-        .dealers-page-container,
+        /* Full-Bleed Outer Page Reset */
+        .dealers-directory-page,
+        .dealers-page,
+        .dealers-container,
+        .page-wrapper {
+          width: 100% !important;
+          max-width: 100% !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          box-sizing: border-box !important;
+        }
+
+        /* Full Bleed Green Hero Banner */
+        .hero-banner,
+        .page-hero-banner,
+        .products-banner-redesign {
+          width: 100% !important;
+          max-width: 100% !important;
+          border-radius: 0 !important;
+          margin: 0 !important;
+          box-sizing: border-box !important;
+        }
+
+        /* Standardized Header Guide-Line Alignment */
         .hero-banner-inner,
-        .dealers-section-inner {
-          max-width: 1200px !important;
+        .dealers-section-inner,
+        .directory-header-wrapper {
+          max-width: 1400px !important;
           margin-left: auto !important;
           margin-right: auto !important;
-          padding-left: 32px !important;
-          padding-right: 32px !important;
+          padding-left: 5% !important;
+          padding-right: 5% !important;
           box-sizing: border-box !important;
           width: 100% !important;
         }
@@ -363,13 +397,13 @@ export default function NightVisionDealerships() {
           width: 100% !important;
         }
 
-        /* Hide Debug Tags & Raw Slugs */
+        /* Hide Top-Right Debug Tags & Raw Slugs */
+        .dealer-card [class*="authorized"],
+        .dealer-card [class*="slug"],
         .dealer-card .dealer-auth-tag,
         .dealer-card .dealer-slug,
         .dealer-card .slug-tag,
-        .dealer-card .dealer-id,
-        .dealer-card span[class*="authorized"],
-        .dealer-card div[class*="authorized"] {
+        .dealer-card .dealer-id {
           display: none !important;
         }
 
@@ -404,7 +438,6 @@ export default function NightVisionDealerships() {
           .steps-grid {
             grid-template-columns: 1fr !important;
           }
-          .dealers-page-container,
           .hero-banner-inner,
           .dealers-section-inner {
             padding-left: 16px !important;
