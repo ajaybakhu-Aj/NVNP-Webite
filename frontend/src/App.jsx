@@ -178,7 +178,6 @@ function App() {
     >
       {!hideHeaderFooter && <Header />}
       {!hideHeaderFooter && <GlobalSocialSidebar />}
-      {!hideHeaderFooter && isAdmin && <GlobalTrafficSidebar />}
       {!hideHeaderFooter && <FloatingChatbot />}
 
       <Routes>
