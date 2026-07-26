@@ -14243,7 +14243,10 @@ html.light .footer-sub-brand-left a[href="/"]:hover {
 .dealership-section-inner,
 .dealers-section-inner,
 .hero-banner-inner,
-.directory-header-wrapper {
+.directory-header-wrapper,
+.blog-page-container,
+.blog-hero-inner,
+.articles-grid-container {
   max-width: 1200px !important;
   width: 100% !important;
   margin-left: auto !important;
@@ -14252,3 +14255,4 @@ html.light .footer-sub-brand-left a[href="/"]:hover {
   padding-right: 24px !important;
   box-sizing: border-box !important;
 }
+
