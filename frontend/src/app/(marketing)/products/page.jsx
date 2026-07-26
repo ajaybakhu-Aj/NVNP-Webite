@@ -85,26 +85,21 @@ export default function NightVision() {
       <PageHeroBanner
         title="OUR PRODUCTS"
         subtitle="Advanced surveillance architecture engineered for uncompromising vigilance."
-      />
-
-
-      {/* PRODUCTS SECTION */}
-      <section className="products-layout">
-        {/* MOBILE / TABLET FILTER ACTION BAR */}
-        <div className="mobile-filter-bar">
+      >
+        <div className="banner-filter-action">
           <button
-            className="mobile-filter-toggle-btn"
+            className="banner-filter-toggle-btn"
             onClick={() => setIsMobileFilterOpen(true)}
           >
             <Icon name="sliders" size={16} />
             <span>FILTER</span>
             {maxPrice < 20000 && <span className="filter-badge">1</span>}
           </button>
-          <div className="mobile-product-count">
-            {filteredProducts.length} Systems
-          </div>
         </div>
+      </PageHeroBanner>
 
+      {/* PRODUCTS SECTION */}
+      <section className="products-layout">
         {/* MOBILE OFF-CANVAS FILTER DRAWER */}
         {isMobileFilterOpen && (
           <>

@@ -7430,6 +7430,42 @@ a {
   max-width: 640px;
 }
 
+/* Banner Filter Toggle Button (Inside Green Banner) */
+.banner-filter-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #0c0c0c;
+  color: #deffa4;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease;
+}
+
+.banner-filter-toggle-btn:hover {
+  background: #181a15;
+  color: #7CFC00;
+  border-color: #000;
+  transform: translateY(-1px);
+}
+
+.banner-filter-toggle-btn .filter-badge {
+  background: #94da32;
+  color: #000;
+  font-size: 11px;
+  font-weight: 800;
+  border-radius: 10px;
+  padding: 1px 7px;
+  margin-left: 4px;
+}
+
 @media screen and (max-width: 1023px) {
   .breadcrumbs-wrapper {
     padding: 8px 16px !important;
@@ -7444,7 +7480,7 @@ a {
   [class*="header-section"] {
     min-height: unset !important;
     height: auto !important;
-    padding: 16px 20px !important;
+    padding: 16px 20px 20px 20px !important;
     box-sizing: border-box;
   }
 
@@ -7465,43 +7501,39 @@ a {
   }
 
   .page-hero-banner-children {
-    margin-top: 8px !important;
+    margin-top: 12px !important;
   }
 
-  /* 2. Restore & Compact Mobile FILTER Button Bar */
-  .mobile-filter-bar {
-    display: flex !important;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 8px 16px !important;
-    background: #181a15;
-    border: 1px solid #434938;
-    border-radius: 4px;
-    margin: 0 0 12px 0 !important;
-    grid-column: 1 / -1;
-    height: auto !important;
+  /* 2. Completely Remove Lower Black Mobile Filter Box & Wrappers */
+  .mobile-filter-bar,
+  .filter-container,
+  .filter-section,
+  .shop-filters {
+    display: none !important;
+    height: 0 !important;
     min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
   }
 
   [class*="filter-box"],
-  [class*="filter-container"],
   [class*="filter-wrapper"] {
     min-height: 0 !important;
     height: auto !important;
   }
 
+  /* Zero-gap transition directly to Products Grid */
   .products-layout,
   .products-page .products-layout {
     grid-template-columns: 1fr !important;
-    gap: 12px !important;
+    gap: 16px !important;
     padding: 16px 16px 32px 16px !important;
     height: auto !important;
     min-height: 0 !important;
   }
 
-  /* Hide static sidebar on mobile (rendered inside drawer instead) */
+  /* Hide static sidebar on mobile (rendered inside off-canvas drawer instead) */
   .categories-sidebar,
   .products-page .categories-sidebar {
     display: none !important;
@@ -7513,39 +7545,11 @@ a {
     border: none !important;
     overflow: hidden !important;
   }
-
-  .mobile-filter-toggle-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #0c0d0a;
-    border: 1px solid #434938;
-    color: #deffa4;
-    padding: 6px 14px;
-    border-radius: 4px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .mobile-filter-toggle-btn:hover {
-    border-color: #94da32;
-    background: #181a15;
-  }
-
-  .mobile-product-count {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 12px;
-    color: #8d937f;
-    font-weight: 600;
-  }
 }
 
 @media (min-width: 1024px) {
-  .mobile-filter-bar {
+  .mobile-filter-bar,
+  .banner-filter-toggle-btn {
     display: none !important;
   }
 

@@ -110,16 +110,9 @@ export default function CategoryProductView({
         title={pageTitle.toUpperCase()}
         subtitle={pageDesc}
       >
-        <CatalogDownloadButton variant="header" categoryName={pageTitle} style={{ background: "#11140c", color: "#7CFC00", borderColor: "#11140c" }} />
-      </PageHeroBanner>
-
-
-      {/* MAIN LAYOUT */}
-      <section className="products-layout">
-        {/* MOBILE / TABLET FILTER ACTION BAR */}
-        <div className="mobile-filter-bar">
+        <div className="banner-filter-action" style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
           <button
-            className="mobile-filter-toggle-btn"
+            className="banner-filter-toggle-btn"
             onClick={() => setIsMobileFilterOpen(true)}
           >
             <Icon name="sliders" size={16} />
@@ -130,11 +123,12 @@ export default function CategoryProductView({
               </span>
             )}
           </button>
-          <div className="mobile-product-count">
-            {filteredProducts.length} Systems
-          </div>
+          <CatalogDownloadButton variant="header" categoryName={pageTitle} style={{ background: "#11140c", color: "#7CFC00", borderColor: "#11140c" }} />
         </div>
+      </PageHeroBanner>
 
+      {/* MAIN LAYOUT */}
+      <section className="products-layout">
         {/* MOBILE OFF-CANVAS FILTER DRAWER */}
         {isMobileFilterOpen && (
           <>
