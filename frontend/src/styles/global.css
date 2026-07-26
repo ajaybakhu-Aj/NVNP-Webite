@@ -7490,18 +7490,22 @@ a {
     padding: 8px 16px !important;
   }
 
-  /* 1. Green Banner Dimensions & Typography Balance */
+  /* 1. Green Banner Compact Fix & Primary Green Color */
   .page-hero-banner,
+  .products-banner-redesign,
   .products-hero-banner,
   .products-banner,
   .page-header,
+  .shop-banner,
+  .hero-banner,
   [class*="banner"],
   [class*="page-title"],
   [class*="header-section"] {
-    min-height: unset !important;
+    min-height: 0 !important;
     height: auto !important;
-    padding: 24px 20px 20px 20px !important;
+    padding: 16px 20px !important;
     box-sizing: border-box;
+    background-color: var(--primary-color, #7CFC00) !important;
   }
 
   .page-hero-banner-title,
@@ -7509,7 +7513,7 @@ a {
   [class*="page-title"] h1 {
     font-size: 1.6rem !important; /* 25.6px */
     letter-spacing: 0.02em !important;
-    color: #0a0a0a !important;
+    color: #000000 !important;
     font-weight: 800 !important;
     line-height: 1.2 !important;
     margin: 0 0 6px 0 !important;
@@ -7520,13 +7524,13 @@ a {
   [class*="page-title"] p {
     font-size: 0.9rem !important;
     line-height: 1.4 !important;
-    color: #1a1a1a !important;
+    color: #111111 !important;
     max-width: 90% !important;
-    margin: 0 !important;
+    margin: 0 0 12px 0 !important;
   }
 
   .page-hero-banner-children {
-    margin-top: 16px !important;
+    margin-top: 12px !important;
   }
 
   /* 2. Completely Remove Lower Black Mobile Filter Box & Wrappers */
