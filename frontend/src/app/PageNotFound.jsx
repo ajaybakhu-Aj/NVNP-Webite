@@ -241,8 +241,19 @@ export default function NotFound() {
                 placeholder="SEARCH WEBSITE..."
                 value={searchValue}
                 onChange={e => setSearchValue(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' && searchValue.trim()) {
+                    navigate(`/search?q=${encodeURIComponent(searchValue.trim())}`);
+                  }
+                }}
               />
-              <button style={{
+              <button 
+                onClick={() => {
+                  if (searchValue.trim()) {
+                    navigate(`/search?q=${encodeURIComponent(searchValue.trim())}`);
+                  }
+                }}
+                style={{
                 position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)",
                 background: "none", border: "none", cursor: "pointer",
                 color: COLORS.primary, fontSize: 18, display: "flex", alignItems: "center",

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Icon from "../../../utils/Icon";
-import { getAllGalleryItems } from "../../../utils/cmsDb";
+import { getAllGalleryItems, useSiteContents } from "../../../utils/cmsDb";
 import PageHeroBanner from "../../../components/ui/PageHeroBanner";
 
 const CATEGORIES = [
@@ -12,10 +12,11 @@ const CATEGORIES = [
 ];
 
 export default function GalleryPage() {
+  const contents = useSiteContents();
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedItem, setSelectedItem] = useState(null);
   const [galleryItems, setGalleryItems] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); l
 
   // Close Lightbox on Escape Key Press
   useEffect(() => {
@@ -42,8 +43,8 @@ export default function GalleryPage() {
   return (
     <div className="gallery-page">
       <PageHeroBanner
-        title="SURVEILLANCE MEDIA & FIELD DEPLOYMENTS"
-        subtitle="Explore installation logs, active control rooms, extreme environment thermals, and enterprise layouts deployed by NightVision across Nepal."
+        title={contents.galleryHeroTitle || "SURVEILLANCE MEDIA & FIELD DEPLOYMENTS"}
+        subtitle={contents.galleryHeroSubtitle || "Explore installation logs, active control rooms, extreme environment thermals, and enterprise layouts deployed by NightVision across Nepal."}
       />
 
       {/* Main Gallery Area */}
@@ -81,7 +82,7 @@ export default function GalleryPage() {
                 <div className="card-bracket bracket-tr" />
                 <div className="card-bracket bracket-bl" />
                 <div className="card-bracket bracket-br" />
-                
+
                 <div className="card-image-wrapper">
                   <img
                     src={item.img}
@@ -89,7 +90,7 @@ export default function GalleryPage() {
                     className="card-image"
                     loading="lazy"
                   />
-                  
+
                   {/* HUD Scan Overlay */}
                   <div className="card-hud-overlay">
                     <div className="hud-target-box" />
@@ -118,12 +119,12 @@ export default function GalleryPage() {
 
       {/* Lightbox / Preview Modal */}
       {selectedItem && (
-        <div 
-          className="lightbox-overlay" 
-          onClick={() => setSelectedItem(null)} 
-          style={{ 
-            display: "flex", 
-            justifyContent: "center", 
+        <div
+          className="lightbox-overlay"
+          onClick={() => setSelectedItem(null)}
+          style={{
+            display: "flex",
+            justifyContent: "center",
             alignItems: "center",
             position: "fixed",
             inset: 0,
@@ -133,17 +134,17 @@ export default function GalleryPage() {
             padding: "20px"
           }}
         >
-          <div 
-            className="lightbox-content" 
-            onClick={(e) => e.stopPropagation()} 
-            style={{ 
-              maxWidth: "90vw", 
-              maxHeight: "90vh", 
+          <div
+            className="lightbox-content"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              maxWidth: "90vw",
+              maxHeight: "90vh",
               width: "auto",
               height: "auto",
-              background: "none", 
-              border: "none", 
-              boxShadow: "none", 
+              background: "none",
+              border: "none",
+              boxShadow: "none",
               padding: 0,
               display: "flex",
               justifyContent: "center",
@@ -156,10 +157,10 @@ export default function GalleryPage() {
               onClick={() => setSelectedItem(null)}
               className="lightbox-close-btn"
               aria-label="Close Preview"
-              style={{ 
-                position: "absolute", 
-                top: "16px", 
-                right: "16px", 
+              style={{
+                position: "absolute",
+                top: "16px",
+                right: "16px",
                 background: "rgba(17, 20, 12, 0.85)",
                 border: "1px solid #94da32",
                 color: "#e2e4d5",

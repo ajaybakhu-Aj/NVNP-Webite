@@ -1,0 +1,33 @@
+# =========================================================================
+# NIGHTVISION CCTV - CPANEL .HTACCESS ROUTING
+# =========================================================================
+# INSTRUCTIONS:
+# 1. Rename this file to exactly ".htaccess" (with the dot)
+# 2. Place it in the ROOT of your subdomain directory (e.g. public_html/aj)
+# 3. Ensure your React "dist" files (index.html, assets folder) are ALSO in this root.
+# =========================================================================
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # ---------------------------------------------------------------------
+    # 1. DJANGO BACKEND ROUTING (PASSENGER)
+    # ---------------------------------------------------------------------
+    # If the request is for the API, Admin panel, Media, or Static files,
+    # let it pass through to the Python Passenger application.
+    RewriteCond %{REQUEST_URI} ^/api/ [OR]
+    RewriteCond %{REQUEST_URI} ^/admin/ [OR]
+    RewriteCond %{REQUEST_URI} ^/media/ [OR]
+    RewriteCond %{REQUEST_URI} ^/static/
+    RewriteRule ^(.*)$ - [L]
+
+    # ---------------------------------------------------------------------
+    # 2. REACT FRONTEND ROUTING (SINGLE PAGE APPLICATION)
+    # ---------------------------------------------------------------------
+    # For all other requests, if the file or directory does NOT exist on disk,
+    # redirect it to React's index.html. This prevents 404 errors when users
+    # refresh the page on React routes like /products or /cctv-setup.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.html [QSA,L]
+</IfModule>

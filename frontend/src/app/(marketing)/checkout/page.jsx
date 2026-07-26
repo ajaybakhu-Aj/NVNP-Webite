@@ -5,23 +5,23 @@ import { saveActivity } from "../../../utils/cmsDb";
 import Icon from "../../../utils/Icon";
 
 const C = {
-  bg: "#11140c",
-  bgContainer: "#1e2117",
-  bgHigh: "#282b21",
-  bgLow: "#1a1d14",
-  bgLowest: "#0c0f07",
-  surface: "#11140c",
-  surfaceVariant: "#33362c",
-  primary: "#deffa4",
-  secondary: "#94da32",
-  secondaryContainer: "#75b800",
-  outline: "#8d937f",
-  outlineVariant: "#434938",
-  onSurface: "#e2e4d5",
-  onSurfaceVariant: "#c3c9b3",
-  onSecondary: "#203700",
-  onPrimary: "#233600",
+  bg: "var(--nv-bg, #11140c)",
+  surface: "var(--nv-surface, #11140c)",
+  surfCont: "var(--nv-surfCont, #1e2117)",
+  surfHi: "var(--nv-surfHi, #282b21)",
+  surfHighest: "var(--nv-surfHighest, #33362c)",
+  surfLow: "var(--nv-surfLow, #0c0f07)",
+  onSurf: "var(--nv-onSurf, #e2e4d5)",
+  onSurfVar: "var(--nv-onSurfVar, #c3c9b3)",
+  primary: "var(--nv-primary, #deffa4)",
+  onPrimary: "var(--nv-onPrimary, #233600)",
+  secondary: "var(--nv-secondary, #94da32)",
+  outline: "var(--nv-outline, #8d937f)",
+  outlineVar: "var(--nv-outlineVar, #434938)",
+  sg: "'Space Grotesk', sans-serif",
+  pp: "'Poppins', sans-serif",
 };
+
 
 function FormField({ label, children }) {
   return (

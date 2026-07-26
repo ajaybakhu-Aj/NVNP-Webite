@@ -1,0 +1,37 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin:redirects_redirect_changelist' %}">Redirects</a>
+&rsaquo; Bulk CSV Importer
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main" style="max-width: 800px;">
+    <div class="module" style="padding: 20px; background: #fff; border: 1px solid #ccc; border-radius: 4px;">
+        <h2 style="margin-top: 0; color: #333;">Upload Redirects CSV</h2>
+        <p>Please select a CSV file to import legacy WordPress redirects. The CSV should contain the following headers:</p>
+        <ul style="margin-left: 20px; margin-bottom: 20px;">
+            <li><strong>from_url</strong>: The legacy path that needs redirecting (e.g. <code>/our-products/</code>).</li>
+            <li><strong>to_url</strong>: The target canonical path on the new site (e.g. <code>/products/</code>).</li>
+            <li><strong>type</strong> (optional): Redirect code (defaults to 301).</li>
+        </ul>
+
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div style="margin: 20px 0; padding: 25px; border: 2px dashed #999; background: #f9f9f9; text-align: center; border-radius: 6px;">
+                <label for="csv_file" style="display: block; margin-bottom: 15px; font-weight: bold; font-size: 14px;">Select CSV File:</label>
+                <input type="file" name="csv_file" id="csv_file" accept=".csv" required style="font-size: 14px;">
+            </div>
+            
+            <div class="submit-row" style="margin: 20px 0 0 0; padding: 15px 0; border-top: 1px solid #eee; display: flex; gap: 10px; background: transparent;">
+                <input type="submit" value="Upload & Parse Redirects" class="default" style="background: #417690; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                <a href="{% url 'admin:redirects_redirect_changelist' %}" style="display: inline-block; padding: 10px 20px; background: #e0e0e0; color: #333; text-decoration: none; border-radius: 4px; font-weight: bold;">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

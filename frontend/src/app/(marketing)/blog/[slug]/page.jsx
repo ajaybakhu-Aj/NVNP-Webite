@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import DOMPurify from "dompurify";
 import { getBlogBySlug, getAllBlogs } from "../../../../utils/cmsDb";
 import Icon from "../../../../utils/Icon";
 
@@ -28,38 +30,29 @@ export default function BlogDetail() {
       setItem(blog);
       if (blog) {
         getAllBlogs().then((all) => {
-          setRelatedItems(all.filter((e) => e.slug !== slug).slice(0, 2));
+          const others = all.filter((e) => e.slug !== slug);
+          const sameCategory = others.filter((e) => e.category === blog.category);
+          setRelatedItems((sameCategory.length > 0 ? sameCategory : others).slice(0, 3));
         });
       }
       setLoading(false);
     });
   }, [slug]);
 
-  useEffect(() => {
-    if (item) {
-      document.title = `${item.title} | NIGHTVISION™ Blog`;
-      let metaDescriptionTag = document.querySelector('meta[name="description"]');
-      if (!metaDescriptionTag) {
-        metaDescriptionTag = document.createElement('meta');
-        metaDescriptionTag.setAttribute('name', 'description');
-        document.head.appendChild(metaDescriptionTag);
-      }
-      metaDescriptionTag.setAttribute('content', item.excerpt || (item.content && item.content[0]) || "");
-    }
-  }, [item]);
+  // Removed manual DOM manipulation in favor of React Helmet Async
 
   if (loading) {
     return (
-      <div style={{ background: "#11140c", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", color: "#94da32", fontFamily: "Space Grotesk, sans-serif" }}>
+      <main style={{ background: "#11140c", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", color: "#94da32", fontFamily: "Space Grotesk, sans-serif" }}>
         DECRYPTING SECURE LOG FEED...
-      </div>
+      </main>
     );
   }
 
   // Fallback for invalid slug
   if (!item) {
     return (
-      <div className="event-not-found-container">
+      <main className="event-not-found-container" style={{ minHeight: "80vh" }}>
         <h1 className="event-not-found-title">BLOG NOT FOUND</h1>
         <p className="event-not-found-desc">
           The requested blog article could not be found.
@@ -68,27 +61,27 @@ export default function BlogDetail() {
           <IconArrowLeft />
           <span>Return to Blogs</span>
         </Link>
-      </div>
+      </main>
     );
   }
 
   return (
-    <div className="event-detail-container">
+    <article className="event-detail-container" style={{ minHeight: "1000px" }}>
+      <Helmet>
+        <title>{item.title} | NIGHTVISION™ Blog</title>
+        <meta name="description" content={item.excerpt || "Security intelligence news from NightVision."} />
+        <meta property="og:title" content={item.title} />
+        <meta property="og:description" content={item.excerpt || ""} />
+        <meta property="og:type" content="article" />
+      </Helmet>
+
       {/* SCANLINE OVERLAY */}
       <div className="scanline-overlay"></div>
 
-      {/* HERO BANNER */}
-      <section className="event-detail-hero" style={{ cursor: "zoom-in" }} onClick={() => setZoomImage(true)}>
-        <div className="event-detail-hero-bg">
-          <img
-            src={item.img}
-            alt={item.title}
-            className="event-detail-hero-img"
-          />
-        </div>
-        <div className="event-detail-hero-overlay"></div>
-        <div className="event-detail-hero-content">
-          <h1 className="event-detail-main-title">{item.title}</h1>
+      {/* HERO BANNER - TITLE ONLY */}
+      <section style={{ padding: "120px 5% 40px", background: "#0a0c07", borderBottom: "1px solid rgba(148, 218, 50, 0.1)" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+          <h1 className="event-detail-main-title" style={{ position: "relative", zIndex: 2, textShadow: "none", marginTop: 0 }}>{item.title}</h1>
         </div>
       </section>
 
@@ -124,11 +117,34 @@ export default function BlogDetail() {
             }}>{item.tag}</span>
           </div>
 
-          {item.content.map((paragraph, index) => (
-            <p key={index} className="event-detail-paragraph">
-              {paragraph}
-            </p>
-          ))}
+          {/* BLOG IMAGE BELOW TITLE */}
+          <div style={{ marginBottom: "40px", cursor: "zoom-in", borderRadius: "8px", overflow: "hidden", border: "1px solid rgba(148, 218, 50, 0.2)" }} onClick={() => setZoomImage(true)}>
+            <img 
+              src={item.img} 
+              alt={item.title} 
+              style={{ width: "100%", height: "auto", display: "block" }} 
+            />
+          </div>
+
+          {item.content.map((paragraph, index) => {
+            const block = typeof paragraph === "string" ? paragraph.trim() : "";
+            if (block.startsWith("<")) {
+              // Sanitize CMS/WordPress-migrated HTML before injecting it —
+              // strips scripts, event handlers, and javascript: URLs.
+              return (
+                <div
+                  key={index}
+                  className="blog-html-block"
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(block) }}
+                />
+              );
+            }
+            return (
+              <p key={index} className="event-detail-paragraph">
+                {paragraph}
+              </p>
+            );
+          })}
 
           <Link to="/blog" className="event-detail-back-btn">
             <IconArrowLeft />
@@ -209,47 +225,38 @@ export default function BlogDetail() {
               </div>
             )}
           </div>
-        </aside>
-      </div>
 
-      {/* RELATED INTELLIGENCE */}
-      {relatedItems.length > 0 && (
-        <section className="event-detail-related-section">
-          <h2 className="event-detail-related-heading">RELATED INTELLIGENCE</h2>
-          <div className="events-grid-layout" style={{ marginBottom: 0 }}>
-            {relatedItems.map((related) => (
-              <Link
-                key={related.id}
-                to={`/blog/${related.slug}`}
-                style={{ textDecoration: "none" }}
-              >
-                <article className="events-card-item">
-                  <div className="events-card-brackets"></div>
-                  <div className="events-card-brackets-br"></div>
-                  <div className="events-card-img-container">
+          {/* RELATED BLOGS SIDEBAR */}
+          {relatedItems.length > 0 && (
+            <div className="event-detail-ledger-card" style={{ marginTop: 20 }}>
+              <h3 className="event-detail-ledger-title">RELATED BLOGS</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                {relatedItems.map((related) => (
+                  <Link
+                    key={related.id}
+                    to={`/blog/${related.slug}`}
+                    style={{ textDecoration: "none", display: "flex", gap: "10px", alignItems: "center" }}
+                  >
                     <img
                       src={related.img}
                       alt={related.title}
-                      className="events-card-img"
+                      style={{ width: "80px", height: "60px", objectFit: "cover", borderRadius: "4px", border: "1px solid rgba(148, 218, 50, 0.2)" }}
                     />
-                    <span className="events-card-tag">{related.tag}</span>
-                  </div>
-                  <div className="events-card-body">
-                    <div className="events-card-meta">
-                      BLOG — BY {related.author}
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <span style={{ color: "#fff", fontSize: "13px", fontWeight: "600", lineHeight: "1.2", marginBottom: "4px" }}>
+                        {related.title}
+                      </span>
+                      <span style={{ color: "#94da32", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                        {related.date}
+                      </span>
                     </div>
-                    <h3 className="events-card-title">{related.title}</h3>
-                    <div className="events-card-link-action">
-                      <span>Read More</span>
-                      <IconArrowRight />
-                    </div>
-                  </div>
-                </article>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </aside>
+      </div>
 
       {/* Centered Lightbox Zoom Overlay */}
       {zoomImage && (
@@ -328,6 +335,6 @@ export default function BlogDetail() {
           </div>
         </div>
       )}
-    </div>
+    </article>
   );
 }

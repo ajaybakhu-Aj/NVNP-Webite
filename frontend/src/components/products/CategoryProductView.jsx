@@ -241,7 +241,7 @@ export default function CategoryProductView({
             boxShadow: "0 0 15px rgba(148, 218, 50, 0.15)",
             textAlign: "center"
           }}>
-            <h4 style={{ margin: "0 0 8px 0", fontSize: 14, fontFamily: "'Space Grotesk', sans-serif", color: "#fff", letterSpacing: 1 }}>
+            <h4 style={{ margin: "0 0 8px 0", fontSize: 14, fontFamily: "'Space Grotesk', sans-serif", color: "var(--nv-onSurf)", letterSpacing: 1 }}>
               CUSTOM SETUP
             </h4>
             <p style={{ color: "#8d937f", fontSize: 11, lineHeight: 1.5, marginBottom: 16 }}>

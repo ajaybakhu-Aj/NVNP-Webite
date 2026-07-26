@@ -18,10 +18,8 @@ export default function ProductCard({
   const { addToCart } = useContext(CartContext);
   const navigate = useNavigate();
 
-  const finalDesc = description || desc || "";
-
   const productPrice = price || 4500;
-  const productId = id || name.toLowerCase().replace(/\s+/g, "-");
+  const productId = id || (name ? name.toLowerCase().replace(/\s+/g, "-") : "product");
 
   const getSubheading = () => {
     if (cameraMp) {
@@ -67,53 +65,70 @@ export default function ProductCard({
   return (
     <Link
       to={`/product/${productId}`}
-      style={{ textDecoration: "none", color: "inherit", display: "block" }}
+      style={{ textDecoration: "none", color: "inherit", display: "block", width: "100%", height: "100%", boxSizing: "border-box" }}
     >
       <div
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{
           position: "relative",
-          background: colors.surfaceContainer,
-          padding: 16,
-          border: `1px solid ${colors.outlineVariant}`,
+          background: "#1e2117",
+          border: `1px solid ${hovered ? "#94da32" : "#434938"}`,
           overflow: "hidden",
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-start",
-          gap: 16,
-          transition: "border-color 0.3s ease",
-          borderColor: hovered ? colors.secondary : colors.outlineVariant,
+          justifyContent: "space-between",
+          boxSizing: "border-box",
+          width: "100%",
+          transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+          boxShadow: hovered ? "0 8px 24px rgba(148, 218, 50, 0.15)" : "none",
+          transform: hovered ? "translateY(-3px)" : "none",
         }}
       >
-        <div>
-          {/* SCANLINE */}
+        <div style={{ width: "100%", boxSizing: "border-box" }}>
+          {/* SCANLINE OVERLAY */}
           <div
             style={{
               position: "absolute",
               inset: 0,
               background:
                 "repeating-linear-gradient(transparent, transparent 3px, rgba(181,231,93,0.05) 4px)",
-              opacity: 0.1,
+              opacity: 0.08,
               pointerEvents: "none",
             }}
           />
 
-
-          {/* IMAGE CONTAINER */}
-          <div style={{ position: "relative", marginBottom: 24, overflow: "hidden", aspectRatio: "1/1", background: "#181a15", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          {/* IMAGE CONTAINER WITH UNIFIED FRAMING */}
+          <div
+            style={{
+              position: "relative",
+              overflow: "hidden",
+              aspectRatio: "1/1",
+              background: "#0c0f07",
+              borderBottom: "1px solid #434938",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              boxSizing: "border-box",
+              padding: "16px",
+            }}
+          >
             <img
               src={img}
               alt={name}
               style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                filter: hovered ? "grayscale(0%)" : "grayscale(100%)",
-                transition: "filter 0.5s, transform 0.5s ease",
-                transform: hovered ? "scale(1.02)" : "scale(1)",
+                maxWidth: "100%",
+                maxHeight: "100%",
+                width: "auto",
+                height: "auto",
+                objectFit: "contain",
+                filter: hovered ? "grayscale(0%)" : "grayscale(30%)",
+                transition: "all 0.5s ease",
+                transform: hovered ? "scale(1.06)" : "scale(1)",
               }}
+              loading="lazy"
             />
             {badge && (
               <span
@@ -122,14 +137,16 @@ export default function ProductCard({
                   top: 12,
                   left: 12,
                   zIndex: 3,
-                  background: colors.secondary,
-                  color: "#111",
+                  background: "#94da32",
+                  color: "#111111",
                   fontSize: 10,
-                  fontWeight: 700,
+                  fontWeight: 800,
                   padding: "4px 8px",
                   whiteSpace: "nowrap",
                   textTransform: "uppercase",
-                  letterSpacing: "0.5px",
+                  letterSpacing: "1px",
+                  borderRadius: "2px",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
                 }}
               >
                 {badge}
@@ -137,82 +154,92 @@ export default function ProductCard({
             )}
           </div>
 
-          {/* HEADER */}
+          {/* PRODUCT DETAILS */}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              marginBottom: 12,
+              padding: "16px 16px 12px 16px",
               position: "relative",
               zIndex: 2,
+              width: "100%",
+              boxSizing: "border-box",
             }}
           >
             <h4
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: 20,
-                fontWeight: 600,
-                letterSpacing: 1,
-                color: "#fff",
+                fontSize: 17,
+                fontWeight: 700,
+                letterSpacing: 0.5,
+                color: hovered ? "#deffa4" : "#ffffff",
                 margin: 0,
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
+                width: "100%",
+                transition: "color 0.2s ease",
               }}
               title={name}
             >
               {name}
             </h4>
+
             <div
               style={{
                 fontSize: 12,
-                color: colors.secondary,
+                color: "#94da32",
                 fontFamily: "'Space Grotesk', sans-serif",
                 marginTop: 4,
+                fontWeight: 600,
                 letterSpacing: 0.5,
-                height: 20,
                 display: "flex",
                 alignItems: "center",
               }}
             >
               {subheadingText}
             </div>
-            
+
             {/* PRICE */}
             <div
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
-                color: colors.secondary,
-                fontSize: 18,
-                fontWeight: 700,
-                marginTop: 4,
-                marginBottom: 12,
+                color: "#94da32",
+                fontSize: 19,
+                fontWeight: 800,
+                marginTop: 6,
+                letterSpacing: 0.5,
               }}
             >
-              रू {productPrice.toLocaleString("en-IN")}
+              रू {productPrice ? productPrice.toLocaleString("en-IN") : "4,500"}
             </div>
           </div>
-
         </div>
 
-        {/* BUTTON */}
-        <button
-          onClick={handleAddToCart}
-          style={{
-            width: "100%",
-            padding: 12,
-            background: hovered ? colors.secondary : "transparent",
-            border: `1px solid ${colors.secondary}`,
-            color: hovered ? "#111" : colors.secondary,
-            fontWeight: 700,
-            cursor: "pointer",
-            transition: "all 0.2s",
-            fontFamily: "'Inter', sans-serif",
-            letterSpacing: 1,
-          }}
-        >
-          ADD TO CART
-        </button>
+        {/* BUTTON AT BOTTOM */}
+        <div style={{ padding: "0 16px 16px 16px", width: "100%", boxSizing: "border-box" }}>
+          <button
+            onClick={handleAddToCart}
+            style={{
+              width: "100%",
+              boxSizing: "border-box",
+              padding: "12px",
+              background: hovered ? "#94da32" : "transparent",
+              border: `2px solid #94da32`,
+              color: hovered ? "#111111" : "#94da32",
+              fontWeight: 800,
+              fontSize: 12,
+              cursor: "pointer",
+              transition: "all 0.25s ease",
+              fontFamily: "'Poppins', sans-serif",
+              letterSpacing: 1.5,
+              textTransform: "uppercase",
+              borderRadius: "9999px",
+            }}
+          >
+            ADD TO CART
+          </button>
+        </div>
       </div>
     </Link>
   );

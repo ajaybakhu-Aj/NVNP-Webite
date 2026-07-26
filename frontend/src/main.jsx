@@ -5,23 +5,31 @@ import App from "./App";
 import "./index.css";
 
 import { BrowserRouter } from "react-router-dom";
-
 import { CartProvider } from "./Context/CartContext";
+import { HelmetProvider } from "react-helmet-async";
+import { ThemeProvider } from "./Context/ThemeContext";
 
 ReactDOM.createRoot(
   document.getElementById("root")
 ).render(
   <React.StrictMode>
-
     <BrowserRouter>
-
-      <CartProvider>
-
-        <App />
-
-      </CartProvider>
-
+      <HelmetProvider>
+        <CartProvider>
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
+        </CartProvider>
+      </HelmetProvider>
     </BrowserRouter>
-
   </React.StrictMode>
 );
+
+// Unregister any dangling service workers from previous PWA attempts
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+    for (let registration of registrations) {
+      registration.unregister();
+    }
+  });
+}

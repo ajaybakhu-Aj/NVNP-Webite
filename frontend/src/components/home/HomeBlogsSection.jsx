@@ -51,7 +51,7 @@ export default function HomeBlogsSection() {
               fontSize: "clamp(28px, 5vw, 40px)", 
               fontWeight: 700, 
               letterSpacing: 2, 
-              color: "#fff",
+              color: colors.onSurface,
               margin: "0 0 16px 0",
               textTransform: "uppercase"
             }}
@@ -339,7 +339,7 @@ export default function HomeBlogsSection() {
                           style={{ 
                             fontFamily: "'Space Grotesk', sans-serif", 
                             fontSize: 16, 
-                            color: "#fff", 
+                            color: colors.onSurface, 
                             fontWeight: 700, 
                             lineHeight: 1.4, 
                             margin: "0 0 12px 0",

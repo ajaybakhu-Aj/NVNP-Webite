@@ -1,0 +1,1 @@
+import{a as r}from"./rolldown-runtime-W-g5d7YK.js";import{N as a,et as i}from"./vendor-wBY6MeWi.js";var s=r(i(),1),t=a();function l(){return(0,t.jsxs)("div",{style:{padding:"40px"},children:[(0,t.jsx)("h1",{children:"CctvInstallationLalitpur Page"}),(0,t.jsx)("p",{children:"Path: src/app/(marketing)/cctv-installation/lalitpur/page.jsx"})]})}export{l as default};

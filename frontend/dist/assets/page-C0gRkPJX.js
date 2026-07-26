@@ -1,0 +1,1 @@
+import{a as e}from"./rolldown-runtime-W-g5d7YK.js";import{N as s,et as t}from"./vendor-wBY6MeWi.js";var o=e(t(),1),r=s();function n(){return(0,r.jsxs)("div",{style:{padding:"40px"},children:[(0,r.jsx)("h1",{children:"BlogCategoryBusinessSecurity Page"}),(0,r.jsx)("p",{children:"Path: src/app/(marketing)/blog/category/business-security/page.jsx"})]})}export{n as default};

@@ -102,7 +102,7 @@ export default function MyProfilePage() {
             <Icon name="admin_panel_settings" size={42} />
           </div>
 
-          <h3 className="auth-label" style={{ fontSize: "14px", marginBottom: "20px", color: "#ffffff", borderBottom: "1px solid rgba(255, 255, 255, 0.05)", paddingBottom: "8px" }}>
+          <h3 className="auth-label" style={{ fontSize: "14px", marginBottom: "20px", color: "var(--nv-onSurf)", borderBottom: "1px solid rgba(255, 255, 255, 0.05)", paddingBottom: "8px" }}>
             User Specifications
           </h3>
 
@@ -129,7 +129,7 @@ export default function MyProfilePage() {
           <div className="auth-card-corner bottom-left" />
           <div className="auth-card-corner bottom-right" />
 
-          <h3 className="auth-label" style={{ fontSize: "14px", marginBottom: "20px", color: "#ffffff", borderBottom: "1px solid rgba(255, 255, 255, 0.05)", paddingBottom: "8px" }}>
+          <h3 className="auth-label" style={{ fontSize: "14px", marginBottom: "20px", color: "var(--nv-onSurf)", borderBottom: "1px solid rgba(255, 255, 255, 0.05)", paddingBottom: "8px" }}>
             Update Profile
           </h3>
 

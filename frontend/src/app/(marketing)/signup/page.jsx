@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Icon from "../../../utils/Icon";
-import { getAllAdmins } from "../../../utils/cmsDb";
+import { authSignup } from "../../../utils/api";
 
 export default function SignUpPage() {
   const [fullName, setFullName] = useState("");
@@ -71,32 +71,26 @@ export default function SignUpPage() {
 
     setIsLoading(true);
 
-    // Prevent administrator registration via the signup page
-    getAllAdmins()
-      .then((adminsList) => {
-        const isAdminEmail = adminsList.some(
-          (x) => x.email.toLowerCase() === email.toLowerCase()
+    authSignup(fullName.trim(), email.trim(), password)
+      .then((result) => {
+        setIsLoading(false);
+        // Signup also logs the user in (Django session).
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ ...result.user, loginTime: new Date().toISOString() })
         );
-        if (isAdminEmail) {
-          setIsLoading(false);
-          setError("Administrator accounts cannot be created via the sign-up page.");
-          return;
-        }
-
-        // Simulate account registration
+        setSuccess("Account registered successfully! Redirecting...");
         setTimeout(() => {
-          setIsLoading(false);
-          setSuccess("Account registered successfully! Redirecting to login...");
-          
-          // Navigate to login page
-          setTimeout(() => {
-            navigate("/login");
-          }, 1500);
+          window.location.href = "/";
         }, 1200);
       })
-      .catch(() => {
+      .catch((err) => {
         setIsLoading(false);
-        setError("Error validating registration. Please try again.");
+        if (err.status === 409) {
+          setError("An account with this email already exists.");
+        } else {
+          setError(err.message || "Error creating account. Please try again.");
+        }
       });
   };
 
