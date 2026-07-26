@@ -35,11 +35,11 @@ export default function PageHeroBanner({ title, subtitle, centered = false, chil
       <div
         className="page-hero-banner-container hero-banner-inner contact-hero-inner news-hero-inner hero-banner-content"
         style={{
-          maxWidth: centered ? 1400 : "100%",
-          marginLeft: centered ? "auto" : 0,
-          marginRight: centered ? "auto" : "auto",
+          maxWidth: 1400,
+          marginLeft: "auto",
+          marginRight: "auto",
           width: "100%",
-          paddingLeft: centered ? "5%" : 0,
+          paddingLeft: "5%",
           paddingRight: "5%",
           boxSizing: "border-box",
           textAlign: centered ? "center" : "left",

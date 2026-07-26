@@ -115,21 +115,29 @@ export default function EventsPage() {
           text-align: left !important;
         }
 
-        /* Inner Hero Container Alignment (Flush Far-Left Edge) */
+        /* Unified Grid Container across Hero Inner, Filter Bar, and Cards Grid */
+        .news-page-container,
         .news-hero-inner,
         .news-hero-banner > div,
         .events-hero-header > div,
-        .news-hero > div,
-        .hero-banner-content,
-        .contact-hero-banner > div,
-        .hero-banner > div,
-        .page-hero-banner-container {
-          max-width: 100% !important;
+        .news-filter-bar,
+        .events-search-filter-bar,
+        .filter-search-wrapper,
+        .news-cards-grid,
+        .events-grid-layout,
+        .news-grid-layout {
+          max-width: 1400px !important;
           width: 100% !important;
-          margin-left: 0 !important;
-          padding-left: 0 !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          padding-left: 5% !important;
           padding-right: 5% !important;
           box-sizing: border-box !important;
+        }
+
+        .news-hero-inner,
+        .news-hero-banner > div,
+        .events-hero-header > div {
           text-align: left !important;
           display: flex !important;
           flex-direction: column !important;
@@ -163,17 +171,10 @@ export default function EventsPage() {
           text-align: left !important;
         }
 
-        /* Lower Filter Bar & Search Container Alignment */
+        /* Lower Filter Bar Layout */
         .events-search-filter-bar,
         .news-filter-bar,
         .filter-search-wrapper {
-          max-width: 1400px !important;
-          width: 100% !important;
-          margin-left: auto !important;
-          margin-right: auto !important;
-          padding-left: 5% !important;
-          padding-right: 5% !important;
-          box-sizing: border-box !important;
           display: flex !important;
           justify-content: space-between !important;
           align-items: center !important;
@@ -186,18 +187,6 @@ export default function EventsPage() {
           background-color: #b5e75d !important;
           color: #000000 !important;
           font-weight: 700 !important;
-        }
-
-        /* Grid Alignment */
-        .events-grid-layout,
-        .news-grid-layout {
-          max-width: 1400px !important;
-          width: 100% !important;
-          margin-left: auto !important;
-          margin-right: auto !important;
-          padding-left: 5% !important;
-          padding-right: 5% !important;
-          box-sizing: border-box !important;
         }
       `}</style>
     </div>
