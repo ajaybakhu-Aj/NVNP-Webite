@@ -7430,35 +7430,44 @@ a {
   max-width: 640px;
 }
 
-/* Banner Filter Toggle Button (Inside Green Banner) */
+/* Banner Filter & Utility Control Bar Layout */
+.banner-filter-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 16px;
+}
+
 .banner-filter-toggle-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #0c0c0c;
+  background: #0d0d0d;
   color: #deffa4;
-  border: 1px solid rgba(0, 0, 0, 0.4);
-  padding: 8px 16px;
-  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 8px 18px;
+  border-radius: 20px;
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 13px;
+  font-size: 0.85rem;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.05em;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
 }
 
 .banner-filter-toggle-btn:hover {
   background: #181a15;
   color: #7CFC00;
-  border-color: #000;
+  border-color: #000000;
   transform: translateY(-1px);
 }
 
 .banner-filter-toggle-btn .filter-badge {
-  background: #94da32;
-  color: #000;
+  background: #7CFC00;
+  color: #000000;
   font-size: 11px;
   font-weight: 800;
   border-radius: 10px;
@@ -7466,13 +7475,24 @@ a {
   margin-left: 4px;
 }
 
+.banner-product-count {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0a0a0a;
+  opacity: 0.85;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
 @media screen and (max-width: 1023px) {
   .breadcrumbs-wrapper {
     padding: 8px 16px !important;
   }
 
-  /* 1. Green Banner Compact Fix */
+  /* 1. Green Banner Dimensions & Typography Balance */
   .page-hero-banner,
+  .products-hero-banner,
   .products-banner,
   .page-header,
   [class*="banner"],
@@ -7480,16 +7500,19 @@ a {
   [class*="header-section"] {
     min-height: unset !important;
     height: auto !important;
-    padding: 16px 20px 20px 20px !important;
+    padding: 24px 20px 20px 20px !important;
     box-sizing: border-box;
   }
 
   .page-hero-banner-title,
   [class*="banner"] h1,
   [class*="page-title"] h1 {
-    font-size: 1.5rem !important; /* 24px */
+    font-size: 1.6rem !important; /* 25.6px */
+    letter-spacing: 0.02em !important;
+    color: #0a0a0a !important;
+    font-weight: 800 !important;
     line-height: 1.2 !important;
-    margin: 0 0 4px 0 !important;
+    margin: 0 0 6px 0 !important;
   }
 
   .page-hero-banner-subtitle,
@@ -7497,11 +7520,13 @@ a {
   [class*="page-title"] p {
     font-size: 0.9rem !important;
     line-height: 1.4 !important;
+    color: #1a1a1a !important;
+    max-width: 90% !important;
     margin: 0 !important;
   }
 
   .page-hero-banner-children {
-    margin-top: 12px !important;
+    margin-top: 16px !important;
   }
 
   /* 2. Completely Remove Lower Black Mobile Filter Box & Wrappers */
@@ -7523,11 +7548,12 @@ a {
     height: auto !important;
   }
 
-  /* Zero-gap transition directly to Products Grid */
+  /* 3. Product Grid Boundary Connection (Zero gap) */
   .products-layout,
   .products-page .products-layout {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
+    margin-top: 0 !important;
     padding: 16px 16px 32px 16px !important;
     height: auto !important;
     min-height: 0 !important;

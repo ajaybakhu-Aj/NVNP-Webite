@@ -110,20 +110,26 @@ export default function CategoryProductView({
         title={pageTitle.toUpperCase()}
         subtitle={pageDesc}
       >
-        <div className="banner-filter-action" style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-          <button
-            className="banner-filter-toggle-btn"
-            onClick={() => setIsMobileFilterOpen(true)}
-          >
-            <Icon name="sliders" size={16} />
-            <span>FILTER</span>
-            {(maxPrice < 20000 || categoryKey || productTypeKey || tagKey) && (
-              <span className="filter-badge">
-                {(maxPrice < 20000 ? 1 : 0) + (categoryKey ? 1 : 0) + (productTypeKey ? 1 : 0) + (tagKey ? 1 : 0)}
-              </span>
-            )}
-          </button>
-          <CatalogDownloadButton variant="header" categoryName={pageTitle} style={{ background: "#11140c", color: "#7CFC00", borderColor: "#11140c" }} />
+        <div className="banner-filter-action">
+          <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+            <button
+              className="banner-filter-toggle-btn"
+              onClick={() => setIsMobileFilterOpen(true)}
+            >
+              <Icon name="sliders" size={16} style={{ color: "#7CFC00" }} />
+              <span>FILTER</span>
+              {(maxPrice < 20000 || categoryKey || productTypeKey || tagKey) && (
+                <span className="filter-badge">
+                  {(maxPrice < 20000 ? 1 : 0) + (categoryKey ? 1 : 0) + (productTypeKey ? 1 : 0) + (tagKey ? 1 : 0)}
+                </span>
+              )}
+            </button>
+            <CatalogDownloadButton variant="header" categoryName={pageTitle} style={{ background: "#11140c", color: "#7CFC00", borderColor: "#11140c" }} />
+          </div>
+
+          <span className="banner-product-count">
+            {filteredProducts.length} SYSTEMS
+          </span>
         </div>
       </PageHeroBanner>
 

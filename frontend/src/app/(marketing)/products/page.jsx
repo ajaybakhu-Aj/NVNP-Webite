@@ -91,10 +91,14 @@ export default function NightVision() {
             className="banner-filter-toggle-btn"
             onClick={() => setIsMobileFilterOpen(true)}
           >
-            <Icon name="sliders" size={16} />
+            <Icon name="sliders" size={16} style={{ color: "#7CFC00" }} />
             <span>FILTER</span>
             {maxPrice < 20000 && <span className="filter-badge">1</span>}
           </button>
+
+          <span className="banner-product-count">
+            {filteredProducts.length} SYSTEMS
+          </span>
         </div>
       </PageHeroBanner>
 
