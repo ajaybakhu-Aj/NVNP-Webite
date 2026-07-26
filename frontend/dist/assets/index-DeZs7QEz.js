@@ -1753,12 +1753,23 @@ Built to withstand severe temperatures and physical stress, these cards are opti
           box-sizing: border-box !important;
         }
 
+        .news-hero-banner,
+        .events-hero-header,
+        .page-hero-banner {
+          padding-top: 0 !important;
+          padding-bottom: 0 !important;
+        }
+
         .news-hero-inner,
         .news-hero-banner > div,
-        .events-hero-header > div {
-          text-align: left !important;
+        .events-hero-header > div,
+        .page-hero-banner-container {
+          padding-top: 24px !important;    /* Reduced from large top gap */
+          padding-bottom: 28px !important; /* Balanced bottom padding */
           display: flex !important;
           flex-direction: column !important;
+          justify-content: center !important; /* Keep vertically centered or higher */
+          text-align: left !important;
           align-items: flex-start !important;
         }
 
