@@ -7,50 +7,169 @@ export default function DealerSection() {
   const contents = useSiteContents();
   const homeSettings = useHomepageSettings();
 
+  const primaryBgColor = colors.secondary || "#94da32";
+
   return (
     <section
-      className="relative w-full py-16 md:py-24 overflow-hidden border-t border-b border-[#434938]"
       style={{
-        background: colors.secondary || "#94da32",
+        position: "relative",
+        width: "100%",
+        padding: "70px 0",
+        overflow: "hidden",
+        backgroundColor: primaryBgColor,
+        borderTop: "1px solid rgba(0, 0, 0, 0.15)",
+        borderBottom: "1px solid rgba(0, 0, 0, 0.15)",
+        boxSizing: "border-box",
       }}
     >
-      {/* HIGH VISIBILITY BACKGROUND WATERMARK TEXT */}
+      <style>
+        {`
+          .dealer-btn-primary {
+            background-color: #0c0e08;
+            color: #94da32;
+            border: 2px solid #0c0e08;
+            padding: 16px 32px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+          }
+          .dealer-btn-primary:hover {
+            background-color: #171c10;
+            color: #ffffff;
+            border-color: #0c0e08;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35);
+          }
+          .dealer-btn-secondary {
+            background-color: transparent;
+            color: #0c0e08;
+            border: 2px solid #0c0e08;
+            padding: 16px 32px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+          }
+          .dealer-btn-secondary:hover {
+            background-color: #0c0e08;
+            color: #94da32;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+          }
+        `}
+      </style>
+
+      {/* SUBTLE WATERMARK BACKGROUND TEXT LAYER */}
       <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden select-none"
-        style={{ opacity: 0.28 }}
+        style={{
+          position: "absolute",
+          inset: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          pointerEvents: "none",
+          overflow: "hidden",
+          userSelect: "none",
+          opacity: 0.09,
+          zIndex: 1,
+        }}
       >
         <span
-          className="font-['Space_Grotesk'] font-extrabold text-[clamp(90px,25vw,340px)] tracking-tighter uppercase whitespace-nowrap leading-none"
           style={{
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontWeight: 900,
+            fontSize: "clamp(100px, 26vw, 360px)",
+            letterSpacing: "-4px",
+            textTransform: "uppercase",
+            whiteSpace: "nowrap",
+            lineHeight: 1,
             color: "#000000",
-            WebkitTextStroke: "2px rgba(0,0,0,0.5)",
           }}
         >
           {contents.expandNetworkBgText || "DEALER"}
         </span>
       </div>
 
-      {/* MAIN CONTENT */}
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 relative z-10 text-center w-full box-border">
-        <h2 className="font-['Space_Grotesk'] text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#111111] mb-4 leading-tight uppercase">
+      {/* FOREGROUND CONTENT LAYER */}
+      <div
+        style={{
+          maxWidth: 1280,
+          margin: "0 auto",
+          padding: "0 24px",
+          position: "relative",
+          zIndex: 10,
+          textAlign: "center",
+          width: "100%",
+          boxSizing: "border-box",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {/* TITLE */}
+        <h2
+          style={{
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontSize: "clamp(28px, 4.5vw, 54px)",
+            fontWeight: 800,
+            letterSpacing: "-0.5px",
+            color: "#0c0e08",
+            margin: "0 0 16px 0",
+            lineHeight: 1.15,
+            textTransform: "uppercase",
+          }}
+        >
           {contents.expandNetworkTitle || "EXPAND THE NETWORK"}
         </h2>
 
-        <p className="max-w-[640px] mx-auto text-sm sm:text-base md:text-lg font-medium text-[#1a2300] mb-8 leading-relaxed">
-          {contents.expandNetworkSubtitle || "Join Nepal's premier surveillance ecosystem. Partner with NightVision to distribute high-tier AI cameras, thermal systems, and perimeter hardware across all 7 provinces."}
+        {/* SUBTITLE */}
+        <p
+          style={{
+            maxWidth: 680,
+            margin: "0 auto 36px auto",
+            fontSize: "clamp(14px, 2vw, 17px)",
+            fontWeight: 600,
+            lineHeight: 1.6,
+            color: "#182405",
+            fontFamily: "'Inter', sans-serif",
+          }}
+        >
+          {contents.expandNetworkSubtitle ||
+            "Join Nepal's premier surveillance ecosystem. Partner with NightVision to distribute high-tier AI cameras, thermal systems, and perimeter hardware across all 7 provinces."}
         </p>
 
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-          <Link
-            to="/dealership"
-            className="w-full sm:w-auto px-8 py-4 bg-[#111111] text-[#94da32] font-bold text-xs sm:text-sm tracking-widest uppercase rounded-full no-underline hover:bg-[#233600] hover:text-[#ffffff] transition-all shadow-lg shadow-[rgba(0,0,0,0.3)] text-center"
-          >
+        {/* CTA BUTTONS CONTAINER */}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 18,
+            width: "100%",
+          }}
+        >
+          <Link to="/dealership" className="dealer-btn-primary">
             BECOME A CERTIFIED DEALER
           </Link>
-          <Link
-            to="/contact"
-            className="w-full sm:w-auto px-8 py-4 bg-transparent border-2 border-[#111111] text-[#111111] font-bold text-xs sm:text-sm tracking-widest uppercase rounded-full no-underline hover:bg-[#111111] hover:text-[#94da32] transition-all text-center"
-          >
+          <Link to="/contact" className="dealer-btn-secondary">
             CONTACT PARTNER TEAM
           </Link>
         </div>

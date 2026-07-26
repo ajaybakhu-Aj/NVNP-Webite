@@ -10,29 +10,38 @@ export default function TestimonialsSection() {
 
   const defaultItems = [
     {
+      text: "The mobile app integration is flawless. I can monitor my store from anywhere in the world with zero lag.",
+      author: "A. SHRESTHA — RETAIL GROUP",
+      role: "Enterprise Partner"
+    },
+    {
       text: "NightVision's 4K AI surveillance system has revolutionized security across our commercial facilities in Biratnagar. Zero downtime, crystal-clear night vision.",
-      author: "Pawan Shrestha — Managing Director, Nano Tek",
+      author: "PAWAN SHRESTHA — MANAGING DIRECTOR, NANO TEK",
       role: "Enterprise Partner"
     },
     {
       text: "The encrypted telemetry and instant threat detection response give our retail chain complete peace of mind. Exceptional build quality and local Nepal support.",
-      author: "Sanjay Dhanusha — Systems Integrator, White Pearl",
+      author: "SANJAY DHANUSHA — SYSTEMS INTEGRATOR, WHITE PEARL",
       role: "Madhesh Logistics Lead"
     },
     {
       text: "Deployment was seamless across our Lumbini warehouse locations. NightVision cameras withstand extreme weather while delivering live 60fps streaming.",
-      author: "Siddharth Lumbini — Operations Head, SR Suppliers",
+      author: "SIDDHARTH LUMBINI — OPERATIONS HEAD, SR SUPPLIERS",
       role: "Logistics Partner"
     }
   ];
 
   const items = contents.testimonials && contents.testimonials.length > 0 ? contents.testimonials : defaultItems;
 
-  // Auto-slide carousel every 5 seconds
+  // Clean quote text to avoid duplicate quotes
+  const currentQuote = (items[currentIndex]?.text || "")
+    .replace(/^["'\s]+|["'\s]+$/g, "");
+
+  // Auto-slide carousel every 5.5 seconds
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % items.length);
-    }, 5000);
+    }, 5500);
     return () => clearInterval(timer);
   }, [items.length]);
 
@@ -45,66 +54,207 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-[var(--nv-bg,#11140c)] border-t border-b border-[#434938] w-full overflow-hidden">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 w-full box-border">
-        {/* HEADER */}
-        <h2 className="font-['Space_Grotesk'] text-2xl sm:text-4xl font-bold tracking-wider text-center text-[var(--nv-onSurf,#e2e4d5)] uppercase mb-10">
+    <section
+      style={{
+        padding: "80px 0",
+        background: "#0a0c08",
+        borderTop: "1px solid rgba(148, 218, 50, 0.15)",
+        borderBottom: "1px solid rgba(148, 218, 50, 0.15)",
+        width: "100%",
+        overflow: "hidden",
+      }}
+    >
+      <style>
+        {`
+          .testimonial-card-glass {
+            background: rgba(18, 20, 15, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(148, 218, 50, 0.35);
+            border-radius: 20px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(148, 218, 50, 0.12);
+            transition: all 0.35s ease;
+          }
+          .testimonial-card-glass:hover {
+            border-color: rgba(148, 218, 50, 0.65);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(148, 218, 50, 0.2);
+          }
+          .t-nav-btn {
+            background: rgba(26, 29, 22, 0.9);
+            border: 1px solid rgba(148, 218, 50, 0.35);
+            color: #94da32;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+          }
+          .t-nav-btn:hover {
+            background: #94da32;
+            color: #0a0c08;
+            border-color: #94da32;
+            box-shadow: 0 0 12px rgba(148, 218, 50, 0.45);
+          }
+          .t-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0;
+          }
+          .t-dot.active {
+            background: #94da32;
+            width: 24px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(148, 218, 50, 0.5);
+          }
+        `}
+      </style>
+
+      {/* CENTERED MAIN CONTAINER */}
+      <div
+        style={{
+          maxWidth: 1280,
+          margin: "0 auto",
+          padding: "0 24px",
+          width: "100%",
+          boxSizing: "border-box",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {/* SECTION HEADER */}
+        <h2
+          style={{
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontSize: "clamp(26px, 4vw, 38px)",
+            fontWeight: 800,
+            letterSpacing: "2px",
+            color: "#ffffff",
+            textTransform: "uppercase",
+            textAlign: "center",
+            margin: "0 0 40px 0",
+          }}
+        >
           {contents.testimonialsTitle || "TRUSTED BY LEADERS"}
         </h2>
 
-        {/* CAROUSEL CONTAINER */}
-        <div className="relative max-w-[900px] mx-auto bg-[#1e2117] border border-[#94da32] p-6 sm:p-10 rounded-lg shadow-xl shadow-[rgba(148,218,50,0.1)] transition-all">
+        {/* TESTIMONIAL GLASS CARD CONTAINER */}
+        <div
+          className="testimonial-card-glass"
+          style={{
+            maxWidth: 820,
+            width: "100%",
+            padding: "40px 32px 32px 32px",
+            boxSizing: "border-box",
+            margin: "0 auto",
+            position: "relative",
+          }}
+        >
           {/* STAR RATING */}
-          <div className="flex justify-center gap-1.5 color-[#94da32] mb-6">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: 6,
+              marginBottom: 24,
+            }}
+          >
             {[...Array(5)].map((_, i) => (
-              <Icon key={i} name="star" size={22} fill style={{ color: colors.secondary }} />
+              <Icon key={i} name="star" size={22} fill style={{ color: "#94da32" }} />
             ))}
           </div>
 
-          {/* TESTIMONIAL CONTENT */}
-          <div className="min-h-[140px] flex flex-col justify-center text-center">
-            <p className="text-sm sm:text-base md:text-lg italic leading-relaxed text-[#e2e4d5] mb-6 font-['Poppins']">
-              "{items[currentIndex]?.text}"
+          {/* QUOTE TEXT */}
+          <div
+            style={{
+              minHeight: 110,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "clamp(16px, 2.5vw, 20px)",
+                fontStyle: "italic",
+                lineHeight: 1.65,
+                color: "#ffffff",
+                fontFamily: "'Inter', sans-serif",
+                margin: "0 0 24px 0",
+                maxWidth: 720,
+              }}
+            >
+              "{currentQuote}"
             </p>
-            <div className="font-['Space_Grotesk'] font-bold text-xs sm:text-sm tracking-wider uppercase text-[#94da32]">
-              {items[currentIndex]?.author}
+
+            {/* AUTHOR */}
+            <div
+              style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontWeight: 700,
+                fontSize: 14,
+                letterSpacing: 1.5,
+                textTransform: "uppercase",
+                color: "#94da32",
+              }}
+            >
+              — {items[currentIndex]?.author}
             </div>
+
             {items[currentIndex]?.role && (
-              <div className="text-[11px] text-[#c3c9b3] tracking-widest uppercase mt-1">
+              <div
+                style={{
+                  fontSize: 11,
+                  color: "#8d937f",
+                  letterSpacing: 1.5,
+                  textTransform: "uppercase",
+                  marginTop: 4,
+                  fontFamily: "'Space Grotesk', sans-serif",
+                }}
+              >
                 {items[currentIndex]?.role}
               </div>
             )}
           </div>
 
-          {/* CAROUSEL CONTROLS */}
-          <div className="flex justify-between items-center mt-8 pt-4 border-t border-[#434938]">
-            <button
-              onClick={handlePrev}
-              className="p-2 rounded-full border border-[#434938] bg-[#181a15] text-[#94da32] hover:bg-[#94da32] hover:text-[#111] transition-all cursor-pointer"
-              aria-label="Previous testimonial"
-            >
+          {/* CONTROLS BAR (CHEVRONS & DOTS) */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: 32,
+              paddingTop: 20,
+              borderTop: "1px solid rgba(255, 255, 255, 0.08)",
+            }}
+          >
+            <button onClick={handlePrev} className="t-nav-btn" aria-label="Previous Testimonial">
               <ChevronLeft size={20} />
             </button>
 
             {/* DOT INDICATORS */}
-            <div className="flex gap-2">
+            <div style={{ display: "flex", gap: 8 }}>
               {items.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => setCurrentIndex(idx)}
-                  className={`w-3 h-3 rounded-full transition-all cursor-pointer ${
-                    currentIndex === idx ? "bg-[#94da32] w-6" : "bg-[#434938] hover:bg-[#8d937f]"
-                  }`}
+                  className={`t-dot ${currentIndex === idx ? "active" : ""}`}
                   aria-label={`Go to slide ${idx + 1}`}
                 />
               ))}
             </div>
 
-            <button
-              onClick={handleNext}
-              className="p-2 rounded-full border border-[#434938] bg-[#181a15] text-[#94da32] hover:bg-[#94da32] hover:text-[#111] transition-all cursor-pointer"
-              aria-label="Next testimonial"
-            >
+            <button onClick={handleNext} className="t-nav-btn" aria-label="Next Testimonial">
               <ChevronRight size={20} />
             </button>
           </div>
