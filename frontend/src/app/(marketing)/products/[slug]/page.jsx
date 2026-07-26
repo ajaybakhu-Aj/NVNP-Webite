@@ -8,6 +8,31 @@ import { useSiteContents } from "../../../../utils/cmsDb";
 import CatalogDownloadButton from "../../../../components/ui/CatalogDownloadButton";
 import Breadcrumbs from "../../../../components/ui/Breadcrumbs";
 
+const getEmbedVideoDetails = (url) => {
+  if (!url || typeof url !== "string") return null;
+  const trimmed = url.trim();
+  if (!trimmed) return null;
+
+  const ytRegex = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = trimmed.match(ytRegex);
+
+  if (match && match[2] && match[2].length === 11) {
+    const videoId = match[2];
+    return {
+      type: "youtube",
+      embedUrl: `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`,
+      thumbUrl: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+      videoId
+    };
+  }
+
+  return {
+    type: "direct",
+    embedUrl: trimmed,
+    thumbUrl: null
+  };
+};
+
 export default function ProductDetail() {
   const { slug } = useParams();
   const { addToCart } = useContext(CartContext);
@@ -19,6 +44,7 @@ export default function ProductDetail() {
   const [loading, setLoading] = useState(true);
 
   const [activeImg, setActiveImg] = useState("");
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [activeColor, setActiveColor] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("specs");
@@ -169,6 +195,42 @@ export default function ProductDetail() {
     );
   }
 
+  const videoDetails = getEmbedVideoDetails(product?.videoUrl);
+  const rawThumbs = Array.isArray(product?.thumbs) && product.thumbs.length > 0
+    ? product.thumbs
+    : product?.img ? [product.img] : [];
+
+  const slides = [];
+
+  if (videoDetails && product.videoIsFirst !== false) {
+    slides.push({
+      id: "video-slide",
+      type: "video",
+      videoDetails,
+      thumb: videoDetails.thumbUrl || rawThumbs[0] || product?.img
+    });
+  }
+
+  rawThumbs.forEach((imgUrl, i) => {
+    slides.push({
+      id: `img-${i}`,
+      type: "image",
+      url: imgUrl,
+      thumb: imgUrl
+    });
+  });
+
+  if (videoDetails && product.videoIsFirst === false) {
+    slides.push({
+      id: "video-slide",
+      type: "video",
+      videoDetails,
+      thumb: videoDetails.thumbUrl || rawThumbs[0] || product?.img
+    });
+  }
+
+  const currentSlide = slides[activeSlideIndex] || slides[0];
+
   return (
     <article className="product-detail-page" style={{ minHeight: "1200px" }}>
       <Helmet>
@@ -191,21 +253,83 @@ export default function ProductDetail() {
         <div className="detail-grid">
           {/* Gallery Column */}
           <div className="gallery-col">
-            <div className="main-img-box">
-              <img src={activeImg} alt={product.name} className="main-img" />
+            <div
+              className="main-img-box"
+              style={currentSlide?.type === "video" ? { padding: 0, overflow: "hidden", background: "#000", aspectRatio: "16 / 9", height: "auto" } : {}}
+            >
+              {currentSlide?.type === "video" ? (
+                currentSlide.videoDetails.type === "youtube" ? (
+                  <iframe
+                    src={currentSlide.videoDetails.embedUrl}
+                    title={product.name}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    loading="lazy"
+                    style={{ width: "100%", height: "100%", minHeight: "340px", border: "none", display: "block" }}
+                  />
+                ) : (
+                  <video
+                    src={currentSlide.videoDetails.embedUrl}
+                    controls
+                    autoPlay
+                    style={{ width: "100%", height: "100%", minHeight: "340px", objectFit: "contain", display: "block" }}
+                  />
+                )
+              ) : (
+                <img src={currentSlide?.url || activeImg} alt={product.name} className="main-img" />
+              )}
+
               {product.badge && (
                 <span className="product-badge">
                   {product.badge}
                 </span>
               )}
             </div>
-            {product.thumbs && product.thumbs.length > 1 && (
+
+            {slides.length > 1 && (
               <div className="thumbs-list">
-                {product.thumbs.map((t, idx) => (
-                  <button key={idx} onClick={() => setActiveImg(t)} className={`thumb-btn ${activeImg === t ? "active" : ""}`}>
-                    <img src={t} alt="" className="thumb-img" />
-                  </button>
-                ))}
+                {slides.map((s, idx) => {
+                  const isActive = activeSlideIndex === idx;
+                  return (
+                    <button
+                      key={s.id || idx}
+                      type="button"
+                      onClick={() => setActiveSlideIndex(idx)}
+                      className={`thumb-btn ${isActive ? "active" : ""}`}
+                      style={{ position: "relative", overflow: "hidden" }}
+                    >
+                      <img src={s.thumb || product.img} alt="" className="thumb-img" />
+                      {s.type === "video" && (
+                        <div
+                          style={{
+                            position: "absolute",
+                            inset: 0,
+                            background: "rgba(0,0,0,0.45)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center"
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: 28,
+                              height: 20,
+                              background: "#ff0000",
+                              borderRadius: 4,
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              boxShadow: "0 2px 6px rgba(0,0,0,0.5)"
+                            }}
+                          >
+                            <span style={{ color: "#fff", fontSize: 10, marginLeft: 2 }}>▶</span>
+                          </div>
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>

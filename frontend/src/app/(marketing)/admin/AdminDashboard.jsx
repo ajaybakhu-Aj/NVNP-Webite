@@ -433,6 +433,8 @@ export default function AdminDashboard() {
       } else if (type === "product") {
         setFormData({
           ...item,
+          videoUrl: item.videoUrl || "",
+          videoIsFirst: item.videoIsFirst !== undefined ? item.videoIsFirst : true,
           specTable: Array.isArray(item.specTable) ? item.specTable : [],
           customThumbs: item.thumbs ? item.thumbs.filter(t => t !== item.img) : []
         });
@@ -446,6 +448,8 @@ export default function AdminDashboard() {
         setFormData({
           id: "",
           name: "",
+          videoUrl: "",
+          videoIsFirst: true,
           category: "IP CCTV Cameras",
           productType: "Indoor CCTV Cameras",
           cameraMp: "4 MP",
@@ -4462,6 +4466,31 @@ export default function AdminDashboard() {
                           ))}
                         </div>
                       )}
+                    </div>
+
+                    {/* PRODUCT VIDEO SECTION */}
+                    <div style={{ border: `1px solid ${C.outlineVar}`, padding: 20, borderRadius: 6, background: C.surfCont }}>
+                      <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6, color: C.secondary, letterSpacing: 1 }}>PRODUCT VIDEO URL OR UPLOAD</label>
+                      <p style={{ fontSize: 12, color: C.onSurfVar, margin: "0 0 12px 0" }}>Enter YouTube video URL (e.g. https://www.youtube.com/watch?v=...) or upload an MP4 video file.</p>
+                      <MediaPicker
+                        label="Product Video URL / Upload"
+                        value={formData.videoUrl || ""}
+                        altText="Product Video"
+                        addLog={addLog}
+                        onChange={(url) => setFormData(prev => ({ ...prev, videoUrl: url }))}
+                      />
+                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 14 }}>
+                        <input
+                          type="checkbox"
+                          id="videoIsFirst"
+                          checked={formData.videoIsFirst !== false}
+                          onChange={(e) => setFormData(prev => ({ ...prev, videoIsFirst: e.target.checked }))}
+                          style={{ width: 16, height: 16, accentColor: C.secondary, cursor: "pointer" }}
+                        />
+                        <label htmlFor="videoIsFirst" style={{ fontSize: 12, color: C.onSurf, cursor: "pointer", userSelect: "none", fontWeight: 600 }}>
+                          Make Video the 1st Item in Gallery (Default: Checked)
+                        </label>
+                      </div>
                     </div>
 
                     <div>

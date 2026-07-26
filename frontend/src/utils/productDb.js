@@ -18,6 +18,8 @@ const SEED_PRODUCTS = [
     badge: "TOP RATED",
     status: "IN STOCK",
     description: "Panoramic 360° coverage with ultra-sensitive low-light sensor and two-way talk.",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    videoIsFirst: true,
     longDesc: "The Y1-Ratri Dome is a compact plug-and-play Wi-Fi surveillance camera designed for high-resolution residential and small business security. Featuring a 360° pan-tilt view, it allows you to monitor an entire room from a single device. Its night vision capability is enhanced with our proprietary Ratri low-light sensor.",
     bodySectionLabel: "TECHNICAL DOCUMENTATION",
     bodySectionTitle: "SYSTEM SPECIFICATIONS & FIELD ARCHITECTURE",
