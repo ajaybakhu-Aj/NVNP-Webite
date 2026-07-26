@@ -2,7 +2,7 @@ import React from "react";
 
 /**
  * PageHeroBanner — Universal page header banner matching the Products page style.
- * Green (#75b800) background strip with dark text.
+ * Green (#7CFC00) background strip with dark text, compact dimensions, and utility bar.
  *
  * Props:
  *  - title    {string}   Page title (uppercase bold)
@@ -12,33 +12,34 @@ import React from "react";
 export default function PageHeroBanner({ title, subtitle, children }) {
   return (
     <section
-      className="page-hero-banner"
+      className="products-banner-redesign page-hero-banner"
       style={{
-        background: "var(--banner-bg, #94da32)",
-        borderBottom: "1px solid var(--banner-bg-dark, #75b800)",
-        padding: "40px 24px 36px",
+        background: "#7CFC00",
+        padding: "24px 20px",
         width: "100%",
         boxSizing: "border-box",
+        minHeight: "auto",
+        height: "auto",
       }}
     >
       <div
         className="page-hero-banner-container"
         style={{
-          maxWidth: 1280,
+          maxWidth: 1200,
           margin: "0 auto",
         }}
       >
         <h1
           className="page-hero-banner-title"
           style={{
-            fontSize: "clamp(28px, 5vw, 48px)",
-            fontWeight: 800,
             color: "#000000",
-            fontFamily: "'Space Grotesk', sans-serif",
-            textTransform: "uppercase",
-            letterSpacing: "1px",
-            lineHeight: 1.1,
+            fontSize: "1.6rem",
+            fontWeight: 800,
             margin: "0 0 8px 0",
+            letterSpacing: "0.03em",
+            textTransform: "uppercase",
+            fontFamily: "'Space Grotesk', sans-serif",
+            lineHeight: 1.2,
           }}
         >
           {title}
@@ -48,12 +49,12 @@ export default function PageHeroBanner({ title, subtitle, children }) {
           <p
             className="page-hero-banner-subtitle"
             style={{
-              fontSize: 14,
-              color: "#000000",
+              color: "#111111",
+              fontSize: "0.9rem",
+              lineHeight: 1.4,
+              margin: children ? "0 0 20px 0" : "0",
+              maxWidth: "90%",
               fontFamily: "'Poppins', sans-serif",
-              lineHeight: 1.6,
-              margin: children ? "0 0 16px 0" : "0",
-              maxWidth: 640,
             }}
           >
             {subtitle}
@@ -61,7 +62,7 @@ export default function PageHeroBanner({ title, subtitle, children }) {
         )}
 
         {children && (
-          <div className="page-hero-banner-children" style={{ marginTop: 16 }}>
+          <div className="page-hero-banner-children">
             {children}
           </div>
         )}

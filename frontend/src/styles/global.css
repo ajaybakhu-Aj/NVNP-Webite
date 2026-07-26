@@ -7575,7 +7575,8 @@ a {
 
 @media (min-width: 1024px) {
   .mobile-filter-bar,
-  .banner-filter-toggle-btn {
+  .banner-filter-toggle-btn,
+  .filter-trigger-btn {
     display: none !important;
   }
 

@@ -110,16 +110,34 @@ export default function CategoryProductView({
         title={pageTitle.toUpperCase()}
         subtitle={pageDesc}
       >
-        <div className="banner-filter-action">
+        {/* Balanced Bottom Utility Row */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+            {/* Filter Button */}
             <button
-              className="banner-filter-toggle-btn"
+              className="filter-trigger-btn"
               onClick={() => setIsMobileFilterOpen(true)}
+              style={{
+                background: "#0d0d0d",
+                color: "#ffffff",
+                border: "1px solid rgba(0,0,0,0.25)",
+                padding: "8px 18px",
+                borderRadius: "20px",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                fontSize: "0.82rem",
+                fontWeight: 700,
+                letterSpacing: "0.05em",
+                cursor: "pointer"
+              }}
             >
-              <Icon name="sliders" size={16} style={{ color: "#7CFC00" }} />
-              <span>FILTER</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7CFC00" strokeWidth="2.5">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+              </svg>
+              FILTER
               {(maxPrice < 20000 || categoryKey || productTypeKey || tagKey) && (
-                <span className="filter-badge">
+                <span className="filter-badge" style={{ background: "#7CFC00", color: "#000", fontSize: "11px", fontWeight: 800, borderRadius: "10px", padding: "1px 7px", marginLeft: "4px" }}>
                   {(maxPrice < 20000 ? 1 : 0) + (categoryKey ? 1 : 0) + (productTypeKey ? 1 : 0) + (tagKey ? 1 : 0)}
                 </span>
               )}
@@ -127,9 +145,22 @@ export default function CategoryProductView({
             <CatalogDownloadButton variant="header" categoryName={pageTitle} style={{ background: "#11140c", color: "#7CFC00", borderColor: "#11140c" }} />
           </div>
 
-          <span className="banner-product-count">
+          {/* Systems Count Pill */}
+          <div
+            className="banner-count-pill"
+            style={{
+              background: "rgba(0, 0, 0, 0.08)",
+              border: "1px solid rgba(0, 0, 0, 0.1)",
+              padding: "6px 14px",
+              borderRadius: "16px",
+              color: "#000000",
+              fontSize: "0.78rem",
+              fontWeight: 700,
+              letterSpacing: "0.05em"
+            }}
+          >
             {filteredProducts.length} SYSTEMS
-          </span>
+          </div>
         </div>
       </PageHeroBanner>
 
