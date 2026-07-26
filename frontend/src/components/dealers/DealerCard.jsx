@@ -9,10 +9,6 @@ export default function DealerCard({ dealer, isHovered, onMouseEnter, onMouseLea
       onMouseLeave={onMouseLeave}
       className={`dealer-card ${isHovered ? 'hovered' : ''}`}
     >
-      <div className="dealer-auth-tag">
-        {String(dealer.id).padStart(3, '0')}_AUTHORIZED
-      </div>
-
       {dealer.isPlatinum && (
         <div className="dealer-platinum-tag">
           <span className="platinum-dot" />

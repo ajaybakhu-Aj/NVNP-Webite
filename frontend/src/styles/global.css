@@ -14175,4 +14175,11 @@ html.light .footer-sub-brand-left a[href="/"]:hover {
   }
 }
 
-
+/* Hide dealer slug / ID badges */
+.dealer-card .dealer-auth-tag,
+.dealer-card .dealer-slug,
+.dealer-card .dealer-id,
+.dealer-card span[class*="authorized"],
+.dealer-card div[class*="authorized"] {
+  display: none !important;
+}
