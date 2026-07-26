@@ -139,7 +139,10 @@ export default function EventsPage() {
 
         .news-hero-banner,
         .events-hero-header,
+        .news-header-section,
         .page-hero-banner {
+          min-height: auto !important;
+          height: auto !important;
           padding-top: 0 !important;
           padding-bottom: 0 !important;
         }
@@ -147,12 +150,15 @@ export default function EventsPage() {
         .news-hero-inner,
         .news-hero-banner > div,
         .events-hero-header > div,
-        .page-hero-banner-container {
-          padding-top: 24px !important;    /* Reduced from large top gap */
-          padding-bottom: 28px !important; /* Balanced bottom padding */
+        .page-hero-banner-container,
+        .news-header-section > div {
+          min-height: auto !important;
+          height: auto !important;
+          padding-top: 18px !important;    /* Reduced top padding */
+          padding-bottom: 18px !important; /* Reduced bottom padding */
           display: flex !important;
           flex-direction: column !important;
-          justify-content: center !important; /* Keep vertically centered or higher */
+          justify-content: center !important;
           text-align: left !important;
           align-items: flex-start !important;
         }
