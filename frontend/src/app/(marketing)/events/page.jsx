@@ -103,8 +103,9 @@ export default function EventsPage() {
       </main>
 
       <style>{`
-        /* Hero Banner Container & Background */
+        /* Hero Banner Container & Background (100% Viewport Width) */
         .news-hero-banner,
+        .news-header-section,
         .events-hero-header,
         .news-hero {
           width: 100% !important;
@@ -115,15 +116,13 @@ export default function EventsPage() {
           text-align: left !important;
         }
 
-        /* Unified Grid Container across Hero Inner, Filter Bar, and Cards Grid */
-        .news-page-container,
+        /* Standardized Site-Wide Left Guide Line */
         .news-hero-inner,
-        .news-hero-banner > div,
-        .events-hero-header > div,
         .news-filter-bar,
+        .news-cards-grid,
+        .news-page-container > div,
         .events-search-filter-bar,
         .filter-search-wrapper,
-        .news-cards-grid,
         .events-grid-layout,
         .news-grid-layout {
           max-width: 1400px !important;
