@@ -14116,3 +14116,49 @@ html.light .footer-sub-brand-left a[href="/"]:hover {
   box-sizing: border-box !important;
   width: 100% !important;
 }
+
+/* UNIVERSAL MOBILE MEDIA QUERY FIX: Prevent feature card & footer overlap */
+@media screen and (max-width: 1023px) {
+  .features-section,
+  .trust-badges-wrapper,
+  .value-proposition-section,
+  .pre-footer-trust-badges,
+  .value-props-container,
+  .trust-badges,
+  footer,
+  .site-footer,
+  .app-footer {
+    position: relative !important;
+    top: auto !important;
+    transform: none !important;
+    float: none !important;
+    clear: both !important;
+    height: auto !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Force vertical block stacking with distinct margins */
+  .features-section,
+  .trust-badges-wrapper,
+  .value-proposition-section,
+  .pre-footer-trust-badges,
+  .value-props-container,
+  .trust-badges {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 32px !important;
+    margin-bottom: 32px !important;
+    padding-bottom: 40px !important;
+  }
+
+  footer,
+  .site-footer,
+  .app-footer {
+    margin-top: 24px !important;
+    padding-top: 40px !important;
+    z-index: 1 !important;
+  }
+}
+
