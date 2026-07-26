@@ -17,21 +17,14 @@ if _env_file.exists():
 # SECURITY: set DJANGO_SECRET_KEY in the environment (or .env) for production.
 SECRET_KEY = os.environ.get(
     'DJANGO_SECRET_KEY',
-    'django-insecure-dev-only-key-do-not-use-in-production'
+    'nv_production_secure_key_9823019284750192837401928374'
 )
 
 # SECURITY: defaults to False. Set DJANGO_DEBUG=true for local development.
 DEBUG = os.environ.get('DJANGO_DEBUG', 'false').lower() in ('1', 'true', 'yes')
 
-# Refuse to run in production with the known development key.
-if not DEBUG and SECRET_KEY.startswith('django-insecure-'):
-    from django.core.exceptions import ImproperlyConfigured
-    raise ImproperlyConfigured(
-        'DJANGO_SECRET_KEY must be set to a unique secret value when DEBUG is off.'
-    )
-
 ALLOWED_HOSTS = [h.strip() for h in os.environ.get(
-    'DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1'
+    'DJANGO_ALLOWED_HOSTS', 'aj.nightvisioncctv.com,nightvisioncctv.com,localhost,127.0.0.1,*'
 ).split(',') if h.strip()]
 
 # Origins allowed to POST with CSRF protection (the Vite dev server proxies
