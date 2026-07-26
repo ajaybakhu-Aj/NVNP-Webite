@@ -7,16 +7,17 @@ import React from "react";
  * Props:
  *  - title    {string}   Page title (uppercase bold)
  *  - subtitle {string}   Optional subtitle / description
+ *  - centered {boolean}  Optional boolean to center title & subtitle text
  *  - children           Optional extra content (e.g. filter button)
  */
-export default function PageHeroBanner({ title, subtitle, children }) {
+export default function PageHeroBanner({ title, subtitle, centered = false, children }) {
   return (
     <section
       className="products-banner-redesign page-hero-banner products-banner products-hero-banner page-title-section hero-banner shop-header"
       style={{
         backgroundColor: "var(--primary-color, #7CFC00)",
-        paddingTop: "24px",
-        paddingBottom: "24px",
+        paddingTop: "20px",
+        paddingBottom: "20px",
         paddingLeft: 0,
         paddingRight: 0,
         width: "100%",
@@ -40,6 +41,10 @@ export default function PageHeroBanner({ title, subtitle, children }) {
           paddingLeft: 24,
           paddingRight: 24,
           boxSizing: "border-box",
+          textAlign: centered ? "center" : "left",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: centered ? "center" : "flex-start",
         }}
       >
         <h1
@@ -49,7 +54,7 @@ export default function PageHeroBanner({ title, subtitle, children }) {
             fontSize: "1.6rem",
             fontWeight: 800,
             marginTop: 0,
-            marginBottom: "8px",
+            marginBottom: "6px",
             letterSpacing: "0.03em",
             textTransform: "uppercase",
             fontFamily: "'Space Grotesk', sans-serif",
@@ -64,11 +69,11 @@ export default function PageHeroBanner({ title, subtitle, children }) {
             className="page-hero-banner-subtitle"
             style={{
               color: "#111111",
-              fontSize: "0.9rem",
+              fontSize: "0.85rem",
               lineHeight: 1.4,
               marginTop: 0,
               marginBottom: children ? "16px" : "0px",
-              maxWidth: "90%",
+              maxWidth: centered ? "800px" : "90%",
               fontFamily: "'Poppins', sans-serif",
             }}
           >
