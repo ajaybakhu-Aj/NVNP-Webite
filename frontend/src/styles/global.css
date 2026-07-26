@@ -7505,14 +7505,12 @@ a {
   gap: 24px;
 }
 
-.product-detail-page .system-code {
-  font-family: 'Space Grotesk', monospace;
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: var(--nv-secondary, #94da32);
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 8px;
+.product-detail-page .system-code,
+.system-code,
+.product-sku,
+.sku-wrapper,
+.product-meta-code {
+  display: none !important;
 }
 
 .product-detail-page .detail-title {

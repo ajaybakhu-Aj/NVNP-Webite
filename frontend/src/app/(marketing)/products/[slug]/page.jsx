@@ -213,10 +213,7 @@ export default function ProductDetail() {
           {/* Details Column */}
           <div className="details-col">
             <div>
-              <span className="system-code">
-                SYSTEM_CODE: {product.code}
-              </span>
-              <h1 className="detail-title">
+              <h1 className="detail-title" style={{ marginTop: 0 }}>
                 {product.name}
               </h1>
               <p className="detail-desc">
