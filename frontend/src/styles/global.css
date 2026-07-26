@@ -9310,20 +9310,23 @@ a {
 .app-header {
   position: sticky;
   top: 0;
-  z-index: 999;
+  z-index: 9999;
   width: 100%;
-  background: rgba(19, 19, 19, 0.98);
+  background: rgba(15, 15, 15, 0.92);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid #2a2a2a;
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   font-family: 'Poppins', sans-serif;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .app-header .header-container {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding-top: 32px;
-  padding-bottom: 32px;
+  padding-top: 16px;
+  padding-bottom: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -9335,7 +9338,7 @@ a {
 .app-header .header-left {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 32px;
   flex: 1;
   min-width: 0;
 }
@@ -9358,7 +9361,7 @@ a {
   align-items: center;
   gap: 24px;
   margin-left: auto;
-  margin-right: 32px;
+  margin-right: 24px;
 }
 
 .app-header .nav-link {
@@ -9370,16 +9373,17 @@ a {
   font-weight: 600;
   text-transform: uppercase;
   transition: color 0.2s ease;
+  white-space: nowrap;
 }
 
 .app-header .nav-link:hover {
-  color: var(--nv-primary, #b5e75d);
+  color: var(--nv-secondary, #94da32);
 }
 
 .app-header .header-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 18px;
 }
 
 .app-header .header-icon {
@@ -9389,7 +9393,7 @@ a {
 }
 
 .app-header .header-icon:hover {
-  color: var(--nv-primary, #b5e75d);
+  color: var(--nv-secondary, #94da32);
 }
 
 .app-header .support-hotline {
@@ -9401,10 +9405,11 @@ a {
   font-family: 'Poppins', sans-serif;
   letter-spacing: 1px;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .app-header .hotline-label {
-  color: var(--nv-primary, #b5e75d);
+  color: var(--nv-secondary, #94da32);
   font-weight: 600;
 }
 
@@ -9428,7 +9433,7 @@ a {
 }
 
 .app-header .cart-link:hover .cart-icon {
-  color: var(--nv-primary, #b5e75d);
+  color: var(--nv-secondary, #94da32);
 }
 
 .app-header .search-trigger {
@@ -9445,7 +9450,7 @@ a {
 }
 
 .app-header .search-trigger:hover .search-icon {
-  color: var(--nv-primary, #b5e75d);
+  color: var(--nv-secondary, #94da32);
 }
 
 .app-header .account-wrapper {
@@ -9466,7 +9471,7 @@ a {
 }
 
 .app-header .account-trigger:hover .account-icon {
-  color: var(--nv-primary, #b5e75d);
+  color: var(--nv-secondary, #94da32);
 }
 
 .app-header .account-dropdown {
@@ -9500,7 +9505,7 @@ a {
 
 .app-header .dropdown-link:hover {
   background: var(--nv-surfCont, #1e2117);
-  color: var(--nv-primary, #b5e75d);
+  color: var(--nv-secondary, #94da32);
 }
 
 .app-header .menu-trigger {
@@ -9516,7 +9521,7 @@ a {
 }
 
 .app-header .menu-trigger:hover .menu-icon {
-  color: var(--nv-primary, #b5e75d);
+  color: var(--nv-secondary, #94da32);
 }
 
 .app-header .mobile-menu {
@@ -9543,7 +9548,7 @@ a {
 }
 
 .app-header .mobile-menu-link:hover {
-  color: var(--nv-primary, #b5e75d);
+  color: var(--nv-secondary, #94da32);
 }
 
 .app-header .mobile-hotline {
@@ -9558,7 +9563,7 @@ a {
 }
 
 /* Responsive Overrides */
-@media (max-width: 1200px) {
+@media (max-width: 1023px) {
   .app-header .header-left {
     gap: 0px;
   }
@@ -9574,30 +9579,29 @@ a {
   .app-header .menu-trigger {
     display: flex;
   }
-
 }
 
 @media (max-width: 768px) {
   .app-header .header-container {
-    padding-top: 24px;
-    padding-bottom: 24px;
+    padding-top: 14px;
+    padding-bottom: 14px;
   }
   .app-header .logo-image {
-    height: 24px;
+    height: 26px;
   }
 }
 
 @media (max-width: 480px) {
   .app-header .header-container {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
   .app-header .logo-image {
-    height: 20px;
+    height: 22px;
   }
 
   .app-header .header-right {
-    gap: 10px;
+    gap: 12px;
   }
 
   .app-header .account-wrapper {
