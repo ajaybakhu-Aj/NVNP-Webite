@@ -5,6 +5,7 @@ import { colors } from "../../data/constants";
 import ProductCard from "./ProductCard";
 import Icon from "../../utils/Icon";
 import PageHeroBanner from "../ui/PageHeroBanner";
+import CatalogDownloadButton from "../ui/CatalogDownloadButton";
 
 
 export default function CategoryProductView({
@@ -290,17 +291,21 @@ export default function CategoryProductView({
 
         </aside>
 
-        {/* PRODUCTS GRID */}
+        {/* PRODUCTS COLUMN */}
         {loading ? (
           <div style={{ display: "flex", justifyContent: "center", padding: "100px 0", color: "#94da32", flex: 1 }}>
             LOADING DYNAMIC DATA PIPELINES...
           </div>
         ) : (
-          <div className="products-grid" style={{ flex: 1 }}>
-            {filteredProducts.map((p) => (
-              <ProductCard key={p.id} {...p} />
-            ))}
-            {filteredProducts.length === 0 && (
+          <div className="products-container" style={{ flex: 1, display: "flex", flexDirection: "column", gap: "20px" }}>
+            {/* DOWNLOAD CATALOG BANNER */}
+            <CatalogDownloadButton variant="banner" categoryName={pageTitle} style={{ margin: "0 0 8px 0" }} />
+
+            <div className="products-grid">
+              {filteredProducts.map((p) => (
+                <ProductCard key={p.id} {...p} />
+              ))}
+              {filteredProducts.length === 0 && (
               <div style={{ color: "#8d937f", textAlign: "center", padding: "80px 0", width: "100%", gridColumn: "1 / -1", border: "1px dashed #434938", borderRadius: 4, background: "#181a15" }}>
                 <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}><Icon name="search" size={32} style={{ color: "#94da32" }} /></div>
                 <div style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#fff", fontWeight: 700, letterSpacing: 1, marginBottom: 6 }}>
@@ -311,6 +316,7 @@ export default function CategoryProductView({
                 </div>
               </div>
             )}
+            </div>
           </div>
         )}
       </section>

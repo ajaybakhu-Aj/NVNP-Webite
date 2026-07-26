@@ -332,7 +332,13 @@ const SEED_SITE_CONTENTS = {
   trafficActiveSessions: "1482",
   trafficDailyHits: "84290",
   trafficBandwidth: "28.4",
-  trafficThreatsBlocked: "427"
+  trafficThreatsBlocked: "427",
+
+  // Global Catalog System
+  globalCatalogPdf: "/assets/guides/nightvision-full-catalog.pdf",
+  globalCatalogSize: "4.2 MB",
+  globalCatalogTitle: "NightVision™ 2026 Master Security Catalog",
+  globalCatalogSubtitle: "Complete technical specifications, camera models, NVR systems, and installation architecture."
 };
 
 const SEED_SETTINGS = [

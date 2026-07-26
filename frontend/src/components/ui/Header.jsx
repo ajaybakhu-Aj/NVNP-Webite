@@ -4,6 +4,7 @@ import Icon from "../../utils/Icon";
 import { useSiteContents } from "../../utils/cmsDb";
 import { getAllProducts } from "../../utils/productDb";
 import { authLogout } from "../../utils/api";
+import CatalogDownloadButton from "./CatalogDownloadButton";
 
 export default function Header() {
   const siteContents = useSiteContents();
@@ -185,6 +186,11 @@ export default function Header() {
 
         {/* RIGHT */}
         <div className="header-right">
+          {/* CATALOG DOWNLOAD CTA */}
+          <div className="hidden sm:block">
+            <CatalogDownloadButton variant="header" />
+          </div>
+
           {/* SEARCH */}
           <div
             onClick={openSearch}
@@ -309,6 +315,11 @@ export default function Header() {
       {/* MOBILE MENU */}
       {mobileMenu && (
         <div className="mobile-menu">
+          {/* MOBILE CATALOG DOWNLOAD CTA */}
+          <div style={{ padding: "0 8px 12px 8px", borderBottom: "1px solid rgba(255, 255, 255, 0.08)", marginBottom: "12px" }}>
+            <CatalogDownloadButton variant="header" style={{ width: "100%", justifyContent: "center", padding: "10px 16px" }} />
+          </div>
+
           {/* USER INFO / AUTH ACTIONS FOR MOBILE */}
           <div className="mobile-auth-section" style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.08)", paddingBottom: "16px", marginBottom: "8px" }}>
             {user ? (

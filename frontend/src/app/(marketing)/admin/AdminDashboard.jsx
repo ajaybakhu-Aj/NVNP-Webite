@@ -3329,6 +3329,73 @@ export default function AdminDashboard() {
                     {siteCustomSubTab === "global" && (
                       <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
                         <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10 }}>
+                          <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>GLOBAL CATALOG PDF SYSTEM</h3>
+                        </div>
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>GLOBAL CATALOG PDF URL</label>
+                            <input 
+                              type="text" 
+                              placeholder="e.g. /assets/guides/nightvision-full-catalog.pdf"
+                              value={siteContents.globalCatalogPdf || ""} 
+                              onChange={(e) => setSiteContents({ ...siteContents, globalCatalogPdf: e.target.value })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: "4px" }} 
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>CATALOG FILE SIZE (DISPLAY BADGE)</label>
+                            <input 
+                              type="text" 
+                              placeholder="e.g. 4.2 MB"
+                              value={siteContents.globalCatalogSize || ""} 
+                              onChange={(e) => setSiteContents({ ...siteContents, globalCatalogSize: e.target.value })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: "4px" }} 
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>OR UPLOAD NEW GLOBAL CATALOG PDF FILE</label>
+                          <input 
+                            type="file" 
+                            accept="application/pdf" 
+                            onChange={(e) => {
+                              const file = e.target.files[0];
+                              if (file) {
+                                const reader = new FileReader();
+                                reader.onloadend = () => {
+                                  setSiteContents({ ...siteContents, globalCatalogPdf: reader.result });
+                                  alert(`Catalog file '${file.name}' (${(file.size / (1024 * 1024)).toFixed(1)} MB) uploaded successfully as Data URL.`);
+                                };
+                                reader.readAsDataURL(file);
+                              }
+                            }} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 10, color: C.onSurf, outline: "none", fontSize: 12, borderRadius: "4px" }} 
+                          />
+                        </div>
+
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>MASTER CATALOG TITLE</label>
+                            <input 
+                              type="text" 
+                              value={siteContents.globalCatalogTitle || ""} 
+                              onChange={(e) => setSiteContents({ ...siteContents, globalCatalogTitle: e.target.value })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: "4px" }} 
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>CATALOG SUBTITLE / DESCRIPTION</label>
+                            <input 
+                              type="text" 
+                              value={siteContents.globalCatalogSubtitle || ""} 
+                              onChange={(e) => setSiteContents({ ...siteContents, globalCatalogSubtitle: e.target.value })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: "4px" }} 
+                            />
+                          </div>
+                        </div>
+
+                        <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10, marginTop: 10 }}>
                           <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>FOOTER DETAILS</h3>
                         </div>
                         <div>

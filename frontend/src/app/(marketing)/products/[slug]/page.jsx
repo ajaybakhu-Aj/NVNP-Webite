@@ -5,6 +5,7 @@ import { CartContext } from "../../../../Context/CartContext";
 import Icon from "../../../../utils/Icon";
 import { getProductById, getAllProducts } from "../../../../utils/productDb";
 import { useSiteContents } from "../../../../utils/cmsDb";
+import CatalogDownloadButton from "../../../../components/ui/CatalogDownloadButton";
 
 export default function ProductDetail() {
   const { slug } = useParams();
@@ -291,6 +292,9 @@ export default function ProductDetail() {
                 BUY NOW
               </button>
             </div>
+
+            {/* HIGH-CONVERSION CATALOG & DATASHEET DOWNLOAD CTA */}
+            <CatalogDownloadButton variant="pdp" product={product} />
 
             {isPurchased ? (
               <div style={{ marginTop: 16, marginBottom: 24 }}>
