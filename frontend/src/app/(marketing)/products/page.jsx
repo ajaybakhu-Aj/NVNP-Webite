@@ -89,7 +89,7 @@ export default function NightVision() {
 
 
       {/* PRODUCTS SECTION */}
-      <section className="products-layout" style={{ paddingTop: "24px" }}>
+      <section className="products-layout">
         {/* MOBILE / TABLET FILTER ACTION BAR */}
         <div className="mobile-filter-bar">
           <button
@@ -176,11 +176,11 @@ export default function NightVision() {
 
         {/* PRODUCTS GRID */}
         {loading ? (
-          <div style={{ display: "flex", justifyContent: "center", padding: "100px 0", color: "#94da32", flex: 1, minHeight: "800px" }}>
+          <div style={{ display: "flex", justifyContent: "center", padding: "60px 0", color: "#94da32", flex: 1 }}>
             LOADING DYNAMIC DATA PIPELINES...
           </div>
         ) : (
-          <div className="products-grid" style={{ flex: 1, minHeight: "800px" }}>
+          <div className="products-grid" style={{ flex: 1 }}>
             {filteredProducts.map((p) => (
               <ProductCard key={p.id} {...p} />
             ))}

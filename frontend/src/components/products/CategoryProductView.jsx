@@ -115,7 +115,7 @@ export default function CategoryProductView({
 
 
       {/* MAIN LAYOUT */}
-      <section className="products-layout" style={{ paddingTop: "24px" }}>
+      <section className="products-layout">
         {/* MOBILE / TABLET FILTER ACTION BAR */}
         <div className="mobile-filter-bar">
           <button
