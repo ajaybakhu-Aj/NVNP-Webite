@@ -265,7 +265,7 @@ export default function NightVisionContactPage() {
         </div>
       </section>
 
-      {/* 3. LOWER 2-COLUMN SECTION (MAP + FORM) */}
+      {/* 3. LOWER 2-COLUMN EQUAL-HEIGHT SECTION (MAP + FORM) */}
       <section
         className="contact-main-grid-section"
         style={{
@@ -287,12 +287,14 @@ export default function NightVisionContactPage() {
               left: "auto",
               width: "100%",
               height: "100%",
-              minHeight: 420,
+              minHeight: 480,
               borderRadius: 12,
               overflow: "hidden",
               border: "1px solid rgba(124, 252, 0, 0.2)",
               background: "#101010",
               boxSizing: "border-box",
+              display: "flex",
+              flexDirection: "column",
             }}
           >
             <iframe
@@ -300,19 +302,19 @@ export default function NightVisionContactPage() {
               src={siteContents.contactMapEmbedUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d516.379656973646!2d85.3979903064471!3d27.677293954618367!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1902e459720b%3A0x446057850e6bebe5!2sNight%20Vision%20CCTV%20Nepal!5e1!3m2!1sen!2snp!4v1778740476919!5m2!1sen!2snp"}
               width="100%"
               height="100%"
-              style={{ border: 0, position: "relative", top: "auto", left: "auto", float: "none", minHeight: 420, display: "block" }}
+              style={{ border: 0, position: "relative", top: "auto", left: "auto", float: "none", flex: 1, minHeight: 420, display: "block" }}
               allowFullScreen=""
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
 
-            {/* Location info badge */}
-            <div className="absolute top-4 left-4 right-4 md:right-auto z-10 bg-black/80 backdrop-blur-md border border-[#94da32]/30 rounded-2xl p-4 md:p-6 max-w-sm shadow-[0_0_20px_rgba(148,218,50,0.15)]">
-              <div className="flex items-center gap-2 text-[#94da32] font-mono text-xs font-bold mb-1">
+            {/* Location info badge overlay - clean vertical block positioning */}
+            <div className="absolute top-4 left-4 right-4 md:right-auto z-10 bg-black/85 backdrop-blur-md border border-[#7CFC00]/30 rounded-xl p-4 md:p-5 max-w-sm shadow-[0_0_20px_rgba(124,252,0,0.15)]">
+              <div className="map-badge map-location-tag flex items-center gap-2 text-[#7CFC00] font-mono text-xs font-bold mb-1">
                 <Navigation size={14} /> KATHMANDU HQ COMMAND
               </div>
-              <div className="text-white font-bold text-lg font-['Space_Grotesk']">NightVision CCTV Nepal</div>
-              <p className="text-[#c3c9b3] text-xs mt-1">Radhe Radhe, Arniko Highway, Bhaktapur</p>
+              <div className="map-title text-white font-bold text-lg font-['Space_Grotesk'] mt-1 leading-snug">NightVision CCTV Nepal</div>
+              <p className="text-[#c3c9b3] text-xs mt-1 leading-relaxed">Radhe Radhe, Arniko Highway, Bhaktapur</p>
             </div>
           </div>
 
@@ -322,7 +324,10 @@ export default function NightVisionContactPage() {
             style={{
               position: "relative",
               width: "100%",
+              height: "100%",
               boxSizing: "border-box",
+              display: "flex",
+              flexDirection: "column",
             }}
           >
             <div
@@ -335,6 +340,9 @@ export default function NightVisionContactPage() {
                 padding: "32px 28px",
                 boxSizing: "border-box",
                 width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
               }}
             >
               <h2
@@ -369,7 +377,7 @@ export default function NightVisionContactPage() {
         </div>
       </section>
 
-      {/* 4. RESPONSIVE MOBILE CSS FALLBACK (< 1024px) */}
+      {/* 4. RESPONSIVE & FORM STYLING FALLBACK */}
       <style>{`
         .contact-cards-grid-inner {
           display: grid;
@@ -377,12 +385,55 @@ export default function NightVisionContactPage() {
           gap: 24px;
           align-items: stretch;
         }
+
         .contact-map-form-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 32px;
-          align-items: start;
+          align-items: stretch !important;
         }
+
+        .map-badge, .map-location-tag {
+          position: relative !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          margin-bottom: 6px !important;
+          top: auto !important;
+          left: auto !important;
+        }
+
+        .map-title, .gm-style-iw h3 {
+          margin-top: 4px !important;
+          line-height: 1.3 !important;
+          color: #ffffff !important;
+        }
+
+        /* Form Input Placeholder Contrast & Alignment */
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder,
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+          color: rgba(255, 255, 255, 0.45) !important;
+          font-size: 0.88rem !important;
+          opacity: 1 !important;
+        }
+
+        .contact-form .form-input,
+        .contact-form .form-select,
+        .contact-form .form-textarea,
+        .form-input,
+        .form-select,
+        .form-textarea {
+          padding: 12px 16px !important;
+          background: #0d0d0d !important;
+          border: 1px solid rgba(124, 252, 0, 0.25) !important;
+          border-radius: 8px !important;
+          color: #ffffff !important;
+          font-size: 0.9rem !important;
+          box-sizing: border-box !important;
+          width: 100% !important;
+        }
+
         @media screen and (max-width: 1023px) {
           .contact-cards-grid-inner {
             grid-template-columns: 1fr !important;
@@ -393,8 +444,8 @@ export default function NightVisionContactPage() {
             gap: 24px !important;
           }
           .contact-map-wrapper {
-            min-height: 360px !important;
-            height: 360px !important;
+            min-height: 380px !important;
+            height: 380px !important;
           }
         }
       `}</style>
