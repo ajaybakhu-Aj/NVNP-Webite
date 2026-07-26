@@ -11064,6 +11064,31 @@ body {
   box-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
 }
 
+/* Theme Toggle Button in Floating Sidebar */
+#theme-toggle-btn,
+.theme-toggle-btn,
+.btn-theme-toggle {
+  background-color: var(--nv-surfHi, #282b21) !important;
+  border: 1px solid var(--nv-outlineVar, #434938) !important;
+  color: var(--nv-secondary, #94da32) !important;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#theme-toggle-btn:hover,
+.theme-toggle-btn:hover,
+.btn-theme-toggle:hover {
+  background-color: #7CFC00 !important;
+  color: #000000 !important;
+  border-color: #7CFC00 !important;
+  box-shadow: 0 0 16px rgba(124, 252, 0, 0.7) !important;
+  transform: scale(1.15);
+}
+
 /* Compact perfect sizing on mobile viewports */
 @media (max-width: 768px) {
   .global-social-sidebar {
