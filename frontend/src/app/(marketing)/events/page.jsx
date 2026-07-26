@@ -44,7 +44,7 @@ export default function EventsPage() {
 
       <main className="events-main-section news-main-section">
         {/* SEARCH & FILTER BAR */}
-        <section className="events-search-filter-bar news-filter-bar filter-search-wrapper">
+        <section className="events-search-filter-bar news-filter-bar news-filter-wrapper filter-search-wrapper">
           <div className="events-tabs-scroll">
             <button
               onClick={() => setActiveTab("all")}
@@ -82,19 +82,19 @@ export default function EventsPage() {
 
         {/* GRID OF NEWS / EVENTS */}
         {loading ? (
-          <section className="events-grid-layout text-center py-16 bg-[#1e2117] rounded-lg border border-white/5">
+          <section className="events-grid-layout news-grid-layout news-cards-container news-cards-grid text-center py-16 bg-[#1e2117] rounded-lg border border-white/5">
             <p className="text-[#b5e75d] text-base font-['Space_Grotesk']">
               RETRIEVING SECURITY EVENT BROADCASTING LOGS...
             </p>
           </section>
         ) : filteredItems.length > 0 ? (
-          <section className="events-grid-layout news-grid-layout">
+          <section className="events-grid-layout news-grid-layout news-cards-container news-cards-grid">
             {filteredItems.map((item) => (
               <EventCard key={item.id} item={item} />
             ))}
           </section>
         ) : (
-          <section className="events-grid-layout text-center py-16 bg-[#1e2117] rounded-lg border border-white/5">
+          <section className="events-grid-layout news-grid-layout news-cards-container news-cards-grid text-center py-16 bg-[#1e2117] rounded-lg border border-white/5">
             <p className="text-[#c3c9b3] text-base font-['Space_Grotesk']">
               NO NEWS OR EVENTS MATCHING YOUR SEARCH.
             </p>
@@ -116,11 +116,13 @@ export default function EventsPage() {
           text-align: left !important;
         }
 
-        /* Standardized Site-Wide Left Guide Line */
+        /* Unified Outer Container Guide Line */
+        .navbar-inner,
         .news-hero-inner,
+        .news-filter-wrapper,
+        .news-cards-container,
         .news-filter-bar,
         .news-cards-grid,
-        .news-page-container > div,
         .events-search-filter-bar,
         .filter-search-wrapper,
         .events-grid-layout,

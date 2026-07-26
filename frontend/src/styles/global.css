@@ -14407,8 +14407,11 @@ html.light .footer-sub-brand-left a[href="/"]:hover {
   text-align: left !important;
 }
 
-/* Standardized Site-Wide Left Guide Line */
+/* Unified Outer Container Guide Line */
+.navbar-inner,
 .news-hero-inner,
+.news-filter-wrapper,
+.news-cards-container,
 .news-filter-bar,
 .news-cards-grid,
 .news-page-container > div,
