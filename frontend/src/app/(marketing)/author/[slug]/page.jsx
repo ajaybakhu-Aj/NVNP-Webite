@@ -12,9 +12,9 @@ const C = {
   surfLow: "var(--nv-surfLow, #0c0f07)",
   onSurf: "var(--nv-onSurf, #e2e4d5)",
   onSurfVar: "var(--nv-onSurfVar, #c3c9b3)",
-  primary: "var(--nv-primary, #deffa4)",
+  primary: "var(--nv-primary, #b5e75d)",
   onPrimary: "var(--nv-onPrimary, #233600)",
-  secondary: "var(--nv-secondary, #94da32)",
+  secondary: "var(--nv-secondary, #b5e75d)",
   outline: "var(--nv-outline, #8d937f)",
   outlineVar: "var(--nv-outlineVar, #434938)",
   sg: "'Space Grotesk', sans-serif",
@@ -196,7 +196,7 @@ export default function AuthorPage() {
                   height: "100%",
                   objectFit: "cover",
                   border: `2px solid ${C.primary}`,
-                  boxShadow: `0 0 15px rgba(222, 255, 164, 0.2)`
+                  boxShadow: `0 0 15px rgba(181, 231, 93, 0.2)`
                 }}
               />
               <div style={{

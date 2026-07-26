@@ -8,10 +8,10 @@ const scanlineStyle = `
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --primary: #deffa4;
+    --primary: #b5e75d;
     --primary-container: #b5e75d;
-    --secondary: #94da32;
-    --secondary-container: #75b800;
+    --secondary: #b5e75d;
+    --secondary-container: #b5e75d;
     --background: #11140c;
     --surface: #11140c;
     --surface-container: #1e2117;
@@ -56,7 +56,7 @@ const scanlineStyle = `
     width: 100%;
     height: 100px;
     z-index: 99;
-    background: linear-gradient(0deg, rgba(222,255,164,0) 0%, rgba(222,255,164,0.05) 50%, rgba(222,255,164,0) 100%);
+    background: linear-gradient(0deg, rgba(181, 231, 93,0) 0%, rgba(181, 231, 93,0.05) 50%, rgba(181, 231, 93,0) 100%);
     opacity: 0.1;
     position: fixed;
     bottom: 100%;
@@ -80,7 +80,7 @@ const scanlineStyle = `
   .br { bottom: 0; right: 0; border-bottom: 1px solid; border-right: 1px solid; }
 
   input:focus, textarea:focus, select:focus {
-    box-shadow: inset 0 0 10px rgba(222,255,164,0.1);
+    box-shadow: inset 0 0 10px rgba(181, 231, 93,0.1);
     outline: none !important;
     border-color: var(--primary) !important;
   }
@@ -131,7 +131,7 @@ const scanlineStyle = `
     transition: border-color 0.2s;
   }
   .form-input::placeholder { color: var(--outline); }
-  .form-input:focus { border-color: var(--primary); box-shadow: inset 0 0 10px rgba(222,255,164,0.1); outline: none; }
+  .form-input:focus { border-color: var(--primary); box-shadow: inset 0 0 10px rgba(181, 231, 93,0.1); outline: none; }
 
   .form-label {
     display: block;
@@ -162,7 +162,7 @@ const scanlineStyle = `
     transition: box-shadow 0.3s, opacity 0.2s;
     white-space: nowrap;
   }
-  .submit-btn:hover { box-shadow: 0 0 20px rgba(222,255,164,0.3); }
+  .submit-btn:hover { box-shadow: 0 0 20px rgba(181, 231, 93,0.3); }
   .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
   .submit-btn.success { background: var(--secondary-container); }
 
@@ -267,7 +267,7 @@ export default function DealerPage() {
         <header style={{ marginBottom: "clamp(3rem, 6vw, 6rem)", position: "relative" }}>
           <div style={{
             position: "absolute", left: "-2rem", top: 0,
-            color: "rgba(222,255,164,0.1)", pointerEvents: "none", userSelect: "none",
+            color: "rgba(181, 231, 93,0.1)", pointerEvents: "none", userSelect: "none",
           }}>
             <span className="material-symbols-outlined" style={{ fontSize: "120px" }}>verified_user</span>
           </div>

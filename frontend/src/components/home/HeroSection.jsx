@@ -86,7 +86,7 @@ function HeroSection() {
                         <div
                             className="absolute left-1/2 -translate-x-1/2 rounded-full bottom-[20px] sm:bottom-[40px] md:bottom-[80px] w-[240px] sm:w-[360px] md:w-[600px] h-[240px] sm:h-[360px] md:h-[600px] z-[1] blur-[50px] sm:blur-[60px]"
                             style={{
-                                background: "radial-gradient(circle, rgba(148,218,50,0.50) 0%, rgba(148,218,50,0.16) 35%, rgba(148,218,50,0) 75%)",
+                                background: "radial-gradient(circle, rgba(181, 231, 93,0.50) 0%, rgba(181, 231, 93,0.16) 35%, rgba(181, 231, 93,0) 75%)",
                             }}
                         />
 
@@ -96,7 +96,7 @@ function HeroSection() {
                             alt="Hero"
                             className="relative z-[2] w-auto max-w-full h-full object-contain object-bottom"
                             style={{
-                                filter: `drop-shadow(0 15px 40px rgba(0,0,0,0.45)) drop-shadow(0 0 30px rgba(148,218,50,0.30))`,
+                                filter: `drop-shadow(0 15px 40px rgba(0,0,0,0.45)) drop-shadow(0 0 30px rgba(181, 231, 93,0.30))`,
                             }}
                         />
                     </div>
@@ -195,7 +195,7 @@ function HeroSection() {
           .hero-btn-1 {
             background: ${colors.secondary};
             color: #111;
-            box-shadow: 0 4px 16px rgba(148,218,50,0.25);
+            box-shadow: 0 4px 16px rgba(181, 231, 93,0.25);
             padding: 14px 28px;
           }
           @media (min-width: 768px) {
@@ -205,11 +205,11 @@ function HeroSection() {
           }
           .hero-btn-1:hover {
             transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 12px 32px rgba(148,218,50,0.6);
-            background: #a3eb3f;
+            box-shadow: 0 12px 32px rgba(181, 231, 93,0.6);
+            background: #b5e75d;
           }
           .hero-btn-2 {
-            background: rgba(148,218,50,0.05);
+            background: rgba(181, 231, 93,0.05);
             color: ${colors.secondary};
             border: 2px solid ${colors.secondary};
             backdrop-filter: blur(4px);
@@ -219,7 +219,7 @@ function HeroSection() {
             background: ${colors.secondary};
             color: #111;
             transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 12px 32px rgba(148,218,50,0.5);
+            box-shadow: 0 12px 32px rgba(181, 231, 93,0.5);
           }
         `}
             </style>

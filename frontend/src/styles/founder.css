@@ -59,7 +59,7 @@
   border: 1px solid #434938;
   font-size: 12px;
   letter-spacing: 3px;
-  color: #94da32;
+  color: #b5e75d;
   font-weight: 600;
 }
 
@@ -79,7 +79,7 @@
   font-size: clamp(16px, 2vw, 22px);
   color: #c3c9b3;
   max-width: 800px;
-  border-left: 4px solid #94da32;
+  border-left: 4px solid #b5e75d;
   padding-left: 24px;
 }
 
@@ -126,7 +126,7 @@
   background-color: rgba(42, 42, 42, 0.9);
   backdrop-filter: blur(10px);
   padding: 24px 32px;
-  border: 2px solid #94da32;
+  border: 2px solid #b5e75d;
   box-shadow: 0 0 25px rgba(181, 231, 93, 0.2);
 }
 
@@ -144,7 +144,7 @@
 .founder-bio-num {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 14px;
-  color: #94da32;
+  color: #b5e75d;
   letter-spacing: 2px;
   margin-bottom: 8px;
 }
@@ -174,7 +174,7 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(32px, 4vw, 56px);
   font-weight: 700;
-  color: #94da32;
+  color: #b5e75d;
   text-transform: uppercase;
   margin-bottom: 32px;
 }
@@ -186,7 +186,7 @@
   font-style: italic;
   color: #c3c9b3;
   font-size: 18px;
-  border-left: 4px solid #94da32;
+  border-left: 4px solid #b5e75d;
   margin: 32px 0;
 }
 
@@ -214,7 +214,7 @@
 }
 
 .founder-card:hover {
-  border-color: #94da32;
+  border-color: #b5e75d;
   transform: translateY(-4px);
 }
 
@@ -249,8 +249,8 @@
   line-height: 1.4;
   margin: 40px 0;
   padding: 40px 0;
-  border-top: 1px solid rgba(148, 218, 50, 0.3);
-  border-bottom: 1px solid rgba(148, 218, 50, 0.3);
+  border-top: 1px solid rgba(181, 231, 93, 0.3);
+  border-bottom: 1px solid rgba(181, 231, 93, 0.3);
 }
 
 /* CTA */

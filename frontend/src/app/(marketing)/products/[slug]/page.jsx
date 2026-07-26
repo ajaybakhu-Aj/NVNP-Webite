@@ -160,7 +160,7 @@ export default function ProductDetail() {
   if (loading) {
     return (
       <main className="product-detail-page" style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
-        <div style={{ color: "#94da32", fontFamily: "'Space Mono', monospace", letterSpacing: 2 }}>
+        <div style={{ color: "#b5e75d", fontFamily: "'Space Mono', monospace", letterSpacing: 2 }}>
           CONNECTING DIGITAL UPLINK FOR DEVICE '{slug.toUpperCase()}'...
         </div>
       </main>
@@ -178,7 +178,7 @@ export default function ProductDetail() {
             The requested device key '{slug}' was not found in the NightVision security database registry.
           </p>
           <Link to="/products" style={{
-            background: "#94da32",
+            background: "#b5e75d",
             color: "#111",
             textDecoration: "none",
             padding: "10px 20px",
@@ -367,8 +367,8 @@ export default function ProductDetail() {
                 onClick={handleAddToCart}
                 style={{
                   background: "transparent",
-                  color: "#deffa4",
-                  border: "1px solid #deffa4",
+                  color: "#b5e75d",
+                  border: "1px solid #b5e75d",
                   fontFamily: "'Space Grotesk', monospace",
                   fontSize: 12,
                   fontWeight: 700,
@@ -407,9 +407,9 @@ export default function ProductDetail() {
                     alignItems: "center",
                     justifyContent: "center",
                     gap: 8,
-                    background: "rgba(148, 218, 50, 0.1)",
-                    border: "1px solid #94da32",
-                    color: "#94da32",
+                    background: "rgba(181, 231, 93, 0.1)",
+                    border: "1px solid #b5e75d",
+                    color: "#b5e75d",
                     padding: "14px 24px",
                     fontFamily: "'Space Grotesk', monospace",
                     fontSize: 12,
@@ -421,12 +421,12 @@ export default function ProductDetail() {
                     width: "100%"
                   }}
                   onMouseOver={(e) => {
-                    e.currentTarget.style.background = "#94da32";
+                    e.currentTarget.style.background = "#b5e75d";
                     e.currentTarget.style.color = "#111";
                   }}
                   onMouseOut={(e) => {
-                    e.currentTarget.style.background = "rgba(148, 218, 50, 0.1)";
-                    e.currentTarget.style.color = "#94da32";
+                    e.currentTarget.style.background = "rgba(181, 231, 93, 0.1)";
+                    e.currentTarget.style.color = "#b5e75d";
                   }}
                 >
                   <Icon name="download" size={18} />
@@ -441,14 +441,14 @@ export default function ProductDetail() {
 
             {/* KEY FEATURES */}
             <div style={{ borderTop: "1px solid #434938", paddingTop: 24 }}>
-              <h4 style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#deffa4", fontSize: 13, fontWeight: 700, letterSpacing: 1, marginBottom: 16, textTransform: "uppercase" }}>
+              <h4 style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#b5e75d", fontSize: 13, fontWeight: 700, letterSpacing: 1, marginBottom: 16, textTransform: "uppercase" }}>
                 KEY FEATURES
               </h4>
               {product.specs && (
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12 }}>
                   {product.specs.map((s, i) => (
                     <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                      <Icon name={s.icon} size={18} style={{ color: "#94da32" }} />
+                      <Icon name={s.icon} size={18} style={{ color: "#b5e75d" }} />
                       <span style={{ color: "#fff", fontSize: 13, fontFamily: "'Space Grotesk', sans-serif" }}>{s.label}</span>
                     </div>
                   ))}
@@ -479,7 +479,7 @@ export default function ProductDetail() {
                   <div className="specs-icons-grid">
                     {product.specs.map((s, i) => (
                       <div key={i} className="spec-icon-box">
-                        <Icon name={s.icon} size={28} style={{ color: "#deffa4" }} />
+                        <Icon name={s.icon} size={28} style={{ color: "#b5e75d" }} />
                         <span className="spec-icon-label">{s.label}</span>
                       </div>
                     ))}
@@ -489,19 +489,19 @@ export default function ProductDetail() {
                     <div className="specs-overview-title">OVERVIEW & HIGHLIGHTS</div>
                     <ul className="specs-overview-list">
                       <li>
-                        <Icon name="check" size={14} style={{ color: "#7CFC00", flexShrink: 0 }} />
+                        <Icon name="check" size={14} style={{ color: "#b5e75d", flexShrink: 0 }} />
                         <span>Smart AI Human & Vehicle Motion Detection</span>
                       </li>
                       <li>
-                        <Icon name="check" size={14} style={{ color: "#7CFC00", flexShrink: 0 }} />
+                        <Icon name="check" size={14} style={{ color: "#b5e75d", flexShrink: 0 }} />
                         <span>Ultra Low-Light Starlight Color Night Vision</span>
                       </li>
                       <li>
-                        <Icon name="check" size={14} style={{ color: "#7CFC00", flexShrink: 0 }} />
+                        <Icon name="check" size={14} style={{ color: "#b5e75d", flexShrink: 0 }} />
                         <span>Two-Way Real-time Audio & Built-in Noise Cancellation</span>
                       </li>
                       <li>
-                        <Icon name="check" size={14} style={{ color: "#7CFC00", flexShrink: 0 }} />
+                        <Icon name="check" size={14} style={{ color: "#b5e75d", flexShrink: 0 }} />
                         <span>Encrypted Cloud & MicroSD Local Storage Support</span>
                       </li>
                     </ul>
@@ -600,7 +600,7 @@ export default function ProductDetail() {
                   <iframe
                     title={`${product.name} video`}
                     src={`https://www.youtube.com/embed/${idMatch[1]}`}
-                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: "1px solid rgba(148, 218, 50, 0.25)", borderRadius: 8 }}
+                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: "1px solid rgba(181, 231, 93, 0.25)", borderRadius: 8 }}
                     allowFullScreen
                   />
                 </div>

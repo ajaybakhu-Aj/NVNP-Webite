@@ -116,7 +116,7 @@ export default function SignUpPage() {
         )}
 
         {success && (
-          <div className="auth-error-banner" style={{ background: "rgba(148, 218, 50, 0.1)", border: "1px solid rgba(148, 218, 50, 0.3)", color: "#94da32" }}>
+          <div className="auth-error-banner" style={{ background: "rgba(181, 231, 93, 0.1)", border: "1px solid rgba(181, 231, 93, 0.3)", color: "#b5e75d" }}>
             <Icon name="check_circle" size={18} />
             <span>{success}</span>
           </div>
@@ -189,7 +189,7 @@ export default function SignUpPage() {
                   <div className={`password-strength-bar ${passwordStrength.score >= 5 ? passwordStrength.label.toLowerCase() : ""}`} />
                 </div>
                 <div className="password-strength-text">
-                  Password Strength: <strong style={{ color: passwordStrength.label === "Strong" ? "#94da32" : passwordStrength.label === "Medium" ? "#ffaa44" : "#ff5b5b" }}>{passwordStrength.label.toUpperCase()}</strong>
+                  Password Strength: <strong style={{ color: passwordStrength.label === "Strong" ? "#b5e75d" : passwordStrength.label === "Medium" ? "#ffaa44" : "#ff5b5b" }}>{passwordStrength.label.toUpperCase()}</strong>
                 </div>
               </div>
             )}

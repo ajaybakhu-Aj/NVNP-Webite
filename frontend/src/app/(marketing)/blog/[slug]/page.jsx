@@ -43,7 +43,7 @@ export default function BlogDetail() {
 
   if (loading) {
     return (
-      <main style={{ background: "#11140c", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", color: "#94da32", fontFamily: "Space Grotesk, sans-serif" }}>
+      <main style={{ background: "#11140c", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", color: "#b5e75d", fontFamily: "Space Grotesk, sans-serif" }}>
         DECRYPTING SECURE LOG FEED...
       </main>
     );
@@ -79,7 +79,7 @@ export default function BlogDetail() {
       <div className="scanline-overlay"></div>
 
       {/* HERO BANNER - TITLE ONLY */}
-      <section style={{ padding: "120px 5% 40px", background: "#0a0c07", borderBottom: "1px solid rgba(148, 218, 50, 0.1)" }}>
+      <section style={{ padding: "120px 5% 40px", background: "#0a0c07", borderBottom: "1px solid rgba(181, 231, 93, 0.1)" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <h1 className="event-detail-main-title" style={{ position: "relative", zIndex: 2, textShadow: "none", marginTop: 0 }}>{item.title}</h1>
         </div>
@@ -91,7 +91,7 @@ export default function BlogDetail() {
         <main className="event-detail-body">
           <div style={{ marginBottom: 20, display: "flex", gap: 8, flexWrap: "wrap" }}>
             <span style={{
-              background: "#94da32",
+              background: "#b5e75d",
               color: "#070805",
               padding: "4px 12px",
               fontSize: 11,
@@ -103,9 +103,9 @@ export default function BlogDetail() {
               display: "inline-block"
             }}>{item.category || "Thermal Tech"}</span>
             <span style={{
-              background: "rgba(148, 218, 50, 0.08)",
-              border: "1px solid #94da32",
-              color: "#94da32",
+              background: "rgba(181, 231, 93, 0.08)",
+              border: "1px solid #b5e75d",
+              color: "#b5e75d",
               padding: "3px 10px",
               fontSize: 11,
               fontWeight: 600,
@@ -118,7 +118,7 @@ export default function BlogDetail() {
           </div>
 
           {/* BLOG IMAGE BELOW TITLE */}
-          <div style={{ marginBottom: "40px", cursor: "zoom-in", borderRadius: "8px", overflow: "hidden", border: "1px solid rgba(148, 218, 50, 0.2)" }} onClick={() => setZoomImage(true)}>
+          <div style={{ marginBottom: "40px", cursor: "zoom-in", borderRadius: "8px", overflow: "hidden", border: "1px solid rgba(181, 231, 93, 0.2)" }} onClick={() => setZoomImage(true)}>
             <img 
               src={item.img} 
               alt={item.title} 
@@ -174,7 +174,7 @@ export default function BlogDetail() {
               <span className="event-detail-ledger-value">
                 <Link 
                   to={`/author/${item.author.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}`}
-                  style={{ color: "#deffa4", textDecoration: "none", fontWeight: "bold" }}
+                  style={{ color: "#b5e75d", textDecoration: "none", fontWeight: "bold" }}
                 >
                   {item.author}
                 </Link>
@@ -183,7 +183,7 @@ export default function BlogDetail() {
 
             <div className="event-detail-ledger-row">
               <span className="event-detail-ledger-label">CATEGORY</span>
-              <span className="event-detail-ledger-value" style={{ color: "#deffa4", fontWeight: "bold" }}>{item.category || "Thermal Tech"}</span>
+              <span className="event-detail-ledger-value" style={{ color: "#b5e75d", fontWeight: "bold" }}>{item.category || "Thermal Tech"}</span>
             </div>
 
             <div className="event-detail-ledger-row">
@@ -192,7 +192,7 @@ export default function BlogDetail() {
             </div>
 
             {item.pdf && (
-              <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid rgba(148, 218, 50, 0.15)" }}>
+              <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid rgba(181, 231, 93, 0.15)" }}>
                 <a
                   href={item.pdf}
                   download={`${item.slug}-brief.pdf`}
@@ -202,7 +202,7 @@ export default function BlogDetail() {
                     justifyContent: "center",
                     gap: 8,
                     width: "100%",
-                    background: "#94da32",
+                    background: "#b5e75d",
                     color: "#070805",
                     textDecoration: "none",
                     padding: "12px 16px",
@@ -240,13 +240,13 @@ export default function BlogDetail() {
                     <img
                       src={related.img}
                       alt={related.title}
-                      style={{ width: "80px", height: "60px", objectFit: "cover", borderRadius: "4px", border: "1px solid rgba(148, 218, 50, 0.2)" }}
+                      style={{ width: "80px", height: "60px", objectFit: "cover", borderRadius: "4px", border: "1px solid rgba(181, 231, 93, 0.2)" }}
                     />
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <span style={{ color: "#fff", fontSize: "13px", fontWeight: "600", lineHeight: "1.2", marginBottom: "4px" }}>
                         {related.title}
                       </span>
-                      <span style={{ color: "#94da32", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                      <span style={{ color: "#b5e75d", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
                         {related.date}
                       </span>
                     </div>
@@ -303,7 +303,7 @@ export default function BlogDetail() {
                 top: "16px", 
                 right: "16px", 
                 background: "rgba(17, 20, 12, 0.85)",
-                border: "1px solid #94da32",
+                border: "1px solid #b5e75d",
                 color: "#e2e4d5",
                 width: "40px",
                 height: "40px",
@@ -326,8 +326,8 @@ export default function BlogDetail() {
                   maxWidth: "100%",
                   maxHeight: "85vh",
                   objectFit: "contain",
-                  border: "2px solid #94da32",
-                  boxShadow: "0 0 25px rgba(148, 218, 50, 0.35)",
+                  border: "2px solid #b5e75d",
+                  boxShadow: "0 0 25px rgba(181, 231, 93, 0.35)",
                   display: "block"
                 }}
               />

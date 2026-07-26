@@ -310,7 +310,7 @@ export default function CctvSetupPage() {
         style={{
           position: "fixed",
           inset: 0,
-          background: "repeating-linear-gradient(transparent, transparent 3px, rgba(148,218,50,0.02) 4px)",
+          background: "repeating-linear-gradient(transparent, transparent 3px, rgba(181, 231, 93,0.02) 4px)",
           opacity: 0.15,
           pointerEvents: "none",
           zIndex: 9999,
@@ -324,7 +324,7 @@ export default function CctvSetupPage() {
           <Icon name="chevron_right" size={14} />
           <Link to="/products" style={{ color: "#8d937f", textDecoration: "none" }}>Products</Link>
           <Icon name="chevron_right" size={14} />
-          <span style={{ color: "#94da32" }}>Interactive Setup Wizard</span>
+          <span style={{ color: "#b5e75d" }}>Interactive Setup Wizard</span>
         </div>
 
         <div style={{ borderBottom: "1px solid #434938", paddingBottom: 24, marginBottom: 40 }}>
@@ -367,7 +367,7 @@ export default function CctvSetupPage() {
           <button onClick={() => scrollToSection(coverageRef)} style={stepAnchorStyle}>
             <Icon name="edgesensor_high" size={16} /> Coverage
           </button>
-          <button onClick={() => scrollToSection(recommendationRef)} style={{ ...stepAnchorStyle, color: "#94da32" }}>
+          <button onClick={() => scrollToSection(recommendationRef)} style={{ ...stepAnchorStyle, color: "#b5e75d" }}>
             <Icon name="build" size={16} /> View Deal
           </button>
         </div>
@@ -405,15 +405,15 @@ export default function CctvSetupPage() {
                     }}
                     style={{
                       ...cardSelectionStyle,
-                      border: active ? "1px solid #94da32" : "1px solid #434938",
-                      background: active ? "rgba(148,218,50,0.06)" : "#181a15",
+                      border: active ? "1px solid #b5e75d" : "1px solid #434938",
+                      background: active ? "rgba(181, 231, 93,0.06)" : "#181a15",
                       transform: active ? "scale(1.02)" : "scale(1)"
                     }}
                   >
-                    <div style={{ color: active ? "#94da32" : "#8d937f", marginBottom: 12 }}>
+                    <div style={{ color: active ? "#b5e75d" : "#8d937f", marginBottom: 12 }}>
                       <Icon name={p.icon} size={36} />
                     </div>
-                    <h3 style={{ ...cardTitleStyle, color: active ? "#fff" : "#deffa4" }}>{p.label}</h3>
+                    <h3 style={{ ...cardTitleStyle, color: active ? "#fff" : "#b5e75d" }}>{p.label}</h3>
                     <p style={cardDescStyle}>{p.desc}</p>
                   </div>
                 );
@@ -447,15 +447,15 @@ export default function CctvSetupPage() {
                     }}
                     style={{
                       ...cardSelectionStyle,
-                      border: active ? "1px solid #94da32" : "1px solid #434938",
-                      background: active ? "rgba(148,218,50,0.06)" : "#181a15",
+                      border: active ? "1px solid #b5e75d" : "1px solid #434938",
+                      background: active ? "rgba(181, 231, 93,0.06)" : "#181a15",
                       textAlign: "center"
                     }}
                   >
-                    <h3 style={{ fontSize: 24, fontFamily: "'Space Grotesk', sans-serif", color: active ? "#94da32" : "#fff", margin: "0 0 4px 0" }}>
+                    <h3 style={{ fontSize: 24, fontFamily: "'Space Grotesk', sans-serif", color: active ? "#b5e75d" : "#fff", margin: "0 0 4px 0" }}>
                       {q.val}
                     </h3>
-                    <div style={{ fontSize: 13, fontWeight: 700, color: "#deffa4", marginBottom: 6 }}>{q.label}</div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: "#b5e75d", marginBottom: 6 }}>{q.label}</div>
                     <p style={{ ...cardDescStyle, margin: 0 }}>{q.desc}</p>
                   </div>
                 );
@@ -490,11 +490,11 @@ export default function CctvSetupPage() {
                     }}
                     style={{
                       ...cardSelectionStyle,
-                      border: active ? "1px solid #94da32" : "1px solid #434938",
-                      background: active ? "rgba(148,218,50,0.06)" : "#181a15"
+                      border: active ? "1px solid #b5e75d" : "1px solid #434938",
+                      background: active ? "rgba(181, 231, 93,0.06)" : "#181a15"
                     }}
                   >
-                    <h3 style={{ ...cardTitleStyle, color: active ? "#94da32" : "#fff" }}>{c.label}</h3>
+                    <h3 style={{ ...cardTitleStyle, color: active ? "#b5e75d" : "#fff" }}>{c.label}</h3>
                     <p style={cardDescStyle}>{c.desc}</p>
                   </div>
                 );
@@ -505,14 +505,14 @@ export default function CctvSetupPage() {
           {/* PACKAGE RECOMMENDATION OUTPUT CONTAINER */}
           <section ref={recommendationRef} style={{ ...stepContainerStyle, minHeight: "400px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #434938", paddingBottom: 16, marginBottom: 20 }}>
-              <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, fontWeight: 700, margin: 0, textTransform: "uppercase", color: "#deffa4" }}>
+              <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, fontWeight: 700, margin: 0, textTransform: "uppercase", color: "#b5e75d" }}>
                 Relational Recommendation Matrix
               </h2>
               <span style={{ fontSize: 11, fontFamily: "monospace", color: "#8d937f" }}>[RECOMMENDED CONFIGURATION]</span>
             </div>
 
             {loading ? (
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", minHeight: "200px", color: "#94da32" }}>
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", minHeight: "200px", color: "#b5e75d" }}>
                 <Icon name="loop" size={32} style={{ animation: "spin 1.5s linear infinite", marginBottom: 12 }} />
                 <span>EVALUATING CUSTOM HARDWARE ALIGNMENTS...</span>
               </div>
@@ -527,7 +527,7 @@ export default function CctvSetupPage() {
                           item.type === "Control Unit" ? "dns" :
                           item.type === "Connectivity" ? "router" :
                           item.type === "Storage" ? "album" : "build"
-                        } size={22} style={{ color: "#94da32" }} />
+                        } size={22} style={{ color: "#b5e75d" }} />
                       </div>
                       <div>
                         <h4 style={{ color: "var(--nv-onSurf)", margin: 0, fontSize: 14, fontWeight: 600 }}>{item.name}</h4>
@@ -599,7 +599,7 @@ export default function CctvSetupPage() {
           {/* Running Grand Total */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
             <span style={{ color: "#fff", fontWeight: 700, fontSize: 13 }}>ESTIMATED TOTAL:</span>
-            <span style={{ color: "#94da32", fontWeight: 700, fontSize: 24, fontFamily: "'Space Grotesk', sans-serif" }}>
+            <span style={{ color: "#b5e75d", fontWeight: 700, fontSize: 24, fontFamily: "'Space Grotesk', sans-serif" }}>
               रू {recommendation ? recommendation.total.toLocaleString("en-IN") : "0"}
             </span>
           </div>
@@ -628,8 +628,8 @@ export default function CctvSetupPage() {
               style={{
                 ...primaryCtaStyle,
                 background: "transparent",
-                border: "1px solid #94da32",
-                color: "#94da32"
+                border: "1px solid #b5e75d",
+                color: "#b5e75d"
               }}
             >
               <Icon name="receipt_long" size={18} /> REQUEST CUSTOM QUOTE
@@ -648,7 +648,7 @@ export default function CctvSetupPage() {
         <div style={drawerOverlayStyle} onClick={() => setIsDrawerOpen(false)}>
           <div style={drawerPanelStyle} onClick={(e) => e.stopPropagation()}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #434938", paddingBottom: 16, marginBottom: 24 }}>
-              <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, color: "#94da32", margin: 0, textTransform: "uppercase" }}>
+              <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, color: "#b5e75d", margin: 0, textTransform: "uppercase" }}>
                 Request Operator Quote
               </h3>
               <button onClick={() => setIsDrawerOpen(false)} style={closeBtnStyle}>
@@ -658,7 +658,7 @@ export default function CctvSetupPage() {
 
             {quoteSuccessMsg ? (
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "80%", textAlign: "center", padding: 24 }}>
-                <Icon name="check_circle" size={64} style={{ color: "#94da32", marginBottom: 16 }} />
+                <Icon name="check_circle" size={64} style={{ color: "#b5e75d", marginBottom: 16 }} />
                 <h4 style={{ color: "var(--nv-onSurf)", fontSize: 18, marginBottom: 12 }}>PROVISION SUCCESSFUL</h4>
                 <p style={{ color: "#c3c9b3", fontSize: 14, lineHeight: 1.6 }}>{quoteSuccessMsg}</p>
                 <button onClick={() => setIsDrawerOpen(false)} style={drawerSubmitBtnStyle}>DISMISS PROTOCOL</button>
@@ -715,7 +715,7 @@ export default function CctvSetupPage() {
                 <div style={{ borderTop: "1px solid #434938", paddingTop: 16, marginTop: 12 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
                     <span style={{ color: "#8d937f", fontSize: 12 }}>Configuration Total:</span>
-                    <span style={{ color: "#94da32", fontWeight: 700, fontSize: 14 }}>
+                    <span style={{ color: "#b5e75d", fontWeight: 700, fontSize: 14 }}>
                       रू {recommendation?.total.toLocaleString("en-IN")}
                     </span>
                   </div>
@@ -896,7 +896,7 @@ const stepHeaderStyle = {
 };
 
 const stepBadgeStyle = {
-  background: "#94da32",
+  background: "#b5e75d",
   color: "#111",
   width: 28,
   height: 28,
@@ -964,7 +964,7 @@ const recommendationItemStyle = {
 };
 
 const iconWrapperStyle = {
-  background: "rgba(148,218,50,0.1)",
+  background: "rgba(181, 231, 93,0.1)",
   width: 38,
   height: 38,
   borderRadius: "50%",
@@ -1037,7 +1037,7 @@ const formGroupStyle = {
 
 const labelStyle = {
   fontSize: 11,
-  color: "#deffa4",
+  color: "#b5e75d",
   fontFamily: "'Space Grotesk', monospace",
   letterSpacing: 1
 };
@@ -1066,7 +1066,7 @@ const textareaStyle = {
 const drawerSubmitBtnStyle = {
   width: "100%",
   padding: "16px",
-  background: "#94da32",
+  background: "#b5e75d",
   border: "none",
   color: "#111",
   fontWeight: 700,

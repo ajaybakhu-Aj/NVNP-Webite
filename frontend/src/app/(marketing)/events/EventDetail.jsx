@@ -37,7 +37,7 @@ export default function EventDetail() {
 
   if (loading) {
     return (
-      <div style={{ background: "#11140c", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", color: "#94da32", fontFamily: "Space Grotesk, sans-serif" }}>
+      <div style={{ background: "#11140c", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", color: "#b5e75d", fontFamily: "Space Grotesk, sans-serif" }}>
         DECRYPTING SECURE SIGNAL TRANSMISSION...
       </div>
     );
@@ -134,7 +134,7 @@ export default function EventDetail() {
               ))}
 
             {item.pdf && (
-              <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid rgba(148, 218, 50, 0.15)" }}>
+              <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid rgba(181, 231, 93, 0.15)" }}>
                 <a
                   href={item.pdf}
                   download={`${item.slug}-brief.pdf`}
@@ -144,7 +144,7 @@ export default function EventDetail() {
                     justifyContent: "center",
                     gap: 8,
                     width: "100%",
-                    background: "#94da32",
+                    background: "#b5e75d",
                     color: "#070805",
                     textDecoration: "none",
                     padding: "12px 16px",
@@ -256,7 +256,7 @@ export default function EventDetail() {
                 top: "16px", 
                 right: "16px", 
                 background: "rgba(17, 20, 12, 0.85)",
-                border: "1px solid #94da32",
+                border: "1px solid #b5e75d",
                 color: "#e2e4d5",
                 width: "40px",
                 height: "40px",
@@ -279,8 +279,8 @@ export default function EventDetail() {
                   maxWidth: "100%",
                   maxHeight: "85vh",
                   objectFit: "contain",
-                  border: "2px solid #94da32",
-                  boxShadow: "0 0 25px rgba(148, 218, 50, 0.35)",
+                  border: "2px solid #b5e75d",
+                  boxShadow: "0 0 25px rgba(181, 231, 93, 0.35)",
                   display: "block"
                 }}
               />

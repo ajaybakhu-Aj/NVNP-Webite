@@ -40,7 +40,7 @@ export default function NightVisionContactPage() {
               background: "rgba(20, 20, 20, 0.6)",
               backdropFilter: "blur(12px)",
               WebkitBackdropFilter: "blur(12px)",
-              border: "1px solid rgba(124, 252, 0, 0.2)",
+              border: "1px solid rgba(181, 231, 93, 0.2)",
               borderRadius: 12,
               padding: "24px 20px",
               display: "flex",
@@ -56,12 +56,12 @@ export default function NightVisionContactPage() {
                 width: 54,
                 height: 54,
                 borderRadius: "50%",
-                background: "rgba(124, 252, 0, 0.1)",
-                border: "1px solid rgba(124, 252, 0, 0.3)",
+                background: "rgba(181, 231, 93, 0.1)",
+                border: "1px solid rgba(181, 231, 93, 0.3)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "#7CFC00",
+                color: "#b5e75d",
                 marginBottom: 16,
               }}
             >
@@ -82,7 +82,7 @@ export default function NightVisionContactPage() {
             </h3>
             <p
               style={{
-                color: "#7CFC00",
+                color: "#b5e75d",
                 fontSize: "0.72rem",
                 fontWeight: 700,
                 marginBottom: 12,
@@ -97,14 +97,14 @@ export default function NightVisionContactPage() {
               <a
                 href={`tel:${settings?.helpline1 || "015925995"}`}
                 style={{ color: "#e5e2e1", textDecoration: "none", fontSize: "0.9rem" }}
-                className="hover:text-[#7CFC00] transition-colors"
+                className="hover:text-[#b5e75d] transition-colors"
               >
                 {settings?.helpline1 || "01-5925995"}
               </a>
               <a
                 href={`tel:${settings?.helpline2 || "+9779745978217"}`}
                 style={{ color: "#e5e2e1", textDecoration: "none", fontSize: "0.9rem" }}
-                className="hover:text-[#7CFC00] transition-colors"
+                className="hover:text-[#b5e75d] transition-colors"
               >
                 {settings?.helpline2 || "+977-9745978217"}
               </a>
@@ -124,7 +124,7 @@ export default function NightVisionContactPage() {
                 background: "rgba(20, 20, 20, 0.6)",
                 backdropFilter: "blur(12px)",
                 WebkitBackdropFilter: "blur(12px)",
-                border: "1px solid rgba(124, 252, 0, 0.2)",
+                border: "1px solid rgba(181, 231, 93, 0.2)",
                 borderRadius: 12,
                 padding: "24px 20px",
                 display: "flex",
@@ -140,12 +140,12 @@ export default function NightVisionContactPage() {
                   width: 54,
                   height: 54,
                   borderRadius: "50%",
-                  background: "rgba(124, 252, 0, 0.1)",
-                  border: "1px solid rgba(124, 252, 0, 0.3)",
+                  background: "rgba(181, 231, 93, 0.1)",
+                  border: "1px solid rgba(181, 231, 93, 0.3)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: "#7CFC00",
+                  color: "#b5e75d",
                   marginBottom: 16,
                 }}
               >
@@ -166,7 +166,7 @@ export default function NightVisionContactPage() {
               </h3>
               <p
                 style={{
-                  color: "#7CFC00",
+                  color: "#b5e75d",
                   fontSize: "0.72rem",
                   fontWeight: 700,
                   marginBottom: 12,
@@ -190,7 +190,7 @@ export default function NightVisionContactPage() {
               background: "rgba(20, 20, 20, 0.6)",
               backdropFilter: "blur(12px)",
               WebkitBackdropFilter: "blur(12px)",
-              border: "1px solid rgba(124, 252, 0, 0.2)",
+              border: "1px solid rgba(181, 231, 93, 0.2)",
               borderRadius: 12,
               padding: "24px 20px",
               display: "flex",
@@ -206,12 +206,12 @@ export default function NightVisionContactPage() {
                 width: 54,
                 height: 54,
                 borderRadius: "50%",
-                background: "rgba(124, 252, 0, 0.1)",
-                border: "1px solid rgba(124, 252, 0, 0.3)",
+                background: "rgba(181, 231, 93, 0.1)",
+                border: "1px solid rgba(181, 231, 93, 0.3)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "#7CFC00",
+                color: "#b5e75d",
                 marginBottom: 16,
               }}
             >
@@ -232,7 +232,7 @@ export default function NightVisionContactPage() {
             </h3>
             <p
               style={{
-                color: "#7CFC00",
+                color: "#b5e75d",
                 fontSize: "0.72rem",
                 fontWeight: 700,
                 marginBottom: 12,
@@ -247,7 +247,7 @@ export default function NightVisionContactPage() {
               <a
                 href={`mailto:${settings?.email || "info@nightvision.com.np"}`}
                 style={{ color: "#e5e2e1", textDecoration: "none", fontSize: "0.9rem" }}
-                className="hover:text-[#7CFC00] transition-colors"
+                className="hover:text-[#b5e75d] transition-colors"
               >
                 {settings?.email || "info@nightvision.com.np"}
               </a>
@@ -256,7 +256,7 @@ export default function NightVisionContactPage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ color: "#e5e2e1", textDecoration: "none", fontSize: "0.9rem" }}
-                className="hover:text-[#7CFC00] transition-colors"
+                className="hover:text-[#b5e75d] transition-colors"
               >
                 www.nightvision.com.np
               </a>
@@ -290,7 +290,7 @@ export default function NightVisionContactPage() {
               minHeight: 480,
               borderRadius: 12,
               overflow: "hidden",
-              border: "1px solid rgba(124, 252, 0, 0.2)",
+              border: "1px solid rgba(181, 231, 93, 0.2)",
               background: "#101010",
               boxSizing: "border-box",
               display: "flex",
@@ -321,7 +321,7 @@ export default function NightVisionContactPage() {
                 maxHeight: "none",
                 padding: "14px 18px",
                 background: "#0d0d0d",
-                border: "1px solid rgba(124, 252, 0, 0.4)",
+                border: "1px solid rgba(181, 231, 93, 0.4)",
                 borderRadius: "10px",
                 boxShadow: "0 8px 24px rgba(0, 0, 0, 0.5)",
                 display: "flex",
@@ -340,7 +340,7 @@ export default function NightVisionContactPage() {
                   display: "flex",
                   alignItems: "center",
                   gap: "6px",
-                  color: "#7CFC00",
+                  color: "#b5e75d",
                   fontSize: "0.72rem",
                   fontWeight: 700,
                   letterSpacing: "0.06em",
@@ -400,7 +400,7 @@ export default function NightVisionContactPage() {
                 background: "rgba(20, 20, 20, 0.6)",
                 backdropFilter: "blur(12px)",
                 WebkitBackdropFilter: "blur(12px)",
-                border: "1px solid rgba(124, 252, 0, 0.2)",
+                border: "1px solid rgba(181, 231, 93, 0.2)",
                 borderRadius: 12,
                 padding: "32px 28px",
                 boxSizing: "border-box",
@@ -470,7 +470,7 @@ export default function NightVisionContactPage() {
           max-height: none !important;
           padding: 14px 18px !important;
           background: #0d0d0d !important;
-          border: 1px solid rgba(124, 252, 0, 0.4) !important;
+          border: 1px solid rgba(181, 231, 93, 0.4) !important;
           border-radius: 10px !important;
           box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
           display: flex !important;
@@ -488,7 +488,7 @@ export default function NightVisionContactPage() {
           display: flex !important;
           align-items: center !important;
           gap: 6px !important;
-          color: #7CFC00 !important;
+          color: #b5e75d !important;
           font-size: 0.72rem !important;
           font-weight: 700 !important;
           letter-spacing: 0.06em !important;
@@ -522,7 +522,7 @@ export default function NightVisionContactPage() {
         .form-textarea {
           padding: 12px 16px !important;
           background: #0d0d0d !important;
-          border: 1px solid rgba(124, 252, 0, 0.25) !important;
+          border: 1px solid rgba(181, 231, 93, 0.25) !important;
           border-radius: 8px !important;
           color: #ffffff !important;
           font-size: 0.9rem !important;

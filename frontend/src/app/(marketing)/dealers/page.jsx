@@ -128,7 +128,7 @@ export default function NightVisionDealerships() {
                 style={{
                   position: 'absolute',
                   left: '16px',
-                  color: '#7CFC00',
+                  color: '#b5e75d',
                   pointerEvents: 'none',
                 }}
               />
@@ -141,7 +141,7 @@ export default function NightVisionDealerships() {
                 style={{
                   width: '100%',
                   background: '#0d0d0d',
-                  border: '1px solid rgba(124, 252, 0, 0.25)',
+                  border: '1px solid rgba(181, 231, 93, 0.25)',
                   color: '#ffffff',
                   borderRadius: '6px',
                   padding: '10px 16px 10px 44px',
@@ -170,7 +170,7 @@ export default function NightVisionDealerships() {
                 style={{
                   width: '100%',
                   background: '#0d0d0d',
-                  border: '1px solid rgba(124, 252, 0, 0.25)',
+                  border: '1px solid rgba(181, 231, 93, 0.25)',
                   color: '#ffffff',
                   borderRadius: '6px',
                   padding: '10px 36px 10px 16px',
@@ -192,7 +192,7 @@ export default function NightVisionDealerships() {
                 style={{
                   position: 'absolute',
                   right: '14px',
-                  color: '#7CFC00',
+                  color: '#b5e75d',
                   pointerEvents: 'none',
                 }}
               />
@@ -201,7 +201,7 @@ export default function NightVisionDealerships() {
 
           {/* Dealer Cards Grid (4 Columns) */}
           {loading ? (
-            <div className="text-center py-12 text-[#7CFC00] font-mono">LOADING DEALER NETWORK...</div>
+            <div className="text-center py-12 text-[#b5e75d] font-mono">LOADING DEALER NETWORK...</div>
           ) : (
             <div className="dealers-grid-4col">
               {filteredDealers.map((dealer, idx) => (
@@ -219,31 +219,31 @@ export default function NightVisionDealerships() {
       </section>
 
       {/* 3. MAP SECTION */}
-      <section className="map-section" style={{ padding: '60px 0', borderTop: '1px solid rgba(124, 252, 0, 0.1)', borderBottom: '1px solid rgba(124, 252, 0, 0.1)' }}>
+      <section className="map-section" style={{ padding: '60px 0', borderTop: '1px solid rgba(181, 231, 93, 0.1)', borderBottom: '1px solid rgba(181, 231, 93, 0.1)' }}>
         <div className="dealers-section-inner">
           <div className="map-section-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', alignItems: 'center' }}>
             <div className="map-info-col">
               <h2 className="map-section-title" style={{ color: '#ffffff', fontSize: '1.8rem', fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif", lineHeight: 1.2, marginBottom: '16px' }}>
                 DOMINATING THE<br />
-                <span className="highlight" style={{ color: '#7CFC00' }}>NEPALESE TERRAIN</span>
+                <span className="highlight" style={{ color: '#b5e75d' }}>NEPALESE TERRAIN</span>
               </h2>
               <p className="map-section-desc" style={{ color: '#aaaaaa', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '24px', fontFamily: "'Poppins', sans-serif" }}>
                 From the high mountain passes to the bustling urban centers, NV// hardware is deployed in the most demanding environments across the country.
               </p>
 
               <div className="stats-grid" style={{ display: 'flex', gap: '24px' }}>
-                <div className="stat-box" style={{ background: 'rgba(20, 20, 20, 0.6)', border: '1px solid rgba(124, 252, 0, 0.2)', borderRadius: '8px', padding: '16px 24px' }}>
-                  <div className="stat-value" style={{ color: '#7CFC00', fontSize: '1.8rem', fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif" }}>50+</div>
+                <div className="stat-box" style={{ background: 'rgba(20, 20, 20, 0.6)', border: '1px solid rgba(181, 231, 93, 0.2)', borderRadius: '8px', padding: '16px 24px' }}>
+                  <div className="stat-value" style={{ color: '#b5e75d', fontSize: '1.8rem', fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif" }}>50+</div>
                   <div className="stat-label" style={{ color: '#ffffff', fontSize: '0.75rem', fontWeight: 700, fontFamily: "'Space Grotesk', sans-serif", letterSpacing: '0.05em' }}>INSTALLATION HUBS</div>
                 </div>
-                <div className="stat-box" style={{ background: 'rgba(20, 20, 20, 0.6)', border: '1px solid rgba(124, 252, 0, 0.2)', borderRadius: '8px', padding: '16px 24px' }}>
-                  <div className="stat-value" style={{ color: '#7CFC00', fontSize: '1.8rem', fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif" }}>24/7</div>
+                <div className="stat-box" style={{ background: 'rgba(20, 20, 20, 0.6)', border: '1px solid rgba(181, 231, 93, 0.2)', borderRadius: '8px', padding: '16px 24px' }}>
+                  <div className="stat-value" style={{ color: '#b5e75d', fontSize: '1.8rem', fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif" }}>24/7</div>
                   <div className="stat-label" style={{ color: '#ffffff', fontSize: '0.75rem', fontWeight: 700, fontFamily: "'Space Grotesk', sans-serif", letterSpacing: '0.05em' }}>LOCAL SUPPORT</div>
                 </div>
               </div>
             </div>
 
-            <div className="map-visual-col" style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(124, 252, 0, 0.2)' }}>
+            <div className="map-visual-col" style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(181, 231, 93, 0.2)' }}>
               <img
                 src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1200&auto=format&fit=crop"
                 alt="Nepal Map Surveillance Network"
@@ -252,7 +252,7 @@ export default function NightVisionDealerships() {
               />
               <div className="radar-overlay" style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0, 0, 0, 0.4)' }}>
                 <div className="radar-pulse-container" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Radar size={48} className="radar-icon" style={{ color: '#7CFC00' }} />
+                  <Radar size={48} className="radar-icon" style={{ color: '#b5e75d' }} />
                 </div>
               </div>
             </div>
@@ -267,7 +267,7 @@ export default function NightVisionDealerships() {
             className="apply-content-inner join-force-card dealership-cta-box"
             style={{
               background: 'rgba(20, 20, 20, 0.6)',
-              border: '1px solid rgba(124, 252, 0, 0.2)',
+              border: '1px solid rgba(181, 231, 93, 0.2)',
               borderRadius: '12px',
               padding: '40px 32px',
               textAlign: 'center',
@@ -285,8 +285,8 @@ export default function NightVisionDealerships() {
 
             <div className="steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '36px', justifyContent: 'center' }}>
               {STEPS.map((step, i) => (
-                <div key={i} className="step-card" style={{ background: '#0d0d0d', border: '1px solid rgba(124, 252, 0, 0.15)', borderRadius: '8px', padding: '16px 12px', textAlign: 'center' }}>
-                  <div className="step-num" style={{ color: '#7CFC00', fontSize: '1.2rem', fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif" }}>{step.num}</div>
+                <div key={i} className="step-card" style={{ background: '#0d0d0d', border: '1px solid rgba(181, 231, 93, 0.15)', borderRadius: '8px', padding: '16px 12px', textAlign: 'center' }}>
+                  <div className="step-num" style={{ color: '#b5e75d', fontSize: '1.2rem', fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif" }}>{step.num}</div>
                   <div className="step-label" style={{ color: '#ffffff', fontSize: '0.8rem', fontWeight: 600, fontFamily: "'Space Grotesk', sans-serif", marginTop: '4px' }}>{step.label}</div>
                 </div>
               ))}
@@ -296,7 +296,7 @@ export default function NightVisionDealerships() {
               to="/apply-dealers"
               className="btn-apply"
               style={{
-                background: '#7CFC00',
+                background: '#b5e75d',
                 color: '#000000',
                 fontFamily: "'Space Grotesk', sans-serif",
                 fontWeight: 800,

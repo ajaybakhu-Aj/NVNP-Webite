@@ -130,17 +130,17 @@ export default function CategoryProductView({
               cursor: "pointer"
             }}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7CFC00" strokeWidth="2.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b5e75d" strokeWidth="2.5">
               <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
             </svg>
             FILTER
             {(maxPrice < 20000 || categoryKey || productTypeKey || tagKey) && (
-              <span className="filter-badge" style={{ background: "#7CFC00", color: "#000", fontSize: "11px", fontWeight: 800, borderRadius: "10px", padding: "1px 7px", marginLeft: "4px" }}>
+              <span className="filter-badge" style={{ background: "#b5e75d", color: "#000", fontSize: "11px", fontWeight: 800, borderRadius: "10px", padding: "1px 7px", marginLeft: "4px" }}>
                 {(maxPrice < 20000 ? 1 : 0) + (categoryKey ? 1 : 0) + (productTypeKey ? 1 : 0) + (tagKey ? 1 : 0)}
               </span>
             )}
           </button>
-          <CatalogDownloadButton variant="header" categoryName={pageTitle} style={{ background: "#11140c", color: "#7CFC00", borderColor: "#11140c" }} />
+          <CatalogDownloadButton variant="header" categoryName={pageTitle} style={{ background: "#11140c", color: "#b5e75d", borderColor: "#11140c" }} />
         </div>
       </PageHeroBanner>
 
@@ -156,7 +156,7 @@ export default function CategoryProductView({
             <div className="mobile-filter-drawer">
               <div className="mobile-filter-drawer-header">
                 <div className="drawer-title">
-                  <Icon name="sliders" size={16} style={{ color: "#deffa4" }} />
+                  <Icon name="sliders" size={16} style={{ color: "#b5e75d" }} />
                   <span>FILTER OPTIONS</span>
                   {(maxPrice < 20000 || categoryKey || productTypeKey || tagKey) && (
                     <span className="filter-badge">
@@ -235,7 +235,7 @@ export default function CategoryProductView({
 
         {/* PRODUCTS COLUMN */}
         {loading ? (
-          <div style={{ display: "flex", justifyContent: "center", padding: "100px 0", color: "#94da32", flex: 1 }}>
+          <div style={{ display: "flex", justifyContent: "center", padding: "100px 0", color: "#b5e75d", flex: 1 }}>
             LOADING DYNAMIC DATA PIPELINES...
           </div>
         ) : (
@@ -249,7 +249,7 @@ export default function CategoryProductView({
               ))}
               {filteredProducts.length === 0 && (
               <div style={{ color: "#8d937f", textAlign: "center", padding: "80px 0", width: "100%", gridColumn: "1 / -1", border: "1px dashed #434938", borderRadius: 4, background: "#181a15" }}>
-                <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}><Icon name="search" size={32} style={{ color: "#94da32" }} /></div>
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}><Icon name="search" size={32} style={{ color: "#b5e75d" }} /></div>
                 <div style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#fff", fontWeight: 700, letterSpacing: 1, marginBottom: 6 }}>
                   NO SYSTEMS MATCHING SEARCH
                 </div>
@@ -303,7 +303,7 @@ export default function CategoryProductView({
                     alignItems: "flex-start",
                     gap: 12
                   }}>
-                    <Icon name="check" size={18} style={{ color: "#94da32", flexShrink: 0 }} />
+                    <Icon name="check" size={18} style={{ color: "#b5e75d", flexShrink: 0 }} />
                     <span style={{ color: "#fff", fontSize: 14, fontFamily: "'Space Grotesk', sans-serif" }}>{feat}</span>
                   </div>
                 ))}

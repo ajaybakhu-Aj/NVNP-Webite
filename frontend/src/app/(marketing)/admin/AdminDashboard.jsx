@@ -49,9 +49,9 @@ const C = {
   surfLow: "var(--nv-surfLow, #0c0f07)",
   onSurf: "var(--nv-onSurf, #e2e4d5)",
   onSurfVar: "var(--nv-onSurfVar, #c3c9b3)",
-  primary: "var(--nv-primary, #deffa4)",
+  primary: "var(--nv-primary, #b5e75d)",
   onPrimary: "var(--nv-onPrimary, #233600)",
-  secondary: "var(--nv-secondary, #94da32)",
+  secondary: "var(--nv-secondary, #b5e75d)",
   outline: "var(--nv-outline, #8d937f)",
   outlineVar: "var(--nv-outlineVar, #434938)",
   sg: "'Space Grotesk', sans-serif",
@@ -1151,7 +1151,7 @@ export default function AdminDashboard() {
                         <tr key={e.id} style={{ borderBottom: `1px solid ${C.outlineVar}` }}>
                           <td style={{ padding: "12px 8px" }}>
                             <span style={{
-                              background: e.type === "event" ? "rgba(148, 218, 50, 0.1)" : "rgba(222, 255, 164, 0.1)",
+                              background: e.type === "event" ? "rgba(181, 231, 93, 0.1)" : "rgba(181, 231, 93, 0.1)",
                               border: `1px solid ${e.type === "event" ? C.secondary : C.primary}`,
                               color: e.type === "event" ? C.secondary : C.primary,
                               padding: "2px 6px",
@@ -1293,7 +1293,7 @@ export default function AdminDashboard() {
                                 </td>
                               </tr>
                               {isExpanded && (
-                                <tr style={{ borderBottom: `1px solid ${C.outlineVar}`, background: "rgba(148, 218, 50, 0.02)" }}>
+                                <tr style={{ borderBottom: `1px solid ${C.outlineVar}`, background: "rgba(181, 231, 93, 0.02)" }}>
                                   <td colSpan={7} style={{ padding: "16px 24px" }}>
                                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, border: `1px dashed ${C.outlineVar}`, padding: 20, background: C.surfCont }}>
                                       <div>
@@ -1321,7 +1321,7 @@ export default function AdminDashboard() {
                                           </div>
                                         </div>
                                         {o.customer?.notes && (
-                                          <div style={{ marginTop: 16, padding: 10, borderLeft: `3px solid ${C.secondary}`, background: "rgba(148, 218, 50, 0.05)", fontSize: 11 }}>
+                                          <div style={{ marginTop: 16, padding: 10, borderLeft: `3px solid ${C.secondary}`, background: "rgba(181, 231, 93, 0.05)", fontSize: 11 }}>
                                             <div style={{ fontWeight: "bold", color: C.secondary, marginBottom: 4 }}>INSTALLATION / DELIVERY NOTES:</div>
                                             <div style={{ color: C.onSurfVar, fontStyle: "italic" }}>"{o.customer?.notes}"</div>
                                           </div>
@@ -1379,7 +1379,7 @@ export default function AdminDashboard() {
                                   <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                                     {d.companyName}
                                     {d.isPlatinum && (
-                                      <span style={{ fontSize: 9, background: "rgba(148, 218, 50, 0.15)", color: "#76B900", padding: "2px 6px", borderRadius: 4, fontWeight: "bold" }}>PLATINUM</span>
+                                      <span style={{ fontSize: 9, background: "rgba(181, 231, 93, 0.15)", color: "#76B900", padding: "2px 6px", borderRadius: 4, fontWeight: "bold" }}>PLATINUM</span>
                                     )}
                                   </div>
                                 </td>
@@ -1464,7 +1464,7 @@ export default function AdminDashboard() {
                                 </td>
                               </tr>
                               {isExpanded && (
-                                <tr style={{ borderBottom: `1px solid ${C.outlineVar}`, background: "rgba(148, 218, 50, 0.02)" }}>
+                                <tr style={{ borderBottom: `1px solid ${C.outlineVar}`, background: "rgba(181, 231, 93, 0.02)" }}>
                                   <td colSpan={7} style={{ padding: "16px 24px" }}>
                                     <div style={{ border: `1px dashed ${C.outlineVar}`, padding: 20, background: C.surfCont }}>
                                       <h4 style={{ fontFamily: C.sg, color: C.secondary, fontSize: 12, marginBottom: 10, letterSpacing: "1px" }}>PROPOSAL BRIEF & INFORMATION</h4>
@@ -1524,7 +1524,7 @@ export default function AdminDashboard() {
                                 <td style={{ padding: "12px 8px" }}>
                                   <span
                                     style={{
-                                      background: msg.status === "Unread" ? "rgba(148, 218, 50, 0.1)" : C.surfCont,
+                                      background: msg.status === "Unread" ? "rgba(181, 231, 93, 0.1)" : C.surfCont,
                                       border: `1px solid ${msg.status === "Unread" ? C.secondary : C.outlineVar}`,
                                       color: msg.status === "Unread" ? C.secondary : C.onSurfVar,
                                       padding: "2px 6px",
@@ -1598,7 +1598,7 @@ export default function AdminDashboard() {
                                 </td>
                               </tr>
                               {isExpanded && (
-                                <tr style={{ borderBottom: `1px solid ${C.outlineVar}`, background: "rgba(148, 218, 50, 0.02)" }}>
+                                <tr style={{ borderBottom: `1px solid ${C.outlineVar}`, background: "rgba(181, 231, 93, 0.02)" }}>
                                   <td colSpan={6} style={{ padding: "16px 24px" }}>
                                     <div style={{ border: `1px dashed ${C.outlineVar}`, padding: 20, background: C.surfCont }}>
                                       <div style={{ display: "flex", justifyContent: "space-between", borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10, marginBottom: 12 }}>

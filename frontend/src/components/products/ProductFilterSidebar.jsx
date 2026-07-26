@@ -20,12 +20,12 @@ export default function ProductFilterSidebar({
     <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
       {/* PRICE SLIDER FILTER */}
       <div style={{ border: "1px solid #434938", padding: 16, borderRadius: 4, background: "#181a15" }}>
-        <h4 style={{ margin: "0 0 16px 0", fontSize: 14, fontFamily: "'Space Grotesk', sans-serif", color: "#deffa4", letterSpacing: 1 }}>
+        <h4 style={{ margin: "0 0 16px 0", fontSize: 14, fontFamily: "'Space Grotesk', sans-serif", color: "#b5e75d", letterSpacing: 1 }}>
           PRICE LIMIT (NPR)
         </h4>
         <div style={{ display: "flex", justifyContent: "space-between", color: "#8d937f", fontSize: 12, marginBottom: 8 }}>
           <span>रू 0</span>
-          <span style={{ color: "#94da32", fontWeight: 700 }}>Up to रू {maxPrice.toLocaleString("en-IN")}</span>
+          <span style={{ color: "#b5e75d", fontWeight: 700 }}>Up to रू {maxPrice.toLocaleString("en-IN")}</span>
         </div>
         <input
           type="range"
@@ -36,7 +36,7 @@ export default function ProductFilterSidebar({
           onChange={(e) => setMaxPrice(Number(e.target.value))}
           style={{
             width: "100%",
-            accentColor: "#94da32",
+            accentColor: "#b5e75d",
             cursor: "pointer",
             background: "#0c0d0a",
             height: 6,
@@ -50,7 +50,7 @@ export default function ProductFilterSidebar({
 
       {/* CATEGORIES FILTER */}
       <div style={{ border: "1px solid #434938", padding: 16, borderRadius: 4, background: "#181a15" }}>
-        <h4 style={{ margin: "0 0 16px 0", fontSize: 14, fontFamily: "'Space Grotesk', sans-serif", color: "#deffa4", letterSpacing: 1 }}>
+        <h4 style={{ margin: "0 0 16px 0", fontSize: 14, fontFamily: "'Space Grotesk', sans-serif", color: "#b5e75d", letterSpacing: 1 }}>
           CATEGORIES
         </h4>
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -70,7 +70,7 @@ export default function ProductFilterSidebar({
                   style={{
                     width: 16,
                     height: 16,
-                    accentColor: "#94da32",
+                    accentColor: "#b5e75d",
                     cursor: "pointer"
                   }}
                 />
@@ -88,7 +88,7 @@ export default function ProductFilterSidebar({
               style={{
                 background: "#0c0d0a",
                 border: "1px solid #434938",
-                color: selectedMemory ? "#94da32" : "#fff",
+                color: selectedMemory ? "#b5e75d" : "#fff",
                 padding: "8px 12px",
                 borderRadius: 4,
                 fontSize: 12,
@@ -106,7 +106,7 @@ export default function ProductFilterSidebar({
 
       {/* PRODUCT TYPE FILTER */}
       <div style={{ border: "1px solid #434938", padding: 16, borderRadius: 4, background: "#181a15" }}>
-        <h4 style={{ margin: "0 0 16px 0", fontSize: 14, fontFamily: "'Space Grotesk', sans-serif", color: "#deffa4", letterSpacing: 1 }}>
+        <h4 style={{ margin: "0 0 16px 0", fontSize: 14, fontFamily: "'Space Grotesk', sans-serif", color: "#b5e75d", letterSpacing: 1 }}>
           PRODUCT TYPE
         </h4>
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -126,7 +126,7 @@ export default function ProductFilterSidebar({
                   style={{
                     width: 16,
                     height: 16,
-                    accentColor: "#94da32",
+                    accentColor: "#b5e75d",
                     cursor: "pointer"
                   }}
                 />
@@ -139,11 +139,11 @@ export default function ProductFilterSidebar({
 
       {/* BUILD YOUR CCTV SETUP BUTTON */}
       <div style={{
-        border: "1px solid #94da32",
+        border: "1px solid #b5e75d",
         padding: 16,
         borderRadius: 4,
         background: "linear-gradient(135deg, #181a15 0%, #0d0f0a 100%)",
-        boxShadow: "0 0 15px rgba(148, 218, 50, 0.15)",
+        boxShadow: "0 0 15px rgba(181, 231, 93, 0.15)",
         textAlign: "center"
       }}>
         <h4 style={{ margin: "0 0 8px 0", fontSize: 14, fontFamily: "'Space Grotesk', sans-serif", color: "var(--nv-onSurf)", letterSpacing: 1 }}>
@@ -156,7 +156,7 @@ export default function ProductFilterSidebar({
           onClick={() => navigate("/cctv-setup")}
           style={{
             width: "100%",
-            background: "#94da32",
+            background: "#b5e75d",
             color: "#111",
             border: "none",
             padding: "12px 8px",
@@ -166,7 +166,7 @@ export default function ProductFilterSidebar({
             fontSize: 12,
             letterSpacing: 1,
             borderRadius: 4,
-            boxShadow: "0 0 10px rgba(148, 218, 50, 0.25)",
+            boxShadow: "0 0 10px rgba(181, 231, 93, 0.25)",
             transition: "transform 0.15s"
           }}
         >

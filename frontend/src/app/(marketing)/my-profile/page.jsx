@@ -43,7 +43,7 @@ export default function MyProfilePage() {
   if (loading) {
     return (
       <div className="profile-dashboard-container" style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
-        <Icon name="sync" className="spin-slow" size={32} style={{ color: "#94da32" }} />
+        <Icon name="sync" className="spin-slow" size={32} style={{ color: "#b5e75d" }} />
       </div>
     );
   }
@@ -82,7 +82,7 @@ export default function MyProfilePage() {
       <header className="profile-dashboard-header">
         <h1 className="profile-dashboard-title">Dashboard</h1>
         <p className="profile-dashboard-subtitle">
-         <strong style={{ color: "#94da32" }}>{user.name}</strong>
+         <strong style={{ color: "#b5e75d" }}>{user.name}</strong>
         </p>
       </header>
 

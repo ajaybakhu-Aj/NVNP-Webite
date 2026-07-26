@@ -83,7 +83,7 @@ export default function FounderPage() {
               className="founder-bio-img"
             />
             <div className="founder-id-card">
-              <div className="text-[#94da32] font-mono text-xs tracking-widest font-bold mb-1">NV_EXEC_OFFICER_01</div>
+              <div className="text-[#b5e75d] font-mono text-xs tracking-widest font-bold mb-1">NV_EXEC_OFFICER_01</div>
               <div className="text-white font-bold text-xl font-['Space_Grotesk']">ROZIL THAPA</div>
               <div className="text-[#c3c9b3] text-sm">FOUNDER / CEO</div>
             </div>
@@ -130,7 +130,7 @@ export default function FounderPage() {
               onMouseEnter={() => setHoveredCard(idx)}
               onMouseLeave={() => setHoveredCard(null)}
             >
-              <div className="text-[#94da32] mb-4">
+              <div className="text-[#b5e75d] mb-4">
                 <Icon name={item.icon || "star"} size={36} />
               </div>
               <h3 className="founder-card-title">{item.title}</h3>

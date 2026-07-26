@@ -55,8 +55,8 @@ export default function TestimonialsSection() {
       style={{
         padding: "60px 0",
         background: "#0a0c08",
-        borderTop: "1px solid rgba(148, 218, 50, 0.15)",
-        borderBottom: "1px solid rgba(148, 218, 50, 0.15)",
+        borderTop: "1px solid rgba(181, 231, 93, 0.15)",
+        borderBottom: "1px solid rgba(181, 231, 93, 0.15)",
         width: "100%",
         overflow: "hidden",
         boxSizing: "border-box",
@@ -67,19 +67,19 @@ export default function TestimonialsSection() {
           .testimonial-card-glass {
             background: rgba(18, 20, 15, 0.85);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(148, 218, 50, 0.35);
+            border: 1px solid rgba(181, 231, 93, 0.35);
             border-radius: 20px;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(148, 218, 50, 0.12);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(181, 231, 93, 0.12);
             transition: all 0.35s ease;
           }
           .testimonial-card-glass:hover {
-            border-color: rgba(148, 218, 50, 0.65);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(148, 218, 50, 0.2);
+            border-color: rgba(181, 231, 93, 0.65);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(181, 231, 93, 0.2);
           }
           .t-nav-btn {
             background: rgba(26, 29, 22, 0.9);
-            border: 1px solid rgba(148, 218, 50, 0.35);
-            color: #94da32;
+            border: 1px solid rgba(181, 231, 93, 0.35);
+            color: #b5e75d;
             width: 38px;
             height: 38px;
             border-radius: 50%;
@@ -91,10 +91,10 @@ export default function TestimonialsSection() {
             flex-shrink: 0;
           }
           .t-nav-btn:hover {
-            background: #94da32;
+            background: #b5e75d;
             color: #0a0c08;
-            border-color: #94da32;
-            box-shadow: 0 0 12px rgba(148, 218, 50, 0.45);
+            border-color: #b5e75d;
+            box-shadow: 0 0 12px rgba(181, 231, 93, 0.45);
           }
           .t-dot {
             width: 9px;
@@ -107,10 +107,10 @@ export default function TestimonialsSection() {
             padding: 0;
           }
           .t-dot.active {
-            background: #94da32;
+            background: #b5e75d;
             width: 22px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(148, 218, 50, 0.5);
+            box-shadow: 0 0 10px rgba(181, 231, 93, 0.5);
           }
 
           @media (max-width: 767px) {
@@ -174,7 +174,7 @@ export default function TestimonialsSection() {
             }}
           >
             {[...Array(5)].map((_, i) => (
-              <Icon key={i} name="star" size={20} fill style={{ color: "#94da32" }} />
+              <Icon key={i} name="star" size={20} fill style={{ color: "#b5e75d" }} />
             ))}
           </div>
 
@@ -211,7 +211,7 @@ export default function TestimonialsSection() {
                 fontSize: "clamp(12px, 2vw, 14px)",
                 letterSpacing: 1.5,
                 textTransform: "uppercase",
-                color: "#94da32",
+                color: "#b5e75d",
               }}
             >
               — {items[currentIndex]?.author}

@@ -144,7 +144,7 @@ export default function SettingsPage() {
   if (loading) {
     return (
       <div className="settings-dashboard-container" style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
-        <Icon name="sync" className="spin-slow" size={32} style={{ color: "#94da32" }} />
+        <Icon name="sync" className="spin-slow" size={32} style={{ color: "#b5e75d" }} />
       </div>
     );
   }
@@ -183,7 +183,7 @@ export default function SettingsPage() {
       <header className="settings-dashboard-header">
         <h1 className="settings-dashboard-title">Account Settings</h1>
         <p className="settings-dashboard-subtitle">
-          Manage notifications, system settings, and your password for account: <strong style={{ color: "#94da32" }}>{user.name}</strong>
+          Manage notifications, system settings, and your password for account: <strong style={{ color: "#b5e75d" }}>{user.name}</strong>
         </p>
       </header>
 
@@ -366,7 +366,7 @@ export default function SettingsPage() {
                   </div>
                 )}
                 {formSuccess && (
-                  <div className="auth-success-msg" style={{ display: "flex", gap: "8px", alignItems: "center", border: "1px solid rgba(148, 218, 50, 0.4)", padding: "10px", borderRadius: "6px", background: "rgba(148, 218, 50, 0.1)", color: "#94da32", fontSize: "12px" }}>
+                  <div className="auth-success-msg" style={{ display: "flex", gap: "8px", alignItems: "center", border: "1px solid rgba(181, 231, 93, 0.4)", padding: "10px", borderRadius: "6px", background: "rgba(181, 231, 93, 0.1)", color: "#b5e75d", fontSize: "12px" }}>
                     <Icon name="check_circle" size={16} />
                     <span>{formSuccess}</span>
                   </div>

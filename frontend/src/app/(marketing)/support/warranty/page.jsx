@@ -7,7 +7,7 @@ const colors = {
     surface: "#1b1b1b",
     surfaceHigh: "#2a2a2a",
     surfaceHighest: "#353535",
-    secondary: "#94da32",
+    secondary: "#b5e75d",
     secondaryBright: "#aff74e",
     primaryFixed: "#c0f367",
     onBg: "#e5e2e1",
@@ -141,7 +141,7 @@ export default function App() {
         .btn-primary:hover { background: ${colors.primaryFixed}; }
         .btn-primary:active { transform: scale(0.98); }
         .btn-outline { background: transparent; color: ${colors.secondary}; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; padding: 14px 32px; border: 1px solid ${colors.secondary}; cursor: pointer; transition: background 0.2s; }
-        .btn-outline:hover { background: rgba(148,218,50,0.1); }
+        .btn-outline:hover { background: rgba(181, 231, 93,0.1); }
         .coverage-card { background: ${colors.surface}; border: 1px solid ${colors.outlineVariant}; padding: 32px; transition: border-color 0.3s; }
         .coverage-card:hover { border-color: ${colors.secondary}; }
         .step-card { background: ${colors.surface}; flex: 1; padding: 32px; border-right: 1px solid ${colors.outlineVariant}; display: flex; flex-direction: column; gap: 16px; transition: background 0.2s; cursor: default; }
@@ -368,7 +368,7 @@ export default function App() {
                                     padding: isMobile ? "24px" : "36px", 
                                     position: "relative", 
                                     overflow: "hidden",
-                                    boxShadow: `0 0 20px rgba(148,218,50,0.15)`,
+                                    boxShadow: `0 0 20px rgba(181, 231, 93,0.15)`,
                                 }}>
                                     <div style={{ 
                                         position: "absolute", 

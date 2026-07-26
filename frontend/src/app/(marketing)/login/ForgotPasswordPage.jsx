@@ -137,7 +137,7 @@ export default function ForgotPasswordPage() {
         )}
 
         {success && (
-          <div className="auth-error-banner" style={{ background: "rgba(148, 218, 50, 0.1)", border: "1px solid rgba(148, 218, 50, 0.3)", color: "#94da32" }}>
+          <div className="auth-error-banner" style={{ background: "rgba(181, 231, 93, 0.1)", border: "1px solid rgba(181, 231, 93, 0.3)", color: "#b5e75d" }}>
             <Icon name="check_circle" size={18} />
             <span>{success}</span>
           </div>
@@ -209,7 +209,7 @@ export default function ForgotPasswordPage() {
                 style={{
                   background: "none",
                   border: "none",
-                  color: countdown > 0 ? "#555" : "#94da32",
+                  color: countdown > 0 ? "#555" : "#b5e75d",
                   cursor: countdown > 0 ? "default" : "pointer",
                   fontWeight: 600,
                   fontSize: 12,

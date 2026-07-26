@@ -5,7 +5,7 @@ import { useSiteContents } from "../../utils/cmsDb";
 
 export default function DealerSection() {
   const contents = useSiteContents();
-  const primaryBgColor = colors.secondary || "#94da32";
+  const primaryBgColor = colors.secondary || "#b5e75d";
 
   return (
     <section
@@ -24,7 +24,7 @@ export default function DealerSection() {
         {`
           .dealer-btn-primary {
             background-color: #0c0e08;
-            color: #94da32;
+            color: #b5e75d;
             border: 2px solid #0c0e08;
             padding: 14px 28px;
             font-family: 'Space Grotesk', sans-serif;
@@ -70,7 +70,7 @@ export default function DealerSection() {
           }
           .dealer-btn-secondary:hover {
             background-color: #0c0e08;
-            color: #94da32;
+            color: #b5e75d;
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
           }

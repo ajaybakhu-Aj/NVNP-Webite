@@ -112,8 +112,8 @@ export default function ProductsSection() {
       style={{
         padding: "60px 0 80px",
         background: "#0a0c08",
-        borderTop: "1px solid rgba(148, 218, 50, 0.15)",
-        borderBottom: "1px solid rgba(148, 218, 50, 0.15)",
+        borderTop: "1px solid rgba(181, 231, 93, 0.15)",
+        borderBottom: "1px solid rgba(181, 231, 93, 0.15)",
         position: "relative",
         overflow: "hidden",
         width: "100%",
@@ -124,7 +124,7 @@ export default function ProductsSection() {
         {`
           .category-tab-btn {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(148, 218, 50, 0.25);
+            border: 1px solid rgba(181, 231, 93, 0.25);
             color: #a1a896;
             padding: 8px 18px;
             border-radius: 30px;
@@ -138,20 +138,20 @@ export default function ProductsSection() {
             flex-shrink: 0;
           }
           .category-tab-btn.active {
-            background: #94da32;
+            background: #b5e75d;
             color: #0a0c08;
-            border-color: #94da32;
-            box-shadow: 0 0 16px rgba(148, 218, 50, 0.4);
+            border-color: #b5e75d;
+            box-shadow: 0 0 16px rgba(181, 231, 93, 0.4);
           }
           .category-tab-btn:hover:not(.active) {
-            background: rgba(148, 218, 50, 0.12);
-            color: #94da32;
-            border-color: rgba(148, 218, 50, 0.5);
+            background: rgba(181, 231, 93, 0.12);
+            color: #b5e75d;
+            border-color: rgba(181, 231, 93, 0.5);
           }
           .catalog-link-btn {
-            background: rgba(148, 218, 50, 0.05);
-            border: 1px solid rgba(148, 218, 50, 0.4);
-            color: #94da32;
+            background: rgba(181, 231, 93, 0.05);
+            border: 1px solid rgba(181, 231, 93, 0.4);
+            color: #b5e75d;
             padding: 8px 18px;
             border-radius: 30px;
             font-family: 'Space Grotesk', sans-serif;
@@ -167,14 +167,14 @@ export default function ProductsSection() {
             white-space: nowrap;
           }
           .catalog-link-btn:hover {
-            background: #94da32;
+            background: #b5e75d;
             color: #0a0c08;
-            box-shadow: 0 0 20px rgba(148, 218, 50, 0.45);
+            box-shadow: 0 0 20px rgba(181, 231, 93, 0.45);
           }
           .nav-chevron-btn {
             background: rgba(20, 22, 18, 0.8);
-            border: 1px solid rgba(148, 218, 50, 0.4);
-            color: #94da32;
+            border: 1px solid rgba(181, 231, 93, 0.4);
+            color: #b5e75d;
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -188,10 +188,10 @@ export default function ProductsSection() {
             flex-shrink: 0;
           }
           .nav-chevron-btn:hover {
-            background: #94da32;
+            background: #b5e75d;
             color: #0a0c08;
-            border-color: #94da32;
-            box-shadow: 0 0 14px rgba(148, 218, 50, 0.45);
+            border-color: #b5e75d;
+            box-shadow: 0 0 14px rgba(181, 231, 93, 0.45);
           }
           .pagination-dot {
             width: 10px;
@@ -204,10 +204,10 @@ export default function ProductsSection() {
             padding: 0;
           }
           .pagination-dot.active {
-            background: #94da32;
+            background: #b5e75d;
             width: 24px;
             border-radius: 10px;
-            box-shadow: 0 0 8px rgba(148, 218, 50, 0.5);
+            box-shadow: 0 0 8px rgba(181, 231, 93, 0.5);
           }
 
           /* CAROUSEL SLIDER WRAPPER */
@@ -383,7 +383,7 @@ export default function ProductsSection() {
               justifyContent: "center",
               alignItems: "center",
               height: "280px",
-              color: "#94da32",
+              color: "#b5e75d",
               fontFamily: "'Space Grotesk', sans-serif",
               letterSpacing: "2px",
               fontSize: "14px",

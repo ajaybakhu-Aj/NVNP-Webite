@@ -111,7 +111,7 @@ export default function HomeBlogsSection() {
               style={{
                 position: "absolute", 
                 inset: 0,
-                background: "repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(148,218,50,0.02) 2px, rgba(148,218,50,0.02) 4px)",
+                background: "repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(181, 231, 93,0.02) 2px, rgba(181, 231, 93,0.02) 4px)",
                 pointerEvents: "none",
                 zIndex: 2
               }} 
@@ -194,7 +194,7 @@ export default function HomeBlogsSection() {
                     alignItems: "center", 
                     justifyContent: "center", 
                     gap: 8,
-                    background: "rgba(148, 218, 50, 0.1)", 
+                    background: "rgba(181, 231, 93, 0.1)", 
                     color: colors.secondary, 
                     border: `1px solid ${colors.secondary}`,
                     textDecoration: "none", 
@@ -212,7 +212,7 @@ export default function HomeBlogsSection() {
                     e.currentTarget.style.color = "#111";
                   }}
                   onMouseOut={(e) => {
-                    e.currentTarget.style.background = "rgba(148, 218, 50, 0.1)";
+                    e.currentTarget.style.background = "rgba(181, 231, 93, 0.1)";
                     e.currentTarget.style.color = colors.secondary;
                   }}
                 >

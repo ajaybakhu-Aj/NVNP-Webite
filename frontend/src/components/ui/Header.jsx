@@ -371,7 +371,7 @@ export default function Header() {
                     flex: 1,
                     textAlign: "center",
                     background: "transparent",
-                    border: "1px solid #94da32",
+                    border: "1px solid #b5e75d",
                     color: "var(--nv-secondary)",
                     padding: "10px",
                     borderRadius: "4px",
@@ -478,7 +478,7 @@ export default function Header() {
               style={{
                 alignSelf: "flex-end",
                 background: "var(--nv-surfHi)",
-                border: "1px solid rgba(148,218,50,0.3)",
+                border: "1px solid rgba(181, 231, 93,0.3)",
                 color: "var(--nv-onSurf)",
                 width: 40,
                 height: 40,
@@ -516,14 +516,14 @@ export default function Header() {
                 style={{
                   width: "100%",
                   background: "var(--nv-surfCont)",
-                  border: "2px solid #94da32",
+                  border: "2px solid #b5e75d",
                   borderRadius: 12,
                   padding: "18px 20px 18px 54px",
                   color: "var(--nv-onSurf)",
                   fontSize: 16,
                   fontFamily: "Poppins, sans-serif",
                   outline: "none",
-                  boxShadow: "0 0 30px rgba(148,218,50,0.15)",
+                  boxShadow: "0 0 30px rgba(181, 231, 93,0.15)",
                 }}
               />
             </div>
@@ -565,7 +565,7 @@ export default function Header() {
                         borderBottom: idx < searchResults.length - 1 ? "1px solid #434938" : "none",
                         transition: "background 0.15s",
                       }}
-                      onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(148,218,50,0.08)"; }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(181, 231, 93,0.08)"; }}
                       onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
                     >
                       {/* Thumbnail */}

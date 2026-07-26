@@ -76,7 +76,7 @@ export default function GalleryPage() {
           style={{
             marginBottom: "36px",
             paddingBottom: "16px",
-            borderBottom: "1px solid rgba(124, 252, 0, 0.15)",
+            borderBottom: "1px solid rgba(181, 231, 93, 0.15)",
             width: "100%",
           }}
         >
@@ -106,14 +106,14 @@ export default function GalleryPage() {
                     cursor: "pointer",
                     transition: "all 0.2s ease",
                     border: isActive
-                      ? "1px solid #7CFC00"
+                      ? "1px solid #b5e75d"
                       : "1px solid rgba(255, 255, 255, 0.12)",
                     background: isActive
-                      ? "#7CFC00"
+                      ? "#b5e75d"
                       : "rgba(20, 20, 20, 0.7)",
                     color: isActive ? "#000000" : "#c3c9b3",
                     boxShadow: isActive
-                      ? "0 0 16px rgba(124, 252, 0, 0.3)"
+                      ? "0 0 16px rgba(181, 231, 93, 0.3)"
                       : "none",
                   }}
                 >
@@ -130,7 +130,7 @@ export default function GalleryPage() {
             style={{
               textAlign: "center",
               padding: "80px 0",
-              color: "#7CFC00",
+              color: "#b5e75d",
               width: "100%",
               fontFamily: "monospace",
               fontSize: "0.9rem",
@@ -158,7 +158,7 @@ export default function GalleryPage() {
                 className="gallery-card-item"
                 style={{
                   background: "#121212",
-                  border: "1px solid rgba(124, 252, 0, 0.15)",
+                  border: "1px solid rgba(181, 231, 93, 0.15)",
                   borderRadius: "12px",
                   overflow: "hidden",
                   cursor: "pointer",
@@ -198,7 +198,7 @@ export default function GalleryPage() {
                       position: "absolute",
                       top: "12px",
                       left: "12px",
-                      background: "#7CFC00",
+                      background: "#b5e75d",
                       color: "#000000",
                       padding: "4px 10px",
                       fontSize: "0.65rem",
@@ -325,8 +325,8 @@ export default function GalleryPage() {
                 top: "-18px",
                 right: "-18px",
                 background: "#000000",
-                border: "2px solid #7CFC00",
-                color: "#7CFC00",
+                border: "2px solid #b5e75d",
+                color: "#b5e75d",
                 width: "42px",
                 height: "42px",
                 borderRadius: "50%",
@@ -335,7 +335,7 @@ export default function GalleryPage() {
                 justifyContent: "center",
                 cursor: "pointer",
                 zIndex: 1000,
-                boxShadow: "0 0 16px rgba(124, 252, 0, 0.4)",
+                boxShadow: "0 0 16px rgba(181, 231, 93, 0.4)",
               }}
             >
               <Icon name="close" size={20} />
@@ -350,8 +350,8 @@ export default function GalleryPage() {
                 alignItems: "center",
                 borderRadius: "12px",
                 overflow: "hidden",
-                border: "1px solid rgba(124, 252, 0, 0.3)",
-                boxShadow: "0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(124, 252, 0, 0.2)",
+                border: "1px solid rgba(181, 231, 93, 0.3)",
+                boxShadow: "0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(181, 231, 93, 0.2)",
               }}
             >
               <img
@@ -369,7 +369,7 @@ export default function GalleryPage() {
                 style={{
                   width: "100%",
                   background: "#11140c",
-                  borderTop: "1px solid rgba(124, 252, 0, 0.3)",
+                  borderTop: "1px solid rgba(181, 231, 93, 0.3)",
                   padding: "16px 24px",
                   color: "#ffffff",
                   fontFamily: "'Space Grotesk', sans-serif",
@@ -390,9 +390,9 @@ export default function GalleryPage() {
       <style>{`
         /* Hover Elevation Effects on Gallery Cards */
         .gallery-card-item:hover {
-          border-color: #7CFC00 !important;
+          border-color: #b5e75d !important;
           transform: translateY(-4px) !important;
-          box-shadow: 0 10px 24px rgba(124, 252, 0, 0.12) !important;
+          box-shadow: 0 10px 24px rgba(181, 231, 93, 0.12) !important;
         }
 
         .gallery-card-item:hover .gallery-card-img {
@@ -400,7 +400,7 @@ export default function GalleryPage() {
         }
 
         .gallery-card-item:hover .gallery-card-title {
-          color: #7CFC00 !important;
+          color: #b5e75d !important;
         }
 
         @media screen and (max-width: 640px) {

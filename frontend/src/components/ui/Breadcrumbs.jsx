@@ -114,15 +114,15 @@ export default function Breadcrumbs({ items: customItems, categoryName, productN
           font-weight: 500;
         }
         .breadcrumb-link:hover {
-          color: #7CFC00;
-          text-shadow: 0 0 8px rgba(124, 252, 0, 0.4);
+          color: #b5e75d;
+          text-shadow: 0 0 8px rgba(181, 231, 93, 0.4);
         }
         .breadcrumb-current {
-          color: #deffa4;
+          color: #b5e75d;
           font-weight: 700;
         }
         .breadcrumb-separator {
-          color: rgba(124, 252, 0, 0.6);
+          color: rgba(181, 231, 93, 0.6);
           display: flex;
           align-items: center;
           font-size: 0.75rem;

@@ -16,13 +16,13 @@ export default function BlogCard({ article }) {
       style={{
         background: "#121212",
         border: hovered
-          ? "1px solid #7CFC00"
-          : "1px solid rgba(124, 252, 0, 0.15)",
+          ? "1px solid #b5e75d"
+          : "1px solid rgba(181, 231, 93, 0.15)",
         borderRadius: "10px",
         overflow: "hidden",
         transition: "all 0.3s ease",
         transform: hovered ? "translateY(-4px)" : "none",
-        boxShadow: hovered ? "0 10px 24px rgba(124, 252, 0, 0.12)" : "none",
+        boxShadow: hovered ? "0 10px 24px rgba(181, 231, 93, 0.12)" : "none",
         display: "flex",
         flexDirection: "column",
         height: "100%",
@@ -62,7 +62,7 @@ export default function BlogCard({ article }) {
               position: "absolute",
               top: "12px",
               left: "12px",
-              background: "#7CFC00",
+              background: "#b5e75d",
               color: "#000000",
               padding: "4px 10px",
               fontSize: "0.65rem",
@@ -97,7 +97,7 @@ export default function BlogCard({ article }) {
                 style={{
                   background: "#1a1a1a",
                   color: "#c3c9b3",
-                  border: "1px solid rgba(124, 252, 0, 0.2)",
+                  border: "1px solid rgba(181, 231, 93, 0.2)",
                   padding: "2px 8px",
                   fontSize: "0.65rem",
                   fontWeight: 700,
@@ -119,7 +119,7 @@ export default function BlogCard({ article }) {
               fontFamily: "monospace",
               letterSpacing: "0.05em",
               textTransform: "uppercase",
-              color: "#7CFC00",
+              color: "#b5e75d",
               marginBottom: "8px",
             }}
           >
@@ -127,7 +127,7 @@ export default function BlogCard({ article }) {
             <Link
               to={`/author/${authorSlug}`}
               style={{
-                color: "#7CFC00",
+                color: "#b5e75d",
                 fontWeight: 700,
                 textDecoration: "underline",
               }}
@@ -144,7 +144,7 @@ export default function BlogCard({ article }) {
                 fontFamily: "'Space Grotesk', sans-serif",
                 lineHeight: 1.35,
                 marginBottom: "10px",
-                color: hovered ? "#7CFC00" : "#ffffff",
+                color: hovered ? "#b5e75d" : "#ffffff",
                 transition: "color 0.2s ease",
                 display: "-webkit-box",
                 WebkitLineClamp: 2,
@@ -180,7 +180,7 @@ export default function BlogCard({ article }) {
             display: "inline-flex",
             alignItems: "center",
             gap: "6px",
-            color: "#7CFC00",
+            color: "#b5e75d",
             fontWeight: 800,
             fontSize: "0.75rem",
             letterSpacing: "0.08em",

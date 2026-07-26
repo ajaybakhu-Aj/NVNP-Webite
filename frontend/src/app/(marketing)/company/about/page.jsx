@@ -134,7 +134,7 @@ export default function NightVisionAboutPage() {
               {pillars.map((item, idx) => (
                 <div className="value-card" key={idx}>
                   <div className="value-header">
-                    <span className="value-icon inline-flex p-2 rounded-lg bg-[#94da32]/10 border border-[#94da32]/20">
+                    <span className="value-icon inline-flex p-2 rounded-lg bg-[#b5e75d]/10 border border-[#b5e75d]/20">
                       <Icon name={item.icon || "star"} size={20} />
                     </span>
                   </div>

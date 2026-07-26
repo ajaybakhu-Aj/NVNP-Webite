@@ -13,9 +13,9 @@ const C = {
   surfLow: "var(--nv-surfLow, #0c0f07)",
   onSurf: "var(--nv-onSurf, #e2e4d5)",
   onSurfVar: "var(--nv-onSurfVar, #c3c9b3)",
-  primary: "var(--nv-primary, #deffa4)",
+  primary: "var(--nv-primary, #b5e75d)",
   onPrimary: "var(--nv-onPrimary, #233600)",
-  secondary: "var(--nv-secondary, #94da32)",
+  secondary: "var(--nv-secondary, #b5e75d)",
   outline: "var(--nv-outline, #8d937f)",
   outlineVar: "var(--nv-outlineVar, #434938)",
   sg: "'Space Grotesk', sans-serif",
@@ -41,7 +41,7 @@ function TagCard({ tag, onRemove }) {
         gap: 12,
         transition: "all 0.25s ease",
         transform: hovered ? "translateY(-2px)" : "translateY(0)",
-        boxShadow: hovered ? `0 4px 20px rgba(148,218,50,0.12)` : "none",
+        boxShadow: hovered ? `0 4px 20px rgba(181, 231, 93,0.12)` : "none",
       }}
     >
       {/* Tag info */}
@@ -51,7 +51,7 @@ function TagCard({ tag, onRemove }) {
             width: 38,
             height: 38,
             borderRadius: 8,
-            background: tag.count > 0 ? "rgba(148,218,50,0.12)" : "rgba(255,255,255,0.04)",
+            background: tag.count > 0 ? "rgba(181, 231, 93,0.12)" : "rgba(255,255,255,0.04)",
             border: `1px solid ${tag.count > 0 ? C.secondary : C.outlineVar}`,
             display: "flex",
             alignItems: "center",
@@ -86,8 +86,8 @@ function TagCard({ tag, onRemove }) {
               <span
                 style={{
                   marginLeft: 8,
-                  background: "rgba(222,255,164,0.12)",
-                  border: "1px solid rgba(222,255,164,0.3)",
+                  background: "rgba(181, 231, 93,0.12)",
+                  border: "1px solid rgba(181, 231, 93,0.3)",
                   color: C.primary,
                   padding: "1px 6px",
                   borderRadius: 4,
@@ -198,10 +198,10 @@ export default function BlogTagsPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Poppins:wght@400;500;600&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        ::selection { background: #deffa4; color: #233600; }
+        ::selection { background: #b5e75d; color: #233600; }
         .tag-add-input::placeholder { color: rgba(194,201,179,0.45); }
         .tag-search-input::placeholder { color: rgba(194,201,179,0.35); }
-        .tag-add-input:focus, .tag-search-input:focus { border-color: #94da32 !important; outline: none; }
+        .tag-add-input:focus, .tag-search-input:focus { border-color: #b5e75d !important; outline: none; }
       `}</style>
 
       <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 clamp(16px,4vw,48px)" }}>
@@ -399,8 +399,8 @@ export default function BlogTagsPage() {
           style={{
             marginTop: 32,
             padding: "14px 18px",
-            background: "rgba(148,218,50,0.05)",
-            border: `1px solid rgba(148,218,50,0.15)`,
+            background: "rgba(181, 231, 93,0.05)",
+            border: `1px solid rgba(181, 231, 93,0.15)`,
             borderRadius: 8,
             fontSize: 12,
             color: C.onSurfVar,

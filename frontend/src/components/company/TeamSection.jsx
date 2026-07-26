@@ -50,7 +50,7 @@ export default function TeamSection() {
     <section className="relative py-20 overflow-hidden border-t border-b bg-[#0a0a0a] border-white/10">
       {/* Background accents */}
       <div className="absolute inset-0 grid-overlay opacity-30 pointer-events-none" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-64 bg-[#7CFC00] opacity-[0.04] blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-64 bg-[#b5e75d] opacity-[0.04] blur-[120px] pointer-events-none" />
 
       {/* Header Container */}
       <div
@@ -74,7 +74,7 @@ export default function TeamSection() {
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-xs font-mono font-bold tracking-[3px] text-[#7CFC00] uppercase mb-2 px-3 py-1 rounded bg-[#7CFC00]/10 border border-[#7CFC00]/20"
+          className="text-xs font-mono font-bold tracking-[3px] text-[#b5e75d] uppercase mb-2 px-3 py-1 rounded bg-[#b5e75d]/10 border border-[#b5e75d]/20"
         >
           OPERATIONAL ARCHITECTS
         </motion.span>
@@ -86,7 +86,7 @@ export default function TeamSection() {
           transition={{ delay: 0.1 }}
           className="font-['Space_Grotesk'] text-4xl md:text-5xl font-extrabold uppercase tracking-tight text-white mb-4"
         >
-          MEET THE <span className="text-[#7CFC00]">TEAM</span>
+          MEET THE <span className="text-[#b5e75d]">TEAM</span>
         </motion.h2>
 
         <motion.p
@@ -134,13 +134,13 @@ export default function TeamSection() {
           transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .team-card-container:hover {
-          border-color: rgba(124, 252, 0, 0.6) !important;
-          box-shadow: 0 0 20px rgba(124, 252, 0, 0.2), 0 8px 30px rgba(0, 0, 0, 0.5) !important;
+          border-color: rgba(181, 231, 93, 0.6) !important;
+          box-shadow: 0 0 20px rgba(181, 231, 93, 0.2), 0 8px 30px rgba(0, 0, 0, 0.5) !important;
           transform: translateY(-4px) !important;
         }
         .team-splide .splide__arrow {
           background: rgba(0, 0, 0, 0.75) !important;
-          border: 1px solid rgba(124, 252, 0, 0.4) !important;
+          border: 1px solid rgba(181, 231, 93, 0.4) !important;
           backdrop-filter: blur(8px) !important;
           -webkit-backdrop-filter: blur(8px) !important;
           width: 42px !important;
@@ -167,14 +167,14 @@ export default function TeamSection() {
           }
         }
         .team-splide .splide__arrow:hover {
-          background: rgba(124, 252, 0, 0.2) !important;
-          border-color: #7CFC00 !important;
-          box-shadow: 0 0 15px rgba(124, 252, 0, 0.5) !important;
+          background: rgba(181, 231, 93, 0.2) !important;
+          border-color: #b5e75d !important;
+          box-shadow: 0 0 15px rgba(181, 231, 93, 0.5) !important;
           opacity: 1 !important;
           transform: translateY(-50%) scale(1.1) !important;
         }
         .team-splide .splide__arrow svg {
-          fill: #7CFC00 !important;
+          fill: #b5e75d !important;
           width: 1.1rem !important;
           height: 1.1rem !important;
         }
@@ -195,8 +195,8 @@ export default function TeamSection() {
           margin: 0 !important;
         }
         .team-splide .splide__pagination__page.is-active {
-          background: #7CFC00 !important;
-          box-shadow: 0 0 10px rgba(124, 252, 0, 0.6) !important;
+          background: #b5e75d !important;
+          box-shadow: 0 0 10px rgba(181, 231, 93, 0.6) !important;
           transform: scale(1.3) !important;
         }
       `}</style>
@@ -212,7 +212,7 @@ function TeamCard({ member }) {
         background: 'rgba(20, 20, 20, 0.6)',
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
-        border: '1px solid rgba(124, 252, 0, 0.15)',
+        border: '1px solid rgba(181, 231, 93, 0.15)',
         borderRadius: '12px',
         boxSizing: 'border-box',
         position: 'relative',
@@ -228,8 +228,8 @@ function TeamCard({ member }) {
           background: 'rgba(0, 0, 0, 0.75)',
           backdropFilter: 'blur(4px)',
           WebkitBackdropFilter: 'blur(4px)',
-          border: '1px solid rgba(124, 252, 0, 0.4)',
-          color: '#7CFC00',
+          border: '1px solid rgba(181, 231, 93, 0.4)',
+          color: '#b5e75d',
           fontSize: '0.68rem',
           fontWeight: 700,
           padding: '4px 10px',
@@ -271,7 +271,7 @@ function TeamCard({ member }) {
         {/* ROLE BADGE */}
         <span
           style={{
-            color: '#7CFC00',
+            color: '#b5e75d',
             fontSize: '0.75rem',
             fontWeight: 700,
             letterSpacing: '0.08em',
@@ -320,7 +320,7 @@ function TeamCard({ member }) {
               href={member.socials.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-8 h-8 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white/80 hover:text-[#7CFC00] hover:border-[#7CFC00] hover:bg-[#7CFC00]/10 transition-all duration-200"
+              className="w-8 h-8 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white/80 hover:text-[#b5e75d] hover:border-[#b5e75d] hover:bg-[#b5e75d]/10 transition-all duration-200"
               title="LinkedIn"
             >
               <FaLinkedinIn size={12} />
@@ -331,7 +331,7 @@ function TeamCard({ member }) {
               href={member.socials.twitter}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-8 h-8 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white/80 hover:text-[#7CFC00] hover:border-[#7CFC00] hover:bg-[#7CFC00]/10 transition-all duration-200"
+              className="w-8 h-8 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white/80 hover:text-[#b5e75d] hover:border-[#b5e75d] hover:bg-[#b5e75d]/10 transition-all duration-200"
               title="Twitter"
             >
               <FaTwitter size={12} />
@@ -342,7 +342,7 @@ function TeamCard({ member }) {
               href={member.socials.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-8 h-8 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white/80 hover:text-[#7CFC00] hover:border-[#7CFC00] hover:bg-[#7CFC00]/10 transition-all duration-200"
+              className="w-8 h-8 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white/80 hover:text-[#b5e75d] hover:border-[#b5e75d] hover:bg-[#b5e75d]/10 transition-all duration-200"
               title="Instagram"
             >
               <FaInstagram size={12} />
@@ -353,7 +353,7 @@ function TeamCard({ member }) {
               href={member.socials.facebook}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-8 h-8 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white/80 hover:text-[#7CFC00] hover:border-[#7CFC00] hover:bg-[#7CFC00]/10 transition-all duration-200"
+              className="w-8 h-8 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white/80 hover:text-[#b5e75d] hover:border-[#b5e75d] hover:bg-[#b5e75d]/10 transition-all duration-200"
               title="Facebook"
             >
               <FaFacebookF size={12} />

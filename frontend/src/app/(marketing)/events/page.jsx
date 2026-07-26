@@ -81,7 +81,7 @@ export default function EventsPage() {
         {/* GRID OF NEWS / EVENTS */}
         {loading ? (
           <section className="text-center py-16 bg-[#1e2117] rounded-lg border border-white/5">
-            <p className="text-[#94da32] text-base font-['Space_Grotesk']">
+            <p className="text-[#b5e75d] text-base font-['Space_Grotesk']">
               RETRIEVING SECURITY EVENT BROADCASTING LOGS...
             </p>
           </section>

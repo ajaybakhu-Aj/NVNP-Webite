@@ -79,7 +79,7 @@ export default function Footer() {
               height="36"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#7CFC00"
+              stroke="#b5e75d"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -92,7 +92,7 @@ export default function Footer() {
             <div>
               <h4
                 style={{
-                  color: "#7CFC00",
+                  color: "#b5e75d",
                   fontSize: "1.1rem",
                   fontWeight: 700,
                   margin: "0 0 4px 0",
@@ -142,7 +142,7 @@ export default function Footer() {
               height="36"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#7CFC00"
+              stroke="#b5e75d"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -154,7 +154,7 @@ export default function Footer() {
             <div>
               <h4
                 style={{
-                  color: "#7CFC00",
+                  color: "#b5e75d",
                   fontSize: "1.1rem",
                   fontWeight: 700,
                   margin: "0 0 4px 0",
@@ -204,7 +204,7 @@ export default function Footer() {
               height="36"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#7CFC00"
+              stroke="#b5e75d"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -214,7 +214,7 @@ export default function Footer() {
             <div>
               <h4
                 style={{
-                  color: "#7CFC00",
+                  color: "#b5e75d",
                   fontSize: "1.1rem",
                   fontWeight: 700,
                   margin: "0 0 4px 0",
@@ -456,7 +456,7 @@ export default function Footer() {
             fontWeight: 700,
             letterSpacing: "2.5px",
             textTransform: "uppercase",
-            color: "#94da32",
+            color: "#b5e75d",
             fontFamily: "'Poppins', sans-serif",
             margin: "0 0 12px 0",
           }}>Security · Surveillance · Nepal</p>
@@ -476,15 +476,15 @@ export default function Footer() {
             color: "var(--nv-onSurfVar)" 
           }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <span style={{ color: "#94da32", fontWeight: "bold" }}>[✓]</span>
+              <span style={{ color: "#b5e75d", fontWeight: "bold" }}>[✓]</span>
               <span>ISO 9001:2015 & CE Certified Surveillance Systems</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <span style={{ color: "#94da32", fontWeight: "bold" }}>[✓]</span>
+              <span style={{ color: "#b5e75d", fontWeight: "bold" }}>[✓]</span>
               <span>Starlight Low-Light Color Vision Technology</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <span style={{ color: "#94da32", fontWeight: "bold" }}>[✓]</span>
+              <span style={{ color: "#b5e75d", fontWeight: "bold" }}>[✓]</span>
               <span>AI-Powered Active Defense & Intrusion Detection</span>
             </div>
           </div>

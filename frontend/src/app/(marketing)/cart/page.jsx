@@ -50,7 +50,7 @@ export default function CartPage() {
   if (loading) {
     return (
       <div className="profile-dashboard-container" style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
-        <Icon name="sync" className="spin-slow" size={32} style={{ color: "#94da32" }} />
+        <Icon name="sync" className="spin-slow" size={32} style={{ color: "#b5e75d" }} />
       </div>
     );
   }
@@ -176,7 +176,7 @@ export default function CartPage() {
               <Link
                 to="/product"
                 style={{
-                  color: "#94da32",
+                  color: "#b5e75d",
                   textDecoration: "none",
                   marginTop: "10px",
                   display: "inline-block",

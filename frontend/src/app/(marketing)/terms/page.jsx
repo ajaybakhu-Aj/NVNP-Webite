@@ -11,9 +11,9 @@ const C = {
   surfLow: "var(--nv-surfLow, #0c0f07)",
   onSurf: "var(--nv-onSurf, #e2e4d5)",
   onSurfVar: "var(--nv-onSurfVar, #c3c9b3)",
-  primary: "var(--nv-primary, #deffa4)",
+  primary: "var(--nv-primary, #b5e75d)",
   onPrimary: "var(--nv-onPrimary, #233600)",
-  secondary: "var(--nv-secondary, #94da32)",
+  secondary: "var(--nv-secondary, #b5e75d)",
   outline: "var(--nv-outline, #8d937f)",
   outlineVar: "var(--nv-outlineVar, #434938)",
   sg: "'Space Grotesk', sans-serif",
@@ -240,7 +240,7 @@ export default function App() {
                   <p style={{ fontSize: 15, lineHeight: 1.75, color: C.onSurfaceVariant, marginBottom: 20 }}>
                     The Service and its original content, features, and functionality are and will remain the exclusive property of NV// NIGHTVISION™ and its licensors. Our trademarks and trade dress may not be used in connection with any product or service without the prior written consent of NV// NIGHTVISION™. This includes but is not limited to the "NV//" signature and "NIGHTVISION™" branding.
                   </p>
-                  <div style={{ border: `1px solid rgba(148,218,50,0.3)`, padding: 18, background: "rgba(148,218,50,0.04)" }}>
+                  <div style={{ border: `1px solid rgba(181, 231, 93,0.3)`, padding: 18, background: "rgba(181, 231, 93,0.04)" }}>
                     <p style={{ fontFamily: "'JetBrains Mono'", fontSize: 11, color: C.secondary, letterSpacing: 1, fontStyle: "italic" }}>
                       "PROPRIETARY TECHNOLOGY PROTECTED BY INTERNATIONAL PATENTS AND REGISTERED COPYRIGHTS."
                     </p>

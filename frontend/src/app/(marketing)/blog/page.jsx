@@ -82,9 +82,9 @@ export default function BlogPage() {
           style={{
             display: "inline-block",
             padding: "4px 12px",
-            background: "rgba(124, 252, 0, 0.1)",
-            border: "1px solid #7CFC00",
-            color: "#7CFC00",
+            background: "rgba(181, 231, 93, 0.1)",
+            border: "1px solid #b5e75d",
+            color: "#b5e75d",
             fontSize: "0.75rem",
             fontFamily: "monospace",
             fontWeight: 700,
@@ -111,7 +111,7 @@ export default function BlogPage() {
             gap: "20px",
             marginBottom: "40px",
             paddingBottom: "24px",
-            borderBottom: "1px solid rgba(124, 252, 0, 0.15)",
+            borderBottom: "1px solid rgba(181, 231, 93, 0.15)",
             width: "100%",
           }}
         >
@@ -142,14 +142,14 @@ export default function BlogPage() {
                     cursor: "pointer",
                     transition: "all 0.2s ease",
                     border: isActive
-                      ? "1px solid #7CFC00"
+                      ? "1px solid #b5e75d"
                       : "1px solid rgba(255, 255, 255, 0.12)",
                     background: isActive
-                      ? "#7CFC00"
+                      ? "#b5e75d"
                       : "rgba(20, 20, 20, 0.7)",
                     color: isActive ? "#000000" : "#c3c9b3",
                     boxShadow: isActive
-                      ? "0 0 16px rgba(124, 252, 0, 0.3)"
+                      ? "0 0 16px rgba(181, 231, 93, 0.3)"
                       : "none",
                   }}
                 >
@@ -175,7 +175,7 @@ export default function BlogPage() {
                 left: "14px",
                 top: "50%",
                 transform: "translateY(-50%)",
-                color: "#7CFC00",
+                color: "#b5e75d",
                 pointerEvents: "none",
               }}
             />
@@ -187,7 +187,7 @@ export default function BlogPage() {
               style={{
                 width: "100%",
                 background: "#0d0d0d",
-                border: "1px solid rgba(124, 252, 0, 0.25)",
+                border: "1px solid rgba(181, 231, 93, 0.25)",
                 color: "#ffffff",
                 borderRadius: "9999px",
                 padding: "10px 16px 10px 42px",
@@ -207,7 +207,7 @@ export default function BlogPage() {
               display: "flex",
               justifyContent: "center",
               padding: "80px 0",
-              color: "#7CFC00",
+              color: "#b5e75d",
               fontFamily: "monospace",
               fontSize: "0.9rem",
               letterSpacing: "0.15em",
@@ -232,7 +232,7 @@ export default function BlogPage() {
                       display: "flex",
                       flexDirection: "row",
                       background: "rgba(20, 20, 20, 0.6)",
-                      border: "1px solid rgba(124, 252, 0, 0.2)",
+                      border: "1px solid rgba(181, 231, 93, 0.2)",
                       borderRadius: "12px",
                       overflow: "hidden",
                       width: "100%",
@@ -268,7 +268,7 @@ export default function BlogPage() {
                           position: "absolute",
                           top: "16px",
                           left: "16px",
-                          background: "#7CFC00",
+                          background: "#b5e75d",
                           color: "#000000",
                           padding: "6px 14px",
                           fontSize: "0.72rem",
@@ -299,7 +299,7 @@ export default function BlogPage() {
                     >
                       <div
                         style={{
-                          color: "#7CFC00",
+                          color: "#b5e75d",
                           fontSize: "0.75rem",
                           fontFamily: "monospace",
                           fontWeight: 700,
@@ -349,7 +349,7 @@ export default function BlogPage() {
                           alignItems: "center",
                           gap: "8px",
                           padding: "10px 22px",
-                          background: "#7CFC00",
+                          background: "#b5e75d",
                           color: "#000000",
                           fontWeight: 800,
                           fontSize: "0.8rem",
@@ -409,8 +409,8 @@ export default function BlogPage() {
                     padding: "0 16px",
                     height: "42px",
                     background: "rgba(255, 255, 255, 0.05)",
-                    border: "1px solid rgba(124, 252, 0, 0.3)",
-                    color: currentPage === 1 ? "rgba(255, 255, 255, 0.3)" : "#7CFC00",
+                    border: "1px solid rgba(181, 231, 93, 0.3)",
+                    color: currentPage === 1 ? "rgba(255, 255, 255, 0.3)" : "#b5e75d",
                     fontWeight: 700,
                     borderRadius: "6px",
                     fontFamily: "'Space Grotesk', sans-serif",
@@ -437,10 +437,10 @@ export default function BlogPage() {
                       style={{
                         width: "42px",
                         height: "42px",
-                        background: isCurrent ? "#7CFC00" : "#141414",
+                        background: isCurrent ? "#b5e75d" : "#141414",
                         color: isCurrent ? "#000000" : "#ffffff",
                         border: isCurrent
-                          ? "1px solid #7CFC00"
+                          ? "1px solid #b5e75d"
                           : "1px solid rgba(255, 255, 255, 0.15)",
                         borderRadius: "6px",
                         fontWeight: isCurrent ? 800 : 700,
@@ -463,8 +463,8 @@ export default function BlogPage() {
                     padding: "0 16px",
                     height: "42px",
                     background: "rgba(255, 255, 255, 0.05)",
-                    border: "1px solid rgba(124, 252, 0, 0.3)",
-                    color: currentPage === totalPages ? "rgba(255, 255, 255, 0.3)" : "#7CFC00",
+                    border: "1px solid rgba(181, 231, 93, 0.3)",
+                    color: currentPage === totalPages ? "rgba(255, 255, 255, 0.3)" : "#b5e75d",
                     fontWeight: 700,
                     borderRadius: "6px",
                     fontFamily: "'Space Grotesk', sans-serif",
@@ -506,8 +506,8 @@ export default function BlogPage() {
 
         /* Featured Card Hover Effects */
         .featured-card-link:hover .featured-card-container {
-          border-color: rgba(124, 252, 0, 0.6) !important;
-          box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(124, 252, 0, 0.15) !important;
+          border-color: rgba(181, 231, 93, 0.6) !important;
+          box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(181, 231, 93, 0.15) !important;
           transform: translateY(-2px);
         }
 
@@ -516,7 +516,7 @@ export default function BlogPage() {
         }
 
         .featured-card-link:hover .featured-title {
-          color: #7CFC00 !important;
+          color: #b5e75d !important;
         }
 
         /* Responsive Layouts */

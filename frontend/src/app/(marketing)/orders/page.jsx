@@ -61,7 +61,7 @@ export default function OrdersPage() {
   if (loading) {
     return (
       <div className="orders-dashboard-container" style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
-        <Icon name="sync" className="spin-slow" size={32} style={{ color: "#94da32" }} />
+        <Icon name="sync" className="spin-slow" size={32} style={{ color: "#b5e75d" }} />
       </div>
     );
   }
@@ -100,7 +100,7 @@ export default function OrdersPage() {
       <header className="orders-dashboard-header">
         <h1 className="orders-dashboard-title">Order History</h1>
         <p className="orders-dashboard-subtitle">
-          Track and manage orders for: <strong style={{ color: "#94da32" }}>{user.name}</strong>
+          Track and manage orders for: <strong style={{ color: "#b5e75d" }}>{user.name}</strong>
         </p>
       </header>
 

@@ -1,6 +1,6 @@
 export const colors = {
   background: "var(--nv-bg, #131313)",
-  secondary: "var(--nv-secondary, #94da32)",
+  secondary: "var(--nv-secondary, #b5e75d)",
   primaryContainer: "var(--nv-primary, #b5e75d)",
   onPrimaryContainer: "var(--nv-onPrimary, #466700)",
   onSecondaryContainer: "var(--nv-onSurf, #284300)",

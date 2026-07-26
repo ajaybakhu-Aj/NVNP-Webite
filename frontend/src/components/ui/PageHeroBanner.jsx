@@ -2,7 +2,7 @@ import React from "react";
 
 /**
  * PageHeroBanner — Universal page header banner matching the Products page style.
- * Green (#7CFC00) background strip with dark text, compact dimensions, and tight content wrapping.
+ * Green (#b5e75d) background strip with dark text, compact dimensions, and tight content wrapping.
  *
  * Props:
  *  - title    {string}   Page title (uppercase bold)
@@ -15,7 +15,7 @@ export default function PageHeroBanner({ title, subtitle, centered = false, chil
     <section
       className="products-banner-redesign page-hero-banner products-banner products-hero-banner page-title-section hero-banner shop-header"
       style={{
-        backgroundColor: "var(--primary-color, #7CFC00)",
+        backgroundColor: "var(--primary-color, #b5e75d)",
         paddingTop: "20px",
         paddingBottom: "20px",
         paddingLeft: 0,

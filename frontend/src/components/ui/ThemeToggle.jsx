@@ -13,7 +13,7 @@ export default function ThemeToggle() {
       style={{
         backgroundColor: isDarkMode ? '#1e2117' : '#ffffff',
         border: `1px solid ${isDarkMode ? '#434938' : '#e5e7eb'}`,
-        color: isDarkMode ? '#94da32' : '#11140c',
+        color: isDarkMode ? '#b5e75d' : '#11140c',
         boxShadow: `0 2px 8px rgba(0,0,0,0.5)`,
       }}
       aria-label="Toggle theme"
