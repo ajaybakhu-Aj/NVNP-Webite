@@ -14507,6 +14507,17 @@ html.light .footer-sub-brand-left a[href="/"]:hover {
   pointer-events: none !important;
 }
 
+/* CSS Hiding Safeguard for Executive Code Tag */
+.ceo-card .exec-code-tag,
+.ceo-profile-box span:first-child,
+[class*="exec_officer_code"],
+.officer-id-tag,
+.exec-code-tag,
+.officer-code-tag {
+  display: none !important;
+  visibility: hidden !important;
+}
+
 
 
 
