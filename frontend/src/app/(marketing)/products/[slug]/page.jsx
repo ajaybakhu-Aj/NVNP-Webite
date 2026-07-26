@@ -464,7 +464,6 @@ export default function ProductDetail() {
             {[
               { id: "specs", label: "TECHNICAL SPECS" },
               { id: "intel", label: "PRODUCT DETAILS" },
-              { id: "logs", label: "DEVICE LOGS" },
             ].map(tab => (
               <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`tab-btn ${activeTab === tab.id ? "active" : ""}`}>
                 {tab.label}
@@ -534,18 +533,6 @@ export default function ProductDetail() {
                   <p>{product.longDesc || product.description}</p>
                 )}
                 <p>NIGHTVISION™ products are designed for durability, ease of deployment, and high integration capability with custom security networks. Supported under global SLA agreements.</p>
-              </div>
-            )}
-
-            {activeTab === "logs" && (
-              <div className="logs-terminal">
-                <div>[SYS_INIT] CONNECTING TO DEVICE {product.code}...</div>
-                <div>[SYS_HANDSHAKE] CRYPTO KEY VALIDATED [RSA-4096]</div>
-                <div>[UPLINK] ACTIVE — BITRATE: 14.2 Mbps</div>
-                <div>[DIAGNOSTICS] ALL OPTICAL ELEMENTS NOMINAL</div>
-                <div>[LOGS] 00:00:01 — SYS:BOOT_SUCCESS</div>
-                <div>[LOGS] 00:00:15 — AI:PERIMETER_DETECTION_ACTIVE</div>
-                <div className="logs-uplink">■ UPLINK SECURED — LIVE STREAMS ONWARD — </div>
               </div>
             )}
           </div>

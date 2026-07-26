@@ -14467,6 +14467,23 @@ html.light .footer-sub-brand-left a[href="/"]:hover {
   align-items: center !important;
 }
 
+/* Permanently hide Device Log container on all single product pages */
+.product-single-page [class*="device-log"],
+.product-single-page [class*="device_log"],
+.product-detail [class*="device-log"],
+.product-detail [class*="device_log"],
+.product-detail-page [class*="device-log"],
+.product-detail-page [class*="device_log"],
+#device-log-section,
+.device-log-wrapper,
+.logs-terminal {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
+}
+
 
 
 
