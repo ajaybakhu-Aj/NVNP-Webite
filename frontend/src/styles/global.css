@@ -14073,3 +14073,46 @@ html.light .footer-sub-brand-left a[href="/"]:hover {
     padding: 14px 28px !important;
   }
 }
+
+/* ==========================================
+   BANNER DARK BUTTON & HERO CONTAINER ALIGNMENT
+   ========================================== */
+.banner-dark-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #0d0d0d !important;
+  color: #ffffff !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  padding: 10px 22px !important;
+  border-radius: 6px !important;
+  border: 1px solid rgba(0, 0, 0, 0.3) !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.25s ease !important;
+  box-sizing: border-box !important;
+}
+
+.banner-dark-btn:hover {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border-color: #7CFC00 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 12px rgba(124, 252, 0, 0.3) !important;
+}
+
+.hero-banner-inner,
+.about-content-inner {
+  max-width: 1200px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}

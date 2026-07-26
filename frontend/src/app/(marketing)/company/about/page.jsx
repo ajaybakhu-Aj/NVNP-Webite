@@ -37,17 +37,14 @@ export default function NightVisionAboutPage() {
           subtitle={contents.aboutHeroDesc || "Nepal's next-generation surveillance and security monitoring brand built for industrial security, intelligent detection, and uncompromising operational reliability."}
         >
           <div className="flex gap-3 flex-wrap mt-1">
-            <Link to="/products" className="btn-primary">
-              Explore Systems
-            </Link>
-            <Link to="/dealership" className="btn-secondary">
-              Contact Sales
+            <Link to="/products" className="banner-dark-btn">
+              EXPLORE SYSTEMS
             </Link>
           </div>
         </PageHeroBanner>
 
         {/* STORY */}
-        <section className="story-section">
+        <section className="story-section about-content-inner">
           <div className="story-grid">
             <div className="story-text">
               <h2>

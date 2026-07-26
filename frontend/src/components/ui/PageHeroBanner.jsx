@@ -15,11 +15,14 @@ export default function PageHeroBanner({ title, subtitle, children }) {
       className="products-banner-redesign page-hero-banner products-banner products-hero-banner page-title-section hero-banner shop-header"
       style={{
         backgroundColor: "var(--primary-color, #7CFC00)",
-        padding: "20px 16px",
+        paddingTop: "24px",
+        paddingBottom: "24px",
+        paddingLeft: 0,
+        paddingRight: 0,
         width: "100%",
         boxSizing: "border-box",
         minHeight: 0,
-        height: "fit-content",
+        height: "auto",
         maxHeight: "fit-content",
         alignSelf: "flex-start",
         display: "flex",
@@ -28,11 +31,15 @@ export default function PageHeroBanner({ title, subtitle, children }) {
       }}
     >
       <div
-        className="page-hero-banner-container"
+        className="page-hero-banner-container hero-banner-inner"
         style={{
           maxWidth: 1200,
-          margin: "0 auto",
+          marginLeft: "auto",
+          marginRight: "auto",
           width: "100%",
+          paddingLeft: 24,
+          paddingRight: 24,
+          boxSizing: "border-box",
         }}
       >
         <h1
