@@ -32,9 +32,63 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="app-footer">
-      <style>{`
-        .footer-container {
+    <>
+      <section className="pre-footer-trust-badges" style={{ background: "#0c0c0c", borderTop: "1px solid rgba(255, 255, 255, 0.08)", borderBottom: "1px solid rgba(255, 255, 255, 0.08)", padding: "40px 20px", width: "100%", boxSizing: "border-box" }}>
+        <div className="trust-badges-container" style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "20px" }}>
+          
+          {/* Item 1 */}
+          <div className="trust-badge-item" style={{ flex: 1, minWidth: "280px", display: "flex", alignItems: "center", gap: "16px", padding: "10px 20px" }}>
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#7CFC00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            <div>
+              <h4 style={{ color: "#7CFC00", fontSize: "1.1rem", fontWeight: 700, margin: "0 0 4px 0", fontFamily: "'Space Grotesk', sans-serif" }}>Fast, Free Shipping</h4>
+              <p style={{ color: "#cccccc", fontSize: "0.9rem", margin: 0, lineHeight: 1.4, fontFamily: "'Poppins', sans-serif" }}>Nationwide delivery across all 7 provinces on qualifying orders.</p>
+            </div>
+          </div>
+
+          {/* Divider 1 */}
+          <div className="trust-divider" style={{ width: "1px", height: "50px", background: "rgba(255, 255, 255, 0.1)" }}></div>
+
+          {/* Item 2 */}
+          <div className="trust-badge-item" style={{ flex: 1, minWidth: "280px", display: "flex", alignItems: "center", gap: "16px", padding: "10px 20px" }}>
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#7CFC00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <div>
+              <h4 style={{ color: "#7CFC00", fontSize: "1.1rem", fontWeight: 700, margin: "0 0 4px 0", fontFamily: "'Space Grotesk', sans-serif" }}>Competitive CCTV Prices</h4>
+              <p style={{ color: "#cccccc", fontSize: "0.9rem", margin: 0, lineHeight: 1.4, fontFamily: "'Poppins', sans-serif" }}>Premium cameras at prices that make sense.</p>
+            </div>
+          </div>
+
+          {/* Divider 2 */}
+          <div className="trust-divider" style={{ width: "1px", height: "50px", background: "rgba(255, 255, 255, 0.1)" }}></div>
+
+          {/* Item 3 */}
+          <div className="trust-badge-item" style={{ flex: 1, minWidth: "280px", display: "flex", alignItems: "center", gap: "16px", padding: "10px 20px" }}>
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#7CFC00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+            <div>
+              <h4 style={{ color: "#7CFC00", fontSize: "1.1rem", fontWeight: 700, margin: "0 0 4px 0", fontFamily: "'Space Grotesk', sans-serif" }}>Quality Guaranteed</h4>
+              <p style={{ color: "#cccccc", fontSize: "0.9rem", margin: 0, lineHeight: 1.4, fontFamily: "'Poppins', sans-serif" }}>Every camera is built to perform, backed by an official warranty.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <footer className="app-footer">
+        <style>{`
+          @media (max-width: 768px) {
+            .pre-footer-trust-badges .trust-badges-container {
+              flex-direction: column !important;
+              text-align: center !important;
+            }
+            .pre-footer-trust-badges .trust-divider {
+              display: none !important;
+            }
+            .pre-footer-trust-badges .trust-badge-item {
+              flex-direction: column !important;
+              align-items: center !important;
+              text-align: center !important;
+            }
+          }
+          .footer-container {
           display: flex !important;
           flex-wrap: nowrap !important;
           justify-content: space-between !important;
@@ -325,5 +379,6 @@ export default function Footer() {
         </p>
       </div>
     </footer>
+    </>
   );
 }
