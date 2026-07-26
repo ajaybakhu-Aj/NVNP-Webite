@@ -10,8 +10,8 @@ export default function ProductsSection() {
 
   useEffect(() => {
     getAllProducts().then((data) => {
-      // Show first 6 products in the featured section
-      setProductsList(data.slice(0, 6));
+      // Show first 8 products in the featured section to utilize the carousel better
+      setProductsList(data.slice(0, 8));
       setLoading(false);
     });
   }, []);
@@ -19,10 +19,41 @@ export default function ProductsSection() {
   return (
     <section
       style={{
-        padding: "80px 0",
+        padding: "80px 0 100px",
         background: colors.surfaceContainerLow,
       }}
     >
+      <style>
+        {`
+          .product-carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 24px;
+            padding-bottom: 32px;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* Internet Explorer 10+ */
+            -webkit-overflow-scrolling: touch;
+          }
+          .product-carousel::-webkit-scrollbar {
+            display: none; /* WebKit */
+          }
+          .product-carousel-item {
+            min-width: 300px;
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+            transition: transform 0.3s ease;
+          }
+          .product-carousel-item:hover {
+            transform: translateY(-4px);
+          }
+          @media (max-width: 768px) {
+            .product-carousel-item {
+              min-width: 260px;
+            }
+          }
+        `}
+      </style>
       <div
         style={{
           maxWidth: 1280,
@@ -37,9 +68,11 @@ export default function ProductsSection() {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "flex-end",
+            alignItems: "center",
             gap: "24px",
-            marginBottom: 48,
+            marginBottom: "40px",
+            paddingBottom: "16px",
+            borderBottom: \`1px solid \${colors.outlineVariant || '#333'}\`,
             flexWrap: "wrap",
           }}
         >
@@ -52,52 +85,67 @@ export default function ProductsSection() {
             <h2
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "clamp(28px, 5vw, 40px)",
+                fontSize: "clamp(24px, 4vw, 36px)",
                 fontWeight: 700,
-                letterSpacing: 2,
+                color: colors.primary || '#94da32',
+                letterSpacing: 1.5,
                 lineHeight: 1.2,
-                wordBreak: "break-word",
+                margin: 0,
+                textTransform: "uppercase",
               }}
             >
               ELITE SERIES CAMERAS
             </h2>
+            <p style={{
+              margin: "8px 0 0 0",
+              color: colors.onSurfaceVariant || '#8d937f',
+              fontSize: "14px",
+              fontFamily: "'Inter', sans-serif",
+              maxWidth: "600px",
+              lineHeight: 1.6
+            }}>
+              Engineered for high-definition monitoring, extreme low-light clarity, and AI-driven thermal threat detection.
+            </p>
           </div>
 
           <Link
             to="/products"
             style={{
-              color: colors.secondary,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              color: "#131313",
+              background: colors.primary || '#94da32',
+              padding: "10px 20px",
+              borderRadius: "4px",
               fontFamily: "'Inter', sans-serif",
-              fontWeight: 600,
+              fontWeight: 700,
               fontSize: 12,
               letterSpacing: 1,
-              textDecoration: "underline",
-              textUnderlineOffset: 8,
+              textDecoration: "none",
+              textTransform: "uppercase",
               whiteSpace: "nowrap",
               flexShrink: 0,
+              transition: "transform 0.2s, background 0.2s",
             }}
+            onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.background = '#a4f036'; }}
+            onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.background = colors.primary || '#94da32'; }}
           >
-            EXPLORE FULL CATALOG →
+            EXPLORE FULL CATALOG <span style={{ fontSize: "16px" }}>→</span>
           </Link>
         </div>
 
-        {/* PRODUCTS GRID */}
+        {/* PRODUCTS CAROUSEL */}
         {loading ? (
-          <div style={{ display: "flex", justifyContent: "center", padding: "40px 0", color: colors.secondary }}>
+          <div style={{ display: "flex", justifyContent: "center", padding: "60px 0", color: colors.primary || '#94da32', fontFamily: "'Space Grotesk', sans-serif", letterSpacing: 1 }}>
             LOADING SECURE CHANNELS...
           </div>
         ) : (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns:
-                "repeat(auto-fit, minmax(260px, 1fr))",
-              gap: 24,
-              width: "100%",
-            }}
-          >
+          <div className="product-carousel">
             {productsList.map((p) => (
-              <ProductCard key={p.id} {...p} />
+              <div key={p.id} className="product-carousel-item">
+                <ProductCard {...p} />
+              </div>
             ))}
           </div>
         )}

@@ -3,15 +3,10 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { useSiteContents } from "./utils/cmsDb";
 
 import Header from "./components/ui/Header";
-import HeroSection from "./components/home/HeroSection";
-import TickerStrip from "./components/home/TickerStrip";
-import FeaturesStrip from "./components/home/FeaturesStrip";
-import ProductsSection from "./components/home/ProductsSection";
-import WhySection from "./components/home/WhySection";
-import FounderSection from "./components/home/FounderSection";
-import TestimonialsSection from "./components/home/TestimonialsSection";
-import DealerSection from "./components/home/DealerSection";
-import HomeBlogsSection from "./components/home/HomeBlogsSection";
+import HomePage from "./app/(marketing)/page";
+import GlobalSocialSidebar from "./components/ui/GlobalSocialSidebar";
+import GlobalTrafficSidebar from "./components/ui/GlobalTrafficSidebar";
+import { defaultTitles, defaultDescs } from "./utils/seoMeta";
 import Footer from "./components/ui/Footer";
 
 import AboutUs from "./app/(marketing)/company/about/page";
@@ -58,7 +53,6 @@ import GalleryPage from "./app/(marketing)/gallery/page";
 import TeamPage from "./app/(marketing)/company/team/page";
 
 import PageNotFound from "./app/PageNotFound";
-import Icon from "./utils/Icon";
 import FloatingChatbot from "./components/ui/FloatingChatbot";
 import Login from "./app/(marketing)/login/page";
 import SignUp from "./app/(marketing)/signup/page";
@@ -70,201 +64,6 @@ import Settings from "./app/(marketing)/settings/page";
 import "./styles/global.css";
 import NanoTek from "./app/(marketing)/dealers/OurDealers/Provience1/NanoTek";
 import DynamicDealerProfile from "./app/(marketing)/dealers/DynamicDealerProfile";
-
-/* HOME PAGE */
-function HomePage() {
-  return (
-    <main>
-      <HeroSection />
-      <TickerStrip />
-      <FeaturesStrip />
-      <ProductsSection />
-      <WhySection />
-      <FounderSection />
-      <TestimonialsSection />
-      <DealerSection />
-      <HomeBlogsSection />
-    </main>
-  );
-}
-
-function GlobalSocialSidebar() {
-  const siteContents = useSiteContents();
-  const facebook = siteContents.socialFacebook || "https://www.facebook.com/nightvisioninterprises";
-  const instagram = siteContents.socialInstagram || "https://www.instagram.com/nightvision_nepal/";
-  const linkedin = siteContents.socialLinkedin || "https://linkedin.com/";
-  const tiktok = siteContents.socialTiktok || "https://www.tiktok.com/@nvnightvisionnp?lang=en";
-  const x = siteContents.socialX || "https://x.com/";
-  const youtube = siteContents.socialYoutube || "https://www.youtube.com/@nvnightvisionnp";
-
-  const [footerVisible, setFooterVisible] = React.useState(false);
-
-  React.useEffect(() => {
-    const footer = document.querySelector(".app-footer");
-    if (!footer) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setFooterVisible(entry.isIntersecting),
-      { threshold: 0.05 }
-    );
-    observer.observe(footer);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div
-      className="global-social-sidebar"
-      style={{
-        opacity: footerVisible ? 0 : 1,
-        pointerEvents: footerVisible ? "none" : "all",
-        transition: "opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-      }}
-    >
-      <a
-        href={facebook}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="global-social-btn btn-facebook"
-        title="Facebook"
-      >
-        <Icon name="facebook" size={18} />
-      </a>
-      <a
-        href={instagram}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="global-social-btn btn-instagram"
-        title="Instagram"
-      >
-        <Icon name="instagram" size={18} />
-      </a>
-      <a
-        href={linkedin}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="global-social-btn btn-linkedin"
-        title="LinkedIn"
-      >
-        <Icon name="linkedin" size={18} />
-      </a>
-      <a
-        href={tiktok}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="global-social-btn btn-tiktok"
-        title="TikTok"
-      >
-        <Icon name="tiktok" size={18} />
-      </a>
-      <a
-        href={x}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="global-social-btn btn-x"
-        title="X"
-      >
-        <Icon name="x" size={18} />
-      </a>
-      <a
-        href={youtube}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="global-social-btn btn-youtube"
-        title="YouTube"
-      >
-        <Icon name="youtube" size={18} />
-      </a>
-    </div>
-  );
-}
-
-
-function GlobalTrafficSidebar() {
-  const siteContents = useSiteContents();
-
-  const [activeSessions, setActiveSessions] = useState(1482);
-  const [dailyHits, setDailyHits] = useState(84290);
-  const [bandwidth, setBandwidth] = useState(28.4);
-  const [latency, setLatency] = useState(18);
-  const [threats, setThreats] = useState(427);
-
-  useEffect(() => {
-    if (siteContents) {
-      const s = parseInt(siteContents.trafficActiveSessions) || 1482;
-      const h = parseInt(siteContents.trafficDailyHits) || 84290;
-      const b = parseFloat(siteContents.trafficBandwidth) || 28.4;
-      const t = parseInt(siteContents.trafficThreatsBlocked) || 427;
-
-      setActiveSessions(s);
-      setDailyHits(h);
-      setBandwidth(b);
-      setThreats(t);
-    }
-  }, [siteContents]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveSessions(prev => Math.max(10, prev + Math.floor(Math.random() * 9) - 4));
-      setDailyHits(prev => prev + Math.floor(Math.random() * 3));
-      setBandwidth(prev => {
-        const base = parseFloat(siteContents.trafficBandwidth) || 28.4;
-        const change = (Math.random() * 4 - 2);
-        return Math.max(0.1, parseFloat((base + change).toFixed(1)));
-      });
-      setLatency(Math.floor(12 + Math.random() * 14));
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [siteContents]);
-
-  return (
-    <div className="global-traffic-sidebar">
-      <div className="sidebar-vertical-label">
-        <span className="live-dot-glowing"></span>
-        <span className="label-text">📡 TELEMETRY FEED</span>
-      </div>
-
-      <div className="sidebar-expanded-panel">
-        <div className="panel-header">
-          <span className="header-status-badge">SECURE LINK: ACTIVE</span>
-          <h4 className="panel-title">SYS MONITORING</h4>
-        </div>
-
-        <div className="panel-grid">
-          <div className="metric-row">
-            <span className="metric-label">ACTIVE SESSIONS</span>
-            <span className="metric-value text-green">{activeSessions.toLocaleString()}</span>
-          </div>
-
-          <div className="metric-row">
-            <span className="metric-label">PAGE VIEW HITS</span>
-            <span className="metric-value text-blue">{dailyHits.toLocaleString()}</span>
-          </div>
-
-          <div className="metric-row">
-            <span className="metric-label">BANDWIDTH FLOW</span>
-            <span className="metric-value text-yellow">{bandwidth} MB/s</span>
-          </div>
-
-          <div className="metric-row">
-            <span className="metric-label">SYS LATENCY</span>
-            <span className="metric-value text-cyan">{latency} ms</span>
-          </div>
-
-          <div className="metric-row">
-            <span className="metric-label">THREATS BLOCKED</span>
-            <span className="metric-value text-red">{threats}</span>
-          </div>
-        </div>
-
-        <div className="panel-footer">
-          <span className="footer-status">FEED SYNC: ONLINE</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-
 
 function App() {
   const location = useLocation();
@@ -356,49 +155,6 @@ function App() {
     } else {
       pageKey = "home";
     }
-
-    const defaultTitles = {
-      home: "NightVision - Advanced surveillance for peace of mind",
-      products: "Explore Security Products - NightVision Nepal",
-      about: "About Us - NightVision Surveillance",
-      contact: "Contact Us - NightVision Specialists",
-      cart: "Shopping Cart - NightVision Security",
-      founder: "Founder Rozil Thapa - NightVision",
-      dealership: "Dealers & Partners - NightVision Network",
-      support: "Technical Support Center - NightVision",
-      warranty: "Ironclad Warranty Policy - NightVision",
-      terms: "Terms of Service - NightVision",
-      privacy: "Privacy Protocol Policy - NightVision",
-      blog: "Security Intelligence Blog - NightVision",
-      gallery: "Perimeter Installation Gallery - NightVision",
-      team: "Meet Our Team - NightVision"
-    };
-
-    const defaultDescs = {
-      home: "Smart AI-powered surveillance systems engineered for continuous monitoring, encrypted live streaming, and real-time security response in Nepal.",
-      products: "Browse high-quality CCTV cameras, NVR networks, PoE switches, and surveillance hard disks engineered for uncompromising vigilance.",
-      about: "Nepal’s next-generation surveillance and security monitoring brand built for industrial security, intelligent detection, and operational reliability.",
-      contact: "Get in touch with NightVision surveillance experts in Nepal for custom security consultations, quotes, and product support.",
-      cart: "View items in your surveillance equipment shopping cart. Complete your order with secure checkout.",
-      founder: "The vision behind NightVision Nepal by founder Rozil Thapa. Architecting Nepal's most resilient security infrastructure.",
-      dealership: "Find authorized NightVision dealers across Nepal or apply to become an official security partner.",
-      support: "Access manuals, software downloads, and contact our 24/7 technical surveillance support helpline.",
-      warranty: "Every NightVision unit is forged for endurance. Read about our 1-Year Ironclad Warranty and device support policy.",
-      terms: "Terms and conditions governing the use of NightVision surveillance hardware, digital applications, and services.",
-      privacy: "Learn how we protect data captured by NightVision surveillance systems. Secure encryption and privacy standards.",
-      blog: "Read latest updates, security tutorials, threat reports, and CCTV guides from NightVision experts.",
-      gallery: "Browse active drone feeds, operations matrix centers, and night vision installation mockups across Nepal.",
-      team: "The visionaries and engineers behind NightVision's uncompromising security ecosystem.",
-      events: "Explore the latest news coverage, event details, and product announcements from NightVision.",
-      checkout: "Finalize your order of enterprise-grade security cameras, NVR networks, and storage packages.",
-      login: "Access your operator terminal dashboard to manage security devices and order history.",
-      signup: "Create a NightVision security operator profile to track warranties, orders, and configurations.",
-      forgot_password: "Request a secure password reset token to recover access to your security terminal.",
-      my_profile: "Manage your registered profile details, delivery addresses, and security settings.",
-      orders: "Review active and past security device dispatch records, order statuses, and invoices.",
-      settings: "Configure terminal preferences, alert methods, and security profile parameters.",
-      cctv_setup: "Estimate surveillance infrastructure costs by specifying camera quantities, NVR channels, switches, and storage size."
-    };
 
     const metaTitle = siteContents[`metaTitle_${pageKey}`] || defaultTitles[pageKey];
     document.title = metaTitle;
