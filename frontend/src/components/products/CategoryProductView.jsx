@@ -106,7 +106,9 @@ export default function CategoryProductView({
       <PageHeroBanner
         title={pageTitle.toUpperCase()}
         subtitle={pageDesc}
-      />
+      >
+        <CatalogDownloadButton variant="header" categoryName={pageTitle} style={{ background: "#11140c", color: "#7CFC00", borderColor: "#11140c" }} />
+      </PageHeroBanner>
 
 
       {/* MAIN LAYOUT */}

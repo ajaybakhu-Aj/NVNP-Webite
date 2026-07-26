@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import ProductCard from "../products/ProductCard";
 import { getAllProducts } from "../../utils/productDb";
+import CatalogDownloadButton from "../ui/CatalogDownloadButton";
 
 const CATEGORY_TABS = [
   { id: "elite", label: "ELITE SERIES CAMERAS", filter: () => true },
@@ -305,9 +306,12 @@ export default function ProductsSection() {
               ))}
             </div>
 
-            <Link to="/products" className="catalog-link-btn">
-              EXPLORE FULL CATALOG <span>→</span>
-            </Link>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+              <CatalogDownloadButton variant="header" />
+              <Link to="/products" className="catalog-link-btn">
+                EXPLORE FULL CATALOG <span>→</span>
+              </Link>
+            </div>
           </div>
 
           {/* MAIN TITLE & ARROWS */}

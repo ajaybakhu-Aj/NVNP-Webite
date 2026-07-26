@@ -390,6 +390,9 @@ export default function ProductDetail() {
                     </div>
                   ))}
                 </div>
+                <div style={{ marginTop: 20, paddingTop: 16, borderTop: "1px solid rgba(255,255,255,0.08)", gridColumn: "1 / -1" }}>
+                  <CatalogDownloadButton variant="button" product={product} />
+                </div>
               </div>
             )}
 
