@@ -14183,3 +14183,16 @@ html.light .footer-sub-brand-left a[href="/"]:hover {
 .dealer-card div[class*="authorized"] {
   display: none !important;
 }
+
+/* Hide Signal Strength overlay box on the map graphic */
+.signal-tag,
+.terrain-section [class*="signal-strength"],
+.terrain-section [class*="signal_strength"],
+.map-section [class*="signal-tag"],
+.map-section [class*="signal_strength"],
+.map-graphic-wrapper > div:last-child {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

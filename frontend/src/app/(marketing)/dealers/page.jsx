@@ -255,9 +255,6 @@ export default function NightVisionDealerships() {
                   <Radar size={48} className="radar-icon" style={{ color: '#7CFC00' }} />
                 </div>
               </div>
-              <div className="signal-tag" style={{ position: 'absolute', bottom: '16px', right: '16px', background: 'rgba(0,0,0,0.85)', border: '1px solid #7CFC00', color: '#7CFC00', padding: '6px 12px', fontSize: '0.7rem', fontFamily: 'monospace', borderRadius: '4px' }}>
-                SIGNAL_STRENGTH:<br />OPTIMAL
-              </div>
             </div>
           </div>
         </div>
@@ -405,6 +402,19 @@ export default function NightVisionDealerships() {
         .dealer-card .slug-tag,
         .dealer-card .dealer-id {
           display: none !important;
+        }
+
+        /* Hide Signal Strength overlay box on the map graphic */
+        .signal-tag,
+        .terrain-section [class*="signal-strength"],
+        .terrain-section [class*="signal_strength"],
+        .map-section [class*="signal-tag"],
+        .map-section [class*="signal_strength"],
+        .map-graphic-wrapper > div:last-child {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
         }
 
         /* Search input placeholder */
