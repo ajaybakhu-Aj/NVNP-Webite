@@ -45,7 +45,6 @@ export default function ProductDetail() {
 
   const [activeImg, setActiveImg] = useState("");
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
-  const [activeColor, setActiveColor] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("specs");
 
@@ -72,7 +71,6 @@ export default function ProductDetail() {
       if (prod) {
         setProduct(prod);
         setActiveImg(prod.img);
-        setActiveColor(prod.colors && prod.colors[0] ? prod.colors[0].name : "Standard");
         setQuantity(1);
 
         // Fetch related products strictly from the same category
@@ -105,7 +103,7 @@ export default function ProductDetail() {
 
     const cartProduct = {
       id: product.id,
-      name: `${product.name} (${activeColor})`,
+      name: product.name,
       img: activeImg,
       price: product.price,
     };
@@ -150,7 +148,7 @@ export default function ProductDetail() {
 
     const cartProduct = {
       id: product.id,
-      name: `${product.name} (${activeColor})`,
+      name: product.name,
       img: activeImg,
       price: product.price,
     };
@@ -354,24 +352,7 @@ export default function ProductDetail() {
               </span>
             </div>
 
-            {product.colors && product.colors.length > 0 && (
-              <div>
-                <span className="shell-label">
-                  SELECT SHELL COLOR: <span className="shell-color-name">{activeColor}</span>
-                </span>
-                <div className="colors-list">
-                  {product.colors.map((col) => (
-                    <button
-                      key={col.name}
-                      onClick={() => setActiveColor(col.name)}
-                      className={`color-btn ${activeColor === col.name ? "active" : ""}`}
-                      style={{ background: col.hex }}
-                      title={col.name}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
+
 
             <div className="actions-row" style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 24 }}>
               <div className="qty-selector" style={{ flexShrink: 0 }}>

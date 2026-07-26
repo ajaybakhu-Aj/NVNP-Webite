@@ -7567,21 +7567,14 @@ a {
   color: #fff;
 }
 
-.product-detail-page .colors-list {
-  display: flex;
-  gap: 12px;
-}
-
-.product-detail-page .color-btn {
-  width: 36px;
-  height: 36px;
-  cursor: pointer;
-  transition: all 0.15s;
-  border: 2px solid var(--nv-outlineVar, #434938);
-}
-
-.product-detail-page .color-btn.active {
-  border-color: #deffa4;
+.product-detail-page .colors-list,
+.product-color-selector,
+.color-swatches,
+.variant-color-picker,
+.shell-label,
+.colors-list,
+.color-btn {
+  display: none !important;
 }
 
 .product-detail-page .actions-row {
