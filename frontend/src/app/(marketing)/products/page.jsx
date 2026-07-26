@@ -86,9 +86,8 @@ export default function NightVision() {
         title="OUR PRODUCTS"
         subtitle="Advanced surveillance architecture engineered for uncompromising vigilance."
       >
-        {/* Balanced Bottom Utility Row */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
-          {/* Filter Button */}
+        {/* Filter Button ONLY */}
+        <div>
           <button
             className="filter-trigger-btn"
             onClick={() => setIsMobileFilterOpen(true)}
@@ -117,23 +116,6 @@ export default function NightVision() {
               </span>
             )}
           </button>
-
-          {/* Systems Count Pill */}
-          <div
-            className="banner-count-pill"
-            style={{
-              background: "rgba(0, 0, 0, 0.08)",
-              border: "1px solid rgba(0, 0, 0, 0.1)",
-              padding: "6px 14px",
-              borderRadius: "16px",
-              color: "#000000",
-              fontSize: "0.78rem",
-              fontWeight: 700,
-              letterSpacing: "0.05em"
-            }}
-          >
-            {filteredProducts.length} SYSTEMS
-          </div>
         </div>
       </PageHeroBanner>
 
