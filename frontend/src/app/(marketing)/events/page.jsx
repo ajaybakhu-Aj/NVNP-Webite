@@ -34,15 +34,17 @@ export default function EventsPage() {
   });
 
   return (
-    <div className="events-page-container">
+    <div className="events-page-container news-page-container w-full max-w-full m-0 p-0">
       <PageHeroBanner
+        className="news-hero-banner events-hero-header news-hero"
         title={contents.eventsHeroTitle || "NEWS & EVENTS"}
         subtitle={contents.eventsHeroSubtitle || "Latest News, Events, and Updates from NightVision Security Systems."}
+        centered={false}
       />
 
-      <main className="events-main-section">
+      <main className="events-main-section news-main-section">
         {/* SEARCH & FILTER BAR */}
-        <section className="events-search-filter-bar">
+        <section className="events-search-filter-bar news-filter-bar filter-search-wrapper">
           <div className="events-tabs-scroll">
             <button
               onClick={() => setActiveTab("all")}
@@ -80,25 +82,121 @@ export default function EventsPage() {
 
         {/* GRID OF NEWS / EVENTS */}
         {loading ? (
-          <section className="text-center py-16 bg-[#1e2117] rounded-lg border border-white/5">
+          <section className="events-grid-layout text-center py-16 bg-[#1e2117] rounded-lg border border-white/5">
             <p className="text-[#b5e75d] text-base font-['Space_Grotesk']">
               RETRIEVING SECURITY EVENT BROADCASTING LOGS...
             </p>
           </section>
         ) : filteredItems.length > 0 ? (
-          <section className="events-grid-layout">
+          <section className="events-grid-layout news-grid-layout">
             {filteredItems.map((item) => (
               <EventCard key={item.id} item={item} />
             ))}
           </section>
         ) : (
-          <section className="text-center py-16 bg-[#1e2117] rounded-lg border border-white/5">
+          <section className="events-grid-layout text-center py-16 bg-[#1e2117] rounded-lg border border-white/5">
             <p className="text-[#c3c9b3] text-base font-['Space_Grotesk']">
               NO NEWS OR EVENTS MATCHING YOUR SEARCH.
             </p>
           </section>
         )}
       </main>
+
+      <style>{`
+        /* Hero Banner Container & Background */
+        .news-hero-banner,
+        .events-hero-header,
+        .news-hero {
+          width: 100% !important;
+          max-width: 100% !important;
+          border-radius: 0 !important;
+          margin: 0 !important;
+          background-color: #b5e75d !important;
+          text-align: left !important;
+        }
+
+        /* Inner Hero Container Alignment */
+        .news-hero-inner,
+        .news-hero-banner > div,
+        .events-hero-header > div,
+        .news-hero > div {
+          max-width: 1400px !important;
+          width: 100% !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          padding-left: 5% !important;
+          padding-right: 5% !important;
+          box-sizing: border-box !important;
+          text-align: left !important;
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: flex-start !important;
+        }
+
+        .news-hero-banner h1,
+        .events-hero-header h1,
+        .news-hero h1,
+        .news-hero-banner .page-hero-banner-title {
+          margin-left: 0 !important;
+          padding-left: 0 !important;
+          color: #000000 !important;
+          font-weight: 800 !important;
+          font-size: 2rem !important;
+          margin-bottom: 6px !important;
+          text-transform: uppercase !important;
+        }
+
+        .news-hero-banner p,
+        .events-hero-header p,
+        .news-hero p,
+        .news-hero-banner .page-hero-banner-subtitle {
+          margin-left: 0 !important;
+          padding-left: 0 !important;
+          color: #111111 !important;
+          font-weight: 600 !important;
+          font-size: 0.88rem !important;
+          max-width: 800px !important;
+          margin: 0 !important;
+          text-align: left !important;
+        }
+
+        /* Lower Filter Bar & Search Container Alignment */
+        .events-search-filter-bar,
+        .news-filter-bar,
+        .filter-search-wrapper {
+          max-width: 1400px !important;
+          width: 100% !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          padding-left: 5% !important;
+          padding-right: 5% !important;
+          box-sizing: border-box !important;
+          display: flex !important;
+          justify-content: space-between !important;
+          align-items: center !important;
+          margin-top: 32px !important;
+          margin-bottom: 32px !important;
+        }
+
+        /* Active Filter Tab Button */
+        .events-tab-btn.active {
+          background-color: #b5e75d !important;
+          color: #000000 !important;
+          font-weight: 700 !important;
+        }
+
+        /* Grid Alignment */
+        .events-grid-layout,
+        .news-grid-layout {
+          max-width: 1400px !important;
+          width: 100% !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          padding-left: 5% !important;
+          padding-right: 5% !important;
+          box-sizing: border-box !important;
+        }
+      `}</style>
     </div>
   );
 }

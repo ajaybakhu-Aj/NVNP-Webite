@@ -14394,4 +14394,69 @@ html.light .footer-sub-brand-left a[href="/"]:hover {
   padding-bottom: 60px !important;
 }
 
+/* News & Events Hero Banner & Filter Bar Alignment Rules */
+.news-hero-banner,
+.events-hero-header,
+.news-hero {
+  width: 100% !important;
+  max-width: 100% !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  background-color: #b5e75d !important;
+  text-align: left !important;
+}
+
+.news-hero-inner,
+.news-hero-banner > div,
+.events-hero-header > div,
+.news-hero > div {
+  max-width: 1400px !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+  box-sizing: border-box !important;
+  text-align: left !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+.news-hero-banner h1,
+.events-hero-header h1,
+.news-hero h1,
+.news-hero-banner .page-hero-banner-title {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+.news-hero-banner p,
+.events-hero-header p,
+.news-hero p,
+.news-hero-banner .page-hero-banner-subtitle {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  color: #111111 !important;
+  font-weight: 600 !important;
+}
+
+.news-filter-bar,
+.events-search-filter-bar,
+.filter-search-wrapper {
+  max-width: 1400px !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+
 
