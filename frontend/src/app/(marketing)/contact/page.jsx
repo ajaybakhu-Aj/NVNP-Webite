@@ -13,7 +13,7 @@ export default function NightVisionContactPage() {
   }, []);
 
   return (
-    <div className="nv-contact-container" style={{ background: '#0a0a0a', minHeight: '100vh', width: '100%' }}>
+    <div className="nv-contact-container contact-page-container" style={{ background: '#0a0a0a', minHeight: '100vh', width: '100%' }}>
       {/* 1. TOP GREEN HERO BANNER (Left-aligned & Standard 1400px / 5% padding) */}
       <PageHeroBanner
         className="contact-hero-banner contact-page-header"
@@ -24,13 +24,9 @@ export default function NightVisionContactPage() {
 
       {/* 2. TOP 3 CONTACT CARDS ROW ("CALL US", "VISIT US", "E-MAIL US") */}
       <section
-        className="contact-cards-section"
+        className="contact-cards-section contact-cards-container contact-cards-wrapper"
         style={{
-          maxWidth: 1200,
           margin: "32px auto",
-          padding: "0 24px",
-          boxSizing: "border-box",
-          width: "100%",
         }}
       >
         <div className="contact-cards-grid-inner">
@@ -268,13 +264,9 @@ export default function NightVisionContactPage() {
 
       {/* 3. LOWER 2-COLUMN EQUAL-HEIGHT SECTION (MAP + FORM) */}
       <section
-        className="contact-main-grid-section"
+        className="contact-main-grid-section map-form-section map-form-wrapper"
         style={{
-          maxWidth: 1200,
           margin: "40px auto 60px auto",
-          padding: "0 24px",
-          boxSizing: "border-box",
-          width: "100%",
         }}
       >
         <div className="contact-map-form-grid">
@@ -445,6 +437,23 @@ export default function NightVisionContactPage() {
 
       {/* 4. RESPONSIVE & FORM STYLING FALLBACK */}
       <style>{`
+        .contact-page-container,
+        .contact-hero-inner,
+        .contact-cards-wrapper,
+        .contact-cards-container,
+        .contact-cards-section,
+        .map-form-wrapper,
+        .map-form-section,
+        .contact-main-grid-section {
+          max-width: 1400px !important;
+          width: 100% !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          padding-left: 5% !important;
+          padding-right: 5% !important;
+          box-sizing: border-box !important;
+        }
+
         .contact-hero-banner,
         .contact-page-header {
           text-align: left !important;
