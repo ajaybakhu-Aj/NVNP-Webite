@@ -308,13 +308,78 @@ export default function NightVisionContactPage() {
               referrerPolicy="no-referrer-when-downgrade"
             />
 
-            {/* Location info badge overlay - clean vertical block positioning */}
-            <div className="absolute top-4 left-4 right-4 md:right-auto z-10 bg-black/85 backdrop-blur-md border border-[#7CFC00]/30 rounded-xl p-4 md:p-5 max-w-sm shadow-[0_0_20px_rgba(124,252,0,0.15)]">
-              <div className="map-badge map-location-tag flex items-center gap-2 text-[#7CFC00] font-mono text-xs font-bold mb-1">
+            {/* Location info badge overlay - Solid dark card with clean flex layout */}
+            <div
+              className="map-card-overlay map-info-badge map-location-card"
+              style={{
+                position: "absolute",
+                top: "16px",
+                left: "16px",
+                zIndex: 10,
+                height: "auto",
+                minHeight: 0,
+                maxHeight: "none",
+                padding: "14px 18px",
+                background: "#0d0d0d",
+                border: "1px solid rgba(124, 252, 0, 0.4)",
+                borderRadius: "10px",
+                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.5)",
+                display: "flex",
+                flexDirection: "column",
+                gap: "6px",
+                alignItems: "flex-start",
+                maxWidth: "calc(100% - 32px)",
+                boxSizing: "border-box",
+              }}
+            >
+              {/* Tag Line */}
+              <div
+                className="map-badge map-location-tag"
+                style={{
+                  position: "relative",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  color: "#7CFC00",
+                  fontSize: "0.72rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.06em",
+                  lineHeight: 1.2,
+                  fontFamily: "monospace",
+                  margin: 0,
+                }}
+              >
                 <Navigation size={14} /> KATHMANDU HQ COMMAND
               </div>
-              <div className="map-title text-white font-bold text-lg font-['Space_Grotesk'] mt-1 leading-snug">NightVision CCTV Nepal</div>
-              <p className="text-[#c3c9b3] text-xs mt-1 leading-relaxed">Radhe Radhe, Arniko Highway, Bhaktapur</p>
+
+              {/* Title Line */}
+              <div
+                className="map-title"
+                style={{
+                  color: "#ffffff",
+                  fontSize: "1.1rem",
+                  fontWeight: 800,
+                  lineHeight: 1.3,
+                  margin: "2px 0",
+                  fontFamily: "'Space Grotesk', sans-serif",
+                }}
+              >
+                NightVision CCTV Nepal
+              </div>
+
+              {/* Subtitle / Address Line */}
+              <p
+                style={{
+                  color: "#aaaaaa",
+                  fontSize: "0.8rem",
+                  fontWeight: 500,
+                  lineHeight: 1.4,
+                  margin: 0,
+                  fontFamily: "'Poppins', sans-serif",
+                }}
+              >
+                Radhe Radhe, Arniko Highway, Bhaktapur
+              </p>
             </div>
           </div>
 
@@ -393,19 +458,50 @@ export default function NightVisionContactPage() {
           align-items: stretch !important;
         }
 
-        .map-badge, .map-location-tag {
-          position: relative !important;
-          display: inline-flex !important;
-          align-items: center !important;
-          margin-bottom: 6px !important;
-          top: auto !important;
-          left: auto !important;
+        .map-card-overlay,
+        .map-info-badge,
+        .map-location-card {
+          position: absolute !important;
+          top: 16px !important;
+          left: 16px !important;
+          z-index: 10 !important;
+          height: auto !important;
+          min-height: 0 !important;
+          max-height: none !important;
+          padding: 14px 18px !important;
+          background: #0d0d0d !important;
+          border: 1px solid rgba(124, 252, 0, 0.4) !important;
+          border-radius: 10px !important;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 6px !important;
+          align-items: flex-start !important;
+          box-sizing: border-box !important;
         }
 
-        .map-title, .gm-style-iw h3 {
-          margin-top: 4px !important;
-          line-height: 1.3 !important;
+        .map-badge,
+        .map-location-tag {
+          position: relative !important;
+          top: auto !important;
+          left: auto !important;
+          display: flex !important;
+          align-items: center !important;
+          gap: 6px !important;
+          color: #7CFC00 !important;
+          font-size: 0.72rem !important;
+          font-weight: 700 !important;
+          letter-spacing: 0.06em !important;
+          line-height: 1.2 !important;
+          margin: 0 !important;
+        }
+
+        .map-title {
           color: #ffffff !important;
+          font-size: 1.1rem !important;
+          font-weight: 800 !important;
+          line-height: 1.3 !important;
+          margin: 2px 0 !important;
         }
 
         /* Form Input Placeholder Contrast & Alignment */
