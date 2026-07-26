@@ -10662,27 +10662,38 @@ body {
   animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.lightbox-close,
+.gallery-modal-close,
+.lightbox-close-btn,
 .gallery-page .lightbox-close-btn {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid var(--nv-outlineVar, #434938);
-  color: #ffffff;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 100;
-  transition: all 0.2s ease;
+  position: absolute !important;
+  top: -16px !important;
+  right: -16px !important;
+  z-index: 100000 !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  background-color: #121212 !important;
+  border: 2px solid #b5e75d !important;
+  color: #b5e75d !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  font-size: 1.2rem !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), 0 0 12px rgba(181, 231, 93, 0.3) !important;
+  transition: all 0.25s ease !important;
 }
 
+.lightbox-close:hover,
+.gallery-modal-close:hover,
+.lightbox-close-btn:hover,
 .gallery-page .lightbox-close-btn:hover {
-  background: #b5e75d;
-  color: #233600;
-  border-color: #b5e75d;
+  background-color: #b5e75d !important;
+  color: #121212 !important;
+  transform: scale(1.1) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8), 0 0 18px rgba(181, 231, 93, 0.6) !important;
 }
 
 .gallery-page .lightbox-grid {

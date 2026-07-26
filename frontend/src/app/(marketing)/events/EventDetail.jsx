@@ -243,29 +243,34 @@ export default function EventDetail() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              position: "relative"
+              position: "relative",
+              overflow: "visible"
             }}
           >
             {/* Close Button */}
             <button
               onClick={() => setZoomImage(false)}
-              className="lightbox-close-btn"
-              aria-label="Close Preview"
+              className="lightbox-close-btn lightbox-close gallery-modal-close"
+              aria-label="Close"
               style={{ 
                 position: "absolute", 
-                top: "16px", 
-                right: "16px", 
-                background: "rgba(17, 20, 12, 0.85)",
-                border: "1px solid #b5e75d",
-                color: "#e2e4d5",
+                top: "-16px", 
+                right: "-16px", 
+                backgroundColor: "#121212",
+                border: "2px solid #b5e75d",
+                color: "#b5e75d",
                 width: "40px",
                 height: "40px",
+                borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 cursor: "pointer",
-                zIndex: 1000,
-                boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)"
+                fontSize: "1.2rem",
+                fontWeight: 800,
+                zIndex: 100000,
+                boxShadow: "0 4px 16px rgba(0, 0, 0, 0.6), 0 0 12px rgba(181, 231, 93, 0.3)",
+                transition: "all 0.25s ease"
               }}
             >
               <Icon name="close" size={20} />
