@@ -7,29 +7,30 @@ export default function FounderSection() {
   const contents = useSiteContents();
   return (
     <section
+      className="about-ceo-section ceo-message-container"
       style={{
-        padding: "80px 0",
+        paddingTop: "60px",
+        paddingBottom: "60px",
         background: colors.surfaceContainerLow,
         borderTop: `1px solid ${colors.outlineVariant}`,
         borderBottom: `1px solid ${colors.outlineVariant}`,
+        width: "100%",
+        boxSizing: "border-box",
       }}
     >
       <div
+        className="about-ceo-inner ceo-message-inner"
         style={{
-          maxWidth: 1280,
-          margin: "0 auto",
-          padding: "0 24px",
-
+          maxWidth: 1400,
+          marginLeft: "auto",
+          marginRight: "auto",
+          paddingLeft: "5%",
+          paddingRight: "5%",
           display: "flex",
-
           alignItems: "center",
-
-          gap: "80px",
-
+          gap: "60px",
           flexWrap: "wrap",
-
           width: "100%",
-
           boxSizing: "border-box",
         }}
       >
@@ -37,13 +38,9 @@ export default function FounderSection() {
         <div
           style={{
             width: "100%",
-
             maxWidth: "420px",
-
             position: "relative",
-
             flexShrink: 0,
-
             margin: "0 auto",
           }}
         >
@@ -52,40 +49,28 @@ export default function FounderSection() {
             alt={contents.homeFounderName || "Rozil Thapa"}
             style={{
               width: "100%",
-
               height: "auto",
-
               objectFit: "cover",
-
               filter: "grayscale(100%) brightness(0.75)",
-
               borderBottom: `8px solid ${colors.secondary}`,
-
               display: "block",
+              borderRadius: "4px",
             }}
           />
 
           <div
             style={{
               position: "absolute",
-
               bottom: 16,
-
               left: 16,
-
               background: colors.secondary,
-
               color: "black",
-
-              padding: "16px",
-
+              padding: "12px 20px",
               fontFamily: "'Space Grotesk', sans-serif",
-
               fontWeight: 700,
-
               fontSize: "clamp(14px, 2vw, 18px)",
-
               lineHeight: 1.2,
+              borderRadius: "2px",
             }}
           >
             {contents.homeFounderName || "ROZIL THAPA"}
@@ -96,28 +81,19 @@ export default function FounderSection() {
         <div
           style={{
             flex: 1,
-
             minWidth: "280px",
-
             width: "100%",
           }}
         >
           <span
             style={{
               color: colors.secondary,
-
               fontFamily: "'Inter', sans-serif",
-
-              fontWeight: 600,
-
-              fontSize: 12,
-
-              letterSpacing: 1,
-
+              fontWeight: 700,
+              fontSize: 13,
+              letterSpacing: 2,
               textTransform: "uppercase",
-
               display: "block",
-
               marginBottom: 16,
             }}
           >
@@ -127,39 +103,25 @@ export default function FounderSection() {
           <blockquote
             style={{
               fontFamily: "'Space Grotesk', sans-serif",
-
-              fontSize: "clamp(28px, 5vw, 40px)",
-
+              fontSize: "clamp(26px, 4.5vw, 38px)",
               fontWeight: 700,
-
-              lineHeight: 1.2,
-
+              lineHeight: 1.25,
               fontStyle: "italic",
-
               marginBottom: 24,
-
               position: "relative",
-
               wordBreak: "break-word",
-              color: "var(--nv-onSurf)",
+              color: "var(--nv-onSurf, #e5e2e1)",
             }}
           >
             <span
               style={{
                 position: "absolute",
-
-                top: "-32px",
-
+                top: "-28px",
                 left: "-12px",
-
                 color: "rgba(181,231,93,0.2)",
-
-                fontSize: "clamp(72px, 12vw, 128px)",
-
+                fontSize: "clamp(64px, 10vw, 110px)",
                 fontFamily: "'Space Grotesk', sans-serif",
-
                 lineHeight: 1,
-
                 pointerEvents: "none",
               }}
             >
@@ -172,13 +134,9 @@ export default function FounderSection() {
           <p
             style={{
               color: colors.onSurfaceVariant,
-
-              fontSize: "clamp(16px, 2vw, 18px)",
-
-              lineHeight: 1.6,
-
-              marginBottom: 24,
-
+              fontSize: "clamp(15px, 1.8vw, 17px)",
+              lineHeight: 1.65,
+              marginBottom: 28,
               wordBreak: "break-word",
             }}
           >

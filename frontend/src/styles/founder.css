@@ -8,6 +8,31 @@
   width: 100%;
 }
 
+/* Standardized Container Layout Rules for About CEO / CEO Message Section */
+.about-ceo-section,
+.ceo-message-container,
+.about-ceo-inner,
+.ceo-message-inner,
+.founder-hero-content,
+.founder-bio-grid,
+.founder-story-section,
+.founder-cards-grid,
+.founder-vision {
+  max-width: 1400px !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+  box-sizing: border-box !important;
+}
+
+.about-ceo-section,
+.ceo-message-container {
+  padding-top: 60px !important;
+  padding-bottom: 60px !important;
+}
+
 /* Hero Section */
 .founder-hero {
   position: relative;
