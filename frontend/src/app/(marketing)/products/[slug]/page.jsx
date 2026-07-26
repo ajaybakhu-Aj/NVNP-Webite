@@ -6,6 +6,7 @@ import Icon from "../../../../utils/Icon";
 import { getProductById, getAllProducts } from "../../../../utils/productDb";
 import { useSiteContents } from "../../../../utils/cmsDb";
 import CatalogDownloadButton from "../../../../components/ui/CatalogDownloadButton";
+import Breadcrumbs from "../../../../components/ui/Breadcrumbs";
 
 export default function ProductDetail() {
   const { slug } = useParams();
@@ -180,14 +181,12 @@ export default function ProductDetail() {
 
       <div className="hud-scanline" style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 999 }} />
 
+      <Breadcrumbs
+        categoryName={product.category}
+        productName={product.name}
+      />
+
       <main>
-        <div className="breadcrumbs">
-          <Link to="/">Home</Link>
-          <Icon name="chevron_right" size={14} />
-          <Link to="/products">Products</Link>
-          <Icon name="chevron_right" size={14} />
-          <span className="current-product">{product.name}</span>
-        </div>
 
         <div className="detail-grid">
           {/* Gallery Column */}

@@ -4,6 +4,7 @@ import { getAllProducts } from "../../../utils/productDb";
 import ProductCard from "../../../components/products/ProductCard";
 import Icon from "../../../utils/Icon";
 import PageHeroBanner from "../../../components/ui/PageHeroBanner";
+import Breadcrumbs from "../../../components/ui/Breadcrumbs";
 
 
 export default function NightVision() {
@@ -76,6 +77,7 @@ export default function NightVision() {
 
   return (
     <div className="products-page">
+      <Breadcrumbs />
       {/* HERO - Unified PageHeroBanner */}
       <PageHeroBanner
         title="OUR PRODUCTS"

@@ -6,6 +6,7 @@ import ProductCard from "./ProductCard";
 import Icon from "../../utils/Icon";
 import PageHeroBanner from "../ui/PageHeroBanner";
 import CatalogDownloadButton from "../ui/CatalogDownloadButton";
+import Breadcrumbs from "../ui/Breadcrumbs";
 
 
 export default function CategoryProductView({
@@ -102,6 +103,7 @@ export default function CategoryProductView({
 
   return (
     <div className="products-page">
+      <Breadcrumbs categoryName={pageTitle} />
       {/* HERO SECTION - Unified PageHeroBanner */}
       <PageHeroBanner
         title={pageTitle.toUpperCase()}
