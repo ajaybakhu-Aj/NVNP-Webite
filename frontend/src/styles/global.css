@@ -14407,7 +14407,8 @@ html.light .footer-sub-brand-left a[href="/"]:hover {
   text-align: left !important;
 }
 
-/* Unified Outer Container Guide Line */
+/* Shared layout guide line across all sections */
+.news-page .site-container,
 .navbar-inner,
 .news-hero-inner,
 .news-filter-wrapper,

@@ -34,7 +34,7 @@ export default function EventsPage() {
   });
 
   return (
-    <div className="events-page-container news-page-container w-full max-w-full m-0 p-0">
+    <div className="events-page-container news-page-container news-page w-full max-w-full m-0 p-0">
       <PageHeroBanner
         className="news-hero-banner events-hero-header news-hero"
         title={contents.eventsHeroTitle || "NEWS & EVENTS"}
@@ -44,7 +44,7 @@ export default function EventsPage() {
 
       <main className="events-main-section news-main-section">
         {/* SEARCH & FILTER BAR */}
-        <section className="events-search-filter-bar news-filter-bar news-filter-wrapper filter-search-wrapper">
+        <section className="events-search-filter-bar news-filter-bar news-filter-wrapper filter-search-wrapper site-container">
           <div className="events-tabs-scroll">
             <button
               onClick={() => setActiveTab("all")}
@@ -82,19 +82,19 @@ export default function EventsPage() {
 
         {/* GRID OF NEWS / EVENTS */}
         {loading ? (
-          <section className="events-grid-layout news-grid-layout news-cards-container news-cards-grid text-center py-16 bg-[#1e2117] rounded-lg border border-white/5">
+          <section className="events-grid-layout news-grid-layout news-cards-container news-cards-grid site-container text-center py-16 bg-[#1e2117] rounded-lg border border-white/5">
             <p className="text-[#b5e75d] text-base font-['Space_Grotesk']">
               RETRIEVING SECURITY EVENT BROADCASTING LOGS...
             </p>
           </section>
         ) : filteredItems.length > 0 ? (
-          <section className="events-grid-layout news-grid-layout news-cards-container news-cards-grid">
+          <section className="events-grid-layout news-grid-layout news-cards-container news-cards-grid site-container">
             {filteredItems.map((item) => (
               <EventCard key={item.id} item={item} />
             ))}
           </section>
         ) : (
-          <section className="events-grid-layout news-grid-layout news-cards-container news-cards-grid text-center py-16 bg-[#1e2117] rounded-lg border border-white/5">
+          <section className="events-grid-layout news-grid-layout news-cards-container news-cards-grid site-container text-center py-16 bg-[#1e2117] rounded-lg border border-white/5">
             <p className="text-[#c3c9b3] text-base font-['Space_Grotesk']">
               NO NEWS OR EVENTS MATCHING YOUR SEARCH.
             </p>
@@ -116,7 +116,8 @@ export default function EventsPage() {
           text-align: left !important;
         }
 
-        /* Unified Outer Container Guide Line */
+        /* Shared layout guide line across all sections */
+        .news-page .site-container,
         .navbar-inner,
         .news-hero-inner,
         .news-filter-wrapper,
