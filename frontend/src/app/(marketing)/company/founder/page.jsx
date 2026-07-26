@@ -153,11 +153,52 @@ export default function FounderPage() {
       <section className="founder-cta">
         <h2 className="founder-cta-title">BUILD THE FUTURE WITH US</h2>
         <div className="flex gap-4 justify-center flex-wrap">
-          <Link to="/dealership" className="bg-[#233600] text-white px-8 py-3 rounded-full font-bold uppercase tracking-wider no-underline hover:bg-black transition-colors">
-            Contact Executive Team
+          <Link
+            to="/dealership"
+            className="founder-cta-btn-primary"
+            style={{
+              backgroundColor: "#0d0d0d",
+              color: "#b5e75d",
+              border: "1px solid #0d0d0d",
+              padding: "12px 28px",
+              borderRadius: "30px",
+              fontWeight: 800,
+              fontSize: "0.88rem",
+              letterSpacing: "0.05em",
+              cursor: "pointer",
+              transition: "all 0.25s ease",
+              boxShadow: "0 4px 14px rgba(0, 0, 0, 0.25)",
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              textTransform: "uppercase",
+            }}
+          >
+            CONTACT EXECUTIVE TEAM
           </Link>
-          <Link to="/products" className="bg-transparent border-2 border-[#233600] text-[#233600] px-8 py-3 rounded-full font-bold uppercase tracking-wider no-underline hover:bg-[#233600] hover:text-white transition-colors">
-            Explore Ecosystem
+          <Link
+            to="/products"
+            className="founder-cta-btn-secondary"
+            style={{
+              backgroundColor: "transparent",
+              border: "2px solid #0d0d0d",
+              color: "#0d0d0d",
+              padding: "12px 28px",
+              borderRadius: "30px",
+              fontWeight: 800,
+              fontSize: "0.88rem",
+              letterSpacing: "0.05em",
+              cursor: "pointer",
+              transition: "all 0.25s ease",
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              textTransform: "uppercase",
+            }}
+          >
+            EXPLORE ECOSYSTEM
           </Link>
         </div>
       </section>

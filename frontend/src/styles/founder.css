@@ -293,3 +293,54 @@
   text-transform: uppercase;
   margin-bottom: 32px;
 }
+
+/* CTA Buttons */
+.founder-cta .founder-cta-btn-primary {
+  background-color: #0d0d0d !important;
+  color: #b5e75d !important;
+  border: 1px solid #0d0d0d !important;
+  padding: 12px 28px !important;
+  border-radius: 30px !important;
+  font-weight: 800 !important;
+  font-size: 0.88rem !important;
+  letter-spacing: 0.05em !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-transform: uppercase !important;
+}
+
+.founder-cta .founder-cta-btn-primary:hover {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+.founder-cta .founder-cta-btn-secondary {
+  background-color: transparent !important;
+  border: 2px solid #0d0d0d !important;
+  color: #0d0d0d !important;
+  padding: 12px 28px !important;
+  border-radius: 30px !important;
+  font-weight: 800 !important;
+  font-size: 0.88rem !important;
+  letter-spacing: 0.05em !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-transform: uppercase !important;
+}
+
+.founder-cta .founder-cta-btn-secondary:hover {
+  background-color: #0d0d0d !important;
+  color: #b5e75d !important;
+  transform: translateY(-2px) !important;
+}

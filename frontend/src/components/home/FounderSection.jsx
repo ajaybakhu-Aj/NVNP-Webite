@@ -144,7 +144,20 @@ export default function FounderSection() {
           </p>
 
           <Link to="/founder" className="no-underline inline-block w-full sm:w-auto">
-            <button className="hero-btn-1 flex items-center justify-center gap-2 border-none font-extrabold tracking-[2px] uppercase cursor-pointer text-[13px] md:text-[14px] w-full sm:w-auto transition-all duration-300 rounded-full">
+            <button
+              className="hero-btn-1 flex items-center justify-center gap-2 uppercase cursor-pointer w-full sm:w-auto transition-all duration-300 rounded-full"
+              style={{
+                backgroundColor: "#0d0d0d",
+                color: "#b5e75d",
+                border: "1px solid #0d0d0d",
+                padding: "12px 28px",
+                borderRadius: "30px",
+                fontWeight: 800,
+                fontSize: "0.88rem",
+                letterSpacing: "0.05em",
+                boxShadow: "0 4px 14px rgba(0, 0, 0, 0.25)",
+              }}
+            >
               READ THE FULL STORY →
             </button>
           </Link>
