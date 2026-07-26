@@ -2,7 +2,7 @@
   RewriteEngine On
   RewriteBase /
   
-  # Pass API, Admin, Media, and Static requests to Python backend
+  # Pass API, Admin, Media, and Static requests to backend server
   RewriteCond %{REQUEST_URI} ^/(api|admin|media|static)/ [NC]
   RewriteRule ^ - [L]
 
