@@ -510,7 +510,6 @@ def custom_admin_index_view(request):
     context.update(admin.site.each_context(request))
     return render(request, 'admin/index.html', context)
 
-@cache_page(60 * 15)
 def api_blog_posts(request):
     posts = BlogPost.objects.all().order_by('-date_published')
     data = []
@@ -543,7 +542,6 @@ def api_blog_posts(request):
         })
     return JsonResponse(data, safe=False)
 
-@cache_page(60 * 15)
 def api_products(request):
     products = Product.objects.all()
     data = []
@@ -568,7 +566,6 @@ def api_products(request):
         data.append(prod_data)
     return JsonResponse(data, safe=False)
 
-@cache_page(60 * 15)
 def api_dealers(request):
     dealers = Dealer.objects.all()
     data = []
