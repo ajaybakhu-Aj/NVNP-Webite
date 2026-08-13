@@ -879,10 +879,11 @@ async function safeFetch(url, options = {}) {
 
 // --- BLOGS EXPORTS ---
 export async function getAllBlogs() {
-  const apiData = await safeFetch('/api/blogs/');
-  if (apiData && apiData.length > 0) {
-    return apiData;
-  }
+  // Bypassing Django API to restore original static blog data
+  // const apiData = await safeFetch('/api/blogs/');
+  // if (apiData && apiData.length > 0) {
+  //   return apiData;
+  // }
   return getStoreList(STORES.BLOGS);
 }
 
