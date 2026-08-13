@@ -131,7 +131,6 @@ class SecurityRestrictionMiddleware:
 
 from django.contrib.redirects.models import Redirect
 from django.contrib.sites.shortcuts import get_current_site
-from core.models import RedirectExtension
 
 class ActiveRedirectFallbackMiddleware(MiddlewareMixin):
     """

@@ -96,6 +96,7 @@ class BlogPost(SEOAbstractModel):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='blog_posts')
     
     # Content
+    image = models.ImageField(_('Blog Image'), upload_to='blogs/', blank=True, null=True)
     content = models.TextField(help_text=_('Rich Text Content for the blog post.')) 
     faq_builder = models.JSONField(
         default=list, 

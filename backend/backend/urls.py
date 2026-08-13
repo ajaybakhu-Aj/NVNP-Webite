@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
-from django.conf.urls.static import static
 from core import views, api
 
 # Django is API-only: the React SPA (frontend/) renders every public page.
@@ -54,6 +53,30 @@ urlpatterns = [
     path('api/events/delete/', api.event_delete, name='api_event_delete'),
     path('api/dealers/save/', api.dealer_save, name='api_dealer_save'),
     path('api/dealers/delete/', api.dealer_delete, name='api_dealer_delete'),
+
+    # Taxonomies API
+    path('api/taxonomies/', include('taxonomies.urls')),
+    
+    # Media Engine API
+    path('api/media/', include('media_engine.urls')),
+    
+    # SEO Engine API
+    path('api/v1/seo/', include('cms_seo.urls')),
+    
+    # Page Builder API
+    path('api/v1/', include('cms_core.urls')),
+    
+    # Form Engine API
+    path('api/v1/', include('cms_forms.urls')),
+    
+    # Revision System API
+    path('api/v1/', include('cms_revisions.urls')),
+    
+    # Settings APIs
+    path('api/v1/site-settings/', include('cms_settings.urls')),
+    path('api/v1/analytics/', include('cms_analytics.urls')),
+    path('api/v1/ai/', include('cms_ai.urls')),
+    path('api/v1/headless/', include('cms_headless.urls')),
 ]
 
 from django.urls import re_path

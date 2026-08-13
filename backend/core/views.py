@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Product, BlogPost, Category, Event, Dealer
+from .models import Product, BlogPost, Event, Dealer
 
 # Django is API-only: the React SPA renders all public pages.
 # The old server-rendered template views were removed; only the admin,
@@ -283,11 +283,8 @@ def asset_list_view(request):
 
 
 from django.contrib.admin.views.decorators import staff_member_required
-from django.utils.text import slugify
-from django.contrib.auth import get_user_model
-from django.utils import timezone
 from .models import SiteSetting
-# from .seed_data import SEED_PRODUCTS_RAW, SEED_BLOGS_RAW, SEED_EVENTS_RAW, SEED_DEALERS_RAW, SEED_SITE_CONTENTS_RAW, SEED_SETTINGS_RAW
+
 
 def sync_existing_media_files():
     import os
@@ -364,7 +361,7 @@ def download_and_register_remote_images():
     import urllib.parse
     from django.core.files.base import ContentFile
     from django.utils.text import slugify
-    from core.models import Product, BlogPost, Event, SiteSetting, MediaAsset
+    from core.models import Product, BlogPost, Event, MediaAsset
 
     def download_image(url, title_hint):
         if not url or not url.startswith(('http://', 'https://')):
@@ -481,123 +478,10 @@ def download_and_register_remote_images():
             print(f"Error processing event schema image: {err}")
 
 
-def ensure_seeded():
-    """Seed initial CMS content if the database is empty.
-
-    Only cheap, count-guarded DB seeding lives here. Media-directory scanning
-    and remote image downloads moved to the `seed_content` management command —
-    they must never run as a side effect of serving a request.
-    """
-    User = get_user_model()
-    admin_user = User.objects.filter(is_superuser=True).first()
-    if not admin_user:
-        admin_user = User.objects.first()
-
-    # 1. Categories
-    categories = [
-        "Wireless CCTV Cameras", "IP CCTV Cameras", "Network Video Recoder (NVR)",
-        "POE Switch", "Hard Disk", "SD Card", "Buying Guide", "Brand Guide",
-        "Maintenance", "Tech Report", "Infrastructure", "Hardware", "Case Studies",
-        "Engineering"
-    ]
-    for cat_name in categories:
-        slug = slugify(cat_name)
-        Category.objects.get_or_create(name=cat_name, defaults={'slug': slug})
-
-    # 2. Products
-    if Product.objects.count() == 0:
-        for p in SEED_PRODUCTS_RAW:
-            cat_obj = Category.objects.filter(name=p['category']).first()
-            tech_specs = {
-                'code': p.get('code', ''),
-                'productType': p.get('productType', ''),
-                'cameraMp': p.get('cameraMp', ''),
-                'tags': p.get('tags', []),
-                'badge': p.get('badge', ''),
-                'longDesc': p.get('longDesc', ''),
-                'bodySectionLabel': p.get('bodySectionLabel', ''),
-                'bodySectionTitle': p.get('bodySectionTitle', ''),
-                'guidePdf': p.get('guidePdf', ''),
-                'img': p.get('img', ''),
-                'thumbs': p.get('thumbs', []),
-                'colors': p.get('colors', []),
-                'specs': p.get('specs', []),
-                'specTable': p.get('specTable', [])
-            }
-            Product.objects.create(
-                name=p['name'],
-                slug=p['slug'],
-                category=cat_obj,
-                price=p['price'],
-                stock_status='in_stock',
-                technical_specifications=tech_specs,
-                description=p.get('description', '')
-            )
-
-    # 3. BlogPosts
-    if BlogPost.objects.count() == 0:
-        for b in SEED_BLOGS_RAW:
-            cat_obj = Category.objects.filter(name=b.get('tag')).first()
-            if not cat_obj and b.get('tag'):
-                cat_obj, _ = Category.objects.get_or_create(name=b['tag'], defaults={'slug': slugify(b['tag'])})
-            
-            content_str = "\n\n".join(b.get('content', [])) if isinstance(b.get('content'), list) else b.get('content', '')
-            
-            BlogPost.objects.create(
-                title=b['title'],
-                slug=b['slug'],
-                author=admin_user,
-                category=cat_obj,
-                content=content_str,
-                meta_description=b.get('excerpt', '')[:160],
-                date_published=timezone.now(),
-                schema_override=json.dumps({"image": b.get('img', '')})
-            )
-
-    # 4. Events
-    if Event.objects.count() == 0:
-        for e in SEED_EVENTS_RAW:
-            content_str = "\n\n".join(e.get('content', [])) if isinstance(e.get('content'), list) else e.get('content', '')
-            Event.objects.create(
-                title=e['title'],
-                slug=e['slug'],
-                description=content_str,
-                start_date=timezone.now(),
-                location=e.get('location', 'Kathmandu, Nepal')
-            )
-
-    # 5. Dealers
-    if Dealer.objects.count() == 0:
-        for d in SEED_DEALERS_RAW:
-            loc = d.get('location', '')
-            province = "Bagmati Province"
-            for prov in ["koshi", "madhesh", "bagmati", "gandaki", "lumbini", "karnali", "sudurpashchim"]:
-                if prov in loc.lower():
-                    province = prov.capitalize() + " Province"
-                    break
-            
-            name = d.get('companyName') or d.get('name') or "Dealer"
-            Dealer.objects.create(
-                name=name,
-                slug=slugify(name),
-                province=province,
-                district="Kathmandu",
-                address=loc,
-                phone_number=d.get('phone', ''),
-                email=d.get('email', '')
-            )
-
-    # 6. SiteSettings & SiteContents
-    if SiteSetting.objects.filter(key='site_contents').count() == 0:
-        SiteSetting.objects.create(key='site_contents', value=SEED_SITE_CONTENTS_RAW)
-
-    if SiteSetting.objects.filter(key='global_config').count() == 0:
-        SiteSetting.objects.create(key='global_config', value=SEED_SETTINGS_RAW)
-
 @staff_member_required
 def custom_admin_index_view(request):
-    # ensure_seeded()
     products = Product.objects.all()
+
     posts = BlogPost.objects.all()
     dealers = Dealer.objects.all()
     events = Event.objects.all()
@@ -632,16 +516,19 @@ def api_blog_posts(request):
     data = []
     for p in posts:
         img = "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=1200&q=80"
-        try:
-            if p.schema_override:
-                extra = json.loads(p.schema_override)
-                if 'image' in extra:
-                    img = extra['image']
-                    # Append a cache-buster to bypass any cached 404 errors from previous routing bugs
-                    if '?' not in img:
-                        img += '?v=2'
-        except Exception:
-            pass
+        if p.image:
+            img = request.build_absolute_uri(p.image.url)
+        else:
+            try:
+                if p.schema_override:
+                    extra = json.loads(p.schema_override)
+                    if 'image' in extra:
+                        img = extra['image']
+                        # Append a cache-buster to bypass any cached 404 errors from previous routing bugs
+                        if '?' not in img:
+                            img += '?v=2'
+            except Exception:
+                pass
         
         data.append({
             'id': p.id,
@@ -951,9 +838,16 @@ def serve_react_app(request):
         html = html.replace('src="/src/main.jsx"', 'src="http://localhost:5173/src/main.jsx"')
         html = html.replace('href="/favicon', 'href="http://localhost:5173/favicon')
         
-        # Inject Vite client
+        # Inject Vite client and React preamble
+        vite_preamble = '''<script type="module">
+import RefreshRuntime from "http://localhost:5173/@react-refresh"
+RefreshRuntime.injectIntoGlobalHook(window)
+window.$RefreshReg$ = () => {}
+window.$RefreshSig$ = () => (type) => type
+window.__vite_plugin_react_preamble_installed__ = true
+</script>'''
         vite_client = '<script type="module" src="http://localhost:5173/@vite/client"></script>'
-        html = html.replace('<head>', f'<head>\n    {vite_client}')
+        html = html.replace('<head>', f'<head>\n    {vite_preamble}\n    {vite_client}')
 
     response = HttpResponse(html)
     if not valid_route:
@@ -971,7 +865,6 @@ def robots_txt_view(request):
 @cache_page(300) # 5 minutes cache
 def dynamic_sitemap_view(request):
     from django.core.paginator import Paginator
-    from django.utils.dateformat import format
     
     # Collect URLs
     urls = []

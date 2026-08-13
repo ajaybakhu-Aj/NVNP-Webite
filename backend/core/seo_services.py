@@ -1,6 +1,5 @@
 import json
 import logging
-from django.urls import reverse
 from django.conf import settings
 
 logger = logging.getLogger(__name__)

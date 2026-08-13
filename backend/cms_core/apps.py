@@ -1,0 +1,9 @@
+from django.apps import AppConfig
+
+
+class CmsCoreConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'cms_core'
+
+    def ready(self):
+        pass

@@ -1,7 +1,7 @@
 import json
 import logging
 from django.urls import resolve, Resolver404
-from .models import Product, BlogPost, Category, Event, Dealer
+from .models import Product, BlogPost, Category, Event
 
 logger = logging.getLogger(__name__)
 

@@ -139,7 +139,7 @@ class BlogPostAdmin(SEOAdminMixin):
     prepopulated_fields = {'slug': ('title',)}
     fieldsets = (
         (None, {
-            'fields': ('title', 'slug', 'author', 'category', 'content', 'date_published')
+            'fields': ('title', 'slug', 'author', 'category', 'image', 'content', 'date_published')
         }),
         SEOAdminMixin.seo_fieldset,
     )

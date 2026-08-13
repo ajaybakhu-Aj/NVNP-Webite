@@ -48,14 +48,47 @@ INSTALLED_APPS = [
     'django.contrib.redirects',
     
     # Custom SEO App
-    'core.apps.CoreConfig',
+    'core',
+    'cms_core',
+    'taxonomies',
+    'rest_framework',
     'tinymce',
     'corsheaders',
+    'media_engine',
+    'django_q',
+    'cms_seo',
+    'cms_forms',
+    'cms_commerce',
+    'cms_revisions',
+    'cms_settings',
+    'cms_security',
+    'cms_analytics',
+    'cms_webhooks',
+    'cms_ai',
+    'cms_i18n',
+    'cms_headless',
 ]
 
 SITE_ID = 1
+SITE_URL = "https://example.com"  # Set to real URL in production
+GOOGLE_CREDENTIALS = None
+
+# Celery Configuration
+CELERY_BROKER_URL = 'redis://localhost:6379/1'  # Default for dev
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
+CELERY_TASK_ALWAYS_EAGER = True
+
+# Headless Integrations
+FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
+FRONTEND_REVALIDATION_SECRET = os.environ.get('FRONTEND_REVALIDATION_SECRET', 'dev-revalidate-secret')
+PREVIEW_JWT_SECRET = os.environ.get('PREVIEW_JWT_SECRET', SECRET_KEY)
+
+# AI Services
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', 'dummy-key-for-testing')
 
 MIDDLEWARE = [
+    'cms_core.cache_engine.middleware.CMSCacheMiddleware',
+    'cms_security.middleware.BruteForceProtectionMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     
@@ -70,6 +103,8 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',  # Handles APPEND_SLASH redirects
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'cms_security.middleware.ThreadLocalUserMiddleware',
+    'cms_i18n.middleware.LanguageContextMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
@@ -116,6 +151,8 @@ if os.environ.get('DJANGO_DB_ENGINE', 'sqlite').lower() == 'postgres':
             'PASSWORD': os.environ['POSTGRES_PASSWORD'],
             'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
             'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+            # Enable database connection pooling for high-traffic environments
+            'CONN_MAX_AGE': int(os.environ.get('CONN_MAX_AGE', 600)),
         }
     }
 else:
@@ -123,6 +160,27 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+# High Traffic Redis Caching Configuration
+REDIS_URL = os.environ.get('REDIS_URL', '')
+if REDIS_URL:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': REDIS_URL,
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+                'CONNECTION_POOL_KWARGS': {"max_connections": 100}
+            }
+        }
+    }
+else:
+    # Fallback to local memory cache for local development
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         }
     }
 
@@ -153,6 +211,20 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = []
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Django-Q2 Configuration (using ORM broker)
+Q_CLUSTER = {
+    'name': 'DjangORM',
+    'workers': 4,
+    'timeout': 90,
+    'retry': 120,
+    'queue_limit': 50,
+    'bulk': 10,
+    'orm': 'default',  # Use Django's default DB
+}
+
+# Default primary key field type
+
 WHITENOISE_ROOT = os.path.join(BASE_DIR, '..', 'frontend', 'dist')
 
 # Media Files
