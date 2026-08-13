@@ -89,3 +89,5 @@ zope.interface==7.2
 
 redis
 django-redis
+
+celery
