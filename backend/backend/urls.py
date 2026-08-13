@@ -110,3 +110,32 @@ urlpatterns += [
 # JSON error handlers
 handler404 = 'core.views.custom_404_view'
 handler500 = 'core.views.custom_500_view'
+
+from django.http import JsonResponse
+import os
+
+def debug_db_view(request):
+    db_path = settings.DATABASES['default'].get('NAME')
+    try:
+        size = os.path.getsize(db_path)
+    except Exception as e:
+        size = str(e)
+        
+    try:
+        from core.models import BlogPost
+        blog_count = BlogPost.objects.count()
+    except Exception as e:
+        blog_count = str(e)
+        
+    return JsonResponse({
+        'database_path': str(db_path),
+        'file_exists': os.path.exists(str(db_path)),
+        'file_size_bytes': size,
+        'blog_count': blog_count,
+        'base_dir': str(settings.BASE_DIR),
+        'current_working_dir': os.getcwd()
+    })
+
+urlpatterns += [
+    path('api/debug-db/', debug_db_view),
+]
