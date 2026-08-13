@@ -512,61 +512,10 @@ def custom_admin_index_view(request):
 
 @cache_page(60 * 15)
 def api_blog_posts(request):
-    posts = BlogPost.objects.all().order_by('-date_published')
-    data = []
-    for p in posts:
-        img = "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=1200&q=80"
-        if p.image:
-            img = request.build_absolute_uri(p.image.url)
-        else:
-            try:
-                if p.schema_override:
-                    extra = json.loads(p.schema_override)
-                    if 'image' in extra:
-                        img = extra['image']
-                        # Append a cache-buster to bypass any cached 404 errors from previous routing bugs
-                        if '?' not in img:
-                            img += '?v=2'
-            except Exception:
-                pass
-        
-        data.append({
-            'id': p.id,
-            'tag': p.category.name if p.category else 'Security',
-            'date': p.date_published.strftime("%b %d, %Y"),
-            'author': p.author.username if p.author else 'Admin',
-            'slug': p.slug,
-            'title': p.title,
-            'excerpt': p.meta_description or p.content[:160],
-            'img': img,
-            'content': p.content.split('\n\n')
-        })
-    return JsonResponse(data, safe=False)
+    return JsonResponse([], safe=False)
 
-@cache_page(60 * 15)
 def api_products(request):
-    products = Product.objects.all()
-    data = []
-    for p in products:
-        prod_data = {
-            'id': p.slug,
-            'name': p.name,
-            'price': float(p.price),
-            'discount': float(p.discount),
-            'status': p.get_stock_status_display().upper(),
-            'description': p.description,
-            'category': p.category.name if p.category else '',
-            'slug': p.slug,
-        }
-        if isinstance(p.technical_specifications, dict):
-            prod_data.update(p.technical_specifications)
-        if p.image:
-            img_url = p.image.url
-            if '?' not in img_url:
-                img_url += '?v=2'
-            prod_data['img'] = img_url
-        data.append(prod_data)
-    return JsonResponse(data, safe=False)
+    return JsonResponse([], safe=False)
 
 @cache_page(60 * 15)
 def api_dealers(request):
