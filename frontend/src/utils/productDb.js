@@ -546,11 +546,10 @@ async function safeFetch(url, options = {}) {
 }
 
 export async function getAllProducts() {
-  // Bypassing Django API to restore original static product data
-  // const apiData = await safeFetch('/api/products/');
-  // if (apiData && apiData.length > 0) {
-  //   return apiData;
-  // }
+  const apiData = await safeFetch('/api/products/');
+  if (apiData && apiData.length > 0) {
+    return apiData;
+  }
   return new Promise((resolve) => {
     initDb()
       .then((db) => {
@@ -578,12 +577,11 @@ export async function getAllProducts() {
 
 // Get product by ID
 export async function getProductById(id) {
-  // Bypassing Django API to restore original static product data
-  // const apiData = await safeFetch('/api/products/');
-  // if (apiData && apiData.length > 0) {
-  //   const prod = apiData.find((p) => p.id === id || p.slug === id);
-  //   if (prod) return prod;
-  // }
+  const apiData = await safeFetch('/api/products/');
+  if (apiData && apiData.length > 0) {
+    const prod = apiData.find((p) => p.id === id || p.slug === id);
+    if (prod) return prod;
+  }
   return new Promise((resolve) => {
     initDb()
       .then((db) => {
