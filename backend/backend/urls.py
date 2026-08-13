@@ -85,15 +85,14 @@ from django.conf import settings
 from django.views.static import serve
 
 urlpatterns += [
-    # Explicitly serve React assets from the cPanel root folder (../assets)
+    # Explicitly serve React assets from the frontend/dist/assets folder
     re_path(r'^assets/(?P<path>.*)$', serve, {
-        'document_root': os.path.join(settings.BASE_DIR, '..', 'assets'),
+        'document_root': os.path.join(settings.BASE_DIR, '..', 'frontend', 'dist', 'assets'),
     }),
     
-    # Also explicitly serve root images (like logo.png) from the cPanel root folder if they are requested directly
-    # Regex [^/]+ ensures it only matches files in the root directory, not inside /media/ or /assets/
+    # Also explicitly serve root images (like logo.png) from the frontend/dist folder
     re_path(r'^(?P<path>[^/]+\.(png|jpg|jpeg|svg|ico|webp|gif))$', serve, {
-        'document_root': os.path.join(settings.BASE_DIR, '..'),
+        'document_root': os.path.join(settings.BASE_DIR, '..', 'frontend', 'dist'),
     }),
 
     # Catch-all for React index.html
