@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSiteContents, getAllBlogs, getAllEvents } from "../../utils/cmsDb";
+import { useSiteContents, useHomepageSettings, getAllBlogs, getAllEvents } from "../../utils/cmsDb";
 import { colors } from "../../data/constants";
 
 export default function HomeBlogsSection() {
   const siteContents = useSiteContents();
+  const homeSettings = useHomepageSettings();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -24,51 +25,74 @@ export default function HomeBlogsSection() {
       });
   }, []);
 
-  const bannerImg = siteContents.homeBlogBanner || "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=800&q=80";
+  const bannerImg = homeSettings.blogs?.image_url || siteContents.homeBlogBanner || "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=800&q=80";
 
   return (
     <section 
-      style={{ 
-        padding: "80px 0", 
-        background: colors.background, 
-        borderTop: `1px solid ${colors.outlineVariant}`,
-        overflow: "hidden"
+      id="blogs"
+      className="homepage-safe-section bg-[var(--nv-bg,#131313)] overflow-hidden flex justify-center items-center"
+      style={{
+        paddingTop: "clamp(45px, 5vw, 85px)",
+        paddingBottom: "clamp(45px, 5vw, 85px)",
       }}
     >
-      <div 
-        style={{ 
-          maxWidth: 1280, 
-          margin: "0 auto", 
-          padding: "0 24px", 
-          boxSizing: "border-box" 
-        }}
-      >
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 w-full box-border">
         {/* Header Block */}
-        <div style={{ textAlign: "center", marginBottom: 54 }}>
+        <div className="text-center mb-12 sm:mb-16 md:mb-20 flex flex-col items-center justify-center">
+          {/* SECURITY INTEL EYEBROW BADGE */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--nv-surfCont,#181a15)] border border-[var(--nv-secondary,#94da32)]/35 mb-4 shadow-[0_0_15px_rgba(148,218,50,0.12)] backdrop-blur-md">
+            <span className="w-2 h-2 rounded-full bg-[#ff2d2d] animate-pulse shadow-[0_0_6px_#ff2d2d]" />
+            <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-[2px] uppercase text-[var(--nv-secondary,#94da32)]">
+              {homeSettings.blogs?.tag || "// SECURITY INTELLIGENCE // ARTICLES & UPDATES"}
+            </span>
+          </div>
+
+          {/* ATTRACTIVE DUAL-TONE H2 HEADING */}
           <h2 
+            className="font-['Space_Grotesk'] text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-extrabold tracking-tight text-center uppercase leading-tight"
             style={{ 
-              fontFamily: "'Space Grotesk', sans-serif", 
-              fontSize: "clamp(28px, 5vw, 40px)", 
-              fontWeight: 700, 
-              letterSpacing: 2, 
               color: colors.onSurface,
-              margin: "0 0 16px 0",
-              textTransform: "uppercase"
+              margin: "0 0 8px 0"
             }}
           >
-            {siteContents.homeBlogTitle || "Our Blogs"}
+            {(() => {
+              const rawTitle = homeSettings.blogs?.heading || siteContents.homeBlogTitle || "Our Blogs";
+              if (rawTitle.toLowerCase() === "our blogs") {
+                return (
+                  <>
+                    OUR{" "}
+                    <span 
+                      style={{ 
+                        color: colors.secondary, 
+                        textShadow: "0 0 16px rgba(148, 218, 50, 0.4)" 
+                      }}
+                    >
+                      BLOGS & INSIGHTS
+                    </span>
+                  </>
+                );
+              }
+              return rawTitle;
+            })()}
           </h2>
+
+          {/* GLOWING DIVIDER LINE ACCENT */}
+          <div className="flex items-center justify-center gap-3 my-3.5 w-full max-w-[260px]">
+            <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[var(--nv-secondary,#94da32)]/50 to-transparent" />
+            <div className="w-1.5 h-1.5 rounded-full bg-[var(--nv-secondary,#94da32)] shadow-[0_0_10px_#94da32]" />
+            <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[var(--nv-secondary,#94da32)]/50 to-transparent" />
+          </div>
+
+          {/* ATTRACTIVE SUBTITLE PARAGRAPH */}
           <p 
+            className="font-['Poppins'] text-[13.5px] sm:text-[15px] md:text-[16px] leading-[1.7] max-w-[760px] text-center px-2"
             style={{ 
-              fontFamily: "'Poppins', sans-serif",
               color: colors.onSurfaceVariant, 
-              fontSize: 15, 
-              lineHeight: 1.7, 
-              maxWidth: 720, 
+              opacity: 0.88,
               margin: "0 auto" 
             }}
           >
-            {siteContents.homeBlogSubtitle || "Find out how Night Vision offers the best CCTV camera in Nepal and is transforming security in all sectors."}
+            {homeSettings.blogs?.subheading || siteContents.homeBlogSubtitle || "Find out how Night Vision offers the best CCTV camera in Nepal and is transforming security in all sectors."}
           </p>
         </div>
 
@@ -76,7 +100,7 @@ export default function HomeBlogsSection() {
         <div 
           style={{ 
             display: "grid", 
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", 
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))", 
             gap: 24 
           }}
         >
@@ -130,7 +154,7 @@ export default function HomeBlogsSection() {
                   textTransform: "uppercase"
                 }}
               >
-                [ INTEL ARCHIVES ]
+                {homeSettings.blogs?.card_tag || "[ INTEL ARCHIVES ]"}
               </div>
               <h3 
                 style={{ 
@@ -143,7 +167,7 @@ export default function HomeBlogsSection() {
                   letterSpacing: 0.5
                 }}
               >
-                OPERATIONAL SECURITY & ANNOUNCEMENTS
+                {homeSettings.blogs?.card_title || "OPERATIONAL SECURITY & ANNOUNCEMENTS"}
               </h3>
               <p 
                 style={{ 
@@ -154,69 +178,22 @@ export default function HomeBlogsSection() {
                   margin: "0 0 28px 0" 
                 }}
               >
-                Access real-time reports, field studies, product update logs, and corporate announcements.
+                {homeSettings.blogs?.card_desc || "Access real-time reports, field studies, product update logs, and corporate announcements."}
               </p>
 
               {/* Navigation links */}
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 <Link 
-                  to="/blog" 
-                  style={{ 
-                    display: "flex", 
-                    alignItems: "center", 
-                    justifyContent: "center", 
-                    gap: 8,
-                    background: colors.secondary, 
-                    color: "#111", 
-                    textDecoration: "none", 
-                    padding: "14px", 
-                    fontWeight: 700, 
-                    fontSize: 11, 
-                    fontFamily: "'Space Grotesk', sans-serif", 
-                    letterSpacing: 2, 
-                    textTransform: "uppercase", 
-                    borderRadius: 3,
-                    transition: "all 0.2s"
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.background = "#fff";
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.background = colors.secondary;
-                  }}
+                  to={homeSettings.blogs?.button1_url || "/blog"} 
+                  className="nv-btn-primary w-full"
                 >
-                  ACCESS SECURITY BLOG
+                  {homeSettings.blogs?.button1_text || "ACCESS SECURITY BLOG →"}
                 </Link>
                 <Link 
-                  to="/events" 
-                  style={{ 
-                    display: "flex", 
-                    alignItems: "center", 
-                    justifyContent: "center", 
-                    gap: 8,
-                    background: "rgba(148, 218, 50, 0.1)", 
-                    color: colors.secondary, 
-                    border: `1px solid ${colors.secondary}`,
-                    textDecoration: "none", 
-                    padding: "14px", 
-                    fontWeight: 700, 
-                    fontSize: 11, 
-                    fontFamily: "'Space Grotesk', sans-serif", 
-                    letterSpacing: 2, 
-                    textTransform: "uppercase", 
-                    borderRadius: 3,
-                    transition: "all 0.2s"
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.background = colors.secondary;
-                    e.currentTarget.style.color = "#111";
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.background = "rgba(148, 218, 50, 0.1)";
-                    e.currentTarget.style.color = colors.secondary;
-                  }}
+                  to={homeSettings.blogs?.button2_url || "/events"} 
+                  className="nv-btn-secondary w-full"
                 >
-                  EXPLORE NEWS & EVENTS
+                  {homeSettings.blogs?.button2_text || siteContents.homeBlogEventsBtnText || "EXPLORE NEWS & EVENTS"}
                 </Link>
               </div>
             </div>
@@ -226,7 +203,7 @@ export default function HomeBlogsSection() {
           <div 
             style={{ 
               display: "grid", 
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", 
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))", 
               gap: 20,
               gridColumn: "span 2"
             }}

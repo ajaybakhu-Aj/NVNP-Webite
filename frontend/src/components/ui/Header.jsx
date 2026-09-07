@@ -129,7 +129,13 @@ export default function Header() {
 
   return (
     <header className="app-header">
-      <div className="header-container max-w-[1280px] mx-auto px-[20px] md:px-[24px] w-full">
+      <div 
+        className="header-container max-w-[1280px] mx-auto w-full box-border"
+        style={{
+          paddingLeft: "clamp(20px, 4vw, 32px)",
+          paddingRight: "clamp(20px, 4vw, 32px)",
+        }}
+      >
         {/* LEFT */}
         <div className="header-left">
           {/* LOGO */}

@@ -340,7 +340,7 @@ export default function ProductDetail() {
                 KEY FEATURES
               </h4>
               {product.specs && (
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 140px), 1fr))", gap: 12 }}>
                   {product.specs.map((s, i) => (
                     <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <Icon name={s.icon} size={18} style={{ color: "#94da32" }} />

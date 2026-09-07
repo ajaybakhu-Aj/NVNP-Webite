@@ -388,7 +388,7 @@ export default function CctvSetupPage() {
             <p style={stepDescStyle}>
               Different layouts require distinct camera styles, ranges, and AI event recognition rules.
             </p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16, marginTop: 24 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 200px), 1fr))", gap: 16, marginTop: 24 }}>
               {[
                 { id: "home", label: "Residential Home", icon: "home", desc: "Perimeter threat detection and family safety monitoring." },
                 { id: "office", label: "Corporate Office", icon: "business", desc: "Employee safety, lobby security, and access control." },
@@ -430,7 +430,7 @@ export default function CctvSetupPage() {
             <p style={stepDescStyle}>
               Choose the total number of security channels needed to eliminate blind spots.
             </p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 16, marginTop: 24 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 140px), 1fr))", gap: 16, marginTop: 24 }}>
               {[
                 { val: 2, label: "2 Channels", desc: "Small rooms / entryways" },
                 { val: 4, label: "4 Channels", desc: "Standard house / small shop" },
@@ -472,7 +472,7 @@ export default function CctvSetupPage() {
             <p style={stepDescStyle}>
               Weatherproof bullet cameras for outdoor elements vs dome cameras for indoor ceilings.
             </p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 16, marginTop: 24 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 180px), 1fr))", gap: 16, marginTop: 24 }}>
               {[
                 { id: "indoor", label: "Indoor Coverage", desc: "Dome cameras optimized for low-profile ceiling mounting." },
                 { id: "outdoor", label: "Outdoor Elements", desc: "IP67 Weatherproof Bullet units with active night vision matrix." },

@@ -1,66 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { colors } from "../../data/constants";
-import { useSiteContents } from "../../utils/cmsDb";
+import { useSiteContents, useHomepageSettings } from "../../utils/cmsDb";
 
 export default function FounderSection() {
   const contents = useSiteContents();
+  const homeSettings = useHomepageSettings();
+
+  const founderImg = homeSettings.founder?.image_url || contents.homeFounderImg || "/founder.jpg";
+  const displayImg = (founderImg && !founderImg.includes("googleusercontent.com")) ? founderImg : "/founder.jpg";
+
   return (
     <section
+      id="founder"
+      className="homepage-safe-section bg-[var(--nv-surfLow,#0c0f07)] border-b border-[var(--nv-outlineVar,#434938)]/40 overflow-hidden flex justify-center items-center"
       style={{
-        padding: "80px 0",
-        background: colors.surfaceContainerLow,
-        borderTop: `1px solid ${colors.outlineVariant}`,
-        borderBottom: `1px solid ${colors.outlineVariant}`,
+        paddingTop: "clamp(45px, 5vw, 85px)",
+        paddingBottom: "clamp(45px, 5vw, 85px)",
       }}
     >
-      <div
-        style={{
-          maxWidth: 1280,
-          margin: "0 auto",
-          padding: "0 24px",
-
-          display: "flex",
-
-          alignItems: "center",
-
-          gap: "80px",
-
-          flexWrap: "wrap",
-
-          width: "100%",
-
-          boxSizing: "border-box",
-        }}
-      >
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-24 items-center w-full box-border">
         {/* IMAGE SECTION */}
-        <div
-          style={{
-            width: "100%",
-
-            maxWidth: "420px",
-
-            position: "relative",
-
-            flexShrink: 0,
-
-            margin: "0 auto",
-          }}
-        >
+        <div className="relative w-full max-w-[480px] mx-auto lg:mx-0 rounded-xl overflow-hidden border border-[var(--nv-outlineVar,#434938)] shadow-xl shadow-[rgba(0,0,0,0.25)]">
           <img
-            src={(!contents.homeFounderImg || contents.homeFounderImg.includes("googleusercontent.com")) ? "/founder.jpg" : contents.homeFounderImg}
-            alt={contents.homeFounderName || "Rozil Thapa"}
+            src={displayImg}
+            alt={homeSettings.founder?.name || contents.homeFounderName || "Rozil Thapa"}
             style={{
               width: "100%",
-
               height: "auto",
-
               objectFit: "cover",
-
-              filter: "grayscale(100%) brightness(0.75)",
-
-              borderBottom: `8px solid ${colors.secondary}`,
-
+              filter: "grayscale(100%) brightness(0.85)",
+              borderBottom: `6px solid ${colors.secondary}`,
               display: "block",
             }}
           />
@@ -68,61 +38,31 @@ export default function FounderSection() {
           <div
             style={{
               position: "absolute",
-
               bottom: 16,
-
               left: 16,
-
               background: colors.secondary,
-
               color: "black",
-
-              padding: "16px",
-
+              padding: "12px 20px",
               fontFamily: "'Space Grotesk', sans-serif",
-
               fontWeight: 700,
-
-              fontSize: "clamp(14px, 2vw, 18px)",
-
+              fontSize: "clamp(13px, 1.8vw, 16px)",
               lineHeight: 1.2,
+              borderRadius: "4px",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
             }}
           >
-            {contents.homeFounderName || "ROZIL THAPA"}
+            {homeSettings.founder?.name || contents.homeFounderName || "ROZIL THAPA"}
           </div>
         </div>
 
         {/* CONTENT SECTION */}
-        <div
-          style={{
-            flex: 1,
-
-            minWidth: "280px",
-
-            width: "100%",
-          }}
-        >
-          <span
-            style={{
-              color: colors.secondary,
-
-              fontFamily: "'Inter', sans-serif",
-
-              fontWeight: 600,
-
-              fontSize: 12,
-
-              letterSpacing: 1,
-
-              textTransform: "uppercase",
-
-              display: "block",
-
-              marginBottom: 16,
-            }}
-          >
-            {contents.homeFounderTag || "Our Founder's Vision"}
-          </span>
+        <div className="flex flex-col gap-5 w-full">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[var(--nv-secondary,#94da32)] animate-pulse" />
+            <span className="text-[11px] font-mono font-bold tracking-[2px] uppercase text-[var(--nv-secondary,#94da32)]">
+              {homeSettings.founder?.tag || contents.homeFounderTag || "// LEADERSHIP // FOUNDER'S DIRECTIVE"}
+            </span>
+          </div>
 
           <blockquote
             style={{
@@ -147,26 +87,20 @@ export default function FounderSection() {
             <span
               style={{
                 position: "absolute",
-
-                top: "-32px",
-
-                left: "-12px",
-
-                color: "rgba(181,231,93,0.2)",
-
-                fontSize: "clamp(72px, 12vw, 128px)",
-
-                fontFamily: "'Space Grotesk', sans-serif",
-
+                top: "-24px",
+                left: "-8px",
+                color: "rgba(148, 218, 50, 0.08)",
+                fontSize: "clamp(56px, 8vw, 96px)",
+                fontFamily: "Georgia, serif",
                 lineHeight: 1,
-
                 pointerEvents: "none",
+                userSelect: "none",
               }}
             >
-              "
+              “
             </span>
 
-            {contents.homeFounderQuote || "The vision behind NV// was never just about hardware. It was about reclaiming safety in a world that never sleeps."}
+            {homeSettings.founder?.quote || contents.homeFounderQuote || "The vision behind NV// was never just about hardware. It was about reclaiming safety in a world that never sleeps."}
           </blockquote>
 
           <p
@@ -182,13 +116,11 @@ export default function FounderSection() {
               wordBreak: "break-word",
             }}
           >
-            {contents.homeFounderDesc || "Founder Rozil Thapa started NightVision with a singular mission: to provide the people of Nepal with security technology that rivals the global elite, without compromise."}
+            {homeSettings.founder?.description || contents.homeFounderDesc || "Founder Rozil Thapa started NightVision with a singular mission: to provide the people of Nepal with security technology that rivals the global elite, without compromise."}
           </p>
 
-          <Link to="/founder" className="no-underline inline-block w-full sm:w-auto">
-            <button className="hero-btn-1 flex items-center justify-center gap-2 border-none font-extrabold tracking-[2px] uppercase cursor-pointer text-[13px] md:text-[14px] w-full sm:w-auto transition-all duration-300 rounded-full">
-              READ THE FULL STORY →
-            </button>
+          <Link to={homeSettings.founder?.button_url || "/founder"} className="nv-btn-primary w-full sm:w-auto">
+            {homeSettings.founder?.button_text || "READ THE FULL STORY →"}
           </Link>
         </div>
       </div>

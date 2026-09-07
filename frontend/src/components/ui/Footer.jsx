@@ -35,11 +35,12 @@ export default function Footer() {
     <footer className="app-footer">
       <style>{`
         .footer-container {
-          display: flex !important;
-          flex-wrap: nowrap !important;
-          justify-content: space-between !important;
-          align-items: flex-start !important;
-          gap: 40px !important;
+          display: grid !important;
+          grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+          gap: 36px !important;
+          max-width: 1400px !important;
+          margin: 0 auto !important;
+          padding: 48px clamp(20px, 4vw, 32px) !important;
           width: 100% !important;
           box-sizing: border-box !important;
         }
@@ -49,9 +50,9 @@ export default function Footer() {
           justify-content: space-between !important;
           align-items: flex-start !important;
           gap: 48px !important;
-          padding: 48px 24px !important;
-          border-top: 1px solid #2a2e20 !important;
-          border-bottom: 1px solid #2a2e20 !important;
+          padding: 48px clamp(20px, 4vw, 32px) !important;
+          border-top: 1px solid var(--nv-outlineVar, #2a2e20) !important;
+          border-bottom: 1px solid var(--nv-outlineVar, #2a2e20) !important;
           max-width: 1400px !important;
           margin: 0 auto !important;
           width: 100% !important;
@@ -59,70 +60,78 @@ export default function Footer() {
         }
         .footer-sub-brand-left {
           flex: 1 1 360px !important;
-          min-width: 280px !important;
+          min-width: 260px !important;
         }
         .footer-sub-brand-right {
           flex: 1 1 360px !important;
-          min-width: 280px !important;
+          min-width: 260px !important;
           display: flex !important;
           flex-direction: column !important;
           gap: 12px !important;
         }
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
           .footer-container {
-            flex-wrap: wrap !important;
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
             gap: 32px !important;
+            padding: 40px clamp(20px, 4vw, 24px) !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .footer-container {
+            grid-template-columns: 1fr !important;
+            gap: 28px !important;
+            padding: 36px clamp(20px, 5vw, 24px) !important;
           }
           .footer-subscribe-brand-section {
             flex-direction: column !important;
-            gap: 32px !important;
+            gap: 28px !important;
             align-items: stretch !important;
-            padding: 32px 16px !important;
+            padding: 36px clamp(20px, 5vw, 24px) !important;
           }
         }
       `}</style>
       <div className="footer-container">
         {/* PRODUCTS CATEGORIES */}
-        <div style={{ flex: "0 0 auto", minWidth: 0 }}>
+        <div style={{ minWidth: 0 }}>
           <h5 className="footer-section-title">Products</h5>
           <ul className="footer-links-list">
-            <li><Link to="/products/wireless-cameras" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span>Wireless CCTV Cameras</Link></li>
-            <li><Link to="/products/ip-cameras" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span>IP CCTV Cameras</Link></li>
-            <li><Link to="/products/nvr" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span>Network Video Recorder (NVR)</Link></li>
-            <li><Link to="/products/poe-switch" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span>POE Switch</Link></li>
-            <li><Link to="/products/hard-disk" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span>Hard Disk</Link></li>
-            <li><Link to="/products/sd-card" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span>SD Card</Link></li>
+            <li><Link to="/products/wireless-cameras" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span>Wireless CCTV Cameras</Link></li>
+            <li><Link to="/products/ip-cameras" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span>IP CCTV Cameras</Link></li>
+            <li><Link to="/products/nvr" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span>Network Video Recorder (NVR)</Link></li>
+            <li><Link to="/products/poe-switch" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span>POE Switch</Link></li>
+            <li><Link to="/products/hard-disk" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span>Hard Disk</Link></li>
+            <li><Link to="/products/sd-card" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span>SD Card</Link></li>
           </ul>
         </div>
 
         {/* QUICK LINKS */}
-        <div style={{ flex: "0 0 auto", minWidth: 0 }}>
+        <div style={{ minWidth: 0 }}>
           <h5 className="footer-section-title">Quick Links</h5>
           <ul className="footer-links-list">
-            <li><Link to="/products" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span>Products</Link></li>
-            <li><Link to="/about" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span>About Us</Link></li>
-            <li><Link to="/contact" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span>Contact Us</Link></li>
-            <li><Link to="/dealership" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span>Dealers</Link></li>
-            <li><Link to="/blog" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span>Blogs</Link></li>
-            <li><Link to="/events" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span>News and Events</Link></li>
+            <li><Link to="/products" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span>Products</Link></li>
+            <li><Link to="/about" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span>About Us</Link></li>
+            <li><Link to="/contact" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span>Contact Us</Link></li>
+            <li><Link to="/dealership" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span>Dealers</Link></li>
+            <li><Link to="/blog" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span>Blogs</Link></li>
+            <li><Link to="/events" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span>News and Events</Link></li>
           </ul>
         </div>
 
         {/* SUPPORT & LEGAL */}
-        <div style={{ flex: "0 0 auto", minWidth: 0 }}>
+        <div style={{ minWidth: 0 }}>
           <h5 className="footer-section-title">Support & Legal</h5>
           <ul className="footer-links-list">
-            <li><Link to="/support" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span>Technical Support Helpline</Link></li>
-            <li><Link to="/support/downloads" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span>App & Software</Link></li>
-            <li><Link to="/warranty" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span> Warranty</Link></li>
-            <li><Link to="/privacy" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span>Privacy Protocol Policy</Link></li>
-            <li><Link to="/terms" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span>Terms & Service</Link></li>
-            <li><Link to="/apply-dealers" className="footer-link" style={{ whiteSpace: "nowrap" }}><span style={{ color: "#b5e75d", marginRight: "8px", fontWeight: 700 }}>›</span>Become a Dealer</Link></li>
+            <li><Link to="/support" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span>Technical Support Helpline</Link></li>
+            <li><Link to="/support/downloads" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span>App & Software</Link></li>
+            <li><Link to="/warranty" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span> Warranty</Link></li>
+            <li><Link to="/privacy" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span>Privacy Protocol Policy</Link></li>
+            <li><Link to="/terms" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span>Terms & Service</Link></li>
+            <li><Link to="/apply-dealers" className="footer-link"><span style={{ color: "var(--nv-secondary, #b5e75d)", marginRight: "8px", fontWeight: 700 }}>›</span>Become a Dealer</Link></li>
           </ul>
         </div>
 
         {/* REACH US */}
-        <div style={{ flex: "0 0 auto", minWidth: 0 }}>
+        <div style={{ minWidth: 0 }}>
           <h5 className="footer-section-title">Reach Us</h5>
           <ul className="footer-links-list" style={{ color: "var(--nv-onSurf)", fontSize: "14px", lineHeight: "1.6", gap: "16px" }}>
             <li style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>

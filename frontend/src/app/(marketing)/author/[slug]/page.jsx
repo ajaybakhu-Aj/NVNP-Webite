@@ -286,7 +286,7 @@ export default function AuthorPage() {
               {/* Stats dashboard */}
               <div style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 110px), 1fr))",
                 gap: 16,
                 borderTop: `1px solid ${C.outlineVar}`,
                 paddingTop: 24
@@ -338,7 +338,7 @@ export default function AuthorPage() {
           ) : authorArticles.length > 0 ? (
             <div style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 340px), 1fr))",
               gap: 24
             }}>
               {authorArticles.map((article) => (

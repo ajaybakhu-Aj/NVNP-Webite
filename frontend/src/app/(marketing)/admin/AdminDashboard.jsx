@@ -836,7 +836,7 @@ export default function AdminDashboard() {
         {/* DIALS / WIDGETS STRIP */}
         <section style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 220px), 1fr))",
           gap: 20,
           marginBottom: 40
         }}>
@@ -1181,7 +1181,7 @@ export default function AdminDashboard() {
                   </button>
                 </div>
 
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 20 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 260px), 1fr))", gap: 20 }}>
                   {gallery.map((g) => (
                     <div key={g.id} style={{ background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 16, display: "flex", flexDirection: "column" }}>
                       <img src={g.img} alt="" style={{ width: "100%", aspectRatio: "16/10", objectFit: "cover", border: `1px solid ${C.outlineVar}`, marginBottom: 12 }} />
@@ -1654,9 +1654,14 @@ export default function AdminDashboard() {
                 <div style={{ display: "flex", gap: 10, marginBottom: 30, borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 12, overflowX: "auto" }}>
                   {[
                     { id: "hero", name: "Hero Section" },
-                    { id: "about", name: "About Section" },
+                    { id: "ticker", name: "Ticker Strip" },
                     { id: "features", name: "Features Section" },
-                    { id: "cta", name: "CTA Section" }
+                    { id: "products", name: "Products Section" },
+                    { id: "about", name: "Why / About Section" },
+                    { id: "founder", name: "Founder Section" },
+                    { id: "testimonials", name: "Testimonials Section" },
+                    { id: "cta", name: "Dealer / CTA Section" },
+                    { id: "blogs", name: "Blogs Section" }
                   ].map((subTab) => (
                     <button
                       key={subTab.id}
@@ -1672,7 +1677,8 @@ export default function AdminDashboard() {
                         fontWeight: 700,
                         cursor: "pointer",
                         fontFamily: C.sg,
-                        transition: "all 0.2s"
+                        transition: "all 0.2s",
+                        whiteSpace: "nowrap"
                       }}
                     >
                       {subTab.name}
@@ -1690,6 +1696,19 @@ export default function AdminDashboard() {
                           <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>HERO SECTION CONFIGURATION</h3>
                         </div>
                         
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>STATUS BADGE TEXT</label>
+                          <input 
+                            type="text" 
+                            value={homepageSettings.hero?.status_badge || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              hero: { ...homepageSettings.hero, status_badge: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                          />
+                        </div>
+
                         <div>
                           <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>HEADING</label>
                           <input 
@@ -1716,22 +1735,9 @@ export default function AdminDashboard() {
                           />
                         </div>
 
-                        <div>
-                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BODY TEXT (FALLBACK/EXTRA DETAILS)</label>
-                          <textarea 
-                            rows={2}
-                            value={homepageSettings.hero?.body_text || ""} 
-                            onChange={(e) => setHomepageSettings({
-                              ...homepageSettings,
-                              hero: { ...homepageSettings.hero, body_text: e.target.value }
-                            })} 
-                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical", borderRadius: 6 }} 
-                          />
-                        </div>
-
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                           <div>
-                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON TEXT</label>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON 1 TEXT</label>
                             <input 
                               type="text" 
                               value={homepageSettings.hero?.button_text || ""} 
@@ -1743,7 +1749,7 @@ export default function AdminDashboard() {
                             />
                           </div>
                           <div>
-                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON URL</label>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON 1 URL</label>
                             <input 
                               type="text" 
                               value={homepageSettings.hero?.button_url || ""} 
@@ -1756,9 +1762,36 @@ export default function AdminDashboard() {
                           </div>
                         </div>
 
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON 2 TEXT</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.hero?.button2_text || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                hero: { ...homepageSettings.hero, button2_text: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON 2 URL</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.hero?.button2_url || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                hero: { ...homepageSettings.hero, button2_url: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                        </div>
+
                         <div style={{ marginBottom: 16 }}>
                           <MediaPicker
-                            label="Hero Image"
+                            label="Hero Ambassador Image"
                             value={homepageSettings.hero?.image_url || ""}
                             altText="Home Hero Image"
                             addLog={addLog}
@@ -1771,11 +1804,212 @@ export default function AdminDashboard() {
                       </div>
                     )}
 
+                    {/* TICKER SECTION EDITING */}
+                    {homeSubTab === "ticker" && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                        <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10 }}>
+                          <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>ANNOUNCEMENT TICKER CONFIGURATION</h3>
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>TICKER SCROLLING TEXT</label>
+                          <textarea 
+                            rows={3}
+                            value={homepageSettings.ticker?.bannerText || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              ticker: { ...homepageSettings.ticker, bannerText: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical", borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>SCROLL SPEED (SECONDS)</label>
+                            <input 
+                              type="number" 
+                              value={homepageSettings.ticker?.bannerSpeed ?? 18} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                ticker: { ...homepageSettings.ticker, bannerSpeed: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>ENABLE TICKER STRIP</label>
+                            <select
+                              value={homepageSettings.ticker?.bannerEnabled !== false ? "true" : "false"}
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                ticker: { ...homepageSettings.ticker, bannerEnabled: e.target.value === "true" }
+                              })}
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }}
+                            >
+                              <option value="true">ENABLED (VISIBLE)</option>
+                              <option value="false">DISABLED (HIDDEN)</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* FEATURES SECTION EDITING */}
+                    {homeSubTab === "features" && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                        <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10 }}>
+                          <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>FEATURES SECTION CONFIGURATION</h3>
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>HEADING</label>
+                          <input 
+                            type="text" 
+                            value={homepageSettings.features?.heading || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              features: { ...homepageSettings.features, heading: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>SUBHEADING</label>
+                          <textarea 
+                            rows={3}
+                            value={homepageSettings.features?.subheading || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              features: { ...homepageSettings.features, subheading: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical", borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON TEXT</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.features?.button_text || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                features: { ...homepageSettings.features, button_text: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON URL</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.features?.button_url || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                features: { ...homepageSettings.features, button_url: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* PRODUCTS SECTION EDITING */}
+                    {homeSubTab === "products" && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                        <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10 }}>
+                          <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>PRODUCTS CATALOG SECTION CONFIGURATION</h3>
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>TAG / BADGE TEXT</label>
+                          <input 
+                            type="text" 
+                            value={homepageSettings.products?.tag || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              products: { ...homepageSettings.products, tag: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>HEADING</label>
+                          <input 
+                            type="text" 
+                            value={homepageSettings.products?.heading || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              products: { ...homepageSettings.products, heading: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>SUBHEADING</label>
+                          <textarea 
+                            rows={3}
+                            value={homepageSettings.products?.subheading || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              products: { ...homepageSettings.products, subheading: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical", borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON TEXT</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.products?.button_text || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                products: { ...homepageSettings.products, button_text: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON URL</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.products?.button_url || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                products: { ...homepageSettings.products, button_url: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
                     {/* ABOUT SECTION EDITING */}
                     {homeSubTab === "about" && (
                       <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
                         <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10 }}>
-                          <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>ABOUT SECTION CONFIGURATION</h3>
+                          <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>WHY / ABOUT SECTION CONFIGURATION</h3>
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>TAG TEXT</label>
+                          <input 
+                            type="text" 
+                            value={homepageSettings.about?.tag || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              about: { ...homepageSettings.about, tag: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                          />
                         </div>
 
                         <div>
@@ -1859,49 +2093,61 @@ export default function AdminDashboard() {
                       </div>
                     )}
 
-                    {/* FEATURES SECTION EDITING */}
-                    {homeSubTab === "features" && (
+                    {/* FOUNDER SECTION EDITING */}
+                    {homeSubTab === "founder" && (
                       <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
                         <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10 }}>
-                          <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>FEATURES SECTION CONFIGURATION</h3>
+                          <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>FOUNDER SECTION CONFIGURATION</h3>
                         </div>
 
                         <div>
-                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>HEADING</label>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>TAG TEXT</label>
                           <input 
                             type="text" 
-                            value={homepageSettings.features?.heading || ""} 
+                            value={homepageSettings.founder?.tag || ""} 
                             onChange={(e) => setHomepageSettings({
                               ...homepageSettings,
-                              features: { ...homepageSettings.features, heading: e.target.value }
+                              founder: { ...homepageSettings.founder, tag: e.target.value }
                             })} 
                             style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
                           />
                         </div>
 
                         <div>
-                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>SUBHEADING</label>
-                          <textarea 
-                            rows={3}
-                            value={homepageSettings.features?.subheading || ""} 
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>FOUNDER NAME</label>
+                          <input 
+                            type="text" 
+                            value={homepageSettings.founder?.name || ""} 
                             onChange={(e) => setHomepageSettings({
                               ...homepageSettings,
-                              features: { ...homepageSettings.features, subheading: e.target.value }
+                              founder: { ...homepageSettings.founder, name: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>QUOTE</label>
+                          <textarea 
+                            rows={3}
+                            value={homepageSettings.founder?.quote || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              founder: { ...homepageSettings.founder, quote: e.target.value }
                             })} 
                             style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical", borderRadius: 6 }} 
                           />
                         </div>
 
                         <div>
-                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BODY TEXT (COMMA SEPARATED FEATURES)</label>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>DESCRIPTION</label>
                           <textarea 
-                            rows={2}
-                            value={homepageSettings.features?.body_text || ""} 
+                            rows={3}
+                            value={homepageSettings.founder?.description || ""} 
                             onChange={(e) => setHomepageSettings({
                               ...homepageSettings,
-                              features: { ...homepageSettings.features, body_text: e.target.value }
+                              founder: { ...homepageSettings.founder, description: e.target.value }
                             })} 
-                            placeholder="e.g. Weatherproof IP67, AI Motion detection, 24/7 Service"
                             style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical", borderRadius: 6 }} 
                           />
                         </div>
@@ -1911,10 +2157,10 @@ export default function AdminDashboard() {
                             <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON TEXT</label>
                             <input 
                               type="text" 
-                              value={homepageSettings.features?.button_text || ""} 
+                              value={homepageSettings.founder?.button_text || ""} 
                               onChange={(e) => setHomepageSettings({
                                 ...homepageSettings,
-                                features: { ...homepageSettings.features, button_text: e.target.value }
+                                founder: { ...homepageSettings.founder, button_text: e.target.value }
                               })} 
                               style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
                             />
@@ -1923,10 +2169,10 @@ export default function AdminDashboard() {
                             <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON URL</label>
                             <input 
                               type="text" 
-                              value={homepageSettings.features?.button_url || ""} 
+                              value={homepageSettings.founder?.button_url || ""} 
                               onChange={(e) => setHomepageSettings({
                                 ...homepageSettings,
-                                features: { ...homepageSettings.features, button_url: e.target.value }
+                                founder: { ...homepageSettings.founder, button_url: e.target.value }
                               })} 
                               style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
                             />
@@ -1935,24 +2181,72 @@ export default function AdminDashboard() {
 
                         <div style={{ marginBottom: 16 }}>
                           <MediaPicker
-                            label="Features Image"
-                            value={homepageSettings.features?.image_url || ""}
-                            altText="Features Image"
+                            label="Founder Image"
+                            value={homepageSettings.founder?.image_url || ""}
+                            altText="Founder Image"
                             addLog={addLog}
                             onChange={(url) => setHomepageSettings(prev => ({
                               ...prev,
-                              features: { ...prev.features, image_url: url }
+                              founder: { ...prev.founder, image_url: url }
                             }))}
                           />
                         </div>
                       </div>
                     )}
 
-                    {/* CTA SECTION EDITING */}
+                    {/* TESTIMONIALS SECTION EDITING */}
+                    {homeSubTab === "testimonials" && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                        <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10 }}>
+                          <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>TESTIMONIALS SECTION CONFIGURATION</h3>
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>TAG TEXT</label>
+                          <input 
+                            type="text" 
+                            value={homepageSettings.testimonials?.tag || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              testimonials: { ...homepageSettings.testimonials, tag: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>HEADING</label>
+                          <input 
+                            type="text" 
+                            value={homepageSettings.testimonials?.heading || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              testimonials: { ...homepageSettings.testimonials, heading: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* DEALER / CTA SECTION EDITING */}
                     {homeSubTab === "cta" && (
                       <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
                         <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10 }}>
-                          <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>CTA (CALL TO ACTION) SECTION CONFIGURATION</h3>
+                          <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>DEALER NETWORK CTA SECTION CONFIGURATION</h3>
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>TAG TEXT</label>
+                          <input 
+                            type="text" 
+                            value={homepageSettings.cta?.tag || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              cta: { ...homepageSettings.cta, tag: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                          />
                         </div>
 
                         <div>
@@ -1981,22 +2275,9 @@ export default function AdminDashboard() {
                           />
                         </div>
 
-                        <div>
-                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BODY TEXT</label>
-                          <textarea 
-                            rows={3}
-                            value={homepageSettings.cta?.body_text || ""} 
-                            onChange={(e) => setHomepageSettings({
-                              ...homepageSettings,
-                              cta: { ...homepageSettings.cta, body_text: e.target.value }
-                            })} 
-                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical", borderRadius: 6 }} 
-                          />
-                        </div>
-
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                           <div>
-                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON TEXT</label>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON 1 TEXT</label>
                             <input 
                               type="text" 
                               value={homepageSettings.cta?.button_text || ""} 
@@ -2008,7 +2289,7 @@ export default function AdminDashboard() {
                             />
                           </div>
                           <div>
-                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON URL</label>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON 1 URL</label>
                             <input 
                               type="text" 
                               value={homepageSettings.cta?.button_url || ""} 
@@ -2021,15 +2302,183 @@ export default function AdminDashboard() {
                           </div>
                         </div>
 
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON 2 TEXT</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.cta?.button2_text || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                cta: { ...homepageSettings.cta, button2_text: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON 2 URL</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.cta?.button2_url || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                cta: { ...homepageSettings.cta, button2_url: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* BLOGS SECTION EDITING */}
+                    {homeSubTab === "blogs" && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                        <div style={{ borderBottom: `1px solid ${C.outlineVar}`, paddingBottom: 10 }}>
+                          <h3 style={{ fontFamily: C.sg, fontSize: 14, color: C.secondary, margin: 0 }}>BLOGS & INTEL SECTION CONFIGURATION</h3>
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>TAG TEXT</label>
+                          <input 
+                            type="text" 
+                            value={homepageSettings.blogs?.tag || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              blogs: { ...homepageSettings.blogs, tag: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>SECTION HEADING</label>
+                          <input 
+                            type="text" 
+                            value={homepageSettings.blogs?.heading || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              blogs: { ...homepageSettings.blogs, heading: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>SECTION SUBHEADING</label>
+                          <textarea 
+                            rows={3}
+                            value={homepageSettings.blogs?.subheading || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              blogs: { ...homepageSettings.blogs, subheading: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical", borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>FEATURED CARD TAG</label>
+                          <input 
+                            type="text" 
+                            value={homepageSettings.blogs?.card_tag || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              blogs: { ...homepageSettings.blogs, card_tag: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>FEATURED CARD TITLE</label>
+                          <input 
+                            type="text" 
+                            value={homepageSettings.blogs?.card_title || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              blogs: { ...homepageSettings.blogs, card_title: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>FEATURED CARD DESCRIPTION</label>
+                          <textarea 
+                            rows={3}
+                            value={homepageSettings.blogs?.card_desc || ""} 
+                            onChange={(e) => setHomepageSettings({
+                              ...homepageSettings,
+                              blogs: { ...homepageSettings.blogs, card_desc: e.target.value }
+                            })} 
+                            style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, resize: "vertical", borderRadius: 6 }} 
+                          />
+                        </div>
+
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON 1 TEXT</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.blogs?.button1_text || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                blogs: { ...homepageSettings.blogs, button1_text: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON 1 URL</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.blogs?.button1_url || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                blogs: { ...homepageSettings.blogs, button1_url: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                        </div>
+
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON 2 TEXT</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.blogs?.button2_text || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                blogs: { ...homepageSettings.blogs, button2_text: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 700, marginBottom: 6 }}>BUTTON 2 URL</label>
+                            <input 
+                              type="text" 
+                              value={homepageSettings.blogs?.button2_url || ""} 
+                              onChange={(e) => setHomepageSettings({
+                                ...homepageSettings,
+                                blogs: { ...homepageSettings.blogs, button2_url: e.target.value }
+                              })} 
+                              style={{ width: "100%", background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 12, color: C.onSurf, outline: "none", fontSize: 13, borderRadius: 6 }} 
+                            />
+                          </div>
+                        </div>
+
                         <div style={{ marginBottom: 16 }}>
                           <MediaPicker
-                            label="CTA Image"
-                            value={homepageSettings.cta?.image_url || ""}
-                            altText="CTA Image"
+                            label="Blog Feature Banner Image"
+                            value={homepageSettings.blogs?.image_url || ""}
+                            altText="Blog Feature Image"
                             addLog={addLog}
                             onChange={(url) => setHomepageSettings(prev => ({
                               ...prev,
-                              cta: { ...prev.cta, image_url: url }
+                              blogs: { ...prev.blogs, image_url: url }
                             }))}
                           />
                         </div>
@@ -3904,7 +4353,7 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* LOGS OVERVIEW STATS */}
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 16, marginBottom: 32 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 180px), 1fr))", gap: 16, marginBottom: 32 }}>
                   {[
                     { label: "TOTAL LOG ENTRIES", val: sysLogs.length, color: C.secondary },
                     { label: "ADMIN ACTIONS", val: sysLogs.filter(l => l.type === "admin").length, color: C.primary },
@@ -3989,7 +4438,7 @@ export default function AdminDashboard() {
                 {teamMembers.length === 0 ? (
                   <p style={{ color: C.onSurfVar, fontSize: 13, background: C.surfCont, padding: 24, borderRadius: "8px", border: `1px dashed ${C.outline}` }}>No team members found. Click "Add Team Member" to create one.</p>
                 ) : (
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 20 }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 280px), 1fr))", gap: 20 }}>
                     {teamMembers.map((member) => (
                       <div key={member.id} style={{ background: C.surface, border: `1px solid ${C.outlineVar}`, borderRadius: "8px", overflow: "hidden", position: "relative" }}>
                         <div style={{ height: 160, backgroundImage: `url(${member.image})`, backgroundSize: "cover", backgroundPosition: "center" }}></div>
@@ -4179,7 +4628,7 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Telemetry Dials Grid */}
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16, marginBottom: 24 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 200px), 1fr))", gap: 16, marginBottom: 24 }}>
                   {/* Card 1: Active Sessions */}
                   <div style={{ background: C.surfCont, border: `1px solid ${C.outlineVar}`, padding: 20, borderRadius: 8, position: "relative", overflow: "hidden" }}>
                     <div style={{ position: "absolute", top: 12, right: 12, width: 8, height: 8, borderRadius: "50%", background: "#10b981", boxShadow: "0 0 8px #10b981", animation: "pulse 1.5s infinite" }} />

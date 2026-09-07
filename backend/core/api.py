@@ -502,9 +502,6 @@ def upload_image(request):
         return JsonResponse({'error': 'No file provided (multipart field name: "file")'}, status=400)
 
     alt_text = request.POST.get('alt_text') or upload.name
-    is_header = request.POST.get('is_header') in ('1', 'true', 'yes')
-
-    from django.core.exceptions import ValidationError
     asset = MediaAsset(file=upload, alt_text=alt_text, is_header=is_header,
                        title=request.POST.get('title', ''))
     try:

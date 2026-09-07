@@ -72,8 +72,9 @@ export default function ProductCard({
         onMouseLeave={() => setHovered(false)}
         style={{
           position: "relative",
-          background: "#1e2117",
-          border: `1px solid ${hovered ? "#94da32" : "#434938"}`,
+          background: "var(--nv-surfCont, #1e2117)",
+          border: `1px solid ${hovered ? "var(--nv-secondary, #94da32)" : "var(--nv-outlineVar, #434938)"}`,
+          borderRadius: "14px",
           overflow: "hidden",
           height: "100%",
           display: "flex",
@@ -82,8 +83,8 @@ export default function ProductCard({
           boxSizing: "border-box",
           width: "100%",
           transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-          boxShadow: hovered ? "0 8px 24px rgba(148, 218, 50, 0.15)" : "none",
-          transform: hovered ? "translateY(-3px)" : "none",
+          boxShadow: hovered ? "0 12px 32px rgba(148, 218, 50, 0.18)" : "0 2px 10px rgba(0,0,0,0.2)",
+          transform: hovered ? "translateY(-4px)" : "none",
         }}
       >
         <div style={{ width: "100%", boxSizing: "border-box" }}>
@@ -105,18 +106,19 @@ export default function ProductCard({
               position: "relative",
               overflow: "hidden",
               aspectRatio: "1/1",
-              background: "#0c0f07",
-              borderBottom: "1px solid #434938",
+              background: "var(--nv-surfLow, #0c0f07)",
+              borderBottom: "1px solid var(--nv-outlineVar, #434938)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               width: "100%",
               boxSizing: "border-box",
-              padding: "16px",
+              padding: "24px",
+              background: "radial-gradient(circle at center, rgba(148,218,50,0.06) 0%, rgba(12,15,7,0.95) 75%)",
             }}
           >
             <img
-              src={img}
+              src={(!img || img.includes("AB6AXuDKHBBETCmvmUDQXf390HXH-Ol")) ? "/assets/white_dome_camera.png" : img}
               alt={name}
               style={{
                 maxWidth: "100%",
@@ -124,7 +126,7 @@ export default function ProductCard({
                 width: "auto",
                 height: "auto",
                 objectFit: "contain",
-                filter: hovered ? "grayscale(0%)" : "grayscale(30%)",
+                filter: hovered ? "grayscale(0%) brightness(1.05)" : "grayscale(15%) brightness(0.95)",
                 transition: "all 0.5s ease",
                 transform: hovered ? "scale(1.06)" : "scale(1)",
               }}
@@ -159,7 +161,7 @@ export default function ProductCard({
             style={{
               display: "flex",
               flexDirection: "column",
-              padding: "16px 16px 12px 16px",
+              padding: "18px 18px 14px 18px",
               position: "relative",
               zIndex: 2,
               width: "100%",
@@ -169,32 +171,30 @@ export default function ProductCard({
             <h4
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: 17,
+                fontSize: 16,
                 fontWeight: 700,
                 letterSpacing: 0.5,
-                color: hovered ? "#deffa4" : "#ffffff",
+                color: hovered ? "var(--nv-secondary, #94da32)" : "var(--nv-onSurf, #ffffff)",
                 margin: 0,
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
-                width: "100%",
-                transition: "color 0.2s ease",
               }}
-              title={name}
             >
               {name}
             </h4>
 
+            {/* SUBHEADING */}
             <div
               style={{
+                fontFamily: "'Poppins', sans-serif",
+                color: "var(--nv-onSurfVar, #c3c9b3)",
                 fontSize: 12,
-                color: "#94da32",
-                fontFamily: "'Space Grotesk', sans-serif",
-                marginTop: 4,
-                fontWeight: 600,
-                letterSpacing: 0.5,
-                display: "flex",
-                alignItems: "center",
+                marginTop: 6,
+                lineHeight: 1.4,
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
               }}
             >
               {subheadingText}
@@ -204,10 +204,10 @@ export default function ProductCard({
             <div
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
-                color: "#94da32",
-                fontSize: 19,
+                color: "var(--nv-secondary, #94da32)",
+                fontSize: 18,
                 fontWeight: 800,
-                marginTop: 6,
+                marginTop: 8,
                 letterSpacing: 0.5,
               }}
             >
@@ -217,24 +217,13 @@ export default function ProductCard({
         </div>
 
         {/* BUTTON AT BOTTOM */}
-        <div style={{ padding: "0 16px 16px 16px", width: "100%", boxSizing: "border-box" }}>
+        <div style={{ padding: "0 18px 18px 18px", width: "100%", boxSizing: "border-box" }}>
           <button
             onClick={handleAddToCart}
+            className={`w-full ${hovered ? "nv-btn-primary" : "nv-btn-secondary"} nv-btn-compact`}
             style={{
               width: "100%",
               boxSizing: "border-box",
-              padding: "12px",
-              background: hovered ? "#94da32" : "transparent",
-              border: `2px solid #94da32`,
-              color: hovered ? "#111111" : "#94da32",
-              fontWeight: 800,
-              fontSize: 12,
-              cursor: "pointer",
-              transition: "all 0.25s ease",
-              fontFamily: "'Poppins', sans-serif",
-              letterSpacing: 1.5,
-              textTransform: "uppercase",
-              borderRadius: "9999px",
             }}
           >
             ADD TO CART

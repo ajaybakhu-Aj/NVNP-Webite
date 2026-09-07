@@ -1,14 +1,38 @@
+import ipaddress
+import json
+import logging
+import os
+import re
+import socket
+import urllib.parse
+import urllib.request
+
+from django.conf import settings
+from django.contrib import admin
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+from django.core.files.base import ContentFile
+from django.core.paginator import Paginator
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
-from .models import Product, BlogPost, Category, Event, Dealer
+from django.utils import timezone
+from django.utils.dateformat import format as date_format
+from django.utils.text import slugify
+from django.views.decorators.cache import cache_page
+
+from core.api import _rate_limited, _rate_limit_response
+from .models import (
+    BlogPost, Category, Dealer, Event, GalleryItem, MediaAsset,
+    Product, QuoteRequest, RobotsTxtConfig, SiteSetting
+)
+
+logger = logging.getLogger(__name__)
 
 # Django is API-only: the React SPA renders all public pages.
 # The old server-rendered template views were removed; only the admin,
 # JSON APIs, and legacy-redirect middleware remain.
 
-import json
-from django.http import JsonResponse
-from .models import QuoteRequest
-from django.views.decorators.cache import cache_page
 
 
 
@@ -175,7 +199,6 @@ def submit_quote_request(request):
     if request.method != 'POST':
         return JsonResponse({'error': 'POST required'}, status=405)
 
-    from core.api import _rate_limited, _rate_limit_response
     if _rate_limited(request, 'quote', limit=5, window_seconds=3600):
         return _rate_limit_response()
 
@@ -194,12 +217,8 @@ def submit_quote_request(request):
     # 2. reCAPTCHA v3 Validation
     recaptcha_token = data.get('recaptcha_token')
     if not recaptcha_token:
-        # In a strict production environment, this should return a 400 error.
-        # But if it's missing, let's at least log it. We will reject it.
         return JsonResponse({'error': 'reCAPTCHA verification failed.'}, status=400)
 
-    import urllib.request
-    import urllib.parse
     recaptcha_secret = getattr(settings, 'RECAPTCHA_SECRET_KEY', 'dummy_secret')
     
     if recaptcha_secret != 'dummy_secret':
@@ -244,8 +263,7 @@ def submit_quote_request(request):
         )
         quote_id = quote.id
     except Exception as db_err:
-        # Log server-side only; never echo internals back to the client.
-        print(f"Database error writing quote: {db_err}")
+        logger.error(f"Database error writing quote: {db_err}")
         return JsonResponse({'error': 'Could not save your request. Please try again later.'},
                             status=500)
 
@@ -255,8 +273,6 @@ def submit_quote_request(request):
         'quote_id': quote_id
     })
 
-
-from .models import MediaAsset
 
 def asset_detail_view(request, asset_id):
     asset = get_object_or_404(MediaAsset, id=asset_id)
@@ -282,18 +298,7 @@ def asset_list_view(request):
     return JsonResponse(data, safe=False)
 
 
-from django.contrib.admin.views.decorators import staff_member_required
-from django.utils.text import slugify
-from django.contrib.auth import get_user_model
-from django.utils import timezone
-from .models import SiteSetting
-# from .seed_data import SEED_PRODUCTS_RAW, SEED_BLOGS_RAW, SEED_EVENTS_RAW, SEED_DEALERS_RAW, SEED_SITE_CONTENTS_RAW, SEED_SETTINGS_RAW
-
 def sync_existing_media_files():
-    import os
-    from django.conf import settings
-    from .models import MediaAsset
-    
     media_root = settings.MEDIA_ROOT
     if not os.path.exists(media_root):
         return
@@ -337,10 +342,6 @@ def sync_existing_media_files():
 
 def _is_safe_remote_url(url):
     """SSRF guard: only allow http(s) URLs that resolve to public IPs."""
-    import socket
-    import ipaddress
-    import urllib.parse
-
     parsed = urllib.parse.urlparse(url)
     if parsed.scheme not in ('http', 'https') or not parsed.hostname:
         return False
@@ -357,20 +358,11 @@ def _is_safe_remote_url(url):
 
 
 def download_and_register_remote_images():
-    import os
-    import re
-    import json
-    import urllib.request
-    import urllib.parse
-    from django.core.files.base import ContentFile
-    from django.utils.text import slugify
-    from core.models import Product, BlogPost, Event, SiteSetting, MediaAsset
-
     def download_image(url, title_hint):
         if not url or not url.startswith(('http://', 'https://')):
             return None
         if not _is_safe_remote_url(url):
-            print(f"Skipping unsafe or unresolvable URL: {url}")
+            logger.warning(f"Skipping unsafe or unresolvable URL: {url}")
             return None
 
         parsed_url = urllib.parse.urlparse(url)
@@ -869,14 +861,10 @@ def api_homepage_settings(request):
     return JsonResponse(setting.value)
 
 
-import os
-from django.conf import settings
-from django.http import HttpResponse
-
 def serve_react_app(request):
     """
     Serves the React SPA with dynamic server-side injected SEO tags.
-    In DEBUG mode, bridges to Vite on port 5174.
+    In DEBUG mode, bridges to Vite on port 5173.
     In Production, serves the built dist/index.html.
     """
     if settings.DEBUG:
@@ -941,7 +929,6 @@ def serve_react_app(request):
     # Inject meta description
     desc_tag = f'<meta name="description" content="{meta_desc}" />'
     if '<meta name="description"' in html:
-        import re
         html = re.sub(r'<meta name="description"[^>]*>', desc_tag, html)
     else:
         html = html.replace('</head>', f'  {desc_tag}\n  </head>')
@@ -961,17 +948,13 @@ def serve_react_app(request):
     return response
 
 
-from django.views.decorators.cache import cache_page
-from .models import RobotsTxtConfig, Product, BlogPost, Dealer
-
 def robots_txt_view(request):
     config = RobotsTxtConfig.load()
     return HttpResponse(config.content, content_type="text/plain")
 
 @cache_page(300) # 5 minutes cache
 def dynamic_sitemap_view(request):
-    from django.core.paginator import Paginator
-    from django.utils.dateformat import format
+    # Collect URLs
     
     # Collect URLs
     urls = []

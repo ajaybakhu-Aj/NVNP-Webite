@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { colors, feedImages } from "../../data/constants";
 import { useSiteContents, useHomepageSettings } from "../../utils/cmsDb";
 
@@ -6,255 +5,79 @@ export default function WhySection() {
   const contents = useSiteContents();
   const homeSettings = useHomepageSettings();
 
-  const whyFeats = contents.whyFeatures || [];
+  const whyFeats = homeSettings.about?.features || contents.whyFeatures || [];
+
   return (
     <section
-      style={{
-        padding: "80px 0",
-
-        background: colors.background,
-
-        overflow: "hidden",
-
-        width: "100%",
-      }}
+      id="why"
+      className="homepage-safe-section bg-[var(--nv-bg,#131313)] border-b border-[var(--nv-outlineVar,#434938)]/40 overflow-hidden flex justify-center items-center py-[clamp(45px,5vw,85px)]"
     >
-      <div
-        style={{
-          maxWidth: 1280,
-
-          margin: "0 auto",
-
-          padding: "0 24px",
-
-          display: "grid",
-
-          gridTemplateColumns:
-            "repeat(auto-fit, minmax(320px, 1fr))",
-
-          gap: "80px",
-
-          alignItems: "center",
-
-          width: "100%",
-
-          boxSizing: "border-box",
-        }}
-      >
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-24 items-center w-full box-border">
         {/* CAMERA FEEDS */}
-        <div
-          style={{
-            display: "grid",
-
-            gridTemplateColumns: "1fr 1fr",
-
-            border: `1px solid ${colors.secondary}`,
-
-            width: "100%",
-
-            overflow: "hidden",
-          }}
-        >
-          {feedImages.map(({ src, ch }, i) => (
-            <div
-              key={ch}
-              style={{
-                position: "relative",
-
-                aspectRatio: "16/9",
-
-                background: "black",
-
-                borderTop:
-                  i >= 2
-                    ? `1px solid ${colors.secondary}`
-                    : "none",
-
-                borderLeft:
-                  i % 2 === 1
-                    ? `1px solid ${colors.secondary}`
-                    : "none",
-
-                overflow: "hidden",
-              }}
-            >
-              <img
-                src={src}
-                alt={ch}
-                style={{
-                  width: "100%",
-
-                  height: "100%",
-
-                  objectFit: "cover",
-
-                  opacity: 0.5,
-
-                  transition: "opacity 0.2s",
-
-                  display: "block",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.opacity = 0.8)
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.opacity = 0.5)
-                }
-              />
-
+        <div className="w-full rounded-xl overflow-hidden border border-[var(--nv-secondary,#94da32)] shadow-xl shadow-[rgba(148,218,50,0.06)] bg-black">
+          <div className="grid grid-cols-2 w-full overflow-hidden">
+            {feedImages.map(({ src, ch }, i) => (
               <div
+                key={ch}
+                className="relative aspect-video bg-black overflow-hidden group"
                 style={{
-                  position: "absolute",
-
-                  top: 8,
-
-                  left: 8,
-
-                  fontSize: "clamp(8px, 2vw, 10px)",
-
-                  background: "#dc2626",
-
-                  color: "white",
-
-                  padding: "2px 6px",
-
-                  whiteSpace: "nowrap",
-
-                  fontWeight: 600,
+                  borderTop: i >= 2 ? `1px solid ${colors.secondary}` : "none",
+                  borderLeft: i % 2 === 1 ? `1px solid ${colors.secondary}` : "none",
                 }}
               >
-                REC • {ch}
+                <img
+                  src={src}
+                  alt={ch}
+                  className="w-full h-full object-cover opacity-50 transition-opacity duration-200 group-hover:opacity-80 block"
+                />
+                <div className="absolute top-2 left-2 text-[clamp(8px,2vw,10px)] bg-[#dc2626] text-white px-1.5 py-0.5 whitespace-nowrap font-semibold">
+                  REC • {ch}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* CONTENT */}
-        <div
-          style={{
-            display: "flex",
+        <div className="flex flex-col gap-5 w-full">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[var(--nv-secondary,#94da32)] animate-pulse" />
+            <span className="text-[11px] font-mono font-bold tracking-[2px] uppercase text-[var(--nv-secondary,#94da32)]">
+              {homeSettings.about?.tag || contents.whyTag || "// ARCHITECTURE // HARDWARE INTEGRITY"}
+            </span>
+          </div>
 
-            flexDirection: "column",
-
-            gap: 24,
-
-            width: "100%",
-          }}
-        >
-
-
-          <h2
-            style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-
-              fontSize: "clamp(28px, 5vw, 40px)",
-
-              fontWeight: 700,
-
-              letterSpacing: 2,
-
-              lineHeight: 1.2,
-
-              wordBreak: "break-word",
-              color: "var(--nv-onSurf)",
-            }}
-          >
+          <h2 className="font-['Space_Grotesk'] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-[var(--nv-onSurf,#ffffff)] uppercase break-words leading-tight">
             {homeSettings.about?.heading || contents.whyTitle || "UNCOMPROMISING VIGILANCE TECHNOLOGY"}
           </h2>
 
-          <p
-            style={{
-              color: colors.onSurfaceVariant,
-
-              fontSize: "clamp(15px, 2vw, 18px)",
-
-              lineHeight: 1.6,
-
-              wordBreak: "break-word",
-            }}
-          >
+          <p className="text-sm sm:text-base text-[var(--nv-onSurfVar,#c3c9b3)] leading-relaxed">
             {homeSettings.about?.subheading || contents.whySubtitle || "We don't just sell cameras; we deploy comprehensive security ecosystems tailored for the unique challenges of Nepal's infrastructure."}
           </p>
 
           {homeSettings.about?.body_text && (
-            <p
-              style={{
-                color: colors.onSurfaceVariant,
-                fontSize: "14px",
-                lineHeight: 1.6,
-                opacity: 0.8,
-                marginTop: -8,
-                wordBreak: "break-word",
-              }}
-            >
+            <p className="text-sm text-[var(--nv-onSurfVar,#c3c9b3)] opacity-80 leading-relaxed -mt-2">
               {homeSettings.about.body_text}
             </p>
           )}
 
           {/* FEATURES */}
-          <div
-            style={{
-              display: "grid",
-
-              gridTemplateColumns:
-                "repeat(auto-fit, minmax(220px, 1fr))",
-
-              gap: 24,
-
-              paddingTop: 8,
-
-              width: "100%",
-            }}
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2 w-full">
             {whyFeats.map((feat, idx) => (
               <div
                 key={idx}
-                style={{
-                  borderLeft: `4px solid ${colors.secondary}`,
-
-                  paddingLeft: 16,
-
-                  paddingTop: 8,
-
-                  paddingBottom: 8,
-
-                  minWidth: 0,
-                }}
+                className="pl-4 py-2 min-w-0"
+                style={{ borderLeft: `4px solid ${colors.secondary}` }}
               >
                 <div
-                  style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
-
-                    fontSize: "clamp(20px, 3vw, 24px)",
-
-                    fontWeight: 700,
-
-                    color: "var(--nv-text-accent)",
-
-                    lineHeight: 1.3,
-
-                    wordBreak: "break-word",
-                  }}
+                  className="text-[clamp(20px,3vw,24px)] font-bold text-[var(--nv-secondary,#94da32)] leading-snug break-words"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                 >
                   {feat.val}
                 </div>
-
                 <div
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-
-                    fontSize: 12,
-
-                    fontWeight: 600,
-
-                    letterSpacing: 1,
-
-                    opacity: 0.6,
-
-                    lineHeight: 1.5,
-
-                    wordBreak: "break-word",
-                  }}
+                  className="text-xs font-semibold tracking-wider text-[var(--nv-onSurfVar,#c3c9b3)] leading-relaxed break-words"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   {feat.label}
                 </div>

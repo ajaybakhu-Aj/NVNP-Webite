@@ -1,38 +1,41 @@
 import React, { useState, useEffect } from "react";
 import Icon from "../../utils/Icon";
 import { colors } from "../../data/constants";
-import { useSiteContents } from "../../utils/cmsDb";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useSiteContents, useHomepageSettings } from "../../utils/cmsDb";
+import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
 export default function TestimonialsSection() {
   const contents = useSiteContents();
+  const homeSettings = useHomepageSettings();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const defaultItems = [
     {
-      text: "NightVision's 4K AI surveillance system has revolutionized security across our commercial facilities in Biratnagar. Zero downtime, crystal-clear night vision.",
-      author: "Pawan Shrestha — Managing Director, Nano Tek",
-      role: "Enterprise Partner"
+      text: "The mobile app integration is flawless. I can monitor my store from anywhere in the world with zero lag. Outstanding build quality and rock-solid reliability.",
+      author: "A. Shrestha",
+      role: "Retail Group"
     },
     {
-      text: "The encrypted telemetry and instant threat detection response give our retail chain complete peace of mind. Exceptional build quality and local Nepal support.",
-      author: "Sanjay Dhanusha — Systems Integrator, White Pearl",
-      role: "Madhesh Logistics Lead"
+      text: "NightVision's 4K AI surveillance system has revolutionized security across our commercial facilities in Biratnagar. Zero downtime, crystal-clear night vision.",
+      author: "Pawan Shrestha",
+      role: "Enterprise Partner, Nano Tek"
     },
     {
       text: "Deployment was seamless across our Lumbini warehouse locations. NightVision cameras withstand extreme weather while delivering live 60fps streaming.",
-      author: "Siddharth Lumbini — Operations Head, SR Suppliers",
+      author: "Siddharth Lumbini",
       role: "Logistics Partner"
     }
   ];
 
-  const items = contents.testimonials && contents.testimonials.length > 0 ? contents.testimonials : defaultItems;
+  const items = (homeSettings.testimonials?.items && homeSettings.testimonials.items.length > 0)
+    ? homeSettings.testimonials.items
+    : (contents.testimonials && contents.testimonials.length > 0 ? contents.testimonials : defaultItems);
 
-  // Auto-slide carousel every 5 seconds
+  // Auto-slide carousel every 6 seconds
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % items.length);
-    }, 5000);
+    }, 6000);
     return () => clearInterval(timer);
   }, [items.length]);
 
@@ -45,55 +48,76 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-[var(--nv-bg,#11140c)] border-t border-b border-[#434938] w-full overflow-hidden">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 w-full box-border">
-        {/* HEADER */}
-        <h2 className="font-['Space_Grotesk'] text-2xl sm:text-4xl font-bold tracking-wider text-center text-[var(--nv-onSurf,#e2e4d5)] uppercase mb-10">
-          {contents.testimonialsTitle || "TRUSTED BY LEADERS"}
-        </h2>
+    <section
+      id="testimonials"
+      className="homepage-safe-section bg-[var(--nv-bg,#11140c)] overflow-hidden flex justify-center items-center"
+      style={{
+        paddingTop: "clamp(45px, 4.5vw, 75px)",
+        paddingBottom: "clamp(30px, 3vw, 45px)",
+      }}
+    >
+      <div className="max-w-[1100px] mx-auto px-4 sm:px-6 md:px-8 w-full box-border flex flex-col items-center justify-center">
+        {/* HEADER BLOCK WITH SAFE MARGIN */}
+        <div className="flex flex-col items-center text-center mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--nv-surfCont,#181a15)] border border-[var(--nv-secondary,#94da32)]/30 mb-4 shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-[var(--nv-secondary,#94da32)] animate-pulse" />
+            <span className="text-[11px] font-mono font-bold tracking-[2px] uppercase text-[var(--nv-secondary,#94da32)]">
+              {homeSettings.testimonials?.tag || "// OPERATIONAL TRUST // VERIFIED CLIENTS"}
+            </span>
+          </div>
+          <h2 className="font-['Space_Grotesk'] text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-center text-[var(--nv-onSurf,#ffffff)] uppercase">
+            {homeSettings.testimonials?.heading || contents.testimonialsTitle || "TRUSTED BY LEADERS"}
+          </h2>
+        </div>
 
-        {/* CAROUSEL CONTAINER */}
-        <div className="relative max-w-[900px] mx-auto bg-[#1e2117] border border-[#94da32] p-6 sm:p-10 rounded-lg shadow-xl shadow-[rgba(148,218,50,0.1)] transition-all">
+        {/* CAROUSEL CARD - MATCHED WIDTH & SPACIOUS SAFE MARGINS */}
+        <div
+          className="w-full relative bg-gradient-to-b from-[#182012] via-[#11150c] to-[#0c0f08] border border-[var(--nv-outlineVar,#434938)]/60 py-14 sm:py-18 md:py-22 px-6 sm:px-14 md:px-20 rounded-3xl shadow-2xl shadow-[rgba(0,0,0,0.5)] transition-all box-border flex flex-col items-center text-center overflow-hidden"
+        >
+          {/* Ambient subtle spotlight */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[540px] h-[180px] bg-[var(--nv-secondary,#94da32)]/10 blur-[80px] pointer-events-none" />
+
           {/* STAR RATING */}
-          <div className="flex justify-center gap-1.5 color-[#94da32] mb-6">
+          <div className="flex justify-center items-center gap-2 mb-8 relative z-10">
             {[...Array(5)].map((_, i) => (
-              <Icon key={i} name="star" size={22} fill style={{ color: colors.secondary }} />
+              <Icon key={i} name="star" size={20} fill style={{ color: colors.secondary || "#94da32" }} />
             ))}
           </div>
 
-          {/* TESTIMONIAL CONTENT */}
-          <div className="min-h-[140px] flex flex-col justify-center text-center">
-            <p className="text-sm sm:text-base md:text-lg italic leading-relaxed text-[#e2e4d5] mb-6 font-['Poppins']">
-              "{items[currentIndex]?.text}"
+          {/* TESTIMONIAL QUOTE */}
+          <div className="min-h-[100px] flex flex-col justify-center items-center text-center max-w-[820px] relative z-10 px-2 sm:px-4">
+            <p className="text-base sm:text-lg md:text-xl font-normal leading-relaxed text-[var(--nv-onSurf,#e2e4d5)] mb-7 font-['Poppins']">
+              “{(items[currentIndex]?.text || "").replace(/^["'“”\s]+|["'“”\s]+$/g, "")}”
             </p>
-            <div className="font-['Space_Grotesk'] font-bold text-xs sm:text-sm tracking-wider uppercase text-[#94da32]">
-              {items[currentIndex]?.author}
+            
+            {/* AUTHOR INFO */}
+            <div className="flex items-center justify-center gap-2 flex-wrap">
+              <span className="font-['Space_Grotesk'] font-bold text-xs sm:text-sm tracking-widest uppercase text-[var(--nv-secondary,#94da32)]">
+                — {items[currentIndex]?.author}{items[currentIndex]?.role ? `, ${items[currentIndex]?.role.toUpperCase()}` : ""}
+              </span>
             </div>
-            {items[currentIndex]?.role && (
-              <div className="text-[11px] text-[#c3c9b3] tracking-widest uppercase mt-1">
-                {items[currentIndex]?.role}
-              </div>
-            )}
           </div>
 
-          {/* CAROUSEL CONTROLS */}
-          <div className="flex justify-between items-center mt-8 pt-4 border-t border-[#434938]">
+          {/* CENTERED HARMONIOUS CONTROLS WITH SAFE TOP MARGIN */}
+          <div className="flex items-center justify-center gap-4 sm:gap-6 mt-10 sm:mt-14 relative z-10">
             <button
               onClick={handlePrev}
-              className="p-2 rounded-full border border-[#434938] bg-[#181a15] text-[#94da32] hover:bg-[#94da32] hover:text-[#111] transition-all cursor-pointer"
+              className="nv-btn-icon shrink-0"
               aria-label="Previous testimonial"
             >
-              <ChevronLeft size={20} />
+              <ChevronLeft size={18} />
             </button>
 
-            {/* DOT INDICATORS */}
-            <div className="flex gap-2">
+            {/* DOT INDICATORS IN A PILL CLUSTER */}
+            <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/[0.04] border border-[var(--nv-outlineVar,#434938)]/40">
               {items.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => setCurrentIndex(idx)}
-                  className={`w-3 h-3 rounded-full transition-all cursor-pointer ${
-                    currentIndex === idx ? "bg-[#94da32] w-6" : "bg-[#434938] hover:bg-[#8d937f]"
+                  className={`h-2 rounded-full transition-all cursor-pointer ${
+                    currentIndex === idx
+                      ? "bg-[var(--nv-secondary,#94da32)] w-6 shadow-sm shadow-[rgba(148,218,50,0.4)]"
+                      : "w-2 bg-[var(--nv-outlineVar,#434938)] hover:bg-[var(--nv-outline,#8d937f)]"
                   }`}
                   aria-label={`Go to slide ${idx + 1}`}
                 />
@@ -102,10 +126,10 @@ export default function TestimonialsSection() {
 
             <button
               onClick={handleNext}
-              className="p-2 rounded-full border border-[#434938] bg-[#181a15] text-[#94da32] hover:bg-[#94da32] hover:text-[#111] transition-all cursor-pointer"
+              className="nv-btn-icon shrink-0"
               aria-label="Next testimonial"
             >
-              <ChevronRight size={20} />
+              <ChevronRight size={18} />
             </button>
           </div>
         </div>
